@@ -1,0 +1,203 @@
+.Profile{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;   
+}
+
+.side_one{
+ 
+ flex:1 20%;
+ 
+}
+
+.side_one h3.first_h3{
+ 
+    color: var(--color-light);
+    margin-bottom: 4%;
+    margin-top: 60%;
+    margin-left: 5%;
+}
+
+
+.side_one h3.second_h3{
+ 
+    color: var(--color-light);
+    margin-bottom: 4%;
+    margin-left: 5%;
+}
+
+.Friends{
+    width: 80%;
+    height: 350px;
+    background-color: var(--color-dark);
+    opacity: 0.5;
+    margin-bottom: 50px;
+    border-radius: 17px;
+    margin-left: 5%;
+}
+
+.Groups{
+    width: 80%;
+    height: 350px;
+    background-color: var(--color-dark);
+    opacity: 0.5;
+    border-radius: 17px;
+    margin-left: 5%;
+}
+
+
+.side_two{
+    border: 3px solid var(--color-border);
+    flex: 1 30%;
+    border-radius: 25px;
+    margin-top: 6%;
+}
+
+.side_three{
+    flex:1 20%;
+}
+   
+
+
+.side_three h3.first_h3{
+ 
+    color: var(--color-light);
+    margin-bottom: 4%;
+    margin-top: 60%;
+    margin-left: 15%;
+}
+
+
+.side_three h3.second_h3{
+ 
+    color: var(--color-light);
+    margin-bottom: 4%;
+    margin-left: 15%;
+}
+
+
+.Achievevements{
+    width: 80%;
+    height: 350px;
+    background-color: var(--color-dark);
+    opacity: 0.5;
+    margin-bottom: 50px;
+    border-radius: 17px;
+    margin-left: 15%;
+}
+
+.Store{
+    width: 80%;
+    height: 350px;
+    background-color: var(--color-dark);
+    opacity: 0.5;
+    border-radius: 17px;
+    margin-left: 15%;
+}
+
+
+.side_two_nav{
+    color:var(--color-light);
+    padding: 20px 30px;
+}
+
+.side_two_nav .span_one{
+   margin: 0px 10px;
+}
+
+.side_two_nav .span_right{
+    margin-left: 45%;
+    font-size: 25px;
+}
+
+.side_two_info{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+
+.side_two_info .profile_avatar img{
+    width: 130px;    
+}
+
+.side_two_info .profile_avatar p.username{
+    color: var(--color-light);
+    font-weight: bold;
+    font-size: 16px;
+    margin-left: 18%;
+}
+
+
+.info{
+    flex:1 70%;
+    background-color: var(--color-dark);
+    /* opacity: 0.5; */
+    border-radius: 25px;
+    margin-right: 5%;
+    height: 200px;
+    color:var(--color-light);
+}
+
+
+.info p{
+   margin: 20px;
+}
+
+.info p span.wins_span
+{
+    margin-left: 42px;
+}
+
+.info p span.group_wins
+{
+    margin-right: 42px;
+
+}
+
+
+.progress_level{
+    width: 90%;
+    background-color: blueviolet;
+    height: 30px;
+    text-align: center;
+    border-radius: 8px;
+    
+}
+
+.progress_level p{
+  font-weight: bold;
+}
+
+
+div.side_two_history{
+    margin-top: 7%;
+    width: 90%;
+    background-color: black;
+    color:var(--color-light);
+    margin-left: 3%;
+    border-radius: 25px;
+    padding: 10% 2%;
+    text-align: center;
+}
+
+div.side_two_history h2{
+    font-size: 30px;
+    margin-bottom: 10%;
+}
+
+div.victory_div{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    font-weight: bold;
+    padding: 2%;
+    border-radius: 13px;
+    margin-bottom: 5%;
+    background: linear-gradient(90deg,#092962, #000);
+    opacity: 0.9;    
+}
+
+div.victory_div p{
+    margin-bottom: 9px;
+}

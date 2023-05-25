@@ -1,0 +1,54 @@
+.container_home{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.first{
+    width: 25%;
+    height: 300px;
+    border: 2px solid #642ADF;
+    margin-left: 10%;
+    margin-top: 30%;
+    border-radius: 7px ;
+    transition: 0.3;
+}
+
+.second{
+    width: 25%;
+    border: 2px solid #2AB4DF;
+    margin-top: 30%;
+    border-radius: 7px;
+    transition: 0.3;
+    height: 300px;
+
+
+}
+
+
+
+
+.third{
+    width: 25%;
+    border: 2px solid #642ADF;
+    margin-top: 30%;
+    margin-right: 10%;
+    border-radius: 7px;
+    transition: 0.3;
+    height: 300px;
+
+}
+
+
+.container_home img{
+    width: 90%;
+
+}
+
+.container_home div:hover{
+   transform: scale(1.1);
+   border: 3px solid var(--color-light);
+  
+}
+
+
