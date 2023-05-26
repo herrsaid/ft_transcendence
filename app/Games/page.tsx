@@ -11,7 +11,7 @@ export default function Home() {
   return (
 
     <main className="absolute inset-x-0 inset-y-0 text-white">
-      <NavBar/>
+      <NavBar idd="1"/>
       <div className='relative games flex space-x-40 justify-center'>
         <CardGames/>
         <Chess/>

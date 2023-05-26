@@ -1,11 +1,12 @@
 import Image from 'next/image'
 import styles from './page.module.css'
-import Welcome from './components/Welcome'
+import Welcome from './Components/Welcome'
+import NavBar from './Components/NavBar/NavBar'
 
 export default function App() {
   return (
-    <>
-    <Welcome/>
-    </>
+    <main>
+      <Welcome/>
+    </main>
   )
 }

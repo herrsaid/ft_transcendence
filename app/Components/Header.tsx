@@ -6,13 +6,14 @@ import Link from 'next/link';
 import '../Style/style.css'
 import MovingLine from './MovingLine';
 
+
 export default function Header(props)
 {
   useEffect(() =>
     {
       function start()
       {
-        let idd = document.getElementById("1");
+        let idd = document.getElementById(props.idd);
         idd.style.transform = "scale(1.5)";
         const buttonRect = idd.getBoundingClientRect();
         const xstart =  buttonRect.left;

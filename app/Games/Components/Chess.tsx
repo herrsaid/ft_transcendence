@@ -9,7 +9,7 @@ export default function Chess()
             <img  src="Chess.png">
             </img>
             <p className="text-2xl text-center">
-            {/* <Button variant="outline-primary">Primary</Button> */}
+                Chess
             </p>
         </div>
         );
