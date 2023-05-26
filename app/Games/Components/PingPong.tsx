@@ -1,0 +1,14 @@
+
+export default function PingPong()
+{
+
+    return(
+        <div className=" PingPong_rectangle border-indigo-500 hover:shadow-2xl hover:shadow-indigo-500 hover:scale-125">
+            <img  src="pingpong.png">
+            </img>
+            <p className="text-2xl font-mono text-center">
+                PingPong
+            </p>
+        </div>
+        );
+}

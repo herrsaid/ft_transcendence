@@ -1,0 +1,1347 @@
+diff --git a/app/Components/Header.tsx b/app/Components/Header.tsx
+index bff3112..74d688b 100644
+--- a/app/Components/Header.tsx
++++ b/app/Components/Header.tsx
+@@ -4,19 +4,20 @@ import React, { useEffect, useState } from 'react';
+ import Icon from './Icon';
+ import Link from 'next/link';
+ import '../Style/style.css'
++import MovingLine from './MovingLine';
+ 
+-export default function Header({ setTargetX })
++export default function Header(props)
+ {
+   useEffect(() =>
+     {
+       function start()
+       {
+-        let idd = document.getElementById("2");
++        let idd = document.getElementById("1");
+         idd.style.transform = "scale(1.5)";
+         const buttonRect = idd.getBoundingClientRect();
+         const xstart =  buttonRect.left;
+         const xend = (buttonRect.left+buttonRect.width);
+-        setTargetX({start: xstart,end: xend});
++        props.setTargetX({start: xstart,end: xend});
+       }
+     start();
+     },[]);
+@@ -29,7 +30,7 @@ export default function Header({ setTargetX })
+             const buttonRect = idd.getBoundingClientRect();
+             const xstart =  buttonRect.left;
+             const xend = (buttonRect.left+buttonRect.width);
+-            setTargetX({start: xstart,end: xend});
++            props.setTargetX({start: xstart,end: xend});
+           
+           }
+         }
+@@ -38,37 +39,40 @@ export default function Header({ setTargetX })
+       setTimeout(aftersleep, 250);
+     };
+     return(
+-      <div onMouseLeave={handlemouseleave} className="relative flex px-3 py-1 font-mono shadow-white">
+-        <Link href="/Home">
+-        <div className= "px-3 py-1 mx-2">
+-          <Icon title="Legends" setTargetX={setTargetX} idd="0"/>
++      <div>
++        <div onMouseLeave={handlemouseleave} className="relative flex px-3 py-1 font-mono shadow-white text-white">
++          <Link href="/Home">
++          <div className= "px-3 py-1 mx-2">
++            <Icon title="Legends" setTargetX={props.setTargetX} idd="0"/>
++          </div>
++          </Link>
++          <Link href="/Games">
++          <div className= "px-3 py-1 mx-2" >
++            <Icon title="Games" setTargetX={props.setTargetX} idd="1"/>
++          </div>
++          </Link>
++          <Link href="/Stream">
++          <div className= "px-3 py-1 mx-2">
++            <Icon title="Stream" setTargetX={props.setTargetX} idd="2"/>
++          </div>
++          </Link>
++          <Link href="/Search">
++          <div className= "px-3 py-1 mx-2">
++            <Icon title="Search" setTargetX={props.setTargetX} idd="3"/>
++          </div>
++          </Link>
++          <Link href="/Notification">
++          <div className= "absolute right-25 px-3 py-1 mx-2">
++            <Icon title="Notification" setTargetX={props.setTargetX} idd="4"/>
++          </div>
++          </Link>
++          <Link href="/Profile">
++          <div className= "absolute right-0 px-3 py-1 mx-2">
++            <Icon title="Profile" setTargetX={props.setTargetX} idd="5"/>
++          </div>
++          </Link>
+         </div>
+-        </Link>
+-        <Link href="/Games">
+-        <div className= "px-3 py-1 mx-2" >
+-          <Icon title="Games" setTargetX={setTargetX} idd="1"/>
+-        </div>
+-        </Link>
+-        <Link href="/Stream">
+-        <div className= "px-3 py-1 mx-2">
+-          <Icon title="Stream" setTargetX={setTargetX} idd="2"/>
+-        </div>
+-        </Link>
+-        <Link href="/Search">
+-        <div className= "px-3 py-1 mx-2">
+-          <Icon title="Search" setTargetX={setTargetX} idd="3"/>
+-        </div>
+-        </Link>
+-        <Link href="/Notification">
+-        <div className= "absolute right-25 px-3 py-1 mx-2">
+-          <Icon title="Notification" setTargetX={setTargetX} idd="5"/>
+-        </div>
+-        </Link>
+-        <Link href="/Profile">
+-        <div className= "absolute right-0 px-3 py-1 mx-2">
+-          <Icon title="Profile" setTargetX={setTargetX} idd="5"/>
+-        </div>
+-        </Link>
++          <MovingLine targetX={props.targetX} />
+       </div>
+     );
+ }
+diff --git a/app/Games/Columents/CardGames.tsx b/app/Games/Columents/CardGames.tsx
+deleted file mode 100644
+index 148b443..0000000
+--- a/app/Games/Columents/CardGames.tsx
++++ /dev/null
+@@ -1,13 +0,0 @@
+-export default function CardGames()
+-{
+-
+-    return(
+-        <div className="relative w-80 h-80 top-40 border-2 border-blue-500 hover:shadow-2xl hover:shadow-blue-500 rounded-xl rounded-xl top-40 hover:scale-125">
+-            <img  src="CardGames.png">
+-            </img>
+-            <p className=" relative text-2xl font-mono text-center -top-10">
+-                Card Games
+-            </p>
+-        </div>
+-        );
+-}
+\ No newline at end of file
+diff --git a/app/Games/Columents/Chess.tsx b/app/Games/Columents/Chess.tsx
+deleted file mode 100644
+index 5546b0f..0000000
+--- a/app/Games/Columents/Chess.tsx
++++ /dev/null
+@@ -1,13 +0,0 @@
+-export default function Chess()
+-{
+-
+-    return(
+-        <div className="relative w-80 h-80 top-40 border-2 border-cyan-500 hover:shadow-2xl hover:shadow-cyan-500 rounded-xl rounded-xl top-40 hover:scale-125">
+-            <img  src="Chess.png">
+-            </img>
+-            <p className=" relative text-2xl font-mono text-center -top-10">
+-                Chess
+-            </p>
+-        </div>
+-        );
+-}
+\ No newline at end of file
+diff --git a/app/Games/Columents/MovingLine.tsx b/app/Games/Columents/MovingLine.tsx
+deleted file mode 100644
+index 949f765..0000000
+--- a/app/Games/Columents/MovingLine.tsx
++++ /dev/null
+@@ -1,34 +0,0 @@
+-'use client'
+-
+-import { useSpring, animated } from 'react-spring';
+-
+-
+-const MovingLine = ({ targetX }) => {
+-  const lineAnimation1 = useSpring({
+-    from: { x: 0 },
+-    to: { x: targetX.start },
+-    config: { tension: 120, friction: 14 },
+-  });
+-
+-  const lineAnimation = useSpring({
+-    from: { x: 0 },
+-    to: { x: targetX.end },
+-    config: { tension: 90, friction: 14 },
+-  });
+-
+-  return (
+-    <div  className="h-3">
+-      <svg className="h-3" width="100%" height="200">
+-        <animated.line
+-          x1={lineAnimation1.x}
+-          y1={10}
+-          x2={lineAnimation.x}
+-          y2={10}
+-          stroke="white"
+-          strokeWidth={3}
+-        />
+-      </svg>
+-    </div>
+-  );
+-};
+-export default MovingLine;
+\ No newline at end of file
+diff --git a/app/Games/Columents/PingPong.tsx b/app/Games/Columents/PingPong.tsx
+deleted file mode 100644
+index c6b6efc..0000000
+--- a/app/Games/Columents/PingPong.tsx
++++ /dev/null
+@@ -1,14 +0,0 @@
+-
+-export default function PingPong()
+-{
+-
+-    return(
+-        <div className="relative w-80 h-80 top-40 border-2 border-indigo-500 hover:shadow-2xl hover:shadow-indigo-500 rounded-xl rounded-xl top-40 hover:scale-125">
+-            <img  src="pingpong.png">
+-            </img>
+-            <p className=" relative text-2xl font-mono text-center -top-10">
+-                PingPong
+-            </p>
+-        </div>
+-        );
+-}
+\ No newline at end of file
+diff --git a/app/Games/Style/style.css b/app/Games/Style/style.css
+index 7e944ca..5c6cb80 100644
+--- a/app/Games/Style/style.css
++++ b/app/Games/Style/style.css
+@@ -1,13 +1,117 @@
+-.bg
++
++/*---------------------------------- this page for /app/Games/page.tsx --------------------------------------------*/
++
++main
+ {
++    width: 100%;
++    top: 100%;
++    background-color: black;
+     background-image: url(../../../public/game-bg.jpg);
+     background-position: center;
+     background-repeat: no-repeat;
+     background-size: cover;
+     /* filter: blur(8px); */    backdrop-filter: blur(16px);
+     
++
++}
++.games
++{
++    position: relative;
++    top: 30%;
++    width: 100%;
++    height: 40%;
++    display: flex;
++}
++
++.PingPong_rectangle
++{
++    position: relative;
++    width: 20%;
++    height: 78.7%;
++    border: 5px solid #58109F;
++    border-radius: 25px;
++}
++.PingPong_rectangle img
++{
++    position:relative;
++    object-fit: contain;
++    width: 100%;
++    height: 100%;
++    display: block;
++
++    top: 5%;
++    
++}
++.PingPong_rectangle p
++{
++    position: relative;
++    text-align: center;
++    display: block;
++    bottom: 10%;
++    
++}
++
++.Chess_rectangle
++{
++    position: relative;
++    width: 20%;
++    height: 78.7%;
++    /* padding: 2.5%; */
++    border: 5px solid #2FA3E4;
++    border-radius: 25px;
++}
++.Chess_rectangle img
++{
++    position:relative;
++    object-fit: contain;
++    width: 75%;
++    height: 75%;
++    display: block;
++    left: 12%;
++    top: 10%;
++    bottom: 2%;
++    
++}
++.Chess_rectangle p
++{
++    position: relative;
++    text-align: center;
++    display: block;
++
++    top: 15%;
++    
+ }
+ 
++.CardGames_rectangle
++{
++    position: relative;
++    width: 20%;
++    height: 78.7%;
++    /* padding: 3%; */
++    border: 5px solid #1483EA;
++    border-radius: 25px;
++
++}
++.CardGames_rectangle img
++{
++    position:relative;
++    object-fit: contain;
++    width: 75%;
++    height: 75%;
++    display: block;
++    left: 12%;
++    top: 10%;
++    
++}
++.CardGames_rectangle p
++{
++    position: relative;
++    display: block;
++    text-align: center;
++    top: 15%;
++    
++}
++/*---------------------------------- this page for /app/Games/PingPong/page.tsx --------------------------------------------*/
+ .PingPong
+ {
+     background-color: black;
+diff --git a/app/Games/page.tsx b/app/Games/page.tsx
+index a7d6fb2..665c7ba 100644
+--- a/app/Games/page.tsx
++++ b/app/Games/page.tsx
+@@ -2,11 +2,10 @@
+ 
+ import React, { useEffect, useState } from 'react';
+ import  Header  from '../Components/Header';
+-import MovingLine from './Columents/MovingLine'
+ import Link from 'next/link';
+-import PingPong from './Columents/PingPong';
+-import Chess from './Columents/Chess';
+-import CardGames from './Columents/CardGames';
++import PingPong from './Components/PingPong';
++import Chess from './Components/Chess';
++import CardGames from './Components/CardGames';
+ import './Style/style.css'
+ 
+ 
+@@ -14,16 +13,12 @@ export default function Home() {
+   const [targetX, setTargetX] = useState({start:0,end:0});
+   return (
+ 
+-    <main className="absolute inset-x-0 inset-y-0 text-white bg">
+-      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Jua"></link>
+-      <Header setTargetX={setTargetX} />
+-      <MovingLine targetX={targetX} />
+-      <div className='flex space-x-20  justify-center content '>
++    <main className="absolute inset-x-0 inset-y-0 text-white">
++      <Header setTargetX={setTargetX}  targetX={targetX}/>
++      <div className='relative games flex space-x-40 justify-center'>
+         <CardGames/>
+         <Chess/>
+-        <Link href="/Games/PingPong">
+-          <PingPong/>
+-        </Link>
++        <PingPong/>
+       </div>
+     </main>
+   )
+diff --git a/app/globals.css b/app/globals.css
+index d8546c8..352e199 100644
+--- a/app/globals.css
++++ b/app/globals.css
+@@ -1,3 +1,8 @@
++
++@tailwind base;
++@tailwind components;
++@tailwind utilities;
++
+ *{
+   margin: 0px;
+   padding: 0px;
+diff --git a/app/layout.tsx b/app/layout.tsx
+index e4fb8d4..7542e17 100644
+--- a/app/layout.tsx
++++ b/app/layout.tsx
+@@ -1,4 +1,5 @@
+-import NavBar from './components/NavBar/NavBar'
++import './globals.css'
++import NavBar from './Components/NavBar/NavBar'
+ import './globals.css'
+ import { Inter } from 'next/font/google'
+ 
+@@ -23,3 +24,23 @@ export default function RootLayout({
+     </html>
+   )
+ }
++// import { Inter } from 'next/font/google'
++
++// const inter = Inter({ subsets: ['latin'] })
++
++// export const metadata = {
++//   title: 'Create Next App',
++//   description: 'Generated by create next app',
++// }
++
++// export default function RootLayout({
++//   children,
++// }: {
++//   children: React.ReactNode
++// }) {
++//   return (
++//     <html lang="en">
++//       <body className={inter.className}>{children}</body>
++//     </html>
++//   )
++// }
+\ No newline at end of file
+diff --git a/package-lock.json b/package-lock.json
+index 89c0b91..2fc456c 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -1,31 +1,25 @@
+ {
+-  "name": "mft_transcendencey-app",
++  "name": "ft_transcendence",
+   "version": "0.1.0",
+   "lockfileVersion": 3,
+   "requires": true,
+   "packages": {
+     "": {
+-      "name": "mft_transcendencey-app",
++      "name": "ft_transcendence",
+       "version": "0.1.0",
+       "dependencies": {
+         "@fontsource/jua": "^5.0.1",
+         "@types/node": "20.2.3",
+         "@types/react": "18.2.7",
+         "@types/react-dom": "18.2.4",
++        "autoprefixer": "10.4.14",
++        "bootstrap": "^5.2.3",
+         "next": "13.4.3",
++        "postcss": "8.4.23",
+         "react": "18.2.0",
++        "react-bootstrap": "^2.7.4",
+         "react-dom": "18.2.0",
+-<<<<<<< HEAD
+-        "react-icon": "^1.0.0",
+         "react-icons": "^4.8.0",
+-        "typescript": "5.0.4"
+-      }
+-    },
+-    "node_modules/@next/env": {
+-      "version": "13.4.3",
+-      "resolved": "https://registry.npmjs.org/@next/env/-/env-13.4.3.tgz",
+-      "integrity": "sha512-pa1ErjyFensznttAk3EIv77vFbfSYT6cLzVRK5jx4uiRuCQo+m2wCFAREaHKIy63dlgvOyMlzh6R8Inu8H3KrQ=="
+-=======
+         "react-spring": "^9.7.1",
+         "tailwindcss": "3.3.2",
+         "typescript": "5.0.4"
+@@ -143,7 +137,6 @@
+       "engines": {
+         "node": ">=6.9.0"
+       }
+->>>>>>> 4ebdf34bcd32b725e924d0c2cfc6bd62e09acb91
+     },
+     "node_modules/@babel/helper-annotate-as-pure": {
+       "version": "7.18.6",
+@@ -302,12 +295,6 @@
+         "node": ">=6.9.0"
+       }
+     },
+-<<<<<<< HEAD
+-    "node_modules/@swc/helpers": {
+-      "version": "0.5.1",
+-      "resolved": "https://registry.npmjs.org/@swc/helpers/-/helpers-0.5.1.tgz",
+-      "integrity": "sha512-sJ902EfIzn1Fa+qYmjdQqh8tPsoxyBz+8yBKC2HKUxyezKJFwPGOn7pv4WY6QuQW//ySQi5lJjA/ZT9sNWWNTg==",
+-=======
+     "node_modules/@babel/helper-member-expression-to-functions": {
+       "version": "7.21.5",
+       "resolved": "https://registry.npmjs.org/@babel/helper-member-expression-to-functions/-/helper-member-expression-to-functions-7.21.5.tgz",
+@@ -356,7 +343,6 @@
+       "resolved": "https://registry.npmjs.org/@babel/helper-optimise-call-expression/-/helper-optimise-call-expression-7.18.6.tgz",
+       "integrity": "sha512-HP59oD9/fEHQkdcbgFCnbmgH5vIQTJbxh2yf+CdM89/glUNnuzr87Q8GIjGEnOktTROemO0Pe0iPAYbqZuOUiA==",
+       "peer": true,
+->>>>>>> 4ebdf34bcd32b725e924d0c2cfc6bd62e09acb91
+       "dependencies": {
+         "@babel/types": "^7.18.6"
+       },
+@@ -420,20 +406,6 @@
+         "node": ">=6.9.0"
+       }
+     },
+-<<<<<<< HEAD
+-    "node_modules/@types/scheduler": {
+-      "version": "0.16.3",
+-      "resolved": "https://registry.npmjs.org/@types/scheduler/-/scheduler-0.16.3.tgz",
+-      "integrity": "sha512-5cJ8CB4yAx7BH1oMvdU0Jh9lrEXyPkar6F9G/ERswkCuvP4KQZfZkSjcMbAICCpQTN4OuZn8tz0HiKv9TGZgrQ=="
+-    },
+-    "node_modules/babel-runtime": {
+-      "version": "5.8.38",
+-      "resolved": "https://registry.npmjs.org/babel-runtime/-/babel-runtime-5.8.38.tgz",
+-      "integrity": "sha512-KpgoA8VE/pMmNCrnEeeXqFG24TIH11Z3ZaimIhJWsin8EbfZy3WzFKUTIan10ZIDgRVvi9EkLbruJElJC9dRlg==",
+-      "peer": true,
+-      "dependencies": {
+-        "core-js": "^1.0.0"
+-=======
+     "node_modules/@babel/helper-skip-transparent-expression-wrappers": {
+       "version": "7.20.0",
+       "resolved": "https://registry.npmjs.org/@babel/helper-skip-transparent-expression-wrappers/-/helper-skip-transparent-expression-wrappers-7.20.0.tgz",
+@@ -512,7 +484,6 @@
+       },
+       "engines": {
+         "node": ">=6.9.0"
+->>>>>>> 4ebdf34bcd32b725e924d0c2cfc6bd62e09acb91
+       }
+     },
+     "node_modules/@babel/highlight": {
+@@ -529,39 +500,6 @@
+         "node": ">=6.9.0"
+       }
+     },
+-<<<<<<< HEAD
+-    "node_modules/caniuse-lite": {
+-      "version": "1.0.30001489",
+-      "resolved": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001489.tgz",
+-      "integrity": "sha512-x1mgZEXK8jHIfAxm+xgdpHpk50IN3z3q3zP261/WS+uvePxW8izXuCu6AHz0lkuYTlATDehiZ/tNyYBdSQsOUQ==",
+-      "funding": [
+-        {
+-          "type": "opencollective",
+-          "url": "https://opencollective.com/browserslist"
+-        },
+-        {
+-          "type": "tidelift",
+-          "url": "https://tidelift.com/funding/github/npm/caniuse-lite"
+-        },
+-        {
+-          "type": "github",
+-          "url": "https://github.com/sponsors/ai"
+-        }
+-      ]
+-    },
+-    "node_modules/client-only": {
+-      "version": "0.0.1",
+-      "resolved": "https://registry.npmjs.org/client-only/-/client-only-0.0.1.tgz",
+-      "integrity": "sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA=="
+-    },
+-    "node_modules/core-js": {
+-      "version": "1.2.7",
+-      "resolved": "https://registry.npmjs.org/core-js/-/core-js-1.2.7.tgz",
+-      "integrity": "sha512-ZiPp9pZlgxpWRu0M+YWbm6+aQ84XEfH1JRXvfOc/fILWI0VKhLC2LX13X1NYq4fULzLMq7Hfh43CSo2/aIaUPA==",
+-      "deprecated": "core-js@<3.23.3 is no longer maintained and not recommended for usage due to the number of issues. Because of the V8 engine whims, feature detection in old core-js versions could cause a slowdown up to 100x even if nothing is polyfilled. Some versions have web compatibility issues. Please, upgrade your dependencies to the actual version of core-js.",
+-      "peer": true
+-    },
+-=======
+     "node_modules/@babel/highlight/node_modules/ansi-styles": {
+       "version": "3.2.1",
+       "resolved": "https://registry.npmjs.org/ansi-styles/-/ansi-styles-3.2.1.tgz",
+@@ -2002,7 +1940,6 @@
+       "version": "7.21.5",
+       "resolved": "https://registry.npmjs.org/@babel/runtime/-/runtime-7.21.5.tgz",
+       "integrity": "sha512-8jI69toZqqcsnqGGqwGS4Qb1VwLOEp4hz+CXPywcvjs60u3B4Pom/U/7rm4W8tMOYEB+E9wgD0mW1l3r8qlI9Q==",
+-      "peer": true,
+       "dependencies": {
+         "regenerator-runtime": "^0.13.11"
+       },
+@@ -2405,6 +2342,34 @@
+         "node": ">= 8"
+       }
+     },
++    "node_modules/@popperjs/core": {
++      "version": "2.11.7",
++      "resolved": "https://registry.npmjs.org/@popperjs/core/-/core-2.11.7.tgz",
++      "integrity": "sha512-Cr4OjIkipTtcXKjAsm8agyleBuDHvxzeBoa1v543lbv1YaIwQjESsVcmjiWiPEbC1FIeHOG/Op9kdCmAmiS3Kw==",
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/popperjs"
++      }
++    },
++    "node_modules/@react-aria/ssr": {
++      "version": "3.6.0",
++      "resolved": "https://registry.npmjs.org/@react-aria/ssr/-/ssr-3.6.0.tgz",
++      "integrity": "sha512-OFiYQdv+Yk7AO7IsQu/fAEPijbeTwrrEYvdNoJ3sblBBedD5j5fBTNWrUPNVlwC4XWWnWTCMaRIVsJujsFiWXg==",
++      "dependencies": {
++        "@swc/helpers": "^0.4.14"
++      },
++      "peerDependencies": {
++        "react": "^16.8.0 || ^17.0.0-rc.1 || ^18.0.0"
++      }
++    },
++    "node_modules/@react-aria/ssr/node_modules/@swc/helpers": {
++      "version": "0.4.14",
++      "resolved": "https://registry.npmjs.org/@swc/helpers/-/helpers-0.4.14.tgz",
++      "integrity": "sha512-4C7nX/dvpzB7za4Ql9K81xK3HPxCpHMgwTZVyf+9JQ6VUbn9jjZVN7/Nkdz/Ugzs2CSjqnL/UPXroiVBVHUWUw==",
++      "dependencies": {
++        "tslib": "^2.4.0"
++      }
++    },
+     "node_modules/@react-native-community/cli": {
+       "version": "10.2.2",
+       "resolved": "https://registry.npmjs.org/@react-native-community/cli/-/cli-10.2.2.tgz",
+@@ -2679,15 +2644,6 @@
+         "joi": "^17.2.1"
+       }
+     },
+-    "node_modules/@react-native-community/cli/node_modules/commander": {
+-      "version": "9.5.0",
+-      "resolved": "https://registry.npmjs.org/commander/-/commander-9.5.0.tgz",
+-      "integrity": "sha512-KRs7WVDKg86PWiuAqhDrAQnTXZKraVcCc6vFdL14qrZ/DcWwuRo7VoiYXalXO7S5GKpqYiVEwCbgFDfxNHKJBQ==",
+-      "peer": true,
+-      "engines": {
+-        "node": "^12.20.0 || >=14"
+-      }
+-    },
+     "node_modules/@react-native/assets": {
+       "version": "1.0.0",
+       "resolved": "https://registry.npmjs.org/@react-native/assets/-/assets-1.0.0.tgz",
+@@ -2888,6 +2844,45 @@
+         "loose-envify": "^1.1.0"
+       }
+     },
++    "node_modules/@restart/hooks": {
++      "version": "0.4.9",
++      "resolved": "https://registry.npmjs.org/@restart/hooks/-/hooks-0.4.9.tgz",
++      "integrity": "sha512-3BekqcwB6Umeya+16XPooARn4qEPW6vNvwYnlofIYe6h9qG1/VeD7UvShCWx11eFz5ELYmwIEshz+MkPX3wjcQ==",
++      "dependencies": {
++        "dequal": "^2.0.2"
++      },
++      "peerDependencies": {
++        "react": ">=16.8.0"
++      }
++    },
++    "node_modules/@restart/ui": {
++      "version": "1.6.5",
++      "resolved": "https://registry.npmjs.org/@restart/ui/-/ui-1.6.5.tgz",
++      "integrity": "sha512-kDjhH8lk+aVGc+dPb8wEBXRDx4B1WX6/pqyWi22R3Oim6KQokeLGO2g8MYzwd2/UdjsrDt+HyYFpKihLIN7+/A==",
++      "dependencies": {
++        "@babel/runtime": "^7.21.0",
++        "@popperjs/core": "^2.11.6",
++        "@react-aria/ssr": "^3.5.0",
++        "@restart/hooks": "^0.4.9",
++        "@types/warning": "^3.0.0",
++        "dequal": "^2.0.3",
++        "dom-helpers": "^5.2.0",
++        "uncontrollable": "^8.0.1",
++        "warning": "^4.0.3"
++      },
++      "peerDependencies": {
++        "react": ">=16.14.0",
++        "react-dom": ">=16.14.0"
++      }
++    },
++    "node_modules/@restart/ui/node_modules/uncontrollable": {
++      "version": "8.0.2",
++      "resolved": "https://registry.npmjs.org/uncontrollable/-/uncontrollable-8.0.2.tgz",
++      "integrity": "sha512-/GDx+K1STGtpgTsj5Dj3J51YaKxZDblbCQHTH1zHLuoBEWodj6MjtRVv3TUijj1JYLRLSFsFzN8NV4M3QV4d9w==",
++      "peerDependencies": {
++        "react": ">=16.14.0"
++      }
++    },
+     "node_modules/@sideway/address": {
+       "version": "4.1.4",
+       "resolved": "https://registry.npmjs.org/@sideway/address/-/address-4.1.4.tgz",
+@@ -3002,6 +2997,14 @@
+         "@types/react": "*"
+       }
+     },
++    "node_modules/@types/react-transition-group": {
++      "version": "4.4.6",
++      "resolved": "https://registry.npmjs.org/@types/react-transition-group/-/react-transition-group-4.4.6.tgz",
++      "integrity": "sha512-VnCdSxfcm08KjsJVQcfBmhEQAPnLB8G08hAxn39azX1qYBQ/5RVQuoHuKIcfKOdncuaUvEpFKFzEvbtIMsfVew==",
++      "dependencies": {
++        "@types/react": "*"
++      }
++    },
+     "node_modules/@types/scheduler": {
+       "version": "0.16.3",
+       "resolved": "https://registry.npmjs.org/@types/scheduler/-/scheduler-0.16.3.tgz",
+@@ -3013,6 +3016,11 @@
+       "integrity": "sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==",
+       "peer": true
+     },
++    "node_modules/@types/warning": {
++      "version": "3.0.0",
++      "resolved": "https://registry.npmjs.org/@types/warning/-/warning-3.0.0.tgz",
++      "integrity": "sha512-t/Tvs5qR47OLOr+4E9ckN8AmP2Tf16gWq+/qA4iUGS/OOyHVO8wv2vjJuX8SNOUTJyWb+2t7wJm6cXILFnOROA=="
++    },
+     "node_modules/@types/yargs": {
+       "version": "17.0.24",
+       "resolved": "https://registry.npmjs.org/@types/yargs/-/yargs-17.0.24.tgz",
+@@ -3443,6 +3451,24 @@
+         "readable-stream": "^3.4.0"
+       }
+     },
++    "node_modules/bootstrap": {
++      "version": "5.2.3",
++      "resolved": "https://registry.npmjs.org/bootstrap/-/bootstrap-5.2.3.tgz",
++      "integrity": "sha512-cEKPM+fwb3cT8NzQZYEu4HilJ3anCrWqh3CHAok1p9jXqMPsPTBhU25fBckEJHJ/p+tTxTFTsFQGM+gaHpi3QQ==",
++      "funding": [
++        {
++          "type": "github",
++          "url": "https://github.com/sponsors/twbs"
++        },
++        {
++          "type": "opencollective",
++          "url": "https://opencollective.com/bootstrap"
++        }
++      ],
++      "peerDependencies": {
++        "@popperjs/core": "^2.11.6"
++      }
++    },
+     "node_modules/brace-expansion": {
+       "version": "1.1.11",
+       "resolved": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-1.1.11.tgz",
+@@ -3807,6 +3833,11 @@
+         "node": ">=0.10.0"
+       }
+     },
++    "node_modules/classnames": {
++      "version": "2.3.2",
++      "resolved": "https://registry.npmjs.org/classnames/-/classnames-2.3.2.tgz",
++      "integrity": "sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw=="
++    },
+     "node_modules/cli-cursor": {
+       "version": "3.1.0",
+       "resolved": "https://registry.npmjs.org/cli-cursor/-/cli-cursor-3.1.0.tgz",
+@@ -3926,11 +3957,12 @@
+       "peer": true
+     },
+     "node_modules/commander": {
+-      "version": "4.1.1",
+-      "resolved": "https://registry.npmjs.org/commander/-/commander-4.1.1.tgz",
+-      "integrity": "sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==",
++      "version": "9.5.0",
++      "resolved": "https://registry.npmjs.org/commander/-/commander-9.5.0.tgz",
++      "integrity": "sha512-KRs7WVDKg86PWiuAqhDrAQnTXZKraVcCc6vFdL14qrZ/DcWwuRo7VoiYXalXO7S5GKpqYiVEwCbgFDfxNHKJBQ==",
++      "peer": true,
+       "engines": {
+-        "node": ">= 6"
++        "node": "^12.20.0 || >=14"
+       }
+     },
+     "node_modules/commondir": {
+@@ -4080,14 +4112,11 @@
+         "node": ">=4"
+       }
+     },
+->>>>>>> 4ebdf34bcd32b725e924d0c2cfc6bd62e09acb91
+     "node_modules/csstype": {
+       "version": "3.1.2",
+       "resolved": "https://registry.npmjs.org/csstype/-/csstype-3.1.2.tgz",
+       "integrity": "sha512-I7K1Uu0MBPzaFKg4nI5Q7Vs2t+3gWWW648spaF+Rg7pI9ds18Ugn+lvg4SHczUdKlHI5LWBXyqfS8+DufyBsgQ=="
+     },
+-<<<<<<< HEAD
+-=======
+     "node_modules/dayjs": {
+       "version": "1.11.7",
+       "resolved": "https://registry.npmjs.org/dayjs/-/dayjs-1.11.7.tgz",
+@@ -4187,6 +4216,14 @@
+         "prop-types": "*"
+       }
+     },
++    "node_modules/dequal": {
++      "version": "2.0.3",
++      "resolved": "https://registry.npmjs.org/dequal/-/dequal-2.0.3.tgz",
++      "integrity": "sha512-0je+qPKHEMohvfRTCEo3CrPG6cAzAYgmzKyxRiYSSDkS6eGJdyVJm7WaYA5ECaAD9wLB2T4EEeymA5aFVcYXCA==",
++      "engines": {
++        "node": ">=6"
++      }
++    },
+     "node_modules/destroy": {
+       "version": "1.2.0",
+       "resolved": "https://registry.npmjs.org/destroy/-/destroy-1.2.0.tgz",
+@@ -4207,6 +4244,15 @@
+       "resolved": "https://registry.npmjs.org/dlv/-/dlv-1.1.3.tgz",
+       "integrity": "sha512-+HlytyjlPKnIG8XuRG8WvmBP8xs8P71y+SKKS6ZXWoEgLuePxtDoUEiH7WkdePWrQ5JBpE6aoVqfZfJUQkjXwA=="
+     },
++    "node_modules/dom-helpers": {
++      "version": "5.2.1",
++      "resolved": "https://registry.npmjs.org/dom-helpers/-/dom-helpers-5.2.1.tgz",
++      "integrity": "sha512-nRCa7CK3VTrM2NmGkIy4cbK7IZlgBE/PYMn55rrXefr5xXDP0LdtfPnblFDoVdcAfslJ7or6iqAUnx0CCGIWQA==",
++      "dependencies": {
++        "@babel/runtime": "^7.8.7",
++        "csstype": "^3.0.2"
++      }
++    },
+     "node_modules/ee-first": {
+       "version": "1.1.1",
+       "resolved": "https://registry.npmjs.org/ee-first/-/ee-first-1.1.1.tgz",
+@@ -4214,9 +4260,9 @@
+       "peer": true
+     },
+     "node_modules/electron-to-chromium": {
+-      "version": "1.4.407",
+-      "resolved": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.407.tgz",
+-      "integrity": "sha512-5smEvFSFYMv90tICOzRVP7Opp98DAC4KW7RRipg3BuNpGbbV3N+x24Zh3sbLb1T5haGtOSy/hrBfXsWnIM9aCg=="
++      "version": "1.4.408",
++      "resolved": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.408.tgz",
++      "integrity": "sha512-vjeaj0u/UYnzA/CIdGXzzcxRLCqRwREYc9YfaWInjIEr7/XPttZ6ShpyqapchEy0S2r6LpLjDBTnNj7ZxnxJKg=="
+     },
+     "node_modules/emoji-regex": {
+       "version": "8.0.0",
+@@ -4802,14 +4848,15 @@
+       }
+     },
+     "node_modules/glob": {
+-      "version": "7.1.6",
+-      "resolved": "https://registry.npmjs.org/glob/-/glob-7.1.6.tgz",
+-      "integrity": "sha512-LwaxwyZ72Lk7vZINtNNrywX0ZuLyStrdDtabefZKAY5ZGJhVtgdznluResxNmPitE0SAO+O26sWTHeKSI2wMBA==",
++      "version": "7.2.3",
++      "resolved": "https://registry.npmjs.org/glob/-/glob-7.2.3.tgz",
++      "integrity": "sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==",
++      "peer": true,
+       "dependencies": {
+         "fs.realpath": "^1.0.0",
+         "inflight": "^1.0.4",
+         "inherits": "2",
+-        "minimatch": "^3.0.4",
++        "minimatch": "^3.1.1",
+         "once": "^1.3.0",
+         "path-is-absolute": "^1.0.0"
+       },
+@@ -5053,7 +5100,6 @@
+       "version": "2.2.4",
+       "resolved": "https://registry.npmjs.org/invariant/-/invariant-2.2.4.tgz",
+       "integrity": "sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==",
+-      "peer": true,
+       "dependencies": {
+         "loose-envify": "^1.0.0"
+       }
+@@ -5518,18 +5564,10 @@
+         "@sideway/pinpoint": "^2.0.0"
+       }
+     },
+->>>>>>> 4ebdf34bcd32b725e924d0c2cfc6bd62e09acb91
+     "node_modules/js-tokens": {
+       "version": "4.0.0",
+       "resolved": "https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz",
+       "integrity": "sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ=="
+-<<<<<<< HEAD
+-    },
+-    "node_modules/loose-envify": {
+-      "version": "1.4.0",
+-      "resolved": "https://registry.npmjs.org/loose-envify/-/loose-envify-1.4.0.tgz",
+-      "integrity": "sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==",
+-=======
+     },
+     "node_modules/js-yaml": {
+       "version": "3.14.1",
+@@ -5929,15 +5967,6 @@
+         "node": ">=6"
+       }
+     },
+-    "node_modules/make-dir/node_modules/pify": {
+-      "version": "4.0.1",
+-      "resolved": "https://registry.npmjs.org/pify/-/pify-4.0.1.tgz",
+-      "integrity": "sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==",
+-      "peer": true,
+-      "engines": {
+-        "node": ">=6"
+-      }
+-    },
+     "node_modules/make-dir/node_modules/semver": {
+       "version": "5.7.1",
+       "resolved": "https://registry.npmjs.org/semver/-/semver-5.7.1.tgz",
+@@ -7309,11 +7338,12 @@
+       }
+     },
+     "node_modules/pify": {
+-      "version": "2.3.0",
+-      "resolved": "https://registry.npmjs.org/pify/-/pify-2.3.0.tgz",
+-      "integrity": "sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==",
++      "version": "4.0.1",
++      "resolved": "https://registry.npmjs.org/pify/-/pify-4.0.1.tgz",
++      "integrity": "sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==",
++      "peer": true,
+       "engines": {
+-        "node": ">=0.10.0"
++        "node": ">=6"
+       }
+     },
+     "node_modules/pirates": {
+@@ -7440,24 +7470,6 @@
+         "postcss": "^8.0.0"
+       }
+     },
+-    "node_modules/postcss-js": {
+-      "version": "4.0.1",
+-      "resolved": "https://registry.npmjs.org/postcss-js/-/postcss-js-4.0.1.tgz",
+-      "integrity": "sha512-dDLF8pEO191hJMtlHFPRa8xsizHaM82MLfNkUHdUtVEV3tgTp5oj+8qbEqYM57SLfc74KSbw//4SeJma2LRVIw==",
+-      "dependencies": {
+-        "camelcase-css": "^2.0.1"
+-      },
+-      "engines": {
+-        "node": "^12 || ^14 || >= 16"
+-      },
+-      "funding": {
+-        "type": "opencollective",
+-        "url": "https://opencollective.com/postcss/"
+-      },
+-      "peerDependencies": {
+-        "postcss": "^8.4.21"
+-      }
+-    },
+     "node_modules/postcss-load-config": {
+       "version": "4.0.1",
+       "resolved": "https://registry.npmjs.org/postcss-load-config/-/postcss-load-config-4.0.1.tgz",
+@@ -7593,18 +7605,33 @@
+       "version": "15.8.1",
+       "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+       "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-      "peer": true,
+       "dependencies": {
+         "loose-envify": "^1.4.0",
+         "object-assign": "^4.1.1",
+         "react-is": "^16.13.1"
+       }
+     },
++    "node_modules/prop-types-extra": {
++      "version": "1.1.1",
++      "resolved": "https://registry.npmjs.org/prop-types-extra/-/prop-types-extra-1.1.1.tgz",
++      "integrity": "sha512-59+AHNnHYCdiC+vMwY52WmvP5dM3QLeoumYuEyceQDi9aEhtwN9zIQ2ZNo25sMyXnbh32h+P1ezDsUpUH3JAew==",
++      "dependencies": {
++        "react-is": "^16.3.2",
++        "warning": "^4.0.0"
++      },
++      "peerDependencies": {
++        "react": ">=0.14.0"
++      }
++    },
++    "node_modules/prop-types-extra/node_modules/react-is": {
++      "version": "16.13.1",
++      "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
++      "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
++    },
+     "node_modules/prop-types/node_modules/react-is": {
+       "version": "16.13.1",
+       "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-      "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==",
+-      "peer": true
++      "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+     },
+     "node_modules/pump": {
+       "version": "3.0.0",
+@@ -7655,6 +7682,35 @@
+         "node": ">=0.10.0"
+       }
+     },
++    "node_modules/react-bootstrap": {
++      "version": "2.7.4",
++      "resolved": "https://registry.npmjs.org/react-bootstrap/-/react-bootstrap-2.7.4.tgz",
++      "integrity": "sha512-EPKPwhfbxsKsNBhJBitJwqul9fvmlYWSft6jWE2EpqhEyjhqIqNihvQo2onE5XtS+QHOavUSNmA+8Lnv5YeAyg==",
++      "dependencies": {
++        "@babel/runtime": "^7.21.0",
++        "@restart/hooks": "^0.4.9",
++        "@restart/ui": "^1.6.3",
++        "@types/react-transition-group": "^4.4.5",
++        "classnames": "^2.3.2",
++        "dom-helpers": "^5.2.1",
++        "invariant": "^2.2.4",
++        "prop-types": "^15.8.1",
++        "prop-types-extra": "^1.1.0",
++        "react-transition-group": "^4.4.5",
++        "uncontrollable": "^7.2.1",
++        "warning": "^4.0.3"
++      },
++      "peerDependencies": {
++        "@types/react": ">=16.14.8",
++        "react": ">=16.14.0",
++        "react-dom": ">=16.14.0"
++      },
++      "peerDependenciesMeta": {
++        "@types/react": {
++          "optional": true
++        }
++      }
++    },
+     "node_modules/react-devtools-core": {
+       "version": "4.27.8",
+       "resolved": "https://registry.npmjs.org/react-devtools-core/-/react-devtools-core-4.27.8.tgz",
+@@ -7698,6 +7754,14 @@
+         "react": "^18.2.0"
+       }
+     },
++    "node_modules/react-icons": {
++      "version": "4.8.0",
++      "resolved": "https://registry.npmjs.org/react-icons/-/react-icons-4.8.0.tgz",
++      "integrity": "sha512-N6+kOLcihDiAnj5Czu637waJqSnwlMNROzVZMhfX68V/9bu9qHaMIJC4UdozWoOk57gahFCNHwVvWzm0MTzRjg==",
++      "peerDependencies": {
++        "react": "*"
++      }
++    },
+     "node_modules/react-is": {
+       "version": "17.0.2",
+       "resolved": "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz",
+@@ -7760,6 +7824,11 @@
+         "react": "^18.2.0"
+       }
+     },
++    "node_modules/react-lifecycles-compat": {
++      "version": "3.0.4",
++      "resolved": "https://registry.npmjs.org/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz",
++      "integrity": "sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA=="
++    },
+     "node_modules/react-native": {
+       "version": "0.71.8",
+       "resolved": "https://registry.npmjs.org/react-native/-/react-native-0.71.8.tgz",
+@@ -7893,6 +7962,21 @@
+         "react-dom": "^16.8.0 || ^17.0.0 || ^18.0.0"
+       }
+     },
++    "node_modules/react-transition-group": {
++      "version": "4.4.5",
++      "resolved": "https://registry.npmjs.org/react-transition-group/-/react-transition-group-4.4.5.tgz",
++      "integrity": "sha512-pZcd1MCJoiKiBR2NRxeCRg13uCXbydPnmB4EOeRrY7480qNWO8IIgQG6zlDkm6uRMsURXPuKq0GWtiM59a5Q6g==",
++      "dependencies": {
++        "@babel/runtime": "^7.5.5",
++        "dom-helpers": "^5.0.1",
++        "loose-envify": "^1.4.0",
++        "prop-types": "^15.6.2"
++      },
++      "peerDependencies": {
++        "react": ">=16.6.0",
++        "react-dom": ">=16.6.0"
++      }
++    },
+     "node_modules/react-use-measure": {
+       "version": "2.1.1",
+       "resolved": "https://registry.npmjs.org/react-use-measure/-/react-use-measure-2.1.1.tgz",
+@@ -7971,6 +8055,14 @@
+         "pify": "^2.3.0"
+       }
+     },
++    "node_modules/read-cache/node_modules/pify": {
++      "version": "2.3.0",
++      "resolved": "https://registry.npmjs.org/pify/-/pify-2.3.0.tgz",
++      "integrity": "sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==",
++      "engines": {
++        "node": ">=0.10.0"
++      }
++    },
+     "node_modules/readable-stream": {
+       "version": "3.6.2",
+       "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-3.6.2.tgz",
+@@ -8047,8 +8139,7 @@
+     "node_modules/regenerator-runtime": {
+       "version": "0.13.11",
+       "resolved": "https://registry.npmjs.org/regenerator-runtime/-/regenerator-runtime-0.13.11.tgz",
+-      "integrity": "sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==",
+-      "peer": true
++      "integrity": "sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg=="
+     },
+     "node_modules/regenerator-transform": {
+       "version": "0.15.1",
+@@ -8544,30 +8635,11 @@
+       "resolved": "https://registry.npmjs.org/snapdragon-node/-/snapdragon-node-2.1.1.tgz",
+       "integrity": "sha512-O27l4xaMYt/RSQ5TR3vpWCAB5Kb/czIcqUFOM/C4fYcLnbZUc1PkjTAMjof2pBWaSTwOUd6qUHcFGVGj7aIwnw==",
+       "peer": true,
+->>>>>>> 4ebdf34bcd32b725e924d0c2cfc6bd62e09acb91
+       "dependencies": {
+         "define-property": "^1.0.0",
+         "isobject": "^3.0.0",
+         "snapdragon-util": "^3.0.1"
+       },
+-<<<<<<< HEAD
+-      "bin": {
+-        "loose-envify": "cli.js"
+-      }
+-    },
+-    "node_modules/nanoid": {
+-      "version": "3.3.6",
+-      "resolved": "https://registry.npmjs.org/nanoid/-/nanoid-3.3.6.tgz",
+-      "integrity": "sha512-BGcqMMJuToF7i1rt+2PWSNVnWIkGCU78jBG3RxO/bZlnZPK2Cmi2QaffxGO/2RvWi9sL+FAiRiXMgsyxQ1DIDA==",
+-      "funding": [
+-        {
+-          "type": "github",
+-          "url": "https://github.com/sponsors/ai"
+-        }
+-      ],
+-      "bin": {
+-        "nanoid": "bin/nanoid.cjs"
+-=======
+       "engines": {
+         "node": ">=0.10.0"
+       }
+@@ -8603,7 +8675,6 @@
+       "peer": true,
+       "dependencies": {
+         "is-buffer": "^1.1.5"
+->>>>>>> 4ebdf34bcd32b725e924d0c2cfc6bd62e09acb91
+       },
+       "engines": {
+         "node": ">=0.10.0"
+@@ -8621,32 +8692,6 @@
+         "node": ">=0.10.0"
+       }
+     },
+-<<<<<<< HEAD
+-    "node_modules/picocolors": {
+-      "version": "1.0.0",
+-      "resolved": "https://registry.npmjs.org/picocolors/-/picocolors-1.0.0.tgz",
+-      "integrity": "sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ=="
+-    },
+-    "node_modules/postcss": {
+-      "version": "8.4.14",
+-      "resolved": "https://registry.npmjs.org/postcss/-/postcss-8.4.14.tgz",
+-      "integrity": "sha512-E398TUmfAYFPBSdzgeieK2Y1+1cpdxJx8yXbK/m57nRhKSmk1GB2tO4lbLBtlkfPQTDKfe4Xqv1ASWPpayPEig==",
+-      "funding": [
+-        {
+-          "type": "opencollective",
+-          "url": "https://opencollective.com/postcss/"
+-        },
+-        {
+-          "type": "tidelift",
+-          "url": "https://tidelift.com/funding/github/npm/postcss"
+-        }
+-      ],
+-      "dependencies": {
+-        "nanoid": "^3.3.4",
+-        "picocolors": "^1.0.0",
+-        "source-map-js": "^1.0.2"
+-      },
+-=======
+     "node_modules/snapdragon/node_modules/extend-shallow": {
+       "version": "2.0.1",
+       "resolved": "https://registry.npmjs.org/extend-shallow/-/extend-shallow-2.0.1.tgz",
+@@ -8794,17 +8839,10 @@
+       "resolved": "https://registry.npmjs.org/source-map/-/source-map-0.6.1.tgz",
+       "integrity": "sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==",
+       "peer": true,
+->>>>>>> 4ebdf34bcd32b725e924d0c2cfc6bd62e09acb91
+       "engines": {
+         "node": ">=0.10.0"
+       }
+     },
+-<<<<<<< HEAD
+-    "node_modules/react": {
+-      "version": "18.2.0",
+-      "resolved": "https://registry.npmjs.org/react/-/react-18.2.0.tgz",
+-      "integrity": "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==",
+-=======
+     "node_modules/source-map-url": {
+       "version": "0.4.1",
+       "resolved": "https://registry.npmjs.org/source-map-url/-/source-map-url-0.4.1.tgz",
+@@ -8890,7 +8928,6 @@
+       "resolved": "https://registry.npmjs.org/is-accessor-descriptor/-/is-accessor-descriptor-0.1.6.tgz",
+       "integrity": "sha512-e1BM1qnDbMRG3ll2U9dSK0UMHuWOs3pY3AtcFsmvwPtKL3MML/Q86i+GilLfvqEs4GW+ExB91tQ3Ig9noDIZ+A==",
+       "peer": true,
+->>>>>>> 4ebdf34bcd32b725e924d0c2cfc6bd62e09acb91
+       "dependencies": {
+         "kind-of": "^3.0.2"
+       },
+@@ -8910,23 +8947,6 @@
+         "node": ">=0.10.0"
+       }
+     },
+-<<<<<<< HEAD
+-    "node_modules/react-icon": {
+-      "version": "1.0.0",
+-      "resolved": "https://registry.npmjs.org/react-icon/-/react-icon-1.0.0.tgz",
+-      "integrity": "sha512-VzSlpBHnLanVw79mOxyq98hWDi6DlxK9qPiZ1bAK6bLurMBCaxO/jjyYUrRx9+JGLc/NbnwOmyE/W5Qglbb2QA==",
+-      "peerDependencies": {
+-        "babel-runtime": "^5.3.3",
+-        "react": ">=0.12.0"
+-      }
+-    },
+-    "node_modules/react-icons": {
+-      "version": "4.8.0",
+-      "resolved": "https://registry.npmjs.org/react-icons/-/react-icons-4.8.0.tgz",
+-      "integrity": "sha512-N6+kOLcihDiAnj5Czu637waJqSnwlMNROzVZMhfX68V/9bu9qHaMIJC4UdozWoOk57gahFCNHwVvWzm0MTzRjg==",
+-      "peerDependencies": {
+-        "react": "*"
+-=======
+     "node_modules/static-extend/node_modules/is-data-descriptor": {
+       "version": "0.1.4",
+       "resolved": "https://registry.npmjs.org/is-data-descriptor/-/is-data-descriptor-0.1.4.tgz",
+@@ -9032,7 +9052,6 @@
+       },
+       "engines": {
+         "node": ">=8"
+->>>>>>> 4ebdf34bcd32b725e924d0c2cfc6bd62e09acb91
+       }
+     },
+     "node_modules/string-width/node_modules/is-fullwidth-code-point": {
+@@ -9114,8 +9133,6 @@
+         }
+       }
+     },
+-<<<<<<< HEAD
+-=======
+     "node_modules/sucrase": {
+       "version": "3.32.0",
+       "resolved": "https://registry.npmjs.org/sucrase/-/sucrase-3.32.0.tgz",
+@@ -9137,6 +9154,33 @@
+         "node": ">=8"
+       }
+     },
++    "node_modules/sucrase/node_modules/commander": {
++      "version": "4.1.1",
++      "resolved": "https://registry.npmjs.org/commander/-/commander-4.1.1.tgz",
++      "integrity": "sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==",
++      "engines": {
++        "node": ">= 6"
++      }
++    },
++    "node_modules/sucrase/node_modules/glob": {
++      "version": "7.1.6",
++      "resolved": "https://registry.npmjs.org/glob/-/glob-7.1.6.tgz",
++      "integrity": "sha512-LwaxwyZ72Lk7vZINtNNrywX0ZuLyStrdDtabefZKAY5ZGJhVtgdznluResxNmPitE0SAO+O26sWTHeKSI2wMBA==",
++      "dependencies": {
++        "fs.realpath": "^1.0.0",
++        "inflight": "^1.0.4",
++        "inherits": "2",
++        "minimatch": "^3.0.4",
++        "once": "^1.3.0",
++        "path-is-absolute": "^1.0.0"
++      },
++      "engines": {
++        "node": "*"
++      },
++      "funding": {
++        "url": "https://github.com/sponsors/isaacs"
++      }
++    },
+     "node_modules/sudo-prompt": {
+       "version": "9.2.1",
+       "resolved": "https://registry.npmjs.org/sudo-prompt/-/sudo-prompt-9.2.1.tgz",
+@@ -9212,6 +9256,24 @@
+         "node": ">=14.0.0"
+       }
+     },
++    "node_modules/tailwindcss/node_modules/postcss-js": {
++      "version": "4.0.1",
++      "resolved": "https://registry.npmjs.org/postcss-js/-/postcss-js-4.0.1.tgz",
++      "integrity": "sha512-dDLF8pEO191hJMtlHFPRa8xsizHaM82MLfNkUHdUtVEV3tgTp5oj+8qbEqYM57SLfc74KSbw//4SeJma2LRVIw==",
++      "dependencies": {
++        "camelcase-css": "^2.0.1"
++      },
++      "engines": {
++        "node": "^12 || ^14 || >= 16"
++      },
++      "funding": {
++        "type": "opencollective",
++        "url": "https://opencollective.com/postcss/"
++      },
++      "peerDependencies": {
++        "postcss": "^8.4.21"
++      }
++    },
+     "node_modules/temp": {
+       "version": "0.8.3",
+       "resolved": "https://registry.npmjs.org/temp/-/temp-0.8.3.tgz",
+@@ -9408,7 +9470,6 @@
+       "resolved": "https://registry.npmjs.org/ts-interface-checker/-/ts-interface-checker-0.1.13.tgz",
+       "integrity": "sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA=="
+     },
+->>>>>>> 4ebdf34bcd32b725e924d0c2cfc6bd62e09acb91
+     "node_modules/tslib": {
+       "version": "2.5.2",
+       "resolved": "https://registry.npmjs.org/tslib/-/tslib-2.5.2.tgz",
+@@ -9444,8 +9505,6 @@
+         "node": ">=12.20"
+       }
+     },
+-<<<<<<< HEAD
+-=======
+     "node_modules/uglify-es": {
+       "version": "3.3.9",
+       "resolved": "https://registry.npmjs.org/uglify-es/-/uglify-es-3.3.9.tgz",
+@@ -9478,6 +9537,20 @@
+         "node": ">=0.10.0"
+       }
+     },
++    "node_modules/uncontrollable": {
++      "version": "7.2.1",
++      "resolved": "https://registry.npmjs.org/uncontrollable/-/uncontrollable-7.2.1.tgz",
++      "integrity": "sha512-svtcfoTADIB0nT9nltgjujTi7BzVmwjZClOmskKu/E8FW9BXzg9os8OLr4f8Dlnk0rYWJIWr4wv9eKUXiQvQwQ==",
++      "dependencies": {
++        "@babel/runtime": "^7.6.3",
++        "@types/react": ">=16.9.11",
++        "invariant": "^2.2.4",
++        "react-lifecycles-compat": "^3.0.4"
++      },
++      "peerDependencies": {
++        "react": ">=15.0.0"
++      }
++    },
+     "node_modules/unicode-canonical-property-names-ecmascript": {
+       "version": "2.0.0",
+       "resolved": "https://registry.npmjs.org/unicode-canonical-property-names-ecmascript/-/unicode-canonical-property-names-ecmascript-2.0.0.tgz",
+@@ -9700,6 +9773,14 @@
+         "makeerror": "1.0.12"
+       }
+     },
++    "node_modules/warning": {
++      "version": "4.0.3",
++      "resolved": "https://registry.npmjs.org/warning/-/warning-4.0.3.tgz",
++      "integrity": "sha512-rpJyN222KWIvHJ/F53XSZv0Zl/accqHR8et1kpaMTD/fLCRxtV8iX8czMzY7sVZupTI3zcUTg8eycS2kNF9l6w==",
++      "dependencies": {
++        "loose-envify": "^1.0.0"
++      }
++    },
+     "node_modules/wcwidth": {
+       "version": "1.0.1",
+       "resolved": "https://registry.npmjs.org/wcwidth/-/wcwidth-1.0.1.tgz",
+@@ -9892,7 +9973,6 @@
+       "integrity": "sha512-raRj6r0gPzopFm5XWBJZr/NuV4EEnT4iE+U3dp5FV5pCb588Gmm3zLIp/j9yqqcMiHH8VNQlerLTgOqL7krh6w==",
+       "peer": true
+     },
+->>>>>>> 4ebdf34bcd32b725e924d0c2cfc6bd62e09acb91
+     "node_modules/zod": {
+       "version": "3.21.4",
+       "resolved": "https://registry.npmjs.org/zod/-/zod-3.21.4.tgz",
+diff --git a/package.json b/package.json
+index 16ff171..be1df3e 100644
+--- a/package.json
++++ b/package.json
+@@ -1,5 +1,5 @@
+ {
+-  "name": "mft_transcendencey-app",
++  "name": "ft_transcendence",
+   "version": "0.1.0",
+   "private": true,
+   "scripts": {
+@@ -13,11 +13,16 @@
+     "@types/node": "20.2.3",
+     "@types/react": "18.2.7",
+     "@types/react-dom": "18.2.4",
++    "autoprefixer": "10.4.14",
++    "bootstrap": "^5.2.3",
+     "next": "13.4.3",
++    "postcss": "8.4.23",
+     "react": "18.2.0",
++    "react-bootstrap": "^2.7.4",
+     "react-dom": "18.2.0",
+-    "react-icon": "^1.0.0",
+     "react-icons": "^4.8.0",
++    "react-spring": "^9.7.1",
++    "tailwindcss": "3.3.2",
+     "typescript": "5.0.4"
+   }
+ }

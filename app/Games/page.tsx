@@ -1,29 +1,21 @@
-'use client'
-
 import React, { useEffect, useState } from 'react';
-import  Header  from '../Components/Header';
-import MovingLine from './Columents/MovingLine'
 import Link from 'next/link';
-import PingPong from './Columents/PingPong';
-import Chess from './Columents/Chess';
-import CardGames from './Columents/CardGames';
+import PingPong from './Components/PingPong';
+import Chess from './Components/Chess';
+import CardGames from './Components/CardGames';
 import './Style/style.css'
+import NavBar from '../Components/NavBar/NavBar';
 
 
 export default function Home() {
-  const [targetX, setTargetX] = useState({start:0,end:0});
   return (
 
-    <main className="absolute inset-x-0 inset-y-0 text-white bg">
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Jua"></link>
-      <Header setTargetX={setTargetX} />
-      <MovingLine targetX={targetX} />
-      <div className='flex space-x-20  justify-center content '>
+    <main className="absolute inset-x-0 inset-y-0 text-white">
+      <NavBar/>
+      <div className='relative games flex space-x-40 justify-center'>
         <CardGames/>
         <Chess/>
-        <Link href="/Games/PingPong">
-          <PingPong/>
-        </Link>
+        <PingPong/>
       </div>
     </main>
   )

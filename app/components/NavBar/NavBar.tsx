@@ -1,18 +1,14 @@
+'use client'
+
 import Link from 'next/link'
 import './NavBar.css'
+import Header from '../Header';
+import { useState } from 'react';
 
 export default function NavBar()
 {
+    const [targetX, setTargetX] = useState({start:0,end:0});
     return(
-        <div className="navbar">
-            <Link href="/home">
-                <h1 className="logo_welcome">LOGO</h1>
-            </Link>
-                
-            <Link href="/profile">
-                <h1 className="profile_link">Profile</h1>
-            </Link>
-                    
-   </div>
+        <Header  setTargetX={setTargetX}  targetX={targetX}/>
     );
 }

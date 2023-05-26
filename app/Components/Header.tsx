@@ -4,19 +4,20 @@ import React, { useEffect, useState } from 'react';
 import Icon from './Icon';
 import Link from 'next/link';
 import '../Style/style.css'
+import MovingLine from './MovingLine';
 
-export default function Header({ setTargetX })
+export default function Header(props)
 {
   useEffect(() =>
     {
       function start()
       {
-        let idd = document.getElementById("2");
+        let idd = document.getElementById("1");
         idd.style.transform = "scale(1.5)";
         const buttonRect = idd.getBoundingClientRect();
         const xstart =  buttonRect.left;
         const xend = (buttonRect.left+buttonRect.width);
-        setTargetX({start: xstart,end: xend});
+        props.setTargetX({start: xstart,end: xend});
       }
     start();
     },[]);
@@ -29,7 +30,7 @@ export default function Header({ setTargetX })
             const buttonRect = idd.getBoundingClientRect();
             const xstart =  buttonRect.left;
             const xend = (buttonRect.left+buttonRect.width);
-            setTargetX({start: xstart,end: xend});
+            props.setTargetX({start: xstart,end: xend});
           
           }
         }
@@ -38,37 +39,40 @@ export default function Header({ setTargetX })
       setTimeout(aftersleep, 250);
     };
     return(
-      <div onMouseLeave={handlemouseleave} className="relative flex px-3 py-1 font-mono shadow-white">
-        <Link href="/Home">
-        <div className= "px-3 py-1 mx-2">
-          <Icon title="Legends" setTargetX={setTargetX} idd="0"/>
+      <div>
+        <div onMouseLeave={handlemouseleave} className="relative flex px-3 py-1 font-mono shadow-white text-white">
+          <Link href="/">
+          <div className= "px-3 py-1 mx-2">
+            <Icon title="Legends" setTargetX={props.setTargetX} idd="0"/>
+          </div>
+          </Link>
+          <Link href="/Games">
+          <div className= "px-3 py-1 mx-2" >
+            <Icon title="Games" setTargetX={props.setTargetX} idd="1"/>
+          </div>
+          </Link>
+          <Link href="/Stream">
+          <div className= "px-3 py-1 mx-2">
+            <Icon title="Stream" setTargetX={props.setTargetX} idd="2"/>
+          </div>
+          </Link>
+          <Link href="/Search">
+          <div className= "px-3 py-1 mx-2">
+            <Icon title="Search" setTargetX={props.setTargetX} idd="3"/>
+          </div>
+          </Link>
+          <Link href="/Notification">
+          <div className= "absolute right-25 px-3 py-1 mx-2">
+            <Icon title="Notification" setTargetX={props.setTargetX} idd="4"/>
+          </div>
+          </Link>
+          <Link href="/profile">
+          <div className= "absolute right-0 px-3 py-1 mx-2">
+            <Icon title="Profile" setTargetX={props.setTargetX} idd="5"/>
+          </div>
+          </Link>
         </div>
-        </Link>
-        <Link href="/Games">
-        <div className= "px-3 py-1 mx-2" >
-          <Icon title="Games" setTargetX={setTargetX} idd="1"/>
-        </div>
-        </Link>
-        <Link href="/Stream">
-        <div className= "px-3 py-1 mx-2">
-          <Icon title="Stream" setTargetX={setTargetX} idd="2"/>
-        </div>
-        </Link>
-        <Link href="/Search">
-        <div className= "px-3 py-1 mx-2">
-          <Icon title="Search" setTargetX={setTargetX} idd="3"/>
-        </div>
-        </Link>
-        <Link href="/Notification">
-        <div className= "absolute right-25 px-3 py-1 mx-2">
-          <Icon title="Notification" setTargetX={setTargetX} idd="5"/>
-        </div>
-        </Link>
-        <Link href="/Profile">
-        <div className= "absolute right-0 px-3 py-1 mx-2">
-          <Icon title="Profile" setTargetX={setTargetX} idd="5"/>
-        </div>
-        </Link>
+          <MovingLine targetX={props.targetX} />
       </div>
     );
 }
