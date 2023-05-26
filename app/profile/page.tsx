@@ -16,7 +16,7 @@ export default function Profile()
                     </div>
 
                     <div className="side_two">
-                        <ProfileInfoNav/>
+                        <ProfileInfoNav />
                         <div className="side_two_info">
 
                             
