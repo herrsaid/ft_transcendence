@@ -99,14 +99,18 @@
 .side_two_nav{
     color:var(--color-light);
     padding: 20px 30px;
+    display: flex;
 }
 
-.side_two_nav .span_one{
-   margin: 0px 10px;
+.side_two_nav span{
+    display: inline;
+    margin-right: 4%;
 }
+
+
 
 .side_two_nav .span_right{
-    margin-left: 45%;
+    margin-left: 60%;
     font-size: 25px;
 }
 
