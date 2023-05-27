@@ -1,0 +1,43 @@
+.all{
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    height: 100vh;
+    
+}
+
+.groups
+{
+    border: solid;
+    flex: 1;
+}
+div.chat
+{
+    display:flex;
+    flex-direction: column;
+    justify-content:flex-end;
+    border: solid;
+    flex: 1;
+}
+.friends
+{
+    border: solid;
+    flex: 1;
+}
+
+.message
+{
+    background-color: black;
+    margin-left: 20px;
+    border-radius: 25px;
+    height:35px;
+    width:350px
+}
+.message-box
+{
+    display:flex;
+    background-color:red;
+    flex-direction: row;
+    justify-content: flex-end;
+}
