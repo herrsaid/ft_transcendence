@@ -9,7 +9,7 @@ export default function Icon(props)
     props.setTargetX({start: xstart,end: xend});
   };
   return(
-    <div className= "mx-2" id={props.idd}>
+    <div id={props.idd}>
         <button  onMouseEnter={handlemouseenter}>
           {props.title}
         </button>

@@ -12,7 +12,7 @@ export default function Home() {
 
     <main className="absolute inset-x-0 inset-y-0 text-white">
       <NavBar idd="1"/>
-      <div className='relative games flex space-x-40 justify-center'>
+      <div className='relative games flex justify-center'>
         <CardGames/>
         <Chess/>
         <PingPong/>
