@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import '../profile.css';
 
 import {FaChevronUp, FaDollarSign, FaTrophy, FaUserEdit} from 'react-icons/fa'
@@ -12,8 +13,9 @@ const ProfileInfoNav = () => {
                         
                         <span className="span_one"><span className="icon"><FaDollarSign/></span> <span> 480</span></span>
                         
-                        
+                        <Link  href="/profile/Setting">
                         <span className="span_right"><FaUserEdit/></span>
+                        </Link>
                        
                     </div>
         </>

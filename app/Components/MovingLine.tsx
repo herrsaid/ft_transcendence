@@ -1,7 +1,7 @@
 'use client'
 
 import { useSpring, animated } from 'react-spring';
-
+import './MovingLine.css'
 
 const MovingLine = ({ targetX }) => {
   const lineAnimation1 = useSpring({
@@ -17,7 +17,7 @@ const MovingLine = ({ targetX }) => {
   });
 
   return (
-    <div  className="h-3">
+    <div  className="MovingLine">
       <svg className="h-3" width="100%" height="200">
         <animated.line
           x1={lineAnimation1.x}

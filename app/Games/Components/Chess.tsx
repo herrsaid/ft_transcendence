@@ -8,7 +8,7 @@ export default function Chess()
         <div className="Chess_rectangle border-cyan-500 hover:shadow-2xl hover:shadow-cyan-500  hover:scale-125">
             <img  src="Chess.png">
             </img>
-            <p className="text-2xl text-center">
+            <p className="text-center">
                 Chess
             </p>
         </div>

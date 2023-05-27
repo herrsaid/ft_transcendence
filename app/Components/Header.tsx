@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Icon from './Icon';
 import Link from 'next/link';
-import '../Style/style.css'
+import './Header.css'
 import MovingLine from './MovingLine';
 
 
@@ -37,38 +37,38 @@ export default function Header(props)
         }
     }
     const handlemouseleave= () => {
-      setTimeout(aftersleep, 250);
+      setTimeout(aftersleep, 500);
     };
     return(
-      <div>
-        <div onMouseLeave={handlemouseleave} className="relative flex px-3 py-1 font-mono shadow-white text-white">
+      <div  className="Header" onMouseLeave={handlemouseleave}>
+        <div className="Div" >
           <Link href="/">
-          <div className= "px-3 py-1 mx-2">
+          <div className= "Legends">
             <Icon title="Legends" setTargetX={props.setTargetX} idd="0"/>
           </div>
           </Link>
           <Link href="/Games">
-          <div className= "px-3 py-1 mx-2" >
+          <div className= "Games" >
             <Icon title="Games" setTargetX={props.setTargetX} idd="1"/>
           </div>
           </Link>
           <Link href="/Stream">
-          <div className= "px-3 py-1 mx-2">
+          <div className= "Stream">
             <Icon title="Stream" setTargetX={props.setTargetX} idd="2"/>
           </div>
           </Link>
           <Link href="/Search">
-          <div className= "px-3 py-1 mx-2">
+          <div className= "Search">
             <Icon title="Search" setTargetX={props.setTargetX} idd="3"/>
           </div>
           </Link>
           <Link href="/Notification">
-          <div className= "absolute right-25 px-3 py-1 mx-2">
+          <div className= "Notification">
             <Icon title="Notification" setTargetX={props.setTargetX} idd="4"/>
           </div>
           </Link>
           <Link href="/profile">
-          <div className= "absolute right-0 px-3 py-1 mx-2">
+          <div className= "Profile">
             <Icon title="Profile" setTargetX={props.setTargetX} idd="5"/>
           </div>
           </Link>

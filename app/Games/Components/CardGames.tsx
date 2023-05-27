@@ -5,7 +5,7 @@ export default function CardGames()
         <div className="CardGames_rectangle border-blue-500 hover:shadow-2xl hover:shadow-blue-500 hover:scale-125">
             <img  src="CardGames.png">
             </img>
-            <p className="text-2xl text-center">
+            <p className="text-center">
                 Card Games
             </p>
         </div>

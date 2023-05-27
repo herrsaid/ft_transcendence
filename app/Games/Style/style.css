@@ -28,6 +28,7 @@ main
     position: relative;
     width: 20%;
     height: 78.7%;
+    margin-left: 5%;
     border: 5px solid #58109F;
     border-radius: 25px;
 }
@@ -45,9 +46,12 @@ main
 .PingPong_rectangle p
 {
     position: relative;
+    object-fit: contain;
     text-align: center;
     display: block;
-    bottom: 10%;
+    font-size:2vw;
+    width: 100%;
+    bottom: 17%;
     
 }
 
@@ -56,6 +60,7 @@ main
     position: relative;
     width: 20%;
     height: 78.7%;
+    margin-left: 5%;
     /* padding: 2.5%; */
     border: 5px solid #2FA3E4;
     border-radius: 25px;
@@ -75,10 +80,12 @@ main
 .Chess_rectangle p
 {
     position: relative;
+    object-fit: contain;
     text-align: center;
     display: block;
-
-    top: 15%;
+    font-size: 2vw;
+    width: 100%;
+    top: 8%;
     
 }
 
@@ -106,9 +113,12 @@ main
 .CardGames_rectangle p
 {
     position: relative;
+    object-fit: contain;
     display: block;
     text-align: center;
-    top: 15%;
+    font-size: 2vw;
+    width: 100%;
+    top: 8%;
     
 }
 /*---------------------------------- this page for /app/Games/PingPong/page.tsx --------------------------------------------*/
