@@ -12,13 +12,25 @@
     border: solid;
     flex: 1;
 }
+
+@media (max-width: 1000px) {
+    .groups{
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .friends{
+        display: none;
+    }
+}
 .chat
 {
     background-color: rgba(0, 0, 0, 0.3);
     /* flex-direction: column; */
     border: solid;
     border-radius: 12px;
-    flex: 1;
+    flex: 2;
     justify-content: space-between;
 }
 .friends
@@ -42,7 +54,19 @@
     justify-content: space-between;
     flex-direction: column;
     height: 100vh;
-    width:350px
+    flex: 2;
+}
+
+.chat-box .chat-send-message form
+{
+    align-items: center;
+    margin-top: 1vh;
+}
+
+.chat-box .chat-send-message form button
+{
+    position: relative;
+    right: 30px;
 }
 
 div.chat-info
@@ -50,22 +74,49 @@ div.chat-info
     display: flex;
     flex:1;
     flex-direction: row;
-    justify-content: space-between;
-    border: solid;
+    padding-left: 10px;
+    padding-top: 5px;
 }
 
 .chat-messages
 {
-    background-color: black;
+    background-color: rgb(219, 214, 214);
     flex:10;
     border: solid;
 }
 
-.chat-send-message
+.chat-box .chat-send-message
 {
     border: solid;
     flex:1;
-    justify-content: center;
-    padding-left: 60px;
-    padding-top: 20px
+    align-items: center;
+} 
+
+.chat-send-message input
+{
+    align-items: center;
+    background: none;
+    border: solid;
+    border-radius: 15px;
+    width: 400px;
+    height: 40px;
+
 }
+
+.profile-img
+{
+    height: 60px;
+    width: 60px;
+}
+
+.profile-img img{
+    border-radius: 50%;
+}
+
+.profile-info
+{
+    color: aliceblue;
+    margin-left: 15px;
+    margin-top: 5px;
+}
+
