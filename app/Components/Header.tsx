@@ -14,7 +14,9 @@ export default function Header(props)
       function start()
       {
         let idd = document.getElementById(props.idd);
+        let txt = idd.querySelector("button");
         idd.style.transform = "scale(1.5)";
+        txt.style.textShadow = "2px 2px 10px rgba(255, 255, 255, 1)";
         const buttonRect = idd.getBoundingClientRect();
         const xstart =  buttonRect.left;
         const xend = (buttonRect.left+buttonRect.width);
