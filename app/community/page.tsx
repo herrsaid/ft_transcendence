@@ -13,7 +13,7 @@ function Chat()
                     <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="avatar" />
                 </div>
                 <div className='profile-info'>
-                    <h1>salma laajour</h1>
+                    <h1>salma salam</h1>
                     <h4>Online</h4>
                 </div>
             </div>
@@ -23,7 +23,7 @@ function Chat()
             <div className='chat-send-message'>
                 <div>
                 <form action="">
-                    <input type="text" />
+                    <input type="text" placeholder='  Message....'/>
                     <button type='submit'><FaBeer /></button>
                 </form>
                 </div>

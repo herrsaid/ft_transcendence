@@ -10,6 +10,9 @@
 .groups
 {
     border: solid;
+    border-color: #DD58D6;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 25px;
     flex: 1;
 }
 
@@ -26,31 +29,25 @@
 }
 .chat
 {
-    background-color: rgba(0, 0, 0, 0.3);
+    background-color: rgba(0, 0, 0, 0.5);
     /* flex-direction: column; */
-    border: solid;
-    border-radius: 12px;
+    border-radius: 25px;
     flex: 2;
     justify-content: space-between;
 }
 .friends
 {
     border: solid;
-    flex: 1;
-    width:350px
-}
-
-.message
-{
-    background-color: black;
-    margin-left: 20px;
+    border-color: #DD58D6;
+    background-color: rgba(0, 0, 0, 0.5);
     border-radius: 25px;
-    height:35px;
+    flex: 1;
     width:350px
 }
 
 .chat-box{
     display:flex;
+    border-radius: 25px;
     justify-content: space-between;
     flex-direction: column;
     height: 100vh;
@@ -59,6 +56,7 @@
 
 .chat-box .chat-send-message form
 {
+    text-align: center;
     align-items: center;
     margin-top: 1vh;
 }
@@ -80,27 +78,38 @@ div.chat-info
 
 .chat-messages
 {
-    background-color: rgb(219, 214, 214);
-    flex:10;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 25px;
     border: solid;
+    border-color: #DD58D6;
+    flex:10;
 }
 
 .chat-box .chat-send-message
 {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 25px;
     border: solid;
+    border-color: #DD58D6;
     flex:1;
     align-items: center;
 } 
 
 .chat-send-message input
 {
+    background-color: #DD58D6;
     align-items: center;
-    background: none;
-    border: solid;
     border-radius: 15px;
-    width: 400px;
+    color: rgb(250, 250, 250);
+    width: 40vw;
     height: 40px;
 
+}
+
+input:focus
+{
+    outline: none;
+    text-align: center;
 }
 
 .profile-img
