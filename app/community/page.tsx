@@ -4,6 +4,16 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { FaBeer } from "react-icons/fa";
 
+function Profile_box()
+{
+    return(
+        <div className='profile_box'>
+            mabboulo
+        </div>
+    )
+}
+
+
 function Chat()
 {
     return(
@@ -23,7 +33,7 @@ function Chat()
             <div className='chat-send-message'>
                 <div>
                 <form action="">
-                    <input type="text" placeholder='  Message....'/>
+                    <input type="text" placeholder='Message....'/>
                     <button type='submit'><FaBeer /></button>
                 </form>
                 </div>
@@ -37,7 +47,26 @@ export default function Community()
     return (
          <div className="all">
              <div className='groups'>
-                 groups
+                <div className='chat-header'>
+                    <h1>
+                        Chats
+                    </h1>
+                </div>
+                <div className='chats'>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                </div>
              </div>
              <Chat />
              {/* <div className='chat'>

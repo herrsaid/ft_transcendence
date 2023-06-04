@@ -1,4 +1,5 @@
 .all{
+    overflow: scroll;
     color: white;
     display: flex;
     justify-content: space-between;
@@ -9,6 +10,7 @@
 
 .groups
 {
+    overflow: scroll;
     border: solid;
     border-color: #DD58D6;
     background-color: rgba(0, 0, 0, 0.5);
@@ -98,18 +100,17 @@ div.chat-info
 .chat-send-message input
 {
     background-color: #DD58D6;
-    align-items: center;
     border-radius: 15px;
     color: rgb(250, 250, 250);
     width: 40vw;
     height: 40px;
+    padding: 10px;
 
 }
 
 input:focus
 {
     outline: none;
-    text-align: center;
 }
 
 .profile-img
@@ -129,3 +130,29 @@ input:focus
     margin-top: 5px;
 }
 
+.profile_box
+{
+    background-color: red;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100px;
+}
+
+.groups .chat-header
+{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-size:large;
+    padding: 23px;
+}
+
+.chat-header h1
+{
+    font-size: larger;
+}
+
+.chats{
+    overflow: scroll;
+}
