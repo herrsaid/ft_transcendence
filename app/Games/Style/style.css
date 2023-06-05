@@ -10,7 +10,7 @@ main
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    /* filter: blur(8px); */    backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
 }
 .games
 {
