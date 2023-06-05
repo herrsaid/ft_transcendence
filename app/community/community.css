@@ -10,7 +10,7 @@
 
 .groups
 {
-    overflow: scroll;
+    height: 100vh;
     border: solid;
     border-color: #DD58D6;
     background-color: rgba(0, 0, 0, 0.5);
@@ -132,7 +132,6 @@ input:focus
 
 .profile_box
 {
-    background-color: red;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -153,6 +152,11 @@ input:focus
     font-size: larger;
 }
 
-.chats{
+div .chats
+{
+    border: #DD58D6;
+    border-radius: 25px;
+    height: 89.5vh;
+    background-color: #DD58D6;
     overflow: scroll;
 }
