@@ -8,7 +8,13 @@ function Profile_box()
 {
     return(
         <div className='profile_box'>
-            mabboulo
+            <div className='chat-img'>
+                <img src="https://cdn.intra.42.fr/users/acc4ad161c4fb89eafe791f7012e8ddb/zasabri.JPG" alt="chatimg" />
+            </div>
+            <div className='profile-name'>
+                <h1>zakaria sabri</h1>
+                <h4>Wach a said</h4>
+            </div>
         </div>
     )
 }
@@ -53,17 +59,6 @@ export default function Community()
                     </h1>
                 </div>
                 <div className='chats'>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
                  <Profile_box/>
                  <Profile_box/>
                 </div>

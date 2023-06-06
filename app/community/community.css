@@ -10,7 +10,7 @@
 
 .groups
 {
-    overflow: scroll;
+    height: 100vh;
     border: solid;
     border-color: #DD58D6;
     background-color: rgba(0, 0, 0, 0.5);
@@ -71,6 +71,8 @@
 
 div.chat-info
 {
+    border-radius: 25px;
+    background-color: rgba(221, 88, 214, 0.5);
     display: flex;
     flex:1;
     flex-direction: row;
@@ -132,11 +134,11 @@ input:focus
 
 .profile_box
 {
-    background-color: red;
+    margin: 2px;
+    background-color: rgba(221, 88, 214, 0.5);
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100px;
+    flex-direction: row;
+    height: 70px;
 }
 
 .groups .chat-header
@@ -153,6 +155,31 @@ input:focus
     font-size: larger;
 }
 
-.chats{
+div .chats
+{
+    border: #DD58D6;
+    border-radius: 25px;
+    height: 89.5vh;
     overflow: scroll;
+}
+
+.chat-img img
+{
+    height: 60px;
+    width: 60px;
+    border-radius: 35px;
+    margin: 5px;
+}
+
+.profile-name h1
+{
+    color: #FFE79B;
+    font-size: 20px;
+    margin: 5px;
+    font-weight: bold;
+}
+
+.profile-name h4
+{
+    margin: 5px;
 }
