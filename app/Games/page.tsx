@@ -161,6 +161,7 @@ function MouveLeft()
     if(scale < 0.8)
       set = 1;
     left_button.style.transform = `scale(${scale})`;
+    //helloWorld
     if(scale > 1)
       clearInterval(id);
     
