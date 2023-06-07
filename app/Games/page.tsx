@@ -46,7 +46,8 @@ function scale_button(obj :any)
 async function TransLeft(arr: any)
 {
   let swap;
-  if(sharedData.id3 === null && sharedData.id4 === null && sharedData.id5 === null)
+  if(sharedData.id === null && sharedData.id1 === null && sharedData.id2 === null
+      && sharedData.id3 === null && sharedData.id4 === null && sharedData.id5 === null)
   {
     wait_proscess = 0;
     if (num_mod == 3)
@@ -67,7 +68,8 @@ async function TransLeft(arr: any)
 async function TransRight(arr: any)
 {
   let swap;
-  if(sharedData.id === null && sharedData.id1 === null && sharedData.id2 === null)
+  if(sharedData.id === null && sharedData.id1 === null && sharedData.id2 === null
+    && sharedData.id3 === null && sharedData.id4 === null && sharedData.id5 === null)
   {
     wait_proscess = 0;
     if (num_mod == 3)

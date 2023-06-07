@@ -6,23 +6,29 @@ import Link from 'next/link';
 import './Header.css'
 import MovingLine from './MovingLine';
 
-
+let old_pos;
 export default function Header(props)
 {
   useEffect(() =>
     {
-      function start()
+      setInterval(()=>
       {
-        let idd = document.getElementById(props.idd);
-        let txt = idd.querySelector("button");
-        idd.style.transform = "scale(1.5)";
-        txt.style.textShadow = "2px 2px 10px rgba(255, 255, 255, 1)";
-        const buttonRect = idd.getBoundingClientRect();
-        const xstart =  buttonRect.left;
-        const xend = (buttonRect.left+buttonRect.width);
-        props.setTargetX({start: xstart,end: xend});
-      }
-    start();
+        const games = document.getElementById("Games");
+        const size = games.getBoundingClientRect().width;
+        if(old_pos != size)
+        {
+          old_pos = size;
+          let idd = document.getElementById(props.idd);
+          let txt = idd.querySelector("button");
+          idd.style.transform = "scale(1.5)";
+          txt.style.textShadow = "2px 2px 10px rgba(255, 255, 255, 1)";
+          const buttonRect = idd.getBoundingClientRect();
+          const xstart =  buttonRect.left;
+          const xend = (buttonRect.left+buttonRect.width);
+          props.setTargetX({start: xstart,end: xend});
+        }
+      },100);
+    // start();
     },[]);
     function aftersleep() {
       for(let a=0;a < 6 ; a++)
