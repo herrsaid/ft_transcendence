@@ -1,14 +1,14 @@
+// import NavBar from '../Components/NavBar/NavBar'
 import './profile.css'
 
 import {Friends, Groups, ProfileAvatar, ProfileInfo, ProfileInfoNav, History, Achievevements, Store} from './index'
-import NavBar from '../Components/NavBar/NavBar';
 
 
 export default function Profile()
 {
     return(
         <>
-        <NavBar idd="5"/>
+        {/* <NavBar idd="5"/> */}
             <div className="Profile">
                     <div className="side_one">
                         <Friends/>

@@ -1,9 +1,10 @@
-import '../profile.css';
         
 const History = () => {
     return (
-        <>
-        <div className="side_two_history">
+        <div>
+
+
+<div className="side_two_history">
 
 <h2>history</h2>
 
@@ -63,7 +64,7 @@ const History = () => {
 
 
 </div>
-        </>
+        </div>
     );
 };
 export default History;
