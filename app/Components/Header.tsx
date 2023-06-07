@@ -6,29 +6,36 @@ import Link from 'next/link';
 import './Header.css'
 import MovingLine from './MovingLine';
 
-let old_pos;
+let old_pos = 0;
 export default function Header(props)
 {
   useEffect(() =>
     {
+      let idd = document.getElementById(props.idd);
+      let txt = idd.querySelector("button");
+      function start()
+      {
+        const buttonRect = idd.getBoundingClientRect();
+        idd.style.transform = "scale(1.5)";
+        txt.style.textShadow = "2px 2px 10px rgba(255, 255, 255, 1)";
+        const xstart =  buttonRect.left;
+          const xend = (buttonRect.left+buttonRect.width);
+          props.setTargetX({start: xstart,end: xend});
+      }
+      start();
       setInterval(()=>
       {
-        const games = document.getElementById("Games");
-        const size = games.getBoundingClientRect().width;
-        if(old_pos != size)
+        const buttonRect = idd.getBoundingClientRect();
+        const divnarbar = document.getElementById("DivNavBar");
+        const size = divnarbar.getBoundingClientRect().width;
+        if(old_pos != size || old_pos === 0)
         {
           old_pos = size;
-          let idd = document.getElementById(props.idd);
-          let txt = idd.querySelector("button");
-          idd.style.transform = "scale(1.5)";
-          txt.style.textShadow = "2px 2px 10px rgba(255, 255, 255, 1)";
-          const buttonRect = idd.getBoundingClientRect();
           const xstart =  buttonRect.left;
           const xend = (buttonRect.left+buttonRect.width);
           props.setTargetX({start: xstart,end: xend});
         }
       },100);
-    // start();
     },[]);
     function aftersleep() {
       for(let a=0;a < 6 ; a++)
@@ -49,7 +56,7 @@ export default function Header(props)
     };
     return(
       <div  className="Header" onMouseLeave={handlemouseleave}>
-        <div className="Div" >
+        <div id="DivNavBar" >
           <Link href="/">
           <div className= "Legends">
             <Icon title="Legends" setTargetX={props.setTargetX} idd="0"/>
