@@ -23,13 +23,25 @@ main
 
 @keyframes myAnimation {
     0% {
-      transform: translateX(0);
+        transform: translateX(0);
     }
     50% {
-      transform: translateX(10%);
+        transform: translateX(10%);
     }
     100% {
-      transform: translateX(0);
+        transform: translateX(0);
+    }
+}
+
+@keyframes Animation {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
     }
 }
 
@@ -38,6 +50,7 @@ main
     position: absolute;
     right: 92.5%;
     height: 80%;
+    z-index: 2;
 }
 
 
@@ -47,6 +60,7 @@ main
     text-align: center;
     color: white;
     animation: myAnimation 1s infinite;
+    z-index: 3;
 }
 
 #left_button p:hover
@@ -59,6 +73,7 @@ main
     position: absolute;
     left: 92.5%;
     height: 80%;
+    z-index: 2;
 }
 #right_button p
 {
@@ -67,6 +82,7 @@ main
     color: white;
     animation: myAnimation 1s infinite;
     animation-delay: 0.5s;
+    z-index: 3;
 }
 
 #right_button p:hover
@@ -79,10 +95,16 @@ main
     position: absolute;
     width: 20%;
     height: 78.7%;
-    /* margin-left: 5%; */
     border: 5px solid #58109F;
     border-radius: 25px;
+    opacity: 0;
 }
+
+.PingPong_rectangle:hover
+{
+    animation: Animation 1.5s infinite;
+}
+
 .PingPong_rectangle img
 {
     position:relative;
@@ -111,11 +133,17 @@ main
     position: absolute;
     width: 20%;
     height: 78.7%;
-    /* margin-left: 5%; */
     padding: 2.5%; 
     border: 5px solid #2FA3E4;
     border-radius: 25px;
+    opacity: 0;
 }
+
+.Chess_rectangle:hover
+{
+    animation: Animation 1.5s infinite;
+}
+
 .Chess_rectangle img
 {
     position:relative;
@@ -148,8 +176,15 @@ main
     padding: 3%; 
     border: 5px solid #1483EA;
     border-radius: 25px;
+    opacity: 0;
 
 }
+
+.CardGames_rectangle:hover
+{
+    animation: Animation 1.5s infinite;
+}
+
 .CardGames_rectangle img
 {
     position:relative;
