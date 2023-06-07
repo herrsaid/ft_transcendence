@@ -19,6 +19,7 @@ main
     width: 100%;
     height: 40%;
     display: flex;
+    z-index: -2;
 }
 
 @keyframes myAnimation {
@@ -93,7 +94,7 @@ main
 .PingPong_rectangle
 {
     position: absolute;
-    width: 20%;
+    /* width: 20%; */
     height: 78.7%;
     border: 5px solid #58109F;
     border-radius: 25px;
@@ -112,7 +113,6 @@ main
     width: 100%;
     height: 100%;
     display: block;
-
     top: 5%;
     
 }
@@ -124,14 +124,13 @@ main
     display: block;
     font-size:2vw;
     width: 100%;
-    bottom: 16%;
-    
+    bottom: 16%;  
 }
 
 .Chess_rectangle
 {
     position: absolute;
-    width: 20%;
+    /* width: 20%; */
     height: 78.7%;
     padding: 2.5%; 
     border: 5px solid #2FA3E4;
@@ -171,7 +170,7 @@ main
 .CardGames_rectangle
 {
     position: absolute;
-    width: 20%;
+    /* width: 20%; */
     height: 78.7%;
     padding: 3%; 
     border: 5px solid #1483EA;

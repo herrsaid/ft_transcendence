@@ -7,12 +7,23 @@ import Chess from './Components/Chess';
 import CardGames from './Components/CardGames';
 import './Style/style.css'
 import NavBar from '../Components/NavBar/NavBar';
-import { Syne } from 'next/font/google';
+import {right_trans_obj1,left_trans_obj1,right_trans_obj2,left_trans_obj2,right_trans_obj3,left_trans_obj3} from './tools';
 
-let swap,id = null,id1 = null,id2 = null,id3 = null,id4 = null,id5 = null;
-let wait_proscess = 1;
+export const sharedData = {
+  id: null,
+  id1: null,
+  id2: null,
+  id3: null,
+  id4: null,
+  id5: null,
+};
+let wait_proscess = 1,num_mod = 3;
 let arr = new Array(
   );
+
+  function sleep(ms :any) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
 function scale_button(obj :any)
 {
@@ -32,69 +43,18 @@ function scale_button(obj :any)
   },1);
 }
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 async function TransLeft(arr: any)
 {
-  let xpos1=15,xpos2=40,xpos3=65;
-  let opacity=1;
-  wait_proscess = 0;
-  if(id3 === null && id4 === null && id5 === null)
+  let swap;
+  if(sharedData.id3 === null && sharedData.id4 === null && sharedData.id5 === null)
   {
-    for(let a=0;a<3;a++)
-    {
-      if(a === 0)
-      {
-        id3 = setInterval(()=>
-        {
-          xpos1--;
-          if(xpos1 === 2)
-            xpos1 = 80;
-          if(xpos1 > 65)
-            opacity += 0.2;
-          else
-            opacity -= 0.1;
-          arr[a].style.left = `${xpos1.toString()}%`;
-          arr[a].style.opacity = `${opacity.toString()}`;
-          if(xpos1 === 65)
-          {
-            clearInterval(id3);
-            id3 = null;
-            xpos1 = 15;
-          }
-        },25);
-      }
-      else if (a === 1)
-      {
-        id4 = setInterval(()=>
-        {
-          xpos2--;
-          arr[a].style.left = `${xpos2.toString()}%`;
-          if(xpos2 === 15)
-          {
-            clearInterval(id4);
-            id4 = null;
-            xpos2 = 40;
-          }
-        },25);
-      }
-      else if (a === 2)
-      {
-        id5 = setInterval(()=>
-        {
-          xpos3--;
-          arr[a].style.left = `${xpos3.toString()}%`;
-          if(xpos3 === 40)
-          {
-            clearInterval(id5);
-            id5 = null;
-            xpos3 = 65;
-          }
-        },25);
-      }
-    }
+    wait_proscess = 0;
+    if (num_mod == 3)
+      left_trans_obj1(arr);
+    if (num_mod == 2)
+      left_trans_obj2(arr);
+    if (num_mod == 1)
+      left_trans_obj3(arr);
     await sleep(1000);
     swap = arr[0];
     arr[0] = arr[1];
@@ -106,63 +66,16 @@ async function TransLeft(arr: any)
 
 async function TransRight(arr: any)
 {
-  let xpos1=15,xpos2=40,xpos3=65;
-  let opacity=1;
-  wait_proscess = 0;
-  if(id === null && id1 === null && id2 === null)
+  let swap;
+  if(sharedData.id === null && sharedData.id1 === null && sharedData.id2 === null)
   {
-    for(let a=0;a<3;a++)
-    {
-      if(a === 0)
-      {
-        id = setInterval(()=>
-        {
-          xpos1++;
-          arr[a].style.left = `${xpos1.toString()}%`;
-          if(xpos1 === 40)
-          {
-            clearInterval(id);
-            id = null;
-            xpos1 = 15;
-          }
-        },25);
-      }
-      else if (a === 1)
-      {
-        id1 = setInterval(()=>
-        {
-          xpos2++;
-          arr[a].style.left = `${xpos2.toString()}%`;
-          if(xpos2 === 65)
-          {
-            clearInterval(id1);
-            id1 = null;
-            xpos2 = 40;
-          }
-        },25);
-      }
-      else if (a === 2)
-      {
-        id2 = setInterval(()=>
-        {
-          xpos3++;
-          if(xpos3 < 15)
-            opacity += 0.2;
-          else
-            opacity -= 0.1;
-          if(xpos3 === 80)
-            xpos3 = 2;
-            arr[a].style.opacity = `${opacity.toString()}`;
-            arr[a].style.left = `${xpos3.toString()}%`;
-          if(xpos3 === 15)
-          {
-            clearInterval(id2);
-            id2 = null;
-            xpos3 = 65;
-          }
-        },25);
-      }
-    }
+    wait_proscess = 0;
+    if (num_mod == 3)
+      right_trans_obj1(arr);
+    if (num_mod == 2)
+      right_trans_obj2(arr);
+    if (num_mod == 1)
+      right_trans_obj3(arr);
     await sleep(1000);
     swap = arr[2];
     arr[2] = arr[1];
@@ -185,6 +98,7 @@ function MouveRight()
   TransRight(arr);
 }
 
+
 export default function Home() {
   useEffect(()=>
   {
@@ -202,27 +116,46 @@ export default function Home() {
         const size = games.getBoundingClientRect().width;
         if (size > 1500)
         {
+          num_mod = 3;
           arr[0].style.left = "15%";
+          arr[0].style.width = "20%";
           arr[0].style.opacity = "1";
           arr[1].style.left = "40%";
+          arr[1].style.width = "20%";
           arr[1].style.opacity = "1";
           arr[2].style.left = "65%";
+          arr[2].style.width = "20%";
           arr[2].style.opacity = "1";
         }
         else if(size < 1500 && size > 750)
         {
-          arr[0].style.left = "25%";
+          num_mod = 2;
+          arr[0].style.left = "13%";
           arr[0].style.opacity = "1";
-          arr[1].style.left = "55%";
+          arr[0].style.zIndex = "1";
+          arr[0].style.width = "35%";
+          arr[1].style.left = "53%";
+          arr[1].style.width = "35%";
           arr[1].style.opacity = "1";
+          arr[1].style.zIndex = "1";
+          arr[1].style.width = "35%";
           arr[2].style.opacity = "0";
+          arr[2].style.zIndex = "0";
+          arr[2].style.width = "35%";
         }
         else if(size < 750)
         {
-          arr[0].style.left = "40%";
+          num_mod = 1;
+          arr[0].style.left = "20%";
+          arr[0].style.width = "60%";
           arr[0].style.opacity = "1";
+          arr[0].style.zIndex = "1";
+          arr[1].style.width = "60%";
           arr[1].style.opacity = "0";
+          arr[1].style.zIndex = "0";
+          arr[2].style.width = "60%";
           arr[2].style.opacity = "0";
+          arr[2].style.zIndex = "0";
         }
       }
     },1000);
