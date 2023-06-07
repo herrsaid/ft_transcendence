@@ -1,10 +1,10 @@
-// import NavBar from '@/app/Components/NavBar/NavBar';
+import NavBar from '@/app/Components/NavBar/NavBar';
 import '../profile.css';
         
 const SettingProfile = () => {
     return (
        <div>
-        {/* <NavBar idd="5"/> */}
+        <NavBar idd="5"/>
         <div className="setting_page">
             <div className="setting_security">
                 <h2>Security</h2>

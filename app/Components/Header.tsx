@@ -70,7 +70,7 @@ export default function Header(props)
           </div>
           </Link>
           <Link href="/profile">
-          <div className= "Profile">
+          <div className= "Profilelink">
             <Icon title="Profile" setTargetX={props.setTargetX} idd="5"/>
           </div>
           </Link>
