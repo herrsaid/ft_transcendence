@@ -3,8 +3,8 @@
 import React,{ useEffect, useState } from 'react';
 import './style/style.css'
 import NavBar from "@/app/Components/NavBar/NavBar";
-
-let alpha=1,speed=5,pause=0,voice=0;
+import {map,voice,pause_game} from '../Components/Settings'
+let alpha=1,access=1;
 let XPingPongStart=0,XPingPongEnd=0,YPingPongStart=0,YPingPongEnd=0;
 let XBall=0, YBall=0,Xdirection=1,Ydirection=0;
 let Yping1Start=0,Yping1End=0,Yping2Start=0,Yping2End=0;
@@ -14,7 +14,7 @@ let key1="",key2="";
 
 export default function PingPong()
 {
-    const [ballxpos, setBallXPos] = useState(50);
+    let [ballxpos, setBallXPos] = useState(50);
     const [ballypos, setBallYPos] = useState(50);
     const [ping1ypos, setPing1YPos] = useState(42);
     const [ping2ypos, setPing2YPos] = useState(42);
@@ -71,44 +71,46 @@ export default function PingPong()
         },10);
         const interval1 = setInterval(()=>
         {
-            if (XBall + 26 < XPingPongEnd && Xdirection === 1)
-                setBallXPos(ballxpos + 0.5);
-            else
+            if(access)
             {
-                if((YBall + 12.5 > Yping2End || YBall < Yping2Start - 12.5) && Xdirection === 1)
+                if (XBall + 26 < XPingPongEnd && Xdirection === 1)
+                    setBallXPos(ballxpos + 0.5);
+                else
                 {
-                    setBallXPos(50);
-                    result1++;
+                    if((YBall + 12.5 > Yping2End || YBall < Yping2Start - 12.5) && Xdirection === 1)
+                    {
+                        ballxpos = 50;
+                        result1++;
+                    }
+                    Xdirection = 0;
                 }
-                Xdirection = 0;
-            }
-            if (XBall > XPingPongStart && Xdirection === 0)
-                setBallXPos(ballxpos - 0.5);
-            else
-            {
-                if((YBall + 12.5 > Yping1End || YBall < Yping1Start - 12.5) && Xdirection === 0)
+                if (XBall > XPingPongStart && Xdirection === 0)
+                    setBallXPos(ballxpos - 0.5);
+                else
                 {
-                    setBallXPos(50);
-                    result2++;
+                    if((YBall + 12.5 > Yping1End || YBall < Yping1Start - 12.5) && Xdirection === 0)
+                    {
+                        setBallXPos(50);
+                        result2++;
+                    }
+                    Xdirection = 1;
                 }
-                Xdirection = 1;
-            }
-            if(YBall + 26 < YPingPongEnd && Ydirection === 1)
-            {
-                if(XBall % alpha === 0)
-                    setBallYPos(ballypos + 0.6);
-            }
-            else
-                Ydirection = 0;
+                if(YBall + 26 < YPingPongEnd && Ydirection === 1)
+                {
+                    if(XBall % alpha === 0)
+                        setBallYPos(ballypos + 0.6);
+                }
+                else
+                    Ydirection = 0;
 
-            if(YBall > YPingPongStart && Ydirection === 0)
-            {
-                if(XBall % alpha === 0)
-                    setBallYPos(ballypos - 0.6);
+                if(YBall > YPingPongStart && Ydirection === 0)
+                {
+                    if(XBall % alpha === 0)
+                        setBallYPos(ballypos - 0.6);
+                }
+                else
+                    Ydirection = 1;
             }
-            else
-                Ydirection = 1;
-            
         },10);
         const interval2 = setInterval(()=>
         {
@@ -148,6 +150,14 @@ export default function PingPong()
         const handleKeyPress1 = (event :any) =>
         {
             key1 = event.key;
+            if(key1 === 'p' && pause_game === 1)
+            {
+                console.log(pause_game);
+                if(access === 1)
+                    access = 0;
+                else
+                    access = 1;
+            }
         }
         const handleKeyPress2 = (event :any) =>
         {
@@ -181,7 +191,7 @@ export default function PingPong()
                 <div id="ball" style={ballStyle}></div>
             </div>
             <div id="map_name">
-                <div>Map-V1</div>
+                <div>Map-V{map}</div>
             </div>
         </main>
         );

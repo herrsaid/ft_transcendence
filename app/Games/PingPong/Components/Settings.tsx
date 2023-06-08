@@ -3,9 +3,9 @@
 import Link from "next/link";
 import "../style/style.css"
 
-let map = 0;
-let voice = -1;
-let pause_game = -1;
+export let map = 0;
+export let voice = 0;
+export let pause_game = 0;
 function change_map_value(param: number)
 {
     for(let a=1;a<4;a++)
