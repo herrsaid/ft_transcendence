@@ -2,14 +2,14 @@
 
 import React,{ useEffect, useState } from 'react';
 import './style/style.css'
-import { Navbar } from 'react-bootstrap';
+import NavBar from "@/app/Components/NavBar/NavBar";
 
 let alpha=1,speed=5,pause=0,voice=0;
 let XPingPongStart=0,XPingPongEnd=0,YPingPongStart=0,YPingPongEnd=0;
 let XBall=0, YBall=0,Xdirection=1,Ydirection=0;
 let Yping1Start=0,Yping1End=0,Yping2Start=0,Yping2End=0;
 let result1=0,result2=0;
-let key1,key2;
+let key1="",key2="";
 
 
 export default function PingPong()
@@ -19,7 +19,7 @@ export default function PingPong()
     const [ping1ypos, setPing1YPos] = useState(42);
     const [ping2ypos, setPing2YPos] = useState(42);
     const PingPongStyle = {
-        top: "30%",
+        top: "20%",
         left: "10%",
         width: "80%",
         height: "40%",
@@ -45,7 +45,7 @@ export default function PingPong()
     {
         const interval = setInterval(()=>
         {
-            let elem = document.getElementById("PingPong");
+            let elem = document.getElementById("PingPong_Game");
             let ball = document.getElementById("ball");
             if(elem != null)
             {
@@ -74,13 +74,25 @@ export default function PingPong()
             if (XBall + 26 < XPingPongEnd && Xdirection === 1)
                 setBallXPos(ballxpos + 0.5);
             else
+            {
+                if((YBall + 12.5 > Yping2End || YBall < Yping2Start - 12.5) && Xdirection === 1)
+                {
+                    setBallXPos(50);
+                    result1++;
+                }
                 Xdirection = 0;
-
+            }
             if (XBall > XPingPongStart && Xdirection === 0)
                 setBallXPos(ballxpos - 0.5);
             else
+            {
+                if((YBall + 12.5 > Yping1End || YBall < Yping1Start - 12.5) && Xdirection === 0)
+                {
+                    setBallXPos(50);
+                    result2++;
+                }
                 Xdirection = 1;
-            
+            }
             if(YBall + 26 < YPingPongEnd && Ydirection === 1)
             {
                 if(XBall % alpha === 0)
@@ -155,16 +167,21 @@ export default function PingPong()
 
     return(
         <main className="absolute inset-x-0 inset-y-0">
-            <Navbar idd="2"/>
-            <div  style={PingPongStyle} id="PingPong">
-                <div id="ping1" style={ping1style}></div>
-                <div id="ping2"  style={ping2style}></div>
+            <NavBar idd="1"/>
+            <div id="informaion">
                 <div id="user1">mabdelou</div>
                 <div id="user2">aabdelou</div>
                 <div id="result1">{result1}</div>
                 <div id="center">-</div>
                 <div id="result2">{result2}</div>
+            </div>
+            <div  style={PingPongStyle} id="PingPong_Game">
+                <div id="ping1" style={ping1style}></div>
+                <div id="ping2"  style={ping2style}></div>
                 <div id="ball" style={ballStyle}></div>
+            </div>
+            <div id="map_name">
+                <div>Map-V1</div>
             </div>
         </main>
         );

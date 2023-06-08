@@ -1,4 +1,17 @@
-#PingPong
+#informaion
+{
+    background-color: rgba(0, 0, 0, 0.4);
+    position: relative;
+    border-top-left-radius:  25px;
+    border-top-right-radius:  25px;
+    height: 5%;
+    width: 40%;
+    left:30%;
+    top:20%;
+}
+
+
+#PingPong_Game
 {
     background-color: rgba(0, 0, 0, 0.4);
     position: relative;
@@ -26,34 +39,59 @@
 {
     color: white;
     position: absolute;
-    left: 35%;
-    top: 5%;
+    left: 15%;
+    top: 25%;
+    font-size: 2vw;
 }
 #user2
 {
     color: white;
     position: absolute;
-    left: 60%;
-    top: 5%;
+    left: 65%;
+    top: 25%;
+    font-size: 2vw;
 }
 #result1
 {
     color: white;
     position: absolute;
-    left: 55%;
-    top: 5%;
+    left: 42%;
+    top: 25%;
+    font-size: 2vw;
 }
 #result2
 {
     color: white;
     position: absolute;
-    left: 46%;
-    top: 5%;
+    left: 56%;
+    top: 25%;
+    font-size: 2vw;
 }
 #center
 {
     color: white;
     position: absolute;
     left: 50%;
-    top: 5%;
+    top: 25%;
+    font-size: 2vw;
+}
+
+#map_name
+{
+    background-color: rgba(0, 0, 0, 0.4);
+    position: relative;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius:  25px;
+    height: 5%;
+    width: 40%;
+    left:30%;
+    top:20%;
+}
+#map_name div
+{
+    color: white;
+    position: absolute;
+    left: 40%;
+    top: 25%;
+    font-size: 2vw;
 }
