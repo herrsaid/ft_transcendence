@@ -26,8 +26,10 @@ export default function Header(props)
       setInterval(()=>
       {
         const buttonRect = idd.getBoundingClientRect();
+        let size;
         const divnarbar = document.getElementById("DivNavBar");
-        const size = divnarbar.getBoundingClientRect().width;
+        if(divnarbar != null)
+          size = divnarbar.getBoundingClientRect().width;
         if(old_pos != size || old_pos === 0)
         {
           old_pos = size;

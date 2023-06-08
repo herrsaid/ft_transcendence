@@ -101,7 +101,7 @@ function MouveRight()
 }
 
 
-export default function Home() {
+export default function Games() {
   useEffect(()=>
   {
     arr = new Array
@@ -115,7 +115,9 @@ export default function Home() {
       if (wait_proscess === 1)
       {
         const games = document.getElementById("Games");
-        const size = games.getBoundingClientRect().width;
+        let size;
+        if(games != null)
+          size = games.getBoundingClientRect().width;
         if (size > 1500)
         {
           num_mod = 3;
@@ -168,9 +170,15 @@ export default function Home() {
       <NavBar idd="1"/>
       <div id="Games" className='relative games flex justify-center'>
         <button onClick={MouveLeft} id="left_button"><p> &lt;&lt; </p></button>
-        <CardGames/>
-        <Chess/>
-        <PingPong/>
+        <Link href="/Games/CardGames">
+          <CardGames/>
+        </Link>
+        <Link href="/Games/Chess">
+          <Chess/>
+        </Link>
+        <Link href="/Games/PingPong">
+          <PingPong/>
+        </Link>
         <button onClick={MouveRight}  id="right_button"><p> &gt;&gt; </p></button>
       </div>
     </main>

@@ -1,0 +1,77 @@
+.PingPong
+{
+    background-color: rgba(0, 0, 0, 0.4);
+    position: relative;
+    top: 30%;
+    left: 10%;
+    width: 80%;
+    height: 40%;
+    border: 5px;
+    border-radius: 25px;
+
+}
+#ping1
+{
+    position: absolute;
+    background-color: white;
+    width:0.5%;
+    height: 15%;
+    top:45%;
+
+}
+#ping2
+{
+    position: absolute;
+    background-color: white;
+    width:0.5%;
+    height: 15%;
+    left: 99.5%;
+    top:45%;
+
+}
+#ball
+{
+    background-color: white;
+    border-radius: 100%;
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    left: 50%;
+    top: 50%;
+
+}
+#user1
+{
+    color: white;
+    position: absolute;
+    left: 35%;
+    top: 5%;
+}
+#user2
+{
+    color: white;
+    position: absolute;
+    left: 60%;
+    top: 5%;
+}
+#result1
+{
+    color: white;
+    position: absolute;
+    left: 55%;
+    top: 5%;
+}
+#result2
+{
+    color: white;
+    position: absolute;
+    left: 46%;
+    top: 5%;
+}
+#center
+{
+    color: white;
+    position: absolute;
+    left: 50%;
+    top: 5%;
+}
