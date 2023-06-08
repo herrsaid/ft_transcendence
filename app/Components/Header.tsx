@@ -7,7 +7,7 @@ import './Header.css'
 import MovingLine from './MovingLine';
 
 let old_pos = 0;
-export default function Header(props)
+export default function Header(props: any)
 {
   useEffect(() =>
     {
