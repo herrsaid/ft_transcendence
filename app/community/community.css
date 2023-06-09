@@ -1,16 +1,15 @@
 .all{
-    overflow: scroll;
     color: white;
     display: flex;
     justify-content: space-between;
-    height: 100vh;
+    height: 100dvh;
     flex-wrap: wrap;
     
 }
 
 .groups
 {
-    height: 100vh;
+    height: 100dvh;
     border: solid;
     border-color: #DD58D6;
     background-color: rgba(0, 0, 0, 0.5);
@@ -52,7 +51,7 @@
     border-radius: 25px;
     justify-content: space-between;
     flex-direction: column;
-    height: 100vh;
+    height: 100dvh;
     flex: 2;
 }
 
@@ -60,7 +59,7 @@
 {
     text-align: center;
     align-items: center;
-    margin-top: 1vh;
+    margin-top: 1dvh;
 }
 
 .chat-box .chat-send-message form button
@@ -159,8 +158,8 @@ div .chats
 {
     border: #DD58D6;
     border-radius: 25px;
-    height: 89.5vh;
-    overflow: scroll;
+    height: 89.5dvh;
+    overflow: auto;
 }
 
 .chat-img img
