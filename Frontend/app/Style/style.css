@@ -1,0 +1,16 @@
+
+.bg
+{
+    background-image: url(../../public/game-bg.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* filter: blur(8px); */    backdrop-filter: blur(16px);
+    font-family: 'Jua', sans-serif;
+    
+}
+
+.right-25
+{
+    right: 5%;
+}

@@ -1,0 +1,184 @@
+.all{
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    height: 100dvh;
+    flex-wrap: wrap;
+    
+}
+
+.groups
+{
+    height: 100dvh;
+    border: solid;
+    border-color: #DD58D6;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 25px;
+    flex: 1;
+}
+
+@media (max-width: 1000px) {
+    .groups{
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .friends{
+        display: none;
+    }
+}
+.chat
+{
+    background-color: rgba(0, 0, 0, 0.5);
+    /* flex-direction: column; */
+    border-radius: 25px;
+    flex: 2;
+    justify-content: space-between;
+}
+.friends
+{
+    border: solid;
+    border-color: #DD58D6;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 25px;
+    flex: 1;
+    width:350px
+}
+
+.chat-box{
+    display:flex;
+    border-radius: 25px;
+    justify-content: space-between;
+    flex-direction: column;
+    height: 100dvh;
+    flex: 2;
+}
+
+.chat-box .chat-send-message form
+{
+    text-align: center;
+    align-items: center;
+    margin-top: 1dvh;
+}
+
+.chat-box .chat-send-message form button
+{
+    position: relative;
+    right: 30px;
+}
+
+div.chat-info
+{
+    border-radius: 25px;
+    background-color: rgba(221, 88, 214, 0.5);
+    display: flex;
+    flex:1;
+    flex-direction: row;
+    padding-left: 10px;
+    padding-top: 5px;
+}
+
+.chat-messages
+{
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 25px;
+    border: solid;
+    border-color: #DD58D6;
+    flex:10;
+}
+
+.chat-box .chat-send-message
+{
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 25px;
+    border: solid;
+    border-color: #DD58D6;
+    flex:1;
+    align-items: center;
+} 
+
+.chat-send-message input
+{
+    background-color: #DD58D6;
+    border-radius: 15px;
+    color: rgb(250, 250, 250);
+    width: 40vw;
+    height: 40px;
+    padding: 10px;
+
+}
+
+input:focus
+{
+    outline: none;
+}
+
+.profile-img
+{
+    height: 60px;
+    width: 60px;
+}
+
+.profile-img img{
+    border-radius: 50%;
+}
+
+.profile-info
+{
+    color: aliceblue;
+    margin-left: 15px;
+    margin-top: 5px;
+}
+
+.profile_box
+{
+    margin: 2px;
+    background-color: rgba(221, 88, 214, 0.5);
+    display: flex;
+    flex-direction: row;
+    height: 70px;
+}
+
+.groups .chat-header
+{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-size:large;
+    padding: 23px;
+}
+
+.chat-header h1
+{
+    font-size: larger;
+}
+
+div .chats
+{
+    border: #DD58D6;
+    border-radius: 25px;
+    height: 89.5dvh;
+    overflow: auto;
+}
+
+.chat-img img
+{
+    height: 60px;
+    width: 60px;
+    border-radius: 35px;
+    margin: 5px;
+}
+
+.profile-name h1
+{
+    color: #FFE79B;
+    font-size: 20px;
+    margin: 5px;
+    font-weight: bold;
+}
+
+.profile-name h4
+{
+    margin: 5px;
+}
