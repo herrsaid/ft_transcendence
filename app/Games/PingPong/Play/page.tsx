@@ -3,15 +3,13 @@
 import React,{ useEffect, useState } from 'react';
 import './style/style.css'
 import NavBar from "@/app/Components/NavBar/NavBar";
-import {map,voice,pause_game} from '../Components/Settings'
+import {map,speed,voice,pause_game} from '../Components/Settings'
 let alpha=1,access=1;
 let XPingPongStart=0,XPingPongEnd=0,YPingPongStart=0,YPingPongEnd=0;
 let XBall=0, YBall=0,Xdirection=1,Ydirection=0;
 let Yping1Start=0,Yping1End=0,Yping2Start=0,Yping2End=0;
 let result1=0,result2=0;
 let key1="",key2="";
-
-
 export default function PingPong()
 {
     let [ballxpos, setBallXPos] = useState(50);
@@ -43,6 +41,8 @@ export default function PingPong()
     };
     useEffect(()=>
     {
+        let vitesse = (40 / speed);
+        console.log(vitesse + " " + speed);
         const interval = setInterval(()=>
         {
             let elem = document.getElementById("PingPong_Game");
@@ -68,7 +68,7 @@ export default function PingPong()
                     // console.log("XBall " + XBall + " YBall " + YBall)
                 } 
             }
-        },10);
+        },vitesse);
         const interval1 = setInterval(()=>
         {
             if(access)
@@ -111,7 +111,7 @@ export default function PingPong()
                 else
                     Ydirection = 1;
             }
-        },10);
+        },vitesse);
         const interval2 = setInterval(()=>
         {
             const ping1 = document.getElementById("ping1");
@@ -146,7 +146,7 @@ export default function PingPong()
                 if(YPingPongStart < Yping2Start - 20)
                     setPing2YPos(ping2ypos - 2);
             }
-        },10);
+        },vitesse);
         const handleKeyPress1 = (event :any) =>
         {
             key1 = event.key;

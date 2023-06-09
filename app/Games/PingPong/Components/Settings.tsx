@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import "../style/style.css"
+import { useEffect } from "react";
 
-export let map = 0;
+export let map = 3;
+export let speed = 1;
 export let voice = 0;
 export let pause_game = 0;
 function change_map_value(param: number)
@@ -32,6 +34,20 @@ function change_pausegame_value(param: number)
     changemap.style.backgroundColor = "rgba(88, 21, 141, 1)";
     pause_game = param;
 }
+function change_pos(param :number)
+{
+    const element = document.getElementById("scroll");
+    if(element != null)
+    {
+        if(param === 1)
+            element.style.left = "35%";
+        else if(param === 2)
+            element.style.left = "58.5%";
+        else
+            element.style.left = "83%";
+        speed = param;
+    }
+}
 
 export default function PingPongSettings()
 {
@@ -44,10 +60,11 @@ export default function PingPongSettings()
                 <p id="speed_p">
                     speed :
                 </p>
+                <div id="scroll" style = {{left: '35%'}}></div>
+                <p onClick={()=>  change_pos(1)} id="p_1">x1</p>
+                <p onClick={()=>  change_pos(2)} id="p_2">x2</p>
+                <p onClick={()=>  change_pos(4)} id="p_4">x4</p>
                 <div id="speed_scrool">
-                    <p id="p_1">1</p>
-                    <p id="p_5">5</p>
-                    <p id="p_10">10</p>
                 </div>
             </div>
             <div id="map">
