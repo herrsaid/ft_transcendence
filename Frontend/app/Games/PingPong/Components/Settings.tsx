@@ -6,8 +6,9 @@ import { useEffect } from "react";
 
 export let map = 3;
 export let speed = 1;
-export let voice = 0;
+export let Online = 1;
 export let pause_game = 0;
+export let other_tools = 0;
 function change_map_value(param: number)
 {
     for(let a=1;a<4;a++)
@@ -17,13 +18,44 @@ function change_map_value(param: number)
     map = param;
 }
 
-function change_voice_value(param: number)
+function change_online_value(param: number)
 {
     for(let a=0;a<2;a++)
-        document.getElementById(`voice_${a}`).style.backgroundColor = "rgba(88, 21, 141, 0.4)";
-    const changemap= document.getElementById(`voice_${param}`);
+        document.getElementById(`match_mood_${a}`).style.backgroundColor = "rgba(88, 21, 141, 0.4)";
+    const changemap= document.getElementById(`match_mood_${param}`);
     changemap.style.backgroundColor = "rgba(88, 21, 141, 1)";
-    voice = param;
+    if(param === 1)
+    {
+        document.getElementById('play').style.zIndex = "1";
+        document.getElementById('play2').style.zIndex = "2";
+        document.getElementById('other_tools').style.opacity = "0";
+        document.getElementById('pause_game').style.opacity = "0";
+        // document.getElementById('pause_game_0').style.zIndex = "-1";
+        // document.getElementById('pause_game_1').style.zIndex = "-1";
+        // document.getElementById('other_tools_0').style.zIndex = "-1";
+        // document.getElementById('other_tools_1').style.zIndex = "-1";
+    }
+        else
+        {
+            document.getElementById('play').style.zIndex = "2";
+            document.getElementById('play2').style.zIndex = "1";
+            document.getElementById('other_tools').style.opacity = "1";
+            document.getElementById('pause_game').style.opacity = "1";
+            // document.getElementById('pause_game_0').style.zIndex = "2";
+            // document.getElementById('pause_game_1').style.zIndex = "2";
+            // document.getElementById('other_tools_0').style.zIndex = "2";
+            // document.getElementById('other_tools_1').style.zIndex = "2";
+        }
+        Online = param;
+}
+
+function change_other_tools_value(param: number)
+{
+    for(let a=0;a<2;a++)
+        document.getElementById(`other_tools_${a}`).style.backgroundColor = "rgba(88, 21, 141, 0.4)";
+    const changemap= document.getElementById(`other_tools_${param}`);
+    changemap.style.backgroundColor = "rgba(88, 21, 141, 1)";
+    other_tools = param;
 }
 
 function change_pausegame_value(param: number)
@@ -34,6 +66,15 @@ function change_pausegame_value(param: number)
     changemap.style.backgroundColor = "rgba(88, 21, 141, 1)";
     pause_game = param;
 }
+
+function is_Online_mod()
+{
+    if(Online === 1)
+    {
+        document.getElementById("Settings").style.filter = "blur(15px)";
+    }
+}
+
 function change_pos(param :number)
 {
     const element = document.getElementById("scroll");
@@ -87,18 +128,18 @@ export default function PingPongSettings()
                     </p>
                 </button>
             </div>
-            <div id="voice">
-                <p id="voice_p">
-                    voice :
+            <div id="match_mood">
+                <p id="match_mood_p">
+                    match mood :
                 </p>
-                <button onClick={()=> change_voice_value(1)} id="voice_1">
+                <button onClick={()=> change_online_value(1)} id="match_mood_1">
                     <p>
-                        true
+                        Online
                     </p>
                 </button>
-                <button onClick={()=> change_voice_value(0)} id="voice_0">
+                <button onClick={()=> change_online_value(0)} id="match_mood_0">
                     <p>
-                        false
+                        Ofline
                     </p>
                 </button>
             </div>
@@ -108,22 +149,46 @@ export default function PingPongSettings()
                 </p>
                 <button onClick={()=> change_pausegame_value(1)} id="pause_game_1">
                     <p>
-                        true
+                        Yes
                     </p>
                 </button>
                 <button onClick={()=> change_pausegame_value(0)} id="pause_game_0">
                     <p>
-                        false
+                        No
                     </p>
                 </button>
             </div>
+            <div id="other_tools">
+                <p id="other_tools_p">
+                    other tools:
+                </p>
+                <button onClick={()=> change_other_tools_value(0)} id="other_tools_0">
+                    <p>
+                        bot
+                    </p>
+                </button>
+                <button onClick={()=> change_other_tools_value(1)} id="other_tools_1">
+                    <p>
+                       2P
+                    </p>
+                </button>
+            </div>
+            <img src="reload.png">
+            </img>
             <Link href="/Games/PingPong/Play">
                 <button id="play">
                     <p>
-                        play
+                        Play
                     </p>
                 </button>
             </Link>
+            {/* <Link href="/Games/PingPong/Play2"> */}
+                <button onClick={is_Online_mod} id="play2">
+                    <p>
+                        Play
+                    </p>
+                </button>
+            {/* </Link> */}
         </div>
     );
 }

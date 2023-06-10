@@ -30,9 +30,9 @@
 }
 #ball
 {
+    position: absolute;
     background-color: white;
     border-radius: 100%;
-    position: absolute;
 
 }
 #user1

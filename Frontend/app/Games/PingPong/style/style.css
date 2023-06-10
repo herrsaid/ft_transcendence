@@ -96,7 +96,7 @@
     display: flex;
     width: 100%;
     height:5%;
-    top: 25%;
+    top: 22.5%;
     font-size: 2vmin;
     color: white;
     z-index: 1;
@@ -110,10 +110,10 @@
 
 #mapv1
 {
-    position: relative;
+    position: absolute;
     width: 10%;
     height: 100%;
-    left: 27%;
+    left: 35%;
     background-color: rgba(88, 21, 141, 0.4);
     border-radius: 10px;
     text-align: center;
@@ -121,10 +121,10 @@
 
 #mapv2
 {
-    position: relative;
+    position: absolute;
     width: 10%;
     height: 100%;
-    left: 38%;
+    left: 56%;
     background-color: rgba(88, 21, 141, 0.4);
     border-radius: 10px;
     text-align: center;
@@ -132,50 +132,50 @@
 
 #mapv3
 {
-    position: relative;
+    position: absolute;
     width: 10%;
     height: 100%;
-    left: 50%;
+    left: 76%;
     background-color: rgba(88, 21, 141, 1);
     border-radius: 10px;
     text-align: center;
 }
 
-#voice
+#match_mood
 {
     position: relative;
     display: flex;
     width: 100%;
     height:5%;
-    top: 35%;
+    top: 30%;
     font-size: 2vmin;
     color: white;
     z-index: 1;
 }
 
-#voice_p
+#match_mood_p
 {
     position: relative;
     left: 15%;
 }
 
-#voice_1
+#match_mood_1
 {
-    position: relative;
+    position: absolute;
     width: 10%;
     height: 100%;
-    left: 26%;
+    left: 56%;
     background-color: rgba(88, 21, 141, 1);
     border-radius: 10px;
     text-align: center;
 }
 
-#voice_0
+#match_mood_0
 {
-    position: relative;
+    position: absolute;
     width: 10%;
     height: 100%;
-    left: 37%;
+    left: 35%;
     background-color: rgba(88, 21, 141, 0.4);
     border-radius: 10px;
     text-align: center;
@@ -187,10 +187,10 @@
     display: flex;
     width: 100%;
     height:5%;
-    top: 45%;
+    top: 37.5%;
     font-size: 2vmin;
     color: white;
-    z-index: 1;
+    opacity: 0;
 }
 
 #pause_game_p
@@ -201,32 +201,76 @@
 
 #pause_game_1
 {
-    position: relative;
+    position: absolute;
     width: 10%;
     height: 100%;
-    left: 17%;
+    left: 35%;
     background-color: rgba(88, 21, 141, 0.4);
     border-radius: 10px;
     text-align: center;
+    /* z-index: -1; */
 }
 
 #pause_game_0
 {
-    position: relative;
+    position: absolute;
     width: 10%;
     height: 100%;
-    left: 28%;
+    left: 56%;
     background-color: rgba(88, 21, 141, 1);
     border-radius: 10px;
     text-align: center;
+    /* z-index: -1; */
+}
+
+#other_tools
+{
+    position: relative;
+    display: flex;
+    width: 100%;
+    height:5%;
+    top: 45%;
+    font-size: 2vmin;
+    color: white;
+    opacity: 0;
+}
+
+#other_tools_p
+{
+    position: relative;
+    left: 15%;
+}
+
+#other_tools_1
+{
+    position: absolute;
+    width: 10%;
+    height: 100%;
+    left: 56%;
+    background-color: rgba(88, 21, 141, 0.4);
+    border-radius: 10px;
+    text-align: center;
+    /* z-index: -1; */
+}
+
+#other_tools_0
+{
+    position: absolute;
+    width: 10%;
+    height: 100%;
+    left: 35%;
+    background-color: rgba(88, 21, 141, 1);
+    border-radius: 10px;
+    text-align: center;
+    /* z-index: -1; */
 }
 
 #play
 {
-    position: relative;
+    position: absolute;
     width: 20%;
     height: 6%;
-    top: 60%;
+    top: 87.5%;
     left: 40%;
     background-color: rgba(88, 21, 141, 0.6);
     border-radius: 15px;
@@ -238,5 +282,23 @@
     position: relative;
     text-align: center;
     font-size:3vmin;
-    bottom: 10%;
+}
+
+#play2
+{
+    position: absolute;
+    width: 20%;
+    height: 6%;
+    top: 87.5%;
+    left: 40%;
+    background-color: rgba(88, 21, 141, 0.6);
+    border-radius: 15px;
+    text-align: center;
+}
+
+#play2 p
+{
+    position: relative;
+    text-align: center;
+    font-size:3vmin;
 }

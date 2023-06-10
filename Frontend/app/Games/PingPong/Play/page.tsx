@@ -3,13 +3,14 @@
 import React,{ useEffect, useState } from 'react';
 import './style/style.css'
 import NavBar from "@/app/Components/NavBar/NavBar";
-import {map,speed,voice,pause_game} from '../Components/Settings'
-let alpha=1,access=1;
+import {map,speed,Online,pause_game,other_tools} from '../Components/Settings'
+let alpha=1,access=1,bot_access = 1;
 let XPingPongStart=0,XPingPongEnd=0,YPingPongStart=0,YPingPongEnd=0;
 let XBall=0, YBall=0,Xdirection=1,Ydirection=0;
 let Yping1Start=0,Yping1End=0,Yping2Start=0,Yping2End=0;
 let result1=0,result2=0;
 let key1="",key2="";
+let interval,interval1,interval2,interval3;
 export default function PingPong()
 {
     let [ballxpos, setBallXPos] = useState(50);
@@ -42,8 +43,7 @@ export default function PingPong()
     useEffect(()=>
     {
         let vitesse = (40 / speed);
-        console.log(vitesse + " " + speed);
-        const interval = setInterval(()=>
+        interval = setInterval(()=>
         {
             let elem = document.getElementById("PingPong_Game");
             let ball = document.getElementById("ball");
@@ -69,7 +69,7 @@ export default function PingPong()
                 } 
             }
         },vitesse);
-        const interval1 = setInterval(()=>
+        interval1 = setInterval(()=>
         {
             if(access)
             {
@@ -112,7 +112,7 @@ export default function PingPong()
                     Ydirection = 1;
             }
         },vitesse);
-        const interval2 = setInterval(()=>
+        interval2 = setInterval(()=>
         {
             const ping1 = document.getElementById("ping1");
             const ping2 = document.getElementById("ping2");
@@ -126,33 +126,63 @@ export default function PingPong()
                 Yping2Start = parseInt((ping2.getBoundingClientRect().top).toString());
                 Yping2End = parseInt((ping2.getBoundingClientRect().top + ping2.getBoundingClientRect().height).toString());
             }
-            if(key1 === 's')
+            if(key2 === 's')
             {
                 if(YPingPongEnd > Yping1End + 20)
                     setPing1YPos(ping1ypos + 2);
             }
-            else if (key1 === 'w')
+            else if (key2 === 'w')
             {
                 if(YPingPongStart < Yping1Start - 20)
                     setPing1YPos(ping1ypos - 2);
             }
-            if(key2 === 'ArrowDown')
+            if(key1 === 'ArrowDown')
             {
                 if(YPingPongEnd > Yping2End + 20)
                     setPing2YPos(ping2ypos + 2);
             }
-            else if (key2 === 'ArrowUp')
+            else if (key1 === 'ArrowUp')
             {
                 if(YPingPongStart < Yping2Start - 20)
                     setPing2YPos(ping2ypos - 2);
             }
         },vitesse);
+        function getRandomNumber(min:number, max:number) {
+            var randomBytes = new Uint32Array(1);
+            window.crypto.getRandomValues(randomBytes);
+            var randomNumber = randomBytes[0] / (Math.pow(2, 32) - 1);
+            return Math.floor(randomNumber * (max - min + 1)) + min;
+        }
+        if(other_tools != 1)
+        { 
+            interval3 = setInterval(()=>
+            {
+                let elem = document.getElementById("ping1");
+                let pos = YBall - 480;
+                if (elem != null)
+                {
+                    if(YPingPongEnd > YBall + 55 && YPingPongStart < YBall - 55)
+                    {
+                        if(getRandomNumber(0, 50) === 5 && bot_access === 1)
+                        {
+                            bot_access = 0;
+                            setTimeout(()=>{bot_access = 1;},1500);
+                        }
+                        else if (bot_access === 1)
+                        {
+                            elem.style.top = `${pos}px`;
+                            bot_access = 1;
+                        }
+                    }
+                }
+            },vitesse);
+        }
+
         const handleKeyPress1 = (event :any) =>
         {
             key1 = event.key;
             if(key1 === 'p' && pause_game === 1)
             {
-                console.log(pause_game);
                 if(access === 1)
                     access = 0;
                 else
@@ -169,15 +199,18 @@ export default function PingPong()
             key1 = "";
         }
         document.addEventListener('keydown', handleKeyPress1);
-        document.addEventListener('keydown', handleKeyPress2);
+        if(other_tools === 1)
+            document.addEventListener('keydown', handleKeyPress2);
         document.addEventListener('keyup', handleKeyrelease);
         return ()=>
         {
             clearInterval(interval);
             clearInterval(interval1);
             clearInterval(interval2);
+            clearInterval(interval3);
             document.removeEventListener('keydown', handleKeyPress1);
-            document.removeEventListener('keydown', handleKeyPress2);
+            if(other_tools === 1)
+                document.removeEventListener('keydown', handleKeyPress2);
             document.addEventListener('keyup', handleKeyPress2);
         };
     });
