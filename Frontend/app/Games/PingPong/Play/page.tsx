@@ -77,7 +77,7 @@ export default function PingPong()
                     setBallXPos(ballxpos + 0.5);
                 else
                 {
-                    if((YBall + 12.5 > Yping2End || YBall < Yping2Start - 12.5) && Xdirection === 1)
+                    if((YBall > Yping2End || YBall < Yping2Start - 20) && Xdirection === 1)
                     {
                         ballxpos = 50;
                         result1++;
@@ -88,7 +88,7 @@ export default function PingPong()
                     setBallXPos(ballxpos - 0.5);
                 else
                 {
-                    if((YBall + 12.5 > Yping1End || YBall < Yping1Start - 12.5) && Xdirection === 0)
+                    if((YBall > Yping1End || YBall < Yping1Start - 20) && Xdirection === 0)
                     {
                         setBallXPos(50);
                         result2++;
@@ -163,8 +163,14 @@ export default function PingPong()
         {
             key2 = event.key;
         }
+        const handleKeyrelease = (event :any) =>
+        {
+            key2 = "";
+            key1 = "";
+        }
         document.addEventListener('keydown', handleKeyPress1);
         document.addEventListener('keydown', handleKeyPress2);
+        document.addEventListener('keyup', handleKeyrelease);
         return ()=>
         {
             clearInterval(interval);
@@ -172,6 +178,7 @@ export default function PingPong()
             clearInterval(interval2);
             document.removeEventListener('keydown', handleKeyPress1);
             document.removeEventListener('keydown', handleKeyPress2);
+            document.addEventListener('keyup', handleKeyPress2);
         };
     });
 
