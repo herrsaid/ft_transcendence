@@ -173,8 +173,6 @@ export default function PingPongSettings()
                     </p>
                 </button>
             </div>
-            <img src="reload.png">
-            </img>
             <Link href="/Games/PingPong/Play">
                 <button id="play">
                     <p>
