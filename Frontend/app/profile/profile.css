@@ -28,21 +28,28 @@
 
 .Friends{
     width: 80%;
-    height: 350px;
+    
     background-color: var(--color-dark);
-    opacity: 0.5;
+    
     margin-bottom: 50px;
     border-radius: 17px;
     margin-left: 5%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    overflow-y: scroll;
+    height: 350px;
 }
 
 .Groups{
     width: 80%;
     height: 350px;
     background-color: var(--color-dark);
-    opacity: 0.5;
+    
     border-radius: 17px;
     margin-left: 5%;
+    overflow-y: scroll;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 
@@ -80,19 +87,27 @@
     width: 80%;
     height: 350px;
     background-color: var(--color-dark);
-    opacity: 0.5;
     margin-bottom: 50px;
     border-radius: 17px;
     margin-left: 15%;
+
+
+
+    
+    overflow-y: scroll;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 .Store{
     width: 80%;
     height: 350px;
     background-color: var(--color-dark);
-    opacity: 0.5;
     border-radius: 17px;
     margin-left: 15%;
+    overflow-y: scroll;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
 
 
@@ -346,4 +361,55 @@ div.avatar img{
 
 div.avatar span{
     margin-left: 70%;
+}
+
+
+
+.Friends .friend{
+    width: 90%;
+    background: linear-gradient(90deg,#092962, #000);
+    color: var(--color-light);
+    margin: 10px 0px;
+    padding-left: 4%;
+    margin-left: 2%;
+    border-radius: 20px;
+    padding-top: 2%;
+    display: flex;
+    font-weight: bold;
+    padding-bottom: 2%;
+}
+
+.Friends .friend img{
+    width: 20%;
+}
+
+p.enligne{
+    color: blueviolet;
+    font-weight: bold;
+}
+
+
+.Groups .group{
+    width: 90%;
+    background: linear-gradient(90deg,#092962, #000);
+    color: var(--color-light);
+    margin: 10px 0px;
+    padding-left: 4%;
+    margin-left: 2%;
+    border-radius: 20px;
+    padding-top: 2%;
+    display: flex;
+    font-weight: bold;
+    padding-bottom: 2%;
+    justify-content: space-between;
+}
+
+.Groups .group h4{
+    color: blueviolet;
+    font-weight: bold;
+}
+
+.side_two_nav{
+    display: flex;
+    /* justify-content: space-between; */
 }
