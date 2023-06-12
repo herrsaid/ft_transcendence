@@ -12,10 +12,9 @@ export default function Profile()
 
         <NavBar idd="5"/>
         <div className="side_two">
-                        <ProfileInfoNav />
+                        
                         <div className="side_two_info">
 
-                            
                             <ProfileAvatar/>
                             <ProfileInfo/>
 

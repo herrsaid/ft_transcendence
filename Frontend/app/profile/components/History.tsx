@@ -6,7 +6,7 @@ const History = () => {
 
 <div className="side_two_history">
 
-<h2>history</h2>
+<h2>History</h2>
 
 <div className="victory_div">
     <div className="info_victory">

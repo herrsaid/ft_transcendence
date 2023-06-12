@@ -4,6 +4,7 @@ const ProfileInfo = () => {
     return (
         <div>
                 <div className="info">
+                                <div className="inside_info_p">
                                 <p>
                                 <span className="group_wins">Wins:<span className="wins_span">50</span></span>
                                 <span className="group_wins">Rank:<span className="wins_span">Gold-P3</span></span>
@@ -26,6 +27,7 @@ const ProfileInfo = () => {
                                         <p>level 8.81</p>
                                     </div>
                                 </p>
+                                </div>
                             </div>
         </div>
         

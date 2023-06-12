@@ -121,43 +121,36 @@
     font-size: 25px;
 }
 
-.side_two_info{
-    /* display: flex;
-    /* justify-content: space-between; */
-    /* flex-wrap: wrap; */ 
-}
-
 
 
 .side_two_info .profile_avatar{
-    padding: 8px 10px;   
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 40px; 
 }
 
 .side_two_info .profile_avatar img{
-    width: 130px;    
+    width: 130px;
+    border: 2px solid var(--color-border);
+    border-radius: 50%;
+        
 }
 
 .side_two_info .profile_avatar p.username{
     color: var(--color-light);
     font-weight: bold;
-    font-size: 16px;
-    /* margin-left: 18%; */
+    font-size: 20px;
     margin-bottom: 5%;
     margin-left: 10px;
 }
 
 
 .info{
-    /* flex:1 70%; */
-    /* background-color: var(--color-dark); */
     background: linear-gradient(90deg,#092962, #000);
     border-radius: 25px;
     height: fit-content;
     color:var(--color-light);
     padding: 10px;
-    /* margin-left: 5%;
-    margin-bottom: 5%; */
-
 }
 
 
@@ -207,8 +200,8 @@ div.side_two_history{
 }
 
 div.side_two_history h2{
-    font-size: 30px;
-    margin-bottom: 10%;
+    font-size: 25px;
+    margin-bottom: 5%;
 }
 
 div.victory_div{
@@ -417,7 +410,6 @@ p.enligne{
 
 .side_two_nav{
     display: flex;
-    /* justify-content: space-between; */
 }
 
 
@@ -444,11 +436,25 @@ p.enligne{
 .one_achievements p{
     color:  var(--color-light);
     font-size: 17px;
-    font-weight: bold;
 }
 
 .one_achievements img{
     width: 80px;
     border-radius: 50%;
     border: 2px solid var(--color-border);
+}
+
+
+.side_two_nav button{
+    background-color: blueviolet;
+    padding: 10px;
+    outline: none;
+    border-radius: 8px;
+    width: 200px;
+    font-weight: bold;
+}
+
+
+.inside_info_p {
+    margin: auto;
 }
