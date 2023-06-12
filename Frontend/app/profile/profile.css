@@ -36,7 +36,7 @@
     margin-left: 5%;
     padding-top: 10px;
     padding-bottom: 10px;
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 350px;
 }
 
@@ -47,7 +47,7 @@
     
     border-radius: 17px;
     margin-left: 5%;
-    overflow-y: scroll;
+    overflow-y: auto;
     padding-top: 10px;
     padding-bottom: 10px;
 }
@@ -58,6 +58,7 @@
     flex: 1 30%;
     border-radius: 25px;
     margin-top: 6%;
+    
 }
 
 .side_three{
@@ -94,7 +95,7 @@
 
 
     
-    overflow-y: scroll;
+    overflow-y: auto;
     padding-top: 10px;
     padding-bottom: 10px;
 }
@@ -105,7 +106,7 @@
     background-color: var(--color-dark);
     border-radius: 17px;
     margin-left: 15%;
-    overflow-y: scroll;
+    overflow-y: auto;
     padding-top: 10px;
     padding-bottom: 10px;
 }
