@@ -1,4 +1,3 @@
-export {default as Store} from './components/Store'
 export {default as ProfileInfoNav} from './components/ProfileInfoNav'
 export {default as ProfileInfo} from './components/ProfileInfo'
 export {default as ProfileAvatar} from './components/ProfileAvatar'

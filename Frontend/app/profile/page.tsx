@@ -28,12 +28,9 @@ export default function Profile()
                         <Groups/>        
                     </div>
 
-                    
-
                     <div className="side_three">
 
                         <Achievevements/>
-                        <Store/>
                         
                     </div>
             </div>

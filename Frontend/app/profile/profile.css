@@ -89,31 +89,18 @@
 
 .Achievevements{
     width: 80%;
-    height: 350px;
+    height: 800px;
     background-color: var(--color-dark);
     margin-bottom: 50px;
     border-radius: 17px;
     margin-left: 5%;
 
-
-
-    
     overflow-y: auto;
     padding-top: 10px;
     padding-bottom: 10px;
 }
 
-.Store{
-    width: 80%;
-    height: 350px;
-    background-color: var(--color-dark);
-    border-radius: 17px;
-    margin-left: 5%;
-    overflow-y: auto;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    margin-bottom: 50px;
-}
+
 
 
 .side_two_nav{
@@ -431,4 +418,37 @@ p.enligne{
 .side_two_nav{
     display: flex;
     /* justify-content: space-between; */
+}
+
+
+.one_achievements{
+    background: linear-gradient(90deg,#092962, #000);
+    padding: 30px;
+    margin: auto;
+    width: 90%;
+    border-radius: 20px;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-around;
+
+}
+
+.one_achievements h3{
+    color:  blueviolet;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.one_achievements p{
+    color:  var(--color-light);
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.one_achievements img{
+    width: 80px;
+    border-radius: 50%;
+    border: 2px solid var(--color-border);
 }
