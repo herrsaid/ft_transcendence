@@ -11,13 +11,7 @@ export default function Profile()
         <div>
 
         <NavBar idd="5"/>
-            <div className="Profile">
-                    <div className="side_one">
-                        <Friends/>
-                        <Groups/>        
-                    </div>
-
-                    <div className="side_two">
+        <div className="side_two">
                         <ProfileInfoNav />
                         <div className="side_two_info">
 
@@ -28,6 +22,13 @@ export default function Profile()
                         </div>
                         <History/>
                     </div>
+            <div className="Profile">
+                    <div className="side_one">
+                        <Friends/>
+                        <Groups/>        
+                    </div>
+
+                    
 
                     <div className="side_three">
 
