@@ -58,6 +58,7 @@
 .chat-box .chat-send-message form
 {
     text-align: center;
+    vertical-align: middle;
     align-items: center;
     margin-top: 1dvh;
 }
@@ -66,6 +67,7 @@
 {
     position: relative;
     right: 30px;
+    vertical-align: middle;
 }
 
 div.chat-info
@@ -75,8 +77,8 @@ div.chat-info
     display: flex;
     flex:1;
     flex-direction: row;
-    padding-left: 10px;
-    padding-top: 5px;
+    align-items: center;
+    padding-left: 1%;
 }
 
 .chat-messages
