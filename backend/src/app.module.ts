@@ -3,9 +3,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TestController } from './test/test.controller';
 import { WebsockGateway } from './websock/websock.gateway';
-
+import { GamesModule } from './Games/Games.module';
 @Module({
-  imports: [],
+  imports: [GamesModule],
   controllers: [AppController, TestController],
   providers: [AppService, WebsockGateway],
 })
