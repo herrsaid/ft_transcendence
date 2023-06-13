@@ -212,8 +212,7 @@ div.victory_div{
     padding: 2%;
     border-radius: 13px;
     margin-bottom: 5%;
-    background: linear-gradient(90deg,#092962, #000);
-    opacity: 0.9;    
+    background: linear-gradient(90deg,#092962, #000);   
 }
 
 div.victory_div p{
@@ -457,4 +456,15 @@ p.enligne{
 
 .inside_info_p {
     margin: auto;
+}
+
+*{
+    transition: 0.3s;
+}
+
+.info_b_one{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
 }

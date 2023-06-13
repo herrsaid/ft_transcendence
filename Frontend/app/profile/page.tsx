@@ -3,6 +3,7 @@ import './profile.css'
 
 
 import {Friends, Groups, ProfileAvatar, ProfileInfo, ProfileInfoNav, History, Achievevements, Store} from './index'
+import SideNavBar from '../Components/SideNavBar/SideNavBar';
 
 
 export default function Profile()
@@ -10,7 +11,8 @@ export default function Profile()
     return(
         <div>
 
-        <NavBar idd="5"/>
+        {/* <NavBar idd="5"/> */}
+        <SideNavBar/>
         <div className="side_two">
                         
                         <div className="side_two_info">
