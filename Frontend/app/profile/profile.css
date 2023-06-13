@@ -461,3 +461,10 @@ p.enligne{
 *{
     transition: 0.3s;
 }
+
+.info_b_one{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
