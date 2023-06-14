@@ -36,12 +36,9 @@ const ProfileInfo = () => {
                                     </div>
                                 </div>
 
-
-                                <p>
                                     <div className="progress_level">
                                         <p>level 8.81</p>
                                     </div>
-                                </p>
                                 </div>
                             </div>
         </div>

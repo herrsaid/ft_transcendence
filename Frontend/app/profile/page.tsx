@@ -1,4 +1,3 @@
-import NavBar from '../Components/NavBar/NavBar'
 import './profile.css'
 
 
@@ -10,8 +9,6 @@ export default function Profile()
 {
     return(
         <div>
-
-        {/* <NavBar idd="5"/> */}
         <SideNavBar/>
         <div className="side_two">
                         
