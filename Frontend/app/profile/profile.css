@@ -375,6 +375,7 @@ div.avatar span{
     display: flex;
     font-weight: bold;
     padding-bottom: 2%;
+    cursor: pointer;
 }
 
 .Friends .friend img{
@@ -400,6 +401,7 @@ p.enligne{
     font-weight: bold;
     padding-bottom: 2%;
     justify-content: space-between;
+    cursor: pointer;
 }
 
 .Groups .group h4{
@@ -468,3 +470,24 @@ p.enligne{
     flex-wrap: wrap;
     margin-bottom: 10px;
 }
+
+.avatar_edit_real{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.avatar_edit_real label{
+   
+   color:blueviolet;
+   left: 0;
+   margin-left: 0px;
+   margin-top: 10px;
+   font-size: 24px;
+   cursor: pointer;
+   position: relative;
+   left: -12%;
+}
+
+.avatar_edit_real input{
+    display: none;
+ }

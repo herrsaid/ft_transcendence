@@ -1,7 +1,7 @@
 "use client"
 import "./SideNavBar.css"
 
-import {FaAlignJustify} from 'react-icons/fa'
+import {FaAlignJustify, FaHome} from 'react-icons/fa'
 
 export default function SideNavBar()
 {
@@ -20,10 +20,6 @@ export default function SideNavBar()
                 <h3>selhanda</h3>
                 <p>Player</p>
             </div>
-
-
-
-
 
 
             <ul>
