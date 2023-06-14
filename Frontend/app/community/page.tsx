@@ -3,6 +3,9 @@ import './community.css'
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { FaBeer } from "react-icons/fa";
+import SideNavBar from '../Components/SideNavBar/SideNavBar';
+import { io } from 'socket.io-client';
+import { useState, useEffect } from 'react'
 
 function Profile_box()
 {
@@ -19,9 +22,16 @@ function Profile_box()
     )
 }
 
-
 function Chat()
 {
+    let socket = io('http://localhost:3030');
+    socket.emit('message', "hello form client");
+    useEffect(() => {
+        socket.emit('message', "hello form effect");
+    }, []);
+    const send = () => {
+        socket.emit('message', "clicked");
+    };
     return(
         <div className='chat-box'>
             <div className='chat-info'>
@@ -40,7 +50,7 @@ function Chat()
                 <div>
                 <form action="">
                     <input type="text" placeholder='Message....'/>
-                    <button type='submit'><FaBeer /></button>
+                    <button onClick={send} type='submit'><FaBeer /></button>
                 </form>
                 </div>
             </div>
@@ -51,6 +61,8 @@ function Chat()
 export default function Community()
 {
     return (
+        <>
+        <SideNavBar/>
          <div className="all">
              <div className='groups'>
                 <div className='chat-header'>
@@ -94,5 +106,6 @@ export default function Community()
                  Friends
              </div>
          </div>
+         </>
     )
 }

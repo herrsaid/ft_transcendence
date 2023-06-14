@@ -28,7 +28,7 @@ export class GameController {
   }
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  CreateGame(@Body(ValidationPipe) body: GameEtity): string {
+  CreateGame(@Body() body: GameEtity): string {
     if (this.Game.find((game) => game.id === body.id)) return 'id alredy exist';
     else if (this.Game.find((game) => game.gamename === body.gamename))
       return 'gamename alredy exist';
@@ -39,7 +39,7 @@ export class GameController {
   @HttpCode(HttpStatus.OK)
   UpdateGame(
     @Param('gamename') gamename: string,
-    @Body(ValidationPipe) body: GameEtity,
+    @Body() body: GameEtity,
   ): string {
     const index = this.Game.findIndex((game) => game.gamename === gamename);
     console.log(body);

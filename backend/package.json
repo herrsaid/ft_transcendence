@@ -25,8 +25,12 @@
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/platform-socket.io": "^9.4.3",
     "@nestjs/websockets": "^9.4.3",
+<<<<<<< HEAD
+    "nest": "^0.1.6",
+=======
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
+>>>>>>> 4dcd21b695c58096c6969fa8a6ec73c5bf7486d4
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
     "uuid": "^9.0.0"
