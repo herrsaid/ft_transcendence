@@ -8,6 +8,7 @@ import {
   Body,
   HttpCode,
   HttpStatus,
+  ValidationPipe,
 } from '@nestjs/common';
 import { GameEtity } from './Game.Entity';
 @Controller('Games')
@@ -22,24 +23,23 @@ export class GameController {
   @HttpCode(HttpStatus.OK)
   GetGame(@Param('gamename') gamename: string): string {
     const ret = this.Game.find((game) => game.gamename === gamename);
-    if (ret === undefined) return `can't GetGame this game not found`;
+    if (ret === undefined) return `can't GetGame: this game not found`;
     return `gamename is ${ret.gamename}\n gameid is ${ret.id}\n gamestatus is ${ret.status}`;
   }
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  CreateGame(@Body() body: GameEtity): string {
+  CreateGame(@Body(ValidationPipe) body: GameEtity): string {
     if (this.Game.find((game) => game.id === body.id)) return 'id alredy exist';
     else if (this.Game.find((game) => game.gamename === body.gamename))
       return 'gamename alredy exist';
     this.Game.push(body);
     return 'game created successfully';
   }
-
   @Patch(':gamename')
   @HttpCode(HttpStatus.OK)
   UpdateGame(
     @Param('gamename') gamename: string,
-    @Body() body: GameEtity,
+    @Body(ValidationPipe) body: GameEtity,
   ): string {
     const index = this.Game.findIndex((game) => game.gamename === gamename);
     console.log(body);
@@ -49,10 +49,14 @@ export class GameController {
       return 'id alredy exist';
     else if (this.Game.find((game) => game.gamename === body.gamename))
       return 'gamename alredy exist';
-    // this.Game[index] = { ...this.Game[index], ...body };
-    this.Game[index].id = body.id;
-    this.Game[index].gamename = body.gamename;
-    this.Game[index].status = body.status;
+    /* ex 1 */
+    this.Game[index] = { ...this.Game[index], ...body };
+    /* ex 2 */
+    // this.Game[index] = body;
+    /* ex 3 */
+    // this.Game[index].id = body.id;
+    // this.Game[index].gamename = body.gamename;
+    // this.Game[index].status = body.status;
 
     return 'game Update successfully';
   }
