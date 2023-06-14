@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TestController } from './test/test.controller';
 import { WebsockGateway } from './websock/websock.gateway';
-import { GamesModule } from './Games/Games.module';
+import { GamesModule } from './learn/Games.module';
 @Module({
   imports: [GamesModule],
   controllers: [AppController, TestController],
