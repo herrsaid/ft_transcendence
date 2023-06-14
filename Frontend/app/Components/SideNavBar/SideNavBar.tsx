@@ -22,10 +22,6 @@ export default function SideNavBar()
             </div>
 
 
-
-
-
-
             <ul>
                 <li>
                     <a href="/" className="active">
