@@ -61,6 +61,29 @@ export default function Community()
                 <div className='chats'>
                  <Profile_box/>
                  <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
+                 <Profile_box/>
                 </div>
              </div>
              <Chat />
