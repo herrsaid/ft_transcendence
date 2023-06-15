@@ -3,8 +3,6 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import Modal  from './Modal';
 
-
-import {FaChevronUp, FaDollarSign, FaTrophy, FaUserEdit} from 'react-icons/fa'
 import SettingProfile from '../Setting/SettingProfile';
 
 const ProfileInfoNav = () => {
@@ -29,13 +27,11 @@ const ProfileInfoNav = () => {
             </Modal>
             <div className="side_two_nav">
                         
-                            {/* <Link  href="/profile/Setting"> */}
                            
                                 <button onClick={openModal}>
                                 <span>Profile Setting</span>
                                 </button>
                            
-                            {/* </Link> */}
                         
                         </div>
         </div>
