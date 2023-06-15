@@ -9,7 +9,7 @@ const SettingProfile = () => {
                 <h3>2FA  <label className="switch">
   <input type="checkbox"/>
   <span className="slider"></span>
-</label>  2-Factor Authentication</h3>
+</label>  </h3>
             </div>
 
             <div className="setting_profile_info">
@@ -20,6 +20,8 @@ const SettingProfile = () => {
 
             </div>
 
+
+            <button className="update_info_button">done</button>
         </div>
 
 
