@@ -16,13 +16,13 @@ const SettingProfile = () => {
                 <div className="edit_username">
                     <h3>UserName</h3>
                     
-                    <input type='text' defaultValue="selhanda"/>
+                    <input type='text' placeholder='enter new username'/>
                 </div>
 
             </div>
 
 
-            <button className="update_info_button">done</button>
+            <button className="update_info_button">Save</button>
         </div>
 
 
