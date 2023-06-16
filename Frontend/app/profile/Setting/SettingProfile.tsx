@@ -14,7 +14,7 @@ const SettingProfile = () => {
 
             <div className="setting_profile_info">
                 <div className="edit_username">
-                    <h3>UserName</h3>
+                    <h3>Username</h3>
                     
                     <input type='text' placeholder='enter new username'/>
                 </div>
