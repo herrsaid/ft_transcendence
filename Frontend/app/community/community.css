@@ -10,7 +10,7 @@
 .groups
 {
     height: 100dvh;
-    border: solid;
+    border: 1px solid;
     border-color: #DD58D6;
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 25px;
@@ -38,7 +38,7 @@
 }
 .friends
 {
-    border: solid;
+    border: 1px solid;
     border-color: #DD58D6;
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 25px;
@@ -53,6 +53,7 @@
     flex-direction: column;
     height: 100dvh;
     flex: 2;
+    margin: 5px;
 }
 
 .chat-box .chat-send-message form
@@ -79,25 +80,28 @@ div.chat-info
     flex-direction: row;
     align-items: center;
     padding-left: 1%;
+    margin: 5px;
 }
 
 .chat-messages
 {
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 25px;
-    border: solid;
+    border: 1px solid;
     border-color: #DD58D6;
     flex:10;
+    padding: 20px;
 }
 
 .chat-box .chat-send-message
 {
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 25px;
-    border: solid;
+    border: 1px solid;
     border-color: #DD58D6;
     flex:1;
     align-items: center;
+    margin: 5px;
 } 
 
 .chat-send-message input
@@ -183,4 +187,16 @@ div .chats
 .profile-name h4
 {
     margin: 5px;
+}
+
+.messagat
+{
+    background-color: #DD58D6;
+    padding: 3px;
+}
+
+.msg{
+    margin: 10px;
+    display: flex;
+    background-color:red;
 }
