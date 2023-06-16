@@ -5,7 +5,16 @@ import TextField from '@mui/material/TextField';
 import { FaBeer } from "react-icons/fa";
 import SideNavBar from '../Components/SideNavBar/SideNavBar';
 import { io } from 'socket.io-client';
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef, use } from 'react'
+
+function Message()
+{
+    return(
+        <div className='msg'>
+            message
+        </div>
+    )
+}
 
 function Profile_box()
 {
@@ -24,14 +33,30 @@ function Profile_box()
 
 function Chat()
 {
-    let socket = io('http://localhost:3030');
-    socket.emit('message', "hello form client");
-    useEffect(() => {
-        socket.emit('message', "hello form effect");
-    }, []);
-    const send = () => {
-        socket.emit('message', "clicked");
+    const inputRef = useRef(null);
+    const [message, Setmessage] = useState("none");
+    const [val, setValue] = useState('');
+    const messagat = [<Message/>];
+    let socket = io('http://10.12.2.9:3030', {extraHeaders:{
+        'Access-Control-Allow-Origin': "*"
+    }});
+    // socket.emit('message', "hello form react");
+    // useEffect(() => {
+    //     socket.emit('message', "hello form effect");
+    // }, []);
+    const send = (e: any) => {
+        e.preventDefault();
+        console.log(val);
+        socket.emit('message', val);
+        messagat.push(<Message />)
+        console.log(messagat);
+        setValue('');
     };
+    useEffect (() =>{}, [messagat]);
+    socket.on("message", (data) => {
+        console.log(data);
+        Setmessage(data);
+    })
     return(
         <div className='chat-box'>
             <div className='chat-info'>
@@ -44,13 +69,15 @@ function Chat()
                 </div>
             </div>
             <div className='chat-messages'>
-                messages
+                <div className='messagat'>
+                    {messagat}
+                </div>
             </div>
             <div className='chat-send-message'>
                 <div>
-                <form action="">
-                    <input type="text" placeholder='Message....'/>
-                    <button onClick={send} type='submit'><FaBeer /></button>
+                <form onSubmit={send}>
+                    <input onChange={event => setValue(event.target.value)} value={val} type="text" ref={inputRef} placeholder='Message....'/>
+                    <button type='submit'><FaBeer /></button>
                 </form>
                 </div>
             </div>
@@ -60,6 +87,10 @@ function Chat()
 
 export default function Community()
 {
+    const Porfiles = [
+        <Profile_box/>,
+        <Profile_box/>,
+    ];
     return (
         <>
         <SideNavBar/>
@@ -72,30 +103,7 @@ export default function Community()
                 </div>
                 <div className='chats'>
                  <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
-                 <Profile_box/>
+                 {Porfiles}
                 </div>
              </div>
              <Chat />
