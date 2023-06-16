@@ -1,12 +1,13 @@
 import Link from 'next/link'
 import './Welcome.css'
-import NavBar from './NavBar/NavBar';
+import SideNavBar from './SideNavBar/SideNavBar';
+
 
 export default function Welcome()
 {
     return(
         <>
-        <NavBar idd="0"/>
+        <SideNavBar/>
         <div className="w">
                 <div className="container">
                 <div className="main_home">

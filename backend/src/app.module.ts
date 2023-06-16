@@ -4,9 +4,11 @@ import { AppService } from './app.service';
 import { TestController } from './test/test.controller';
 import { WebsockGateway } from './websock/websock.gateway';
 import { GamesModule } from './learn/Games.module';
+import { AuthService } from './auth/auth.service';
+import { AuthModule } from './auth/auth.module';
 @Module({
-  imports: [GamesModule],
+  imports: [GamesModule, AuthModule],
   controllers: [AppController, TestController],
-  providers: [AppService, WebsockGateway],
+  providers: [AppService, WebsockGateway, AuthService],
 })
 export class AppModule {}

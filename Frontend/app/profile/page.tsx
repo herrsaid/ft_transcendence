@@ -1,14 +1,16 @@
 import './profile.css'
 
-
-import {Friends, Groups, ProfileAvatar, ProfileInfo, ProfileInfoNav, History, Achievevements, Store} from './index'
+import {Friends, Groups, ProfileAvatar, ProfileInfo, History, Achievevements} from './index'
 import SideNavBar from '../Components/SideNavBar/SideNavBar';
 
 
 export default function Profile()
 {
+
+
     return(
         <div>
+            
         <SideNavBar/>
         <div className="side_two">
                         

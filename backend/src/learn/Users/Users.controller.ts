@@ -22,11 +22,19 @@ export class UserController {
   }
   @Get(':UserName')
   @HttpCode(HttpStatus.OK)
-  GetUser(@Param('UserName') UserName: string): UsersEntity | string {
-    const ret = this.users.find((user) => user.UserName === UserName);
+  GetUser(@Param('UserName') UserName: string): string | UsersEntity[] {
+    let validusers: UsersEntity[] = [];
+    validusers = this.users.filter((user) => {
+      let valid = 1;
+      for (let a = 0; a < UserName.length; a++) {
+        if (user.UserName[a] != UserName[a]) valid = 0;
+        if (a === user.UserName.length) valid = 0;
+      }
+      if (valid === 1) return validusers;
+    });
 
-    if (ret === undefined) return 'no user have that username !';
-    return ret;
+    if (validusers === undefined) return 'no user have that username !';
+    return validusers;
   }
   @Post()
   @HttpCode(HttpStatus.CREATED)
