@@ -2,7 +2,7 @@
 import './community.css'
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import { FaBeer } from "react-icons/fa";
+import { AiOutlineSend } from "react-icons/ai";
 import SideNavBar from '../Components/SideNavBar/SideNavBar';
 import { io } from 'socket.io-client';
 import { useState, useEffect, useRef, use } from 'react'
@@ -77,7 +77,7 @@ function Chat()
                 <div>
                 <form onSubmit={send}>
                     <input onChange={event => setValue(event.target.value)} value={val} type="text" ref={inputRef} placeholder='Message....'/>
-                    <button type='submit'><FaBeer /></button>
+                    <button type='submit'><AiOutlineSend /></button>
                 </form>
                 </div>
             </div>
