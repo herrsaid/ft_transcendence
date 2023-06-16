@@ -30,6 +30,7 @@
     "class-validator": "^0.14.0",
     "nest": "^0.1.6",
     "passport": "^0.6.0",
+    "passport-42": "^1.2.6",
     "passport-headerapikey": "^1.2.2",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
