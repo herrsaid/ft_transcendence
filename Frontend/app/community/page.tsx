@@ -4,14 +4,16 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { AiOutlineSend } from "react-icons/ai";
 import SideNavBar from '../Components/SideNavBar/SideNavBar';
+import { createRoot } from 'react-dom/client';
 import { io } from 'socket.io-client';
 import { useState, useEffect, useRef, use } from 'react'
 
-function Message()
+function Message(props: any)
 {
     return(
-        <div className='msg'>
-            message
+        <div className={props.class}>
+            Lorem Ipsum is simply dummy text of the 
+            printing and typesetting industry.
         </div>
     )
 }
@@ -35,20 +37,17 @@ function Chat()
 {
     const inputRef = useRef(null);
     const [message, Setmessage] = useState("none");
+    const [clicked, setClicked] = useState(false);
     const [val, setValue] = useState('');
-    const messagat = [<Message/>];
+    const messagat = [<Message/>, <Message/>];
     let socket = io('http://10.12.2.9:3030', {extraHeaders:{
         'Access-Control-Allow-Origin': "*"
     }});
-    // socket.emit('message', "hello form react");
-    // useEffect(() => {
-    //     socket.emit('message', "hello form effect");
-    // }, []);
+
     const send = (e: any) => {
         e.preventDefault();
         console.log(val);
         socket.emit('message', val);
-        messagat.push(<Message />)
         console.log(messagat);
         setValue('');
     };
@@ -69,8 +68,14 @@ function Chat()
                 </div>
             </div>
             <div className='chat-messages'>
-                <div className='messagat'>
-                    {messagat}
+                <div id='msg' className='messagat'>
+                <Message class="me"/>
+                <Message class="you"/>
+                <Message class="me"/>
+                <Message class="you"/>
+                <Message class="me"/>
+                <Message class="you"/>
+                <Message class="you"/>
                 </div>
             </div>
             <div className='chat-send-message'>

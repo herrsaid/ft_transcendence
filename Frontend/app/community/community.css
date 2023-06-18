@@ -191,12 +191,23 @@ div .chats
 
 .messagat
 {
-    background-color: #DD58D6;
     padding: 3px;
+    display: flex;
+    flex-direction: column;
 }
 
-.msg{
-    margin: 10px;
-    display: flex;
-    background-color:red;
+.me{
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 15px;
+    background-color: red;
+    align-self: end;
+}
+
+.you{
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 15px;
+    background-color: blue;
+    align-self: start;
 }
