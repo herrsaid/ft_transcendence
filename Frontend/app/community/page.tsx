@@ -36,19 +36,23 @@ function Profile_box()
 function Chat()
 {
     const inputRef = useRef(null);
-    const [message, Setmessage] = useState("none");
+    const [message, Setmessage] = useState([]);
     const [clicked, setClicked] = useState(false);
     const [val, setValue] = useState('');
     const messagat = [<Message/>, <Message/>];
-    let socket = io('http://10.12.2.9:3030', {extraHeaders:{
+    const comps  = [<Message/>, <Message/>];
+    let msgat
+    let array = [{key:'01', class:'me'}, {key:'02', class:'you'}];
+    const socket = io('http://10.12.2.9:3030', {extraHeaders:{
         'Access-Control-Allow-Origin': "*"
     }});
-
     const send = (e: any) => {
         e.preventDefault();
         console.log(val);
         socket.emit('message', val);
-        console.log(messagat);
+        const abc=[...message,[]];
+        Setmessage(abc);
+        console.log(message);
         setValue('');
     };
     useEffect (() =>{}, [messagat]);
@@ -68,16 +72,9 @@ function Chat()
                 </div>
             </div>
             <div className='chat-messages'>
-                <div id='msg' className='messagat'>
-                <Message class="me"/>
-                <Message class="you"/>
-                <Message class="me"/>
-                <Message class="you"/>
-                <Message class="me"/>
-                <Message class="you"/>
-                <Message class="you"/>
+                <div className='messagat'>
+                    {message.map((data) => {return(<Message class="me"/>)})}
                 </div>
-            </div>
             <div className='chat-send-message'>
                 <div>
                 <form onSubmit={send}>
@@ -85,6 +82,7 @@ function Chat()
                     <button type='submit'><AiOutlineSend /></button>
                 </form>
                 </div>
+            </div>
             </div>
         </div>
     );
@@ -98,7 +96,7 @@ export default function Community()
     ];
     return (
         <>
-        <SideNavBar/>
+        {/* <SideNavBar/> */}
          <div className="all">
              <div className='groups'>
                 <div className='chat-header'>
@@ -112,9 +110,6 @@ export default function Community()
                 </div>
              </div>
              <Chat />
-             {/* <div className='chat'>
-                 chat
-             </div> */}
              <div className='friends'>
                  Friends
              </div>
