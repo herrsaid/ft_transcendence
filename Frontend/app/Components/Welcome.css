@@ -30,15 +30,17 @@
   }
 
   .main_home button{
-    width: 180px;
-    height: 50px;
+    width: 160px;
+    height: 45px;
     outline: 0px;
-    border-radius: 25px;
+    border-radius: 20px;
     background-color: transparent;
     border: 2px solid var(--color-light);
     color: var(--color-light);
-    font-size: 20px;
+    font-size: 15px;
     transition: 0.3s;
+    margin-right: 5px;
+    margin-bottom: 5px;
     
   }
 
