@@ -4,6 +4,7 @@ node_modules
 .next
 .DS_Store
 
+/data
 # IDE - VSCode
 .vscode/*
 !.vscode/settings.json

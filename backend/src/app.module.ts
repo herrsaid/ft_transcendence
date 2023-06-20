@@ -8,10 +8,13 @@ import { AuthService } from './auth/auth.service';
 import { AuthModule } from './auth/auth.module';
 import { AuthStrategy } from './auth/auth.strategy';
 import { AuthController } from './auth/auth.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import config from 'ormconfig';
+import { GoogleStrategy } from './google.strategy';
 
 @Module({
-  imports: [GamesModule, AuthModule],
+  imports: [GamesModule, AuthModule, TypeOrmModule.forRoot(config)],
   controllers: [AppController, TestController, AuthController],
-  providers: [AppService, WebsockGateway, AuthService, AuthStrategy],
+  providers: [AppService, WebsockGateway, AuthService, AuthStrategy, GoogleStrategy],
 })
 export class AppModule {}

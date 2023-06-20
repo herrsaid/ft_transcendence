@@ -4,8 +4,14 @@ services:
   db:
     image: postgres
     restart: always
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432 
     environment:
-      POSTGRES_PASSWORD: 'db_password'
+      - POSTGRES_DB=testDB
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     networks:
       - my_net
   adminer:
