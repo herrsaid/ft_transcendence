@@ -11,9 +11,10 @@ import { AuthController } from './auth/auth.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import config from 'ormconfig';
 import { GoogleStrategy } from './google.strategy';
+import { UserModule } from './user/user.module';
 
 @Module({
-  imports: [GamesModule, AuthModule, TypeOrmModule.forRoot(config)],
+  imports: [GamesModule, AuthModule, TypeOrmModule.forRoot(config), UserModule],
   controllers: [AppController, TestController, AuthController],
   providers: [AppService, WebsockGateway, AuthService, AuthStrategy, GoogleStrategy],
 })
