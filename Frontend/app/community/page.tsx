@@ -4,14 +4,16 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import { AiOutlineSend } from "react-icons/ai";
 import SideNavBar from '../Components/SideNavBar/SideNavBar';
+import { createRoot } from 'react-dom/client';
 import { io } from 'socket.io-client';
 import { useState, useEffect, useRef, use } from 'react'
 
-function Message()
+function Message(props: any)
 {
     return(
-        <div className='msg'>
-            message
+        <div className={props.class}>
+            Lorem Ipsum is simply dummy text of the 
+            printing and typesetting industry.
         </div>
     )
 }
@@ -34,22 +36,23 @@ function Profile_box()
 function Chat()
 {
     const inputRef = useRef(null);
-    const [message, Setmessage] = useState("none");
+    const [message, Setmessage] = useState([]);
+    const [clicked, setClicked] = useState(false);
     const [val, setValue] = useState('');
-    const messagat = [<Message/>];
-    let socket = io('http://10.12.2.9:3030', {extraHeaders:{
+    const messagat = [<Message/>, <Message/>];
+    const comps  = [<Message/>, <Message/>];
+    let msgat
+    let array = [{key:'01', class:'me'}, {key:'02', class:'you'}];
+    const socket = io('http://10.12.2.9:3030', {extraHeaders:{
         'Access-Control-Allow-Origin': "*"
     }});
-    // socket.emit('message', "hello form react");
-    // useEffect(() => {
-    //     socket.emit('message', "hello form effect");
-    // }, []);
     const send = (e: any) => {
         e.preventDefault();
         console.log(val);
         socket.emit('message', val);
-        messagat.push(<Message />)
-        console.log(messagat);
+        const abc=[...message,[]];
+        Setmessage(abc);
+        console.log(message);
         setValue('');
     };
     useEffect (() =>{}, [messagat]);
@@ -70,9 +73,8 @@ function Chat()
             </div>
             <div className='chat-messages'>
                 <div className='messagat'>
-                    {messagat}
+                    {message.map((data) => {return(<Message class="me"/>)})}
                 </div>
-            </div>
             <div className='chat-send-message'>
                 <div>
                 <form onSubmit={send}>
@@ -80,6 +82,7 @@ function Chat()
                     <button type='submit'><AiOutlineSend /></button>
                 </form>
                 </div>
+            </div>
             </div>
         </div>
     );
@@ -93,7 +96,7 @@ export default function Community()
     ];
     return (
         <>
-        <SideNavBar/>
+        {/* <SideNavBar/> */}
          <div className="all">
              <div className='groups'>
                 <div className='chat-header'>
@@ -107,9 +110,6 @@ export default function Community()
                 </div>
              </div>
              <Chat />
-             {/* <div className='chat'>
-                 chat
-             </div> */}
              <div className='friends'>
                  Friends
              </div>

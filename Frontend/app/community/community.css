@@ -51,7 +51,7 @@
     border-radius: 25px;
     justify-content: space-between;
     flex-direction: column;
-    height: 100dvh;
+    height: 99dvh;
     flex: 2;
     margin: 5px;
 }
@@ -61,7 +61,8 @@
     text-align: center;
     vertical-align: middle;
     align-items: center;
-    margin-top: 1dvh;
+    /* margin-top: 1dvh; */
+    bottom: 0px;
 }
 
 .chat-box .chat-send-message form button
@@ -97,11 +98,13 @@ div.chat-info
 {
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 25px;
-    border: 1px solid;
     border-color: #DD58D6;
     flex:1;
     align-items: center;
     margin: 5px;
+    bottom: 30px;
+    left: 30dvw;
+    position: absolute;
 } 
 
 .chat-send-message input
@@ -109,7 +112,7 @@ div.chat-info
     background-color: #DD58D6;
     border-radius: 15px;
     color: rgb(250, 250, 250);
-    width: 40vw;
+    width: 40dvw;
     height: 40px;
     padding: 10px;
 
@@ -191,12 +194,25 @@ div .chats
 
 .messagat
 {
-    background-color: #DD58D6;
     padding: 3px;
+    display: flex;
+    flex-direction: column;
+    height: 80dvh;
+    overflow: auto;
 }
 
-.msg{
-    margin: 10px;
-    display: flex;
-    background-color:red;
+.me{
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 15px;
+    background-color: red;
+    align-self: end;
+}
+
+.you{
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 15px;
+    background-color: blue;
+    align-self: start;
 }
