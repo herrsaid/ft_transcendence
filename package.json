@@ -1,6 +1,10 @@
+<<<<<<< HEAD
+{}
+=======
 {
   "dependencies": {
     "@react-icons/all-files": "^4.1.0",
     "react-icons": "^4.9.0"
   }
 }
+>>>>>>> 96bf7090d5e66621ae807c05389ba5548976279a
