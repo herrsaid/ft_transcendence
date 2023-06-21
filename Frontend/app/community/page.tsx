@@ -98,7 +98,7 @@ export default function Community()
     ];
     return (
         <>
-        {/* <SideNavBar/> */}
+        <SideNavBar/>
          <div className="all">
              <div className='groups'>
                 <div className='chat-header'>
