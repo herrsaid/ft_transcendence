@@ -12,4 +12,31 @@ export class User{
 
     @Column({unique: true, nullable: false})
     email:string;
+
+    // @Column()
+    // profile_img:string;
+
+    // @Column()
+    // rank:string;
+
+    // @Column({default:false})
+    // status:boolean;
+
+    // @Column()
+    // location:string;
+
+    // @Column()
+    // totalgame:string;
+
+    // @Column()
+    // wins:number;
+
+
+    // @Column()
+    // loss:number;
+
+    // @Column()
+    // score:number;
+
+
 }
