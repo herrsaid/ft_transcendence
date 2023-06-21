@@ -12,10 +12,19 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import config from 'ormconfig';
 import { GoogleStrategy } from './google.strategy';
 import { UserModule } from './user/user.module';
+import { UserService } from './user/user.service';
+import { UserController } from './user/user.controller';
+import { User } from './entities/user.entity';
+import { JwtModule } from '@nestjs/jwt';
+import { jwtConstants } from './auth/constants';
 
 @Module({
-  imports: [GamesModule, AuthModule, TypeOrmModule.forRoot(config), UserModule],
-  controllers: [AppController, TestController, AuthController],
-  providers: [AppService, WebsockGateway, AuthService, AuthStrategy, GoogleStrategy],
+  imports: [GamesModule, AuthModule, TypeOrmModule.forRoot(config), UserModule, TypeOrmModule.forFeature([User]), JwtModule.register({
+    global: true,
+    secret: jwtConstants.secret,
+    signOptions: { expiresIn: '60s' },
+  }),],
+  controllers: [AppController, TestController, AuthController, UserController],
+  providers: [AppService, WebsockGateway, AuthService, AuthStrategy, GoogleStrategy, UserService],
 })
 export class AppModule {}
