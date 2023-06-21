@@ -8,6 +8,8 @@ import { AuthService } from './auth/auth.service';
 import { AuthModule } from './auth/auth.module';
 import { AuthStrategy } from './auth/auth.strategy';
 import { AuthController } from './auth/auth.controller';
+import { PingPongGateway } from './learn/Game/PingPong/PingPong.Gateway';
+import { PlayGateway } from './learn/Game/PingPong/Play.Gateway';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import config from 'ormconfig';
 import { GoogleStrategy } from './google.strategy';
@@ -25,6 +27,16 @@ import { jwtConstants } from './auth/constants';
     signOptions: { expiresIn: '60s' },
   }),],
   controllers: [AppController, TestController, AuthController, UserController],
-  providers: [AppService, WebsockGateway, AuthService, AuthStrategy, GoogleStrategy, UserService],
+
+  providers: [
+    AppService,
+    WebsockGateway,
+    AuthService,
+    AuthStrategy,
+    PingPongGateway,
+    PlayGateway,
+    GoogleStrategy,
+    UserService
+  ],
 })
 export class AppModule {}

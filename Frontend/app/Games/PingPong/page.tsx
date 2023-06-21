@@ -1,13 +1,15 @@
+'use client'
+
 import NavBar from "@/app/Components/NavBar/NavBar";
 import PingPongSettings from "./Components/Settings";
-
-export default function CardGames() {
-
+import { useRouter } from 'next/navigation'
+export default function Game() {
+  const router = useRouter();
     return (
   
       <main className="absolute inset-x-0 inset-y-0 text-white">
         <NavBar idd="1"/>
-        <PingPongSettings/>
+        <PingPongSettings router={router} />
       </main>
     )
   }
