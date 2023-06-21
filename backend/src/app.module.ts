@@ -8,10 +8,18 @@ import { AuthService } from './auth/auth.service';
 import { AuthModule } from './auth/auth.module';
 import { AuthStrategy } from './auth/auth.strategy';
 import { AuthController } from './auth/auth.controller';
-
+import { PingPongGateway } from './learn/Game/PingPong/PingPong.Gateway';
+import { PlayGateway } from './learn/Game/PingPong/Play.Gateway';
 @Module({
   imports: [GamesModule, AuthModule],
   controllers: [AppController, TestController, AuthController],
-  providers: [AppService, WebsockGateway, AuthService, AuthStrategy],
+  providers: [
+    AppService,
+    WebsockGateway,
+    AuthService,
+    AuthStrategy,
+    PingPongGateway,
+    PlayGateway,
+  ],
 })
 export class AppModule {}

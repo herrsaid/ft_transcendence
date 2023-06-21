@@ -2,26 +2,29 @@
 
 import Link from "next/link";
 import "../style/style.css"
-import { useEffect } from "react";
+import { io } from 'socket.io-client'
+import { Socket } from "dgram";
 
-export let map = 3;
-export let speed = 1;
-export let Online = 1;
+export let MapNumber = 3;
+export let Speed = 1;
 export let pause_game = 0;
 export let other_tools = 0;
+export let host = false;
+export let Online = 1;
+// export let ID = "";
 function change_map_value(param: number)
 {
     for(let a=1;a<4;a++)
-        document.getElementById(`mapv${a}`).style.backgroundColor = "rgba(88, 21, 141, 0.4)";
+    document.getElementById(`mapv${a}`).style.backgroundColor = "rgba(88, 21, 141, 0.4)";
     const changemap= document.getElementById(`mapv${param}`);
     changemap.style.backgroundColor = "rgba(88, 21, 141, 1)";
-    map = param;
+    MapNumber = param;
 }
 
 function change_online_value(param: number)
 {
     for(let a=0;a<2;a++)
-        document.getElementById(`match_mood_${a}`).style.backgroundColor = "rgba(88, 21, 141, 0.4)";
+    document.getElementById(`match_mood_${a}`).style.backgroundColor = "rgba(88, 21, 141, 0.4)";
     const changemap= document.getElementById(`match_mood_${param}`);
     changemap.style.backgroundColor = "rgba(88, 21, 141, 1)";
     if(param === 1)
@@ -35,24 +38,24 @@ function change_online_value(param: number)
         // document.getElementById('other_tools_0').style.zIndex = "-1";
         // document.getElementById('other_tools_1').style.zIndex = "-1";
     }
-        else
-        {
-            document.getElementById('play').style.zIndex = "2";
-            document.getElementById('play2').style.zIndex = "1";
-            document.getElementById('other_tools').style.opacity = "1";
-            document.getElementById('pause_game').style.opacity = "1";
-            // document.getElementById('pause_game_0').style.zIndex = "2";
-            // document.getElementById('pause_game_1').style.zIndex = "2";
-            // document.getElementById('other_tools_0').style.zIndex = "2";
-            // document.getElementById('other_tools_1').style.zIndex = "2";
-        }
-        Online = param;
+    else
+    {
+        document.getElementById('play').style.zIndex = "2";
+        document.getElementById('play2').style.zIndex = "1";
+        document.getElementById('other_tools').style.opacity = "1";
+        document.getElementById('pause_game').style.opacity = "1";
+        // document.getElementById('pause_game_0').style.zIndex = "2";
+        // document.getElementById('pause_game_1').style.zIndex = "2";
+        // document.getElementById('other_tools_0').style.zIndex = "2";
+        // document.getElementById('other_tools_1').style.zIndex = "2";
+    }
+    Online = param;
 }
 
 function change_other_tools_value(param: number)
 {
     for(let a=0;a<2;a++)
-        document.getElementById(`other_tools_${a}`).style.backgroundColor = "rgba(88, 21, 141, 0.4)";
+    document.getElementById(`other_tools_${a}`).style.backgroundColor = "rgba(88, 21, 141, 0.4)";
     const changemap= document.getElementById(`other_tools_${param}`);
     changemap.style.backgroundColor = "rgba(88, 21, 141, 1)";
     other_tools = param;
@@ -61,17 +64,28 @@ function change_other_tools_value(param: number)
 function change_pausegame_value(param: number)
 {
     for(let a=0;a<2;a++)
-        document.getElementById(`pause_game_${a}`).style.backgroundColor = "rgba(88, 21, 141, 0.4)";
+    document.getElementById(`pause_game_${a}`).style.backgroundColor = "rgba(88, 21, 141, 0.4)";
     const changemap= document.getElementById(`pause_game_${param}`);
     changemap.style.backgroundColor = "rgba(88, 21, 141, 1)";
     pause_game = param;
 }
 
-function is_Online_mod()
+function is_Online_mod(socket:Socket,router: Router)
 {
     if(Online === 1)
     {
-        document.getElementById("Settings").style.filter = "blur(15px)";
+        // document.getElementById("Settings").style.filter = "blur(15px)";
+        socket.emit('join_user','new User join party');
+        socket.on('join_user', (data) => {
+            console.log(data);
+        });
+        socket.emit('send_data',{Speed,MapNumber,});
+        socket.on('send_data', (data) => {
+            host = data;
+            console.log(host);
+            socket.disconnect();
+            router.replace('/Games/PingPong/Play');
+        });
     }
 }
 
@@ -81,17 +95,20 @@ function change_pos(param :number)
     if(element != null)
     {
         if(param === 1)
-            element.style.left = "35%";
+        element.style.left = "35%";
         else if(param === 2)
-            element.style.left = "58.5%";
+        element.style.left = "58.5%";
         else
-            element.style.left = "83%";
-        speed = param;
+        element.style.left = "83%";
+        Speed = param;
     }
 }
 
-export default function PingPongSettings()
+const PingPongSettings = ({ router }: any) => 
 {
+    const socket = io('http://10.11.9.1:1339', {extraHeaders:{
+            'Access-Control-Allow-Origin': "*"
+        }});
     return(
         <div id="Settings">
             <p id="Game_title">
@@ -99,7 +116,7 @@ export default function PingPongSettings()
             </p>
             <div id="speed">
                 <p id="speed_p">
-                    speed :
+                    Speed :
                 </p>
                 <div id="scroll" style = {{left: '35%'}}></div>
                 <p onClick={()=>  change_pos(1)} id="p_1">x1</p>
@@ -110,7 +127,7 @@ export default function PingPongSettings()
             </div>
             <div id="map">
                 <p id="map_p">
-                    map :
+                    Map :
                 </p>
                 <button  onClick={()=> change_map_value(1)} id="mapv1">
                     <p>
@@ -130,7 +147,7 @@ export default function PingPongSettings()
             </div>
             <div id="match_mood">
                 <p id="match_mood_p">
-                    match mood :
+                    Match Mood :
                 </p>
                 <button onClick={()=> change_online_value(1)} id="match_mood_1">
                     <p>
@@ -160,11 +177,11 @@ export default function PingPongSettings()
             </div>
             <div id="other_tools">
                 <p id="other_tools_p">
-                    other tools:
+                    Other Tools:
                 </p>
                 <button onClick={()=> change_other_tools_value(0)} id="other_tools_0">
                     <p>
-                        bot
+                        Bot
                     </p>
                 </button>
                 <button onClick={()=> change_other_tools_value(1)} id="other_tools_1">
@@ -181,7 +198,7 @@ export default function PingPongSettings()
                 </button>
             </Link>
             {/* <Link href="/Games/PingPong/Play2"> */}
-                <button onClick={is_Online_mod} id="play2">
+                <button onClick={() => {is_Online_mod(socket,router)}} id="play2">
                     <p>
                         Play
                     </p>
@@ -190,3 +207,4 @@ export default function PingPongSettings()
         </div>
     );
 }
+export default PingPongSettings;
