@@ -10,8 +10,13 @@ import { AuthStrategy } from './auth/auth.strategy';
 import { AuthController } from './auth/auth.controller';
 import { PingPongGateway } from './learn/Game/PingPong/PingPong.Gateway';
 import { PlayGateway } from './learn/Game/PingPong/Play.Gateway';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import config from 'ormconfig';
+import { GoogleStrategy } from './google.strategy';
+import { UserModule } from './user/user.module';
+
 @Module({
-  imports: [GamesModule, AuthModule],
+  imports: [GamesModule, AuthModule, TypeOrmModule.forRoot(config), UserModule],
   controllers: [AppController, TestController, AuthController],
   providers: [
     AppService,
@@ -20,6 +25,7 @@ import { PlayGateway } from './learn/Game/PingPong/Play.Gateway';
     AuthStrategy,
     PingPongGateway,
     PlayGateway,
+    GoogleStrategy
   ],
 })
 export class AppModule {}

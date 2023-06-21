@@ -1,7 +1,7 @@
 "use client"
 import "./SideNavBar.css"
 
-import {FaAlignJustify, FaHome} from 'react-icons/fa'
+import {FaAlignJustify, FaHome, FaGamepad,  FaUserCircle, FaUsers, FaCogs} from 'react-icons/fa'
 
 export default function SideNavBar()
 {
@@ -15,36 +15,30 @@ export default function SideNavBar()
             <div className="wrapper">
         
         <div className="sidebar">
-        <div className="profile">
-                <img src="/avatar.png" alt="profile_picture"/>
-                <h3>selhanda</h3>
-                <p>Player</p>
-            </div>
-
-
+        
             <ul>
                 <li>
                     <a href="/" className="active">
                         <span className="icon"><i className="fas fa-home"></i></span>
-                        <span className="item">Home</span>
+                        <span className="item"><FaHome/></span>
                     </a>
                 </li>
                 <li>
                     <a href="/Games">
                         <span className="icon"><i className="fas fa-desktop"></i></span>
-                        <span className="item">Games</span>
+                        <span className="item"><FaGamepad/></span>
                     </a>
                 </li>
                 <li>
                     <a href="/profile">
                         <span className="icon"><i className="fas fa-user-friends"></i></span>
-                        <span className="item">Profile</span>
+                        <span className="item"><FaUserCircle/></span>
                     </a>
                 </li>
                 <li>
                     <a href="/community">
                         <span className="icon"><i className="fas fa-tachometer-alt"></i></span>
-                        <span className="item">Community</span>
+                        <span className="item"><FaUsers/></span>
                     </a>
                 </li>
                 
@@ -52,7 +46,7 @@ export default function SideNavBar()
                 <li>
                     <a href="/profile/Setting">
                         <span className="icon"><i className="fas fa-cog"></i></span>
-                        <span className="item">Settings</span>
+                        <span className="item"><FaCogs/></span>
                     </a>
                 </li>
             </ul>

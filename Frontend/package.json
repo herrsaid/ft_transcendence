@@ -9,7 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.0",
+    "@chakra-ui/react": "^2.7.1",
+    "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fontsource/jua": "^5.0.1",
     "@mui/material": "^5.13.5",
@@ -19,6 +20,7 @@
     "@types/react-dom": "18.2.4",
     "autoprefixer": "10.4.14",
     "bootstrap": "^5.2.3",
+    "framer-motion": "^10.12.16",
     "next": "^13.4.3",
     "postcss": "8.4.23",
     "react": "18.2.0",

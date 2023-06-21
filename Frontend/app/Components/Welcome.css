@@ -11,23 +11,43 @@
     left: 50%;
     top:50%;
     transform: translate(-50%, -50%);
+    background: linear-gradient(90deg,#092962, #000);
+    border-radius: 10px;
+    padding: 20px;
   }
 
 
   .main_home h2{
-    font-size: 30px;
-    margin-bottom: 8%;
+    font-size: 28px;
+    margin-bottom: 25px;
     font-weight: bold;
   }
 
+  .main_home p{
+    font-size: 17px;
+    margin-bottom: 20px;
+
+  }
+
   .main_home button{
-    width: 180px;
-    height: 50px;
+    width: 160px;
+    height: 45px;
     outline: 0px;
-    border-radius: 25px;
+    border-radius: 20px;
     background-color: transparent;
     border: 2px solid var(--color-light);
     color: var(--color-light);
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 15px;
+    transition: 0.3s;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    
+  }
+
+  .main_home button:hover{
+    
+    background-color: var(--color-light);
+    color: #092962;
+
+    
   }

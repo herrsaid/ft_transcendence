@@ -2,9 +2,13 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AuthService {
-    validateApiKey(apiKey:string)
+    loginIntra42(req)
     {
-        const apiKeys: string[] = ["api-key-1", "api-key-2"];
-        return apiKeys.find((key) => apiKey === key);
+        if(!req.user)
+            return "No user from intra";
+        return{
+            message: 'User Info from intra',
+            user: req.user
+            }
     }
 }
