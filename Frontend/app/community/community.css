@@ -107,7 +107,7 @@ div.chat-info
     position: absolute;
 } 
 
-.chat-send-message input
+/* .chat-send-message input
 {
     background-color: #DD58D6;
     border-radius: 15px;
@@ -116,7 +116,7 @@ div.chat-info
     height: 40px;
     padding: 10px;
 
-}
+} */
 
 input:focus
 {
@@ -215,4 +215,8 @@ div .chats
     margin-top: 15px;
     background-color: blue;
     align-self: start;
+}
+
+body {
+    scrollbar-width: none;
 }

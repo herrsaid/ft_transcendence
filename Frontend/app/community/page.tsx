@@ -7,6 +7,7 @@ import SideNavBar from '../Components/SideNavBar/SideNavBar';
 import { createRoot } from 'react-dom/client';
 import { io } from 'socket.io-client';
 import { useState, useEffect, useRef, use } from 'react'
+import { Input } from '@chakra-ui/react'
 
 function Message(props: any)
 {
@@ -75,14 +76,15 @@ function Chat()
                 <div className='messagat'>
                     {message.map((data) => {return(<Message class="me"/>)})}
                 </div>
-            <div className='chat-send-message'>
+            {/* <div className='chat-send-message'> */}
                 <div>
                 <form onSubmit={send}>
-                    <input onChange={event => setValue(event.target.value)} value={val} type="text" ref={inputRef} placeholder='Message....'/>
+                    {/* <input onChange={event => setValue(event.target.value)} value={val} type="text" ref={inputRef} placeholder='Message....'/> */}
+                    <Input placeholder='Basic usage' size='lg'/>
                     <button type='submit'><AiOutlineSend /></button>
                 </form>
                 </div>
-            </div>
+            {/* </div> */}
             </div>
         </div>
     );
