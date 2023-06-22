@@ -1,6 +1,6 @@
 import {PassportStrategy} from "@nestjs/passport";
 import { Strategy, VerifyCallback } from "passport-google-oauth20"
-import { Injectable } from "@nestjs/common";
+import { Injectable, Res } from "@nestjs/common";
 import { UserService } from "./user/user.service";
 import { JwtService } from '@nestjs/jwt';
 
@@ -25,7 +25,9 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google')
         
         if (user_check)
         {
+
             const payload = {sub : user_check.id, username: user_check.username};
+        
             return {
                 access_token: await this.jwtService.signAsync(payload),
             };

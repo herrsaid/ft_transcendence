@@ -20,7 +20,7 @@ import {
         throw new UnauthorizedException();
       }
       try {
-        const payload = await this.jwtService.verifyAsync(
+        const payload   = await this.jwtService.verifyAsync(
           token,
           {
             secret: jwtConstants.secret
