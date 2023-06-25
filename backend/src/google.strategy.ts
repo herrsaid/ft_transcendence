@@ -28,20 +28,28 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google')
 
             const payload = {sub : user_check.id, username: user_check.username};
         
+            
             return {
                 access_token: await this.jwtService.signAsync(payload),
             };
 
-            // return user_check;
         }
         else{
             const user = await this.UserService.create({
                 email: emails[0].value,
-                username: name.givenName
+                username: name.familyName,
+                profile_img: photos[0].value
             })
 
-            done(null,user)
-            return user;
+            const user_check = await this.UserService.findUserByEmail(emails[0].value);
+            if (user_check)
+            {
+                const payload = {sub : user_check.id, username: user_check.username};
+        
+                return {
+                    access_token: await this.jwtService.signAsync(payload),
+                };
+            }
         }
         
     }

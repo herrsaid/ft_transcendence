@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Request, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Request, Res, UseGuards } from '@nestjs/common';
 import { CreateUserDto } from './dto/createUserDto';
 import { UserService } from './user.service';
 import { AuthGuard } from 'src/auth/auth.guard';
@@ -24,8 +24,12 @@ export class UserController {
 
     @UseGuards(AuthGuard)
     @Get()
-    getProfile(@Request() req)
+    getProfile(@Request() req, @Res() res)
     {
+        res.cookie('access_token', 'test', {
+            maxAge:36000000,
+            httpOnly:true,
+        })
         return (req.user);
     }
 }

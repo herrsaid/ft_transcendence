@@ -13,30 +13,30 @@ export class User{
     @Column({unique: true, nullable: false})
     email:string;
 
-    // @Column()
-    // profile_img:string;
+    @Column({default:"/avatar.png"})
+    profile_img:string;
 
-    // @Column()
-    // rank:string;
+    @Column({default:"noob"})
+    rank:string;
 
-    // @Column({default:false})
-    // status:boolean;
+    @Column({default:false})
+    status:boolean;
 
-    // @Column()
-    // location:string;
+    @Column({default:"morocco"})
+    location:string;
 
-    // @Column()
-    // totalgame:string;
+    @Column({default:0})
+    totalgame:number;
 
-    // @Column()
-    // wins:number;
+    @Column({default:0})
+    wins:number;
 
 
-    // @Column()
-    // loss:number;
+    @Column({default:0})
+    loss:number;
 
-    // @Column()
-    // score:number;
+    @Column({default:0})
+    score:number;
 
 
 }
