@@ -54,8 +54,7 @@
 
 
 .side_two{
-    /* border: 1px solid var(--color-border);
-    border-radius: 25px; */
+
     padding: 30px;
     width: 95%;
     margin: auto;
@@ -90,8 +89,6 @@
     height: 800px;
     background-color: var(--color-dark);
     border-radius: 17px;
-    /* margin-left: 5%; */
-    
     overflow-y: auto;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -391,14 +388,14 @@ p.enligne{
 
 .avatar_edit_real label{
    
-   color:blueviolet;
+   color:var(--color-light);
    left: 0;
    margin-left: 0px;
    margin-top: 10px;
-   font-size: 24px;
+   font-size: 18px;
    cursor: pointer;
    position: relative;
-   left: -12%;
+   left: -15%;
 }
 
 .avatar_edit_real input{
