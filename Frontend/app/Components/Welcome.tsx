@@ -6,7 +6,11 @@ export default function Welcome()
     return(
         <>
         <div className="w">
+
+
+        
                 <div className="container">
+           
                 <div className="main_home">
                     <h2>Welcome to legends</h2>
                     <p>Play PingPong with your friends online</p>
@@ -20,7 +24,16 @@ export default function Welcome()
                     
                 </div>
 
+
+                <div className="table">
+    <div className="net"></div>
+    <div className="ball"></div>
+  </div>
+
                 </div>
+
+
+
         </div>
         </>
     );
