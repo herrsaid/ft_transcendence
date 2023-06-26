@@ -7,7 +7,6 @@ export class AuthService {
         if(!req.user)
             return "No user from intra";
         return{
-            message: 'User Info from intra',
             user: req.user
             }
     }
