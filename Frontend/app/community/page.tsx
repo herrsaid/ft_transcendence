@@ -77,12 +77,10 @@ function Chat()
                     {message.map((data) => {return(<Message class="me"/>)})}
                 </div>
             <div className='chat-send-message'>
-                <div>
                 <form onSubmit={send}>
                     <input onChange={event => setValue(event.target.value)} value={val} type="text" ref={inputRef} placeholder='Message....'/>
                     <button type='submit'><AiOutlineSend /></button>
                 </form>
-                </div>
             </div>
             </div>
         </div>
