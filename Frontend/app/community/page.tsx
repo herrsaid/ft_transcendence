@@ -1,9 +1,10 @@
-"use client";
+"use client"
 import './community.css'
 import { AiOutlineSend } from "react-icons/ai";
 import SideNavBar from '../Components/SideNavBar/SideNavBar';
 import { io } from 'socket.io-client';
 import { useState, useEffect, useRef, use } from 'react'
+import SideNavBar_Res from '../Components/SideNavBar_Res/SideNavBar_Res';
 
 
 function Message(props: any)
@@ -92,8 +93,8 @@ export default function Community()
     ];
     return (
         <>
-        <SideNavBar/>
          <div className="all">
+                <SideNavBar_Res/>
              <div className='groups'>
                 <div className='chat-header'>
                     <h1>
