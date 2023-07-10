@@ -2,7 +2,7 @@
 .NavBar{
     height: 100dvh;
     width: 60px;
-    background-color: #278dd6;
+    background-color: var(--primary-color);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
