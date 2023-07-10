@@ -15,39 +15,54 @@ export let Online = 1;
 function change_map_value(param: number)
 {
     for(let a=1;a<4;a++)
-    document.getElementById(`mapv${a}`).style.backgroundColor = "rgba(88, 21, 141, 0.4)";
+    {
+        const mapv = document.getElementById(`mapv${a}`);
+        if(mapv !== null)
+            mapv.style.backgroundColor = "rgba(88, 21, 141, 0.4)";
+    }
     const changemap= document.getElementById(`mapv${param}`);
-    changemap.style.backgroundColor = "rgba(88, 21, 141, 1)";
+    if(changemap !== null)
+        changemap.style.backgroundColor = "rgba(88, 21, 141, 1)";
     MapNumber = param;
 }
 
 function change_online_value(param: number)
 {
-    for(let a=0;a<2;a++)
-    document.getElementById(`match_mood_${a}`).style.backgroundColor = "rgba(88, 21, 141, 0.4)";
     const changemap= document.getElementById(`match_mood_${param}`);
-    changemap.style.backgroundColor = "rgba(88, 21, 141, 1)";
+    const play = document.getElementById('play');
+    const play2 = document.getElementById('play2');
+    const other_tools = document.getElementById('other_tools');
+    const pause_game = document.getElementById('pause_game');
+    for(let a=0;a<2;a++)
+    {
+        const match_mood_ = document.getElementById(`match_mood_${a}`);
+        if(match_mood_ !== null)
+            match_mood_.style.backgroundColor = "rgba(88, 21, 141, 0.4)";
+    }
+    if(changemap !== null)
+        changemap.style.backgroundColor = "rgba(88, 21, 141, 1)";
     if(param === 1)
     {
-        document.getElementById('play').style.zIndex = "1";
-        document.getElementById('play2').style.zIndex = "2";
-        document.getElementById('other_tools').style.opacity = "0";
-        document.getElementById('pause_game').style.opacity = "0";
-        // document.getElementById('pause_game_0').style.zIndex = "-1";
-        // document.getElementById('pause_game_1').style.zIndex = "-1";
-        // document.getElementById('other_tools_0').style.zIndex = "-1";
-        // document.getElementById('other_tools_1').style.zIndex = "-1";
+        
+        if(play !== null)
+            play.style.zIndex = "1";
+        if(play2 !== null)
+            play2.style.zIndex = "2";
+        if(other_tools !== null)
+            other_tools.style.opacity = "0";
+        if(pause_game !== null)
+            pause_game.style.opacity = "0";
     }
     else
     {
-        document.getElementById('play').style.zIndex = "2";
-        document.getElementById('play2').style.zIndex = "1";
-        document.getElementById('other_tools').style.opacity = "1";
-        document.getElementById('pause_game').style.opacity = "1";
-        // document.getElementById('pause_game_0').style.zIndex = "2";
-        // document.getElementById('pause_game_1').style.zIndex = "2";
-        // document.getElementById('other_tools_0').style.zIndex = "2";
-        // document.getElementById('other_tools_1').style.zIndex = "2";
+        if(play !== null)
+            play.style.zIndex = "2";
+        if(play2 !== null)
+            play2.style.zIndex = "1";
+        if(other_tools !== null)
+            other_tools.style.opacity = "1";
+        if(pause_game !== null)
+            pause_game.style.opacity = "1";
     }
     Online = param;
 }
@@ -55,26 +70,38 @@ function change_online_value(param: number)
 function change_other_tools_value(param: number)
 {
     for(let a=0;a<2;a++)
-    document.getElementById(`other_tools_${a}`).style.backgroundColor = "rgba(88, 21, 141, 0.4)";
+    {
+        const other_tools_ = document.getElementById(`other_tools_${a}`)
+        if(other_tools_ !== null)
+            other_tools_.style.backgroundColor = "rgba(88, 21, 141, 0.4)";
+    }
     const changemap= document.getElementById(`other_tools_${param}`);
-    changemap.style.backgroundColor = "rgba(88, 21, 141, 1)";
+    if(changemap !== null)
+        changemap.style.backgroundColor = "rgba(88, 21, 141, 1)";
     other_tools = param;
 }
 
 function change_pausegame_value(param: number)
 {
     for(let a=0;a<2;a++)
-    document.getElementById(`pause_game_${a}`).style.backgroundColor = "rgba(88, 21, 141, 0.4)";
-    const changemap= document.getElementById(`pause_game_${param}`);
-    changemap.style.backgroundColor = "rgba(88, 21, 141, 1)";
+    {
+        const pause_game_ = document.getElementById(`pause_game_${a}`);
+        if(pause_game_ !== null)
+            pause_game_.style.backgroundColor = "rgba(88, 21, 141, 0.4)";
+    }
+    const changemap = document.getElementById(`pause_game_${param}`);
+    if(changemap !== null)
+        changemap.style.backgroundColor = "rgba(88, 21, 141, 1)";
     pause_game = param;
 }
 
-function is_Online_mod(socket:Socket,router: Router)
+function is_Online_mod(socket: Socket, router: any)
 {
+    const settings = document.getElementById("Settings")
     if(Online === 1)
     {
-        // document.getElementById("Settings").style.filter = "blur(15px)";
+        if(settings !== null)
+            settings.style.filter = "blur(15px)";
         socket.emit('join_user','new User join party');
         socket.on('join_user', (data) => {
             console.log(data);
@@ -84,9 +111,11 @@ function is_Online_mod(socket:Socket,router: Router)
             host = data;
             console.log(host);
             socket.disconnect();
-            router.replace('/Games/PingPong/Play');
+            router.replace('/PingPong/Play/Online');
         });
     }
+    else
+        router.replace('/PingPong/Play/Ofline');
 }
 
 function change_pos(param :number)
@@ -106,7 +135,7 @@ function change_pos(param :number)
 
 const PingPongSettings = ({ router }: any) => 
 {
-    const socket = io('http://10.11.9.1:1339', {extraHeaders:{
+    const socket = io('http://10.11.8.1:1339', {extraHeaders:{
             'Access-Control-Allow-Origin': "*"
         }});
     return(
@@ -119,9 +148,9 @@ const PingPongSettings = ({ router }: any) =>
                     Speed :
                 </p>
                 <div id="scroll" style = {{left: '35%'}}></div>
-                <p onClick={()=>  change_pos(1)} id="p_1">x1</p>
-                <p onClick={()=>  change_pos(2)} id="p_2">x2</p>
-                <p onClick={()=>  change_pos(4)} id="p_4">x4</p>
+                <button  onClick={()=>  change_pos(1)} id="p_1">x1</button>
+                <button  onClick={()=>  change_pos(2)} id="p_2">x2</button>
+                <button  onClick={()=>  change_pos(4)} id="p_4">x4</button>
                 <div id="speed_scrool">
                 </div>
             </div>
@@ -190,21 +219,12 @@ const PingPongSettings = ({ router }: any) =>
                     </p>
                 </button>
             </div>
-            <Link href="/Games/PingPong/Play">
-                <button id="play">
+                <button onClick={() => {is_Online_mod(socket,router)}} id="play">
                     <p>
                         Play
                     </p>
                 </button>
-            </Link>
-            {/* <Link href="/Games/PingPong/Play2"> */}
-                <button onClick={() => {is_Online_mod(socket,router)}} id="play2">
-                    <p>
-                        Play
-                    </p>
-                </button>
-            {/* </Link> */}
-        </div>
+            </div>
     );
 }
 export default PingPongSettings;

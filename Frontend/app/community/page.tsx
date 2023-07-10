@@ -1,13 +1,11 @@
-"use client";
+"use client"
 import './community.css'
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
 import { AiOutlineSend } from "react-icons/ai";
 import SideNavBar from '../Components/SideNavBar/SideNavBar';
-import { createRoot } from 'react-dom/client';
 import { io } from 'socket.io-client';
 import { useState, useEffect, useRef, use } from 'react'
-import { Input } from '@chakra-ui/react'
+import SideNavBar_Res from '../Components/SideNavBar_Res/SideNavBar_Res';
+
 
 function Message(props: any)
 {
@@ -76,15 +74,12 @@ function Chat()
                 <div className='messagat'>
                     {message.map((data) => {return(<Message class="me"/>)})}
                 </div>
-            {/* <div className='chat-send-message'> */}
-                <div>
+            <div className='chat-send-message'>
                 <form onSubmit={send}>
-                    {/* <input onChange={event => setValue(event.target.value)} value={val} type="text" ref={inputRef} placeholder='Message....'/> */}
-                    <Input placeholder='Basic usage' size='lg'/>
-                    <button type='submit'><AiOutlineSend /></button>
+                    <input onChange={event => setValue(event.target.value)} value={val} type="text" ref={inputRef} placeholder='Message....'/>
+                    <button className='send-btn' type='submit'><AiOutlineSend size={20}/></button>
                 </form>
-                </div>
-            {/* </div> */}
+            </div>
             </div>
         </div>
     );
@@ -98,8 +93,8 @@ export default function Community()
     ];
     return (
         <>
-        <SideNavBar/>
          <div className="all">
+            <SideNavBar_Res />
              <div className='groups'>
                 <div className='chat-header'>
                     <h1>

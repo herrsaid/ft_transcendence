@@ -20,14 +20,17 @@ a{
   --color-light:#fff;
   --color-dark:#000;
   --color-border:#642ADF;
+  --color-bg: #363636;
+  --primary-color: #4a4646;
+  --color-btn: #278dd6;
 }
 
 body{
-  background-image: url("../public/bg.jpg");
+  /* background-image: url("../public/bg.jpg"); */
+  background-color: #363636;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   width: 100%;
   min-height: 100vh;
 }
-

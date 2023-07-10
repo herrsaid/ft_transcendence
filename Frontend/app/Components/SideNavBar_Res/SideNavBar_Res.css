@@ -1,0 +1,50 @@
+
+.NavBar{
+    height: 100dvh;
+    width: 60px;
+    background-color: var(--primary-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.Home
+{
+    /* background-color: red; */
+    margin-top: 20px;
+    flex: 1;
+    align-self: center;
+}
+
+.Content
+{
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    flex: 2;
+}
+
+.Content button 
+{
+    /* background-color: red; */
+    padding-top: 100px;
+}
+.Logout
+{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-self: center;
+}
+
+.Logout button
+{
+    padding-top: 250px;
+}
+
+.Mobile
+{
+    background-color: rebeccapurple;
+    width: 100dvh;
+    height: 60px;
+}
