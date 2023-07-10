@@ -7,7 +7,7 @@ export class AppService {
     if(!req.user)
       return "No user from google";
     return{
-      user: req.user
+      access_token : req.user.access_token
     }
 
   }

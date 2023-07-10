@@ -24,7 +24,7 @@ import { jwtConstants } from './auth/constants';
   imports: [GamesModule, AuthModule, TypeOrmModule.forRoot(config), UserModule, TypeOrmModule.forFeature([User]), JwtModule.register({
     global: true,
     secret: jwtConstants.secret,
-    signOptions: { expiresIn: '15m' },
+    signOptions: { expiresIn: '1d' },
   }),],
   controllers: [AppController, TestController, AuthController, UserController],
 

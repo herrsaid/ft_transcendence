@@ -1,7 +1,8 @@
-import { Controller, Get , UseGuards, Req} from '@nestjs/common';
+import { Controller, Get , UseGuards, Req, Res} from '@nestjs/common';
 import { AppService } from './app.service';
 
 import {AuthGuard} from "@nestjs/passport"
+import { Request, Response } from 'express';
 
 
 @Controller()
@@ -14,10 +15,22 @@ export class AppController {
     
   }
 
+
   @Get('auth/google/callback')
   @UseGuards(AuthGuard('google'))
-  googleAuthRedirect(@Req() req)
+  googleAuthRedirect(@Req() req:Request, @Res() res:Response)
   {
+    const access_token = this.appService.googleLogin(req);
+    const token : string = access_token['access_token'];
+   
+    res.cookie('access_token', token,{
+      httpOnly: true,
+            secure: false,
+            sameSite: 'lax',
+            expires: new Date(Date.now() + 1 * 24 * 60 * 1000),
+    });
+    res.redirect('http://localhost:3030/');
+    
     return this.appService.googleLogin(req)
   }
 
