@@ -11,7 +11,7 @@
 {
     height: 100dvh;
     border: 1px solid;
-    border-color: #DD58D6;
+    border-color: #4a4646;
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 25px;
     flex: 1;
@@ -39,7 +39,7 @@
 .friends
 {
     border: 1px solid;
-    border-color: #DD58D6;
+    border-color: #4a4646;
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 25px;
     flex: 1;
@@ -75,7 +75,7 @@
 div.chat-info
 {
     border-radius: 25px;
-    background-color: rgba(221, 88, 214, 0.5);
+    background-color: #4a4646;
     display: flex;
     flex:1;
     flex-direction: row;
@@ -91,7 +91,7 @@ div.chat-info
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 25px;
     border: 1px solid;
-    border-color: #DD58D6;
+    border-color: #4a4646;
     flex:10;
     padding: 20px;
 }
@@ -106,7 +106,7 @@ div.chat-info
 
 .chat-send-message input
 {
-    background-color: #DD58D6;
+    background-color: #4a4646;
     border-radius: 15px;
     width: 90%;
     height: 40px;
@@ -140,7 +140,7 @@ input:focus
 .profile_box
 {
     margin: 2px;
-    background-color: rgba(221, 88, 214, 0.5);
+    background-color: #4a4646;
     display: flex;
     flex-direction: row;
     height: 70px;
@@ -162,7 +162,7 @@ input:focus
 
 div .chats
 {
-    border: #DD58D6;
+    border: #bdb9b9;
     border-radius: 25px;
     height: 89.5dvh;
     overflow: auto;
@@ -200,15 +200,13 @@ div .chats
 
 .me{
     padding: 5px;
-    border-radius: 5px;
     margin-top: 15px;
-    background-color: red;
+    background-color: #278dd6;
     align-self: end;
 }
 
 .you{
     padding: 5px;
-    border-radius: 5px;
     margin-top: 15px;
     background-color: blue;
     align-self: start;

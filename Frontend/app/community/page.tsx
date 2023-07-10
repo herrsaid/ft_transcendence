@@ -77,7 +77,7 @@ function Chat()
             <div className='chat-send-message'>
                 <form onSubmit={send}>
                     <input onChange={event => setValue(event.target.value)} value={val} type="text" ref={inputRef} placeholder='Message....'/>
-                    <button type='submit'><AiOutlineSend /></button>
+                    <button type='submit'><AiOutlineSend color='#278dd6' size={20}/></button>
                 </form>
             </div>
             </div>
@@ -94,7 +94,7 @@ export default function Community()
     return (
         <>
          <div className="all">
-                <SideNavBar_Res/>
+            <SideNavBar_Res />
              <div className='groups'>
                 <div className='chat-header'>
                     <h1>
