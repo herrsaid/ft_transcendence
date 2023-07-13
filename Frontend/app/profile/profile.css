@@ -283,6 +283,7 @@ div.edit_username input{
     margin-left: 2%;
     border-radius: 20px;
     padding-top: 2%;
+    padding-right: 10px;
     display: flex;
     font-weight: bold;
     padding-bottom: 2%;
@@ -311,6 +312,7 @@ p.enligne{
     display: flex;
     font-weight: bold;
     padding-bottom: 2%;
+    padding-right: 10px;
     justify-content: space-between;
     cursor: pointer;
 }
