@@ -17,6 +17,7 @@ import {
       const request = context.switchToHttp().getRequest();
       const token = this.extractTokenFromHeader(request);
       if (!token) {
+        console.log("no token");
         throw new UnauthorizedException();
       }
       try {
@@ -25,9 +26,8 @@ import {
           {
             secret: jwtConstants.secret
           }
-        );
-        
-        request['user'] = payload;
+        );    
+        // request['user'] = payload;
       } catch {
         throw new UnauthorizedException();
       }

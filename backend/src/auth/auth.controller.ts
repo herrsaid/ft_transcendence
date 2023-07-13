@@ -25,12 +25,12 @@ export class AuthController {
     const token : string = access_token['access_token'];
    
     res.cookie('access_token', token,{
-      httpOnly: true,
+      httpOnly: false,
             secure: false,
             sameSite: 'lax',
             expires: new Date(Date.now() + 1 * 24 * 60 * 1000),
     });
-    res.redirect('http://localhost:3030/');
+    res.redirect('http://localhost:3000/profile');
       return this.authservice.loginIntra42(req);
   }
 }

@@ -9,6 +9,39 @@ export class UserController {
     constructor(private readonly userService:UserService)
     {}
 
+
+    @UseGuards(AuthGuard)
+    @Get('me')
+    profileInfo()
+    {
+        
+        // return req.headers.cookie;
+        return [
+            {
+                id:'1',
+                username:'selhanda',
+                loss:0
+            },
+            {
+                id:'2',
+                username:'selhanda',
+                loss:0
+            },
+            {
+                id:'3',
+                username:'selhanda',
+                loss:0
+            },
+            {
+                id:'4',
+                username:'selhanda',
+                loss:0
+            },
+            
+
+        ]
+    }
+
     @Get(':id')
     findOne(@Param('id') id:number)
     {
@@ -20,16 +53,5 @@ export class UserController {
     {
         return this.userService.create(CreateUserDto);
     }
-
-
-    @UseGuards(AuthGuard)
-    @Get()
-    getProfile(@Request() req, @Res() res)
-    {
-        res.cookie('access_token', 'test', {
-            maxAge:36000000,
-            httpOnly:true,
-        })
-        return (req.user);
-    }
+   
 }
