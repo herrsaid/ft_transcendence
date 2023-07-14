@@ -2,48 +2,40 @@
 import './profile.css'
 import {Friends, Groups, ProfileAvatar, ProfileInfo, History, Achievevements} from './index'
 import SideNavBar_Res from '../Components/SideNavBar_Res/SideNavBar_Res';
+import { useState, useEffect } from 'react'
 
-
-
-
-const getData = async () => {
-        const cookieStore = document.cookie;
+export default  function Profile()
+{
+    const [mydata, setData] = useState([])
+    const cookieStore = document.cookie;
+    useEffect(()=>{
         var arr = cookieStore.split("=");
     
-        const res = await fetch("http://localhost:1337/user/me", {
+        fetch("http://localhost:1337/user/me", {
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${arr[1]}`,
              },
           }).then((response) => response.json())
+          .then(data => setData(data))
+    },[]);
 
-          if (!res.ok) {
-            throw new Error('Failed to fetch data')
-          }
-
-          return res.json();
-}
-
-
-// const data = await getData();
-
-export default  function Profile()
-{
-
-    // const data = await getData();
-
+    console.log(mydata)
     return(
         <div className="profile_container">
             
         <SideNavBar_Res/>
         <div className="all_profile">
-            {/* <button onClick={getData}>getData</button> */}
+            {/*  */}
         <div className="side_two">
                         
                         <div className="side_two_info">
 
-                            <ProfileAvatar/>
-                            <ProfileInfo/>
+                            <ProfileAvatar  img={mydata.profile_img}   username={mydata.username}/>
+                            <ProfileInfo location={mydata.location} totalgame={mydata.totalgame}
+                            loss={mydata.loss} wins={mydata.wins} rank={mydata.rank}
+                            
+                            />
 
                         </div>
                         <History/>
