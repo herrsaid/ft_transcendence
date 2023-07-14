@@ -1,17 +1,23 @@
-const OneFriend = () => {
+import Link from "next/link";
+
+
+const OneFriend = (props) => {
     return (
+
+
+            <Link href={`http://localhost:3000/user/${props.id}`}>
         <div className="friend">
         <div className="inside_friend">
-            <img src="/avatar.png" alt="" />
-            <p>selhanda</p>
+            <img src={props.image} alt="" />
+            <p>{props.usrname}</p>
         </div>
 
         <p className="enligne">
-            Active
+            {props.status?"Active" : "Offline"}
         </p>
         
     </div>
-        
+    </Link>
     );
 };
 export default OneFriend;

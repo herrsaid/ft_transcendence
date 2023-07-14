@@ -17,7 +17,7 @@ export default  function Profile()
                 Authorization: `Bearer ${arr[1]}`,
              },
           }).then((response) => response.json())
-          .then(data => setData(data))
+          .then(data => setData(data))  
     },[]);
 
     console.log(mydata)
