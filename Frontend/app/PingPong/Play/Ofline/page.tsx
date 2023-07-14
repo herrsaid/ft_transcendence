@@ -2,9 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import './style/style.css'
-import NavBar from "@/app/Components/NavBar/NavBar";
-import { io } from 'socket.io-client'
-import { Socket } from "dgram";
 import {MapNumber,Speed,pause_game,other_tools} from '../../Components/Settings'
 let alpha: number = 1,access: number = 1,bot_access: number  = 1;
 let XPingPongStart: number = 0,XPingPongEnd: number = 0,YPingPongStart: number = 0,YPingPongEnd: number = 0;
@@ -235,7 +232,6 @@ export default function PingPong()
 
     return(
         <main className="absolute inset-x-0 inset-y-0">
-            <NavBar idd="1"/>
             <div id="informaion">
                 <div id="user1">mabdelou</div>
                 <div id="user2">aabdelou</div>

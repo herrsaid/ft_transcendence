@@ -2,7 +2,6 @@
 
 import './style/style.css'
 import { useEffect, useState } from 'react';
-import NavBar from "@/app/Components/NavBar/NavBar";
 import { player1 } from '../../Socket/start_game_socket'
 import { player2 } from '../../Socket/start_game_socket'
 import {MapNumber,Speed,host} from '../../Components/Settings'
@@ -255,7 +254,6 @@ export default function PingPong()
 
     return(
         <main className="absolute inset-x-0 inset-y-0">
-            <NavBar idd="1"/>
             <div id="informaion">
                 <div id="user1">mabdelou</div>
                 <div id="user2">aabdelou</div>
