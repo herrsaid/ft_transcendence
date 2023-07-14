@@ -1,6 +1,5 @@
 'use client'
 
-import Link from "next/link";
 import "../style/style.css"
 import { socket } from '../Socket/auto_match_socket'
 
@@ -17,11 +16,11 @@ function change_map_value(param: number)
     {
         const mapv = document.getElementById(`mapv${a}`);
         if(mapv !== null)
-            mapv.style.backgroundColor = "rgba(88, 21, 141, 0.4)";
+            mapv.style.backgroundColor = " rgb(39, 141, 214,0.4)";
     }
     const changemap= document.getElementById(`mapv${param}`);
     if(changemap !== null)
-        changemap.style.backgroundColor = "rgba(88, 21, 141, 1)";
+        changemap.style.backgroundColor = " rgb(39, 141, 214,1)";
     MapNumber = param;
 }
 
@@ -36,10 +35,10 @@ function change_online_value(param: number)
     {
         const match_mood_ = document.getElementById(`match_mood_${a}`);
         if(match_mood_ !== null)
-            match_mood_.style.backgroundColor = "rgba(88, 21, 141, 0.4)";
+            match_mood_.style.backgroundColor = " rgb(39, 141, 214,0.4)";
     }
     if(changemap !== null)
-        changemap.style.backgroundColor = "rgba(88, 21, 141, 1)";
+        changemap.style.backgroundColor = " rgb(39, 141, 214,1)";
     if(param === 1)
     {
         
@@ -72,11 +71,11 @@ function change_other_tools_value(param: number)
     {
         const other_tools_ = document.getElementById(`other_tools_${a}`)
         if(other_tools_ !== null)
-            other_tools_.style.backgroundColor = "rgba(88, 21, 141, 0.4)";
+            other_tools_.style.backgroundColor = " rgb(39, 141, 214,0.4)";
     }
     const changemap= document.getElementById(`other_tools_${param}`);
     if(changemap !== null)
-        changemap.style.backgroundColor = "rgba(88, 21, 141, 1)";
+        changemap.style.backgroundColor = " rgb(39, 141, 214,1)";
     other_tools = param;
 }
 
@@ -86,11 +85,11 @@ function change_pausegame_value(param: number)
     {
         const pause_game_ = document.getElementById(`pause_game_${a}`);
         if(pause_game_ !== null)
-            pause_game_.style.backgroundColor = "rgba(88, 21, 141, 0.4)";
+            pause_game_.style.backgroundColor = " rgb(39, 141, 214,0.4)";
     }
     const changemap = document.getElementById(`pause_game_${param}`);
     if(changemap !== null)
-        changemap.style.backgroundColor = "rgba(88, 21, 141, 1)";
+        changemap.style.backgroundColor = " rgb(39, 141, 214,1)";
     pause_game = param;
 }
 

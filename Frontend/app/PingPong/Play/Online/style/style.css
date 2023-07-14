@@ -1,16 +1,22 @@
-#informaion
+
+#Game
 {
-    background-color: rgba(0, 0, 0, 0.4);
+    position: absolute;
+    top: 50%;
+    left: 60%;
+    transform: translate(-50%,-50%);
+}
+#information
+{
     position: relative;
-    border-top-left-radius:  25px;
-    border-top-right-radius:  25px;
-    height: 5%;
-    width: 40%;
     left:30%;
     top:20%;
+    height: 5%;
+    width: 40%;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-top-left-radius:  25px;
+    border-top-right-radius:  25px;
 }
-
-
 #PingPong_Game
 {
     background-color: rgba(0, 0, 0, 0.4);

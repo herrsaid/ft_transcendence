@@ -2,7 +2,6 @@
 
 import './style/style.css'
 import { useEffect, useState } from 'react';
-import NavBar from "@/app/Components/NavBar/NavBar";
 import { player1 } from '../../Socket/start_game_socket'
 import { player2 } from '../../Socket/start_game_socket'
 import {MapNumber,Speed,host} from '../../Components/Settings'
@@ -255,22 +254,23 @@ export default function PingPong()
 
     return(
         <main className="absolute inset-x-0 inset-y-0">
-            <NavBar idd="1"/>
-            <div id="informaion">
-                <div id="user1">mabdelou</div>
-                <div id="user2">aabdelou</div>
-                <div id="result1">{result1}</div>
-                <div id="center">-</div>
-                <div id="result2">{result2}</div>
-            </div>
-            <div  style={PingPongStyle} id="PingPong_Game">
-                <div id="ping1" style={ping1style}></div>
-                <div id="ping2"  style={ping2style}></div>
-                <div id="ball" style={ballStyle}></div>
-            </div>
-            <div id="map_name">
-                <div>Map-V{MapNumber}</div>
-            </div>
+			<div id="Game">
+            	<div id="information">
+            	    <div id="user1">mabdelou</div>
+            	    <div id="user2">aabdelou</div>
+            	    <div id="result1">{result1}</div>
+            	    <div id="center">-</div>
+            	    <div id="result2">{result2}</div>
+            	</div>
+            	<div  style={PingPongStyle} id="PingPong_Game">
+            	    <div id="ping1" style={ping1style}></div>
+            	    <div id="ping2"  style={ping2style}></div>
+            	    <div id="ball" style={ballStyle}></div>
+            	</div>
+            	<div id="map_name">
+            	    <div>Map-V{MapNumber}</div>
+            	</div>
+			</div>
         </main>
         );
 }
