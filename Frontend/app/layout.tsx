@@ -1,3 +1,5 @@
+import zabiHeader from './Components/Header/zabiHeader'
+import SideNavBar_Res from './Components/SideNavBar_Res/SideNavBar_Res'
 import './globals.css'
 import { Inter } from 'next/font/google'
 
@@ -18,7 +20,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {children}</body>
+        <div className='Site'>
+          <div className='Header'>
+            <zabiHeader/>
+          </div>
+          <div className='NavChild'>
+            <SideNavBar_Res/>
+            <div className='child'>
+              {children}
+            </div>
+          </div>
+        </div>
+      </body>
     </html>
   )
 }

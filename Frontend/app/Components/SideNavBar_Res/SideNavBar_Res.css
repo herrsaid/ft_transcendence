@@ -1,17 +1,18 @@
 
 .NavBar{
-    height: 100dvh;
+    height: 96dvh;
     width: 60px;
-    background-color: var(--primary-color);
+    background-color: var(--color-btn);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    color: white;
+    border-top: 1px solid var(--primary-color);
 }
 
-.Home
+.Setting
 {
-    /* background-color: red; */
-    margin-top: 20px;
+    /* margin-top: 20px; */
     flex: 1;
     align-self: center;
 }
@@ -29,6 +30,7 @@
     /* background-color: red; */
     padding-top: 100px;
 }
+
 .Logout
 {
     display: flex;

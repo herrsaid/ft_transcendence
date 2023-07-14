@@ -94,7 +94,6 @@ export default function Community()
     return (
         <>
          <div className="all">
-            <SideNavBar_Res />
              <div className='groups'>
                 <div className='chat-header'>
                     <h1>

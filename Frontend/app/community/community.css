@@ -2,14 +2,13 @@
     color: white;
     display: flex;
     justify-content: space-between;
-    height: 100dvh;
     flex-wrap: wrap;
     
 }
 
 .groups
 {
-    height: 100dvh;
+    height: 95dvh;
     border: 1px solid;
     border-color: #4a4646;
     background-color: rgba(0, 0, 0, 0.5);
@@ -51,7 +50,7 @@
     border-radius: 25px;
     justify-content: space-between;
     flex-direction: column;
-    height: 99dvh;
+    height: 95dvh;
     flex: 2;
     margin: 5px;
 }

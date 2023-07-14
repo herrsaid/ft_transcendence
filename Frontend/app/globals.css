@@ -6,6 +6,7 @@
 *{
   margin: 0px;
   padding: 0px;
+  color: #fff;
 }
 
 ul{
@@ -31,6 +32,35 @@ body{
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  width: 100%;
+  /* width: 100%; */
   min-height: 100vh;
+}
+
+.site
+{
+  display: flex;
+  flex-direction: column;
+}
+
+.Header
+{
+  width: 100dvw;
+  height: 60px;
+  background-color: var(--color-btn);
+}
+
+.NavChild
+{
+  display: flex;
+  justify-content: space-between;
+  width: 100dvw;
+  height: 95.5dvh;
+  overflow: auto;
+  /* border: 4px solid #278dd6 ; */
+}
+
+.child
+{
+  height: 96dvh;
+  flex: 1;
 }
