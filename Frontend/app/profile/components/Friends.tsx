@@ -20,7 +20,7 @@ const Friends = () => {
              },
           }).then((response) => response.json())
           .then(data => setfriends(data))  
-    },[]);
+    },[]); 
 
 
 

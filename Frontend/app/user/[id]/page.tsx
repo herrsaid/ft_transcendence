@@ -12,7 +12,6 @@ export default  function User()
     return(
         <div className="profile_container">
             
-        <SideNavBar_Res/>
         <div className="all_profile">
             {/*  */}
         <div className="side_two">
