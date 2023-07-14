@@ -3,7 +3,14 @@ import "../profile.css"
 
 import {FaPen} from 'react-icons/fa'
 
-const ProfileAvatar = (props) => {
+
+
+interface props{
+    img:string,
+    username:string
+}
+
+const ProfileAvatar = (props:props) => {
     return (
         <div>
 

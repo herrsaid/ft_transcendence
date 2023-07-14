@@ -1,15 +1,22 @@
 import Link from "next/link";
 
 
-const OneFriend = (props) => {
+interface props{
+    image:string,
+    username:string,
+    status:boolean
+    id:number
+}
+
+const OneFriend = (props:props) => {
     return (
 
 
-            <Link href={`http://localhost:3000/user/${props.id}`}>
+            <Link href={`/user/${props.id}`}>
         <div className="friend">
         <div className="inside_friend">
             <img src={props.image} alt="" />
-            <p>{props.usrname}</p>
+            <p>{props.username}</p>
         </div>
 
         <p className="enligne">
