@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Achievevement } from "./achievevements.entity";
 
 @Entity()
 export class User{
@@ -16,13 +17,13 @@ export class User{
     @Column({default:"/avatar.png"})
     profile_img:string;
 
-    @Column({default:"noob"})
+    @Column({default:"beginner"})
     rank:string;
 
     @Column({default:false})
     status:boolean;
 
-    @Column({default:"morocco"})
+    @Column({default:"morroco"})
     location:string;
 
     @Column({default:0})
@@ -38,5 +39,8 @@ export class User{
     @Column({default:0})
     score:number;
 
+
+    // @OneToMany(type => Achievevement, achievevement => achievevement.user)
+    // achievevements: Achievevement[];
 
 }

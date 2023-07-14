@@ -12,7 +12,11 @@ async function bootstrap() {
     whitelist:true,
     forbidNonWhitelisted:true
   }));
-  app.enableCors();
+  app.enableCors({
+    origin: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+  });
   await app.listen(1337);
 }
 bootstrap();

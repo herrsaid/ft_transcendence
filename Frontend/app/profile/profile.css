@@ -298,8 +298,14 @@ div.edit_username input{
     border-radius: 50%;
 }
 
+.Friends .friend p{
+    font-weight:  normal !important;
+    font-size: 15px !important;
+}
+
 p.enligne{
     color: var(--color-light);
+    font-weight:  normal !important;
 }
 
 

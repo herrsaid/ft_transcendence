@@ -17,8 +17,9 @@ import { User } from './entities/user.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './auth/constants';
 import { GameModule } from './game/PingPong.module';
+import { Achievevement } from './entities/achievevements.entity';
 @Module({
-  imports: [GameModule, AuthModule, TypeOrmModule.forRoot(config), UserModule, TypeOrmModule.forFeature([User]), JwtModule.register({
+  imports: [GameModule, AuthModule, TypeOrmModule.forRoot(config), UserModule, TypeOrmModule.forFeature([User,Achievevement]), JwtModule.register({
     global: true,
     secret: jwtConstants.secret,
     signOptions: { expiresIn: '1d' },

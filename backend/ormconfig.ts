@@ -1,3 +1,4 @@
+import { Achievevement } from "src/entities/achievevements.entity";
 import { User } from "src/entities/user.entity";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
@@ -9,7 +10,7 @@ const config : PostgresConnectionOptions = {
     port: 5432,
     username: "postgres",
     password: "postgres",
-    entities:[User],
+    entities:[User,Achievevement],
     synchronize: true,
 };
 

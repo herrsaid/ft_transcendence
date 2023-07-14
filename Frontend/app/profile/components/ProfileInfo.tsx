@@ -1,6 +1,15 @@
 
-        
-const ProfileInfo = (props) => {
+  
+  interface props{
+    wins:number,
+    loss:number,
+    rank:string,
+    totalgame:number,
+    location:string
+  }
+
+
+const ProfileInfo = (props:props) => {
     return (
         <div>
                 <div className="info">
@@ -36,9 +45,6 @@ const ProfileInfo = (props) => {
                                     </div>
                                 </div>
 
-                                    {/* <div className="progress_level">
-                                        <p>level 8.81</p>
-                                    </div> */}
                                 </div>
                             </div>
         </div>
