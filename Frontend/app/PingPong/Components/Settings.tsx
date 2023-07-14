@@ -2,15 +2,14 @@
 
 import Link from "next/link";
 import "../style/style.css"
-import { io } from 'socket.io-client'
-import { Socket } from "dgram";
+import { socket } from '../Socket/auto_match_socket'
 
-export let MapNumber = 3;
-export let Speed = 1;
-export let pause_game = 0;
-export let other_tools = 0;
-export let host = false;
-export let Online = 1;
+export let MapNumber: number = 3;
+export let Speed: number = 1;
+export let pause_game: number = 0;
+export let other_tools: number = 0;
+export let host: boolean = false;
+export let Online: number = 1;
 // export let ID = "";
 function change_map_value(param: number)
 {
@@ -95,7 +94,7 @@ function change_pausegame_value(param: number)
     pause_game = param;
 }
 
-function is_Online_mod(socket: Socket, router: any)
+function is_Online_mod(router: any)
 {
     const settings = document.getElementById("Settings")
     if(Online === 1)
@@ -135,9 +134,6 @@ function change_pos(param :number)
 
 const PingPongSettings = ({ router }: any) => 
 {
-    const socket = io('http://10.11.8.1:1339', {extraHeaders:{
-            'Access-Control-Allow-Origin': "*"
-        }});
     return(
         <div id="Settings">
             <p id="Game_title">
@@ -219,7 +215,7 @@ const PingPongSettings = ({ router }: any) =>
                     </p>
                 </button>
             </div>
-                <button onClick={() => {is_Online_mod(socket,router)}} id="play">
+                <button onClick={() => {is_Online_mod(router)}} id="play">
                     <p>
                         Play
                     </p>

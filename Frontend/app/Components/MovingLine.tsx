@@ -3,7 +3,7 @@
 import { useSpring, animated } from 'react-spring';
 import './MovingLine.css'
 
-const MovingLine = ({ targetX }) => {
+const MovingLine = ({ targetX }: any) => {
   const lineAnimation1 = useSpring({
     from: { x: 0 },
     to: { x: targetX.start },
