@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/createUserDto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
-import { Repository } from 'typeorm';
+import { Not, Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
@@ -12,6 +12,12 @@ export class UserService {
     async findOne(id:number)
     {
         return await this.userRepo.findOne({where:{id:id}})
+    }
+
+
+    async findAllFriends(id:number)
+    {
+        return await this.userRepo.find( { where: {id: Not(id)}})
     }
 
 

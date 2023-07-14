@@ -3,13 +3,13 @@ import "../profile.css"
 
 import {FaPen} from 'react-icons/fa'
 
-const ProfileAvatar = () => {
+const ProfileAvatar = (props) => {
     return (
         <div>
 
             <div className="profile_avatar">
                 <div className="avatar_edit_real">
-                    <img src="/avatar.png" ></img>
+                    <img src={props.img} ></img>
                     <label>
                     <FaPen/>
                     <input type="file" name="myfile" ></input>
@@ -19,7 +19,7 @@ const ProfileAvatar = () => {
 
 
                         <div>
-                        <p className="username">mabdelou</p>
+                        <p className="username">{props.username}</p>
                         </div>
                         <div>
                         <ProfileInfoNav/> 

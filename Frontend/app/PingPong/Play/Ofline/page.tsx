@@ -1,18 +1,18 @@
 'use client'
 
-import React,{ useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './style/style.css'
 import NavBar from "@/app/Components/NavBar/NavBar";
 import { io } from 'socket.io-client'
 import { Socket } from "dgram";
 import {MapNumber,Speed,pause_game,other_tools} from '../../Components/Settings'
-let alpha=1,access=1,bot_access = 1;
-let XPingPongStart=0,XPingPongEnd=0,YPingPongStart=0,YPingPongEnd=0;
-let XBall=0, YBall=0,Xdirection=1,Ydirection=0;
-let Yping1Start=0,Yping1End=0,Yping2Start=0,Yping2End=0;
-let result1=0,result2=0;
-let key1="",key2="";
-let interval,interval2;
+let alpha: number = 1,access: number = 1,bot_access: number  = 1;
+let XPingPongStart: number = 0,XPingPongEnd: number = 0,YPingPongStart: number = 0,YPingPongEnd: number = 0;
+let XBall: number = 0, YBall: number = 0,Xdirection: number = 1,Ydirection: number = 0;
+let Yping1Start: number = 0,Yping1End: number = 0,Yping2Start: number = 0,Yping2End: number = 0;
+let result1: number = 0,result2: number = 0;
+let key1: string = "",key2: string = "";
+let interval: NodeJS.Timer, interval2: NodeJS.Timer;
 export default function PingPong()
 {
   let [ballxpos, setBallXPos] = useState(50);

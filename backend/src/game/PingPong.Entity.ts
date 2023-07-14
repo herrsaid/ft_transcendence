@@ -1,4 +1,4 @@
-import { IsBoolean, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsNumber, IsObject, IsString } from 'class-validator';
 
 export class GameUserSettingsEntity {
   @IsNumber()
@@ -17,24 +17,23 @@ export class GameUserSettingsEntity {
 export class PingPongGamePlayEntity {
   @IsNumber()
   @IsNotEmpty()
-  ballxpos: number;
+  ping2ypos: number;
   @IsNumber()
   @IsNotEmpty()
   ballypos: number;
   @IsNumber()
   @IsNotEmpty()
-  ping1ypos: number;
+  ballxpos: number;
   @IsNumber()
   @IsNotEmpty()
-  ping2ypos: number;
+  rlt1: number;
   @IsNumber()
   @IsNotEmpty()
-  result1: number;
-  @IsNumber()
-  @IsNotEmpty()
-  result2: number;
+  rlt2: number;
   @IsString()
   @IsNotEmpty()
   ID?: string;
+  @IsObject()
+  // @IsNumber()
   obj: GameUserSettingsEntity;
 }

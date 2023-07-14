@@ -1,51 +1,48 @@
 'use client'
 
-import React,{ useEffect, useState } from 'react';
 import './style/style.css'
+import { useEffect, useState } from 'react';
 import NavBar from "@/app/Components/NavBar/NavBar";
-import { io } from 'socket.io-client'
-import { Socket } from "dgram";
+import { player1 } from '../../Socket/start_game_socket'
+import { player2 } from '../../Socket/start_game_socket'
 import {MapNumber,Speed,host} from '../../Components/Settings'
-let alpha=1;
-let XPingPongStart=0,XPingPongEnd=0,YPingPongStart=0,YPingPongEnd=0;
-let XBall=0, YBall=0,Xdirection=1,Ydirection=0;
-let Yping1Start=0,Yping1End=0,Yping2Start=0,Yping2End=0;
-let result1=0,result2=0;
-let key1="",key2="";
-const socket2 = io('http://10.11.8.1:1340', {extraHeaders:{
-        'Access-Control-Allow-Origin': "*"
-    }});
-socket2.emit('first_conection');
+
+let alpha: number = 1,first_conection: boolean = false;
+let XPingPongStart: number = 0,XPingPongEnd: number = 0,YPingPongStart: number = 0,YPingPongEnd: number = 0;
+let XBall: number = 0, YBall: number = 0,Xdirection: number = 1,Ydirection: number = 0;
+let Yping1Start: number = 0,Yping1End: number = 0,Yping2Start: number = 0,Yping2End: number = 0;
+let result1: number = 0,result2: number = 0;
+let key1: string = "",key2: string = "";
 export default function PingPong()
 {
-  let [ballxpos, setBallXPos] = useState(50);
-  let [ballypos, setBallYPos] = useState(50);
-  let [ping1ypos, setPing1YPos] = useState(42);
-  let [ping2ypos, setPing2YPos] = useState(42);
-  const PingPongStyle = {
-      top: "20%",
-      left: "10%",
-      width: "80%",
-      height: "40%",
-  };
-  const ballStyle = {
-      left: `${ballxpos}%`,
-      top: `${ballypos}%`,
-      width: "25px",
-      height: "25px",
-  };
-  const ping2style = {
-      top: `${ping2ypos}%`,
-      left: "99.5%",
-      width: "0.5%",
-      height: "15%",
-  };
-  const ping1style = {
-      top: `${ping1ypos}%`,
-      width: "0.5%",
-      height: "15%",
-  };
-
+	let [ballxpos, setBallXPos] = useState(50);
+	let [ballypos, setBallYPos] = useState(50);
+	let [ping1ypos, setPing1YPos] = useState(42);
+	let [ping2ypos, setPing2YPos] = useState(42);
+	let [test, settest] = useState(0);
+	const PingPongStyle = {
+		top: "20%",
+		left: "10%",
+		width: "80%",
+		height: "40%",
+	};
+	const ballStyle = {
+		left: `${ballxpos}%`,
+		top: `${ballypos}%`,
+		width: "25px",
+		height: "25px",
+	};
+	const ping2style = {
+		top: `${ping2ypos}%`,
+		left: "99.5%",
+		width: "0.5%",
+		height: "15%",
+	};
+	const ping1style = {
+		top: `${ping1ypos}%`,
+		width: "0.5%",
+		height: "15%",
+	};
 	function getpos()
 	{
 		let elem = document.getElementById("PingPong_Game");
@@ -110,13 +107,21 @@ export default function PingPong()
 			}
 		}
 	}
-	function sendpos()
+	async function send_receive_pos()
 	{
+		// console.log("here is the value: "+ host);
 		if(host)
 		{
-			socket2.emit('send_user1_data',ping2ypos,ballypos,ballxpos);
-			socket2.on('send_user1_data',(data)=> {
-			console.log(data);
+			// console.log('here1');
+			const host_data = {
+				p2yp: ping2ypos,
+				byp: ballypos,
+				bxp: ballxpos,
+				rlt1: result1,
+				rlt2: result2,
+			}
+			player1.emit('send_player1_data',host_data);
+			await player1.on('send_player1_data',(data)=> {
 			setPing1YPos(data);
 			const ping1 = document.getElementById("ping1");
 			if(ping1 != null)
@@ -125,15 +130,20 @@ export default function PingPong()
 				Yping1End = parseInt((ping1.getBoundingClientRect().top + ping1.getBoundingClientRect().height).toString());
 			}
 			});
+			// player1.on('conection_closed',()=> {
+			// 	first_conection = false;
+			// });
 		}
 		else
 		{
-			socket2.emit('send_user2_data',ping1ypos);
-			socket2.on('send_user2_data',(ping2ypos,ballypos,ballxpos)=> {
-			console.log(ping2ypos,ballypos,ballxpos);
-			setPing2YPos(ping2ypos);
-			setBallXPos(ballxpos);
-			setBallYPos(ballypos);
+			// console.log('here2');
+			player2.emit('send_player2_data',ping1ypos);
+			await player2.on('send_player2_data',(data)=> {
+			setPing2YPos(data.p2yp);
+			setBallXPos(data.bxp);
+			setBallYPos(data.byp);
+			result1 = data.rlt1;
+			result2 = data.rlt2;
 			const ping2 = document.getElementById("ping2");
 			if(ping2 != null)
 			{
@@ -141,6 +151,9 @@ export default function PingPong()
 				Yping2End = parseInt((ping2.getBoundingClientRect().top + ping2.getBoundingClientRect().height).toString());
 			}
 		});
+		// player1.on('conection_closed',()=> {
+		// 	first_conection = false;
+		// });
 		}
 	}
 	function checkpos()
@@ -190,32 +203,53 @@ export default function PingPong()
 	{
 		key2 = event.key;
 	}
-	const handleKeyrelease = (event :any) =>
+	const handleKeyrelease = () =>
 	{
 		key2 = "";
 		key1 = "";
 	}
-    useEffect(()=>
+	const handleBeforeUnload = (event: any) =>
+	{
+		first_conection = false;
+		event.preventDefault();
+		event.returnValue = ''; // Needed for Chrome
+  		const confirmationMessage = 'Are you sure you want to leave? Your changes may not be saved.';
+  		event.returnValue = confirmationMessage; // For other browsers
+  		return confirmationMessage; // For modern browsers
+	}
+    useEffect(() =>
     {
         let vitesse = (20 / Speed);
-		const interval = setInterval(()=>
-        {
-					getpos();
-					sendpos();
-					changepos();
-					if(host)
-						checkpos();
-
+		if(first_conection === false)
+		{
+			first_conection = true;
+			if(host)
+				player1.emit('first_conection');
+			else
+				player2.emit('first_conection');
+		}
+		const timeout: NodeJS.Timeout = setTimeout(() =>
+		{
+			getpos();
+			changepos();
+			if(host)
+				checkpos();
+			else
+				settest(test + 1);
+			send_receive_pos();
+			console.log("here");
         },vitesse);
         document.addEventListener('keydown', handleKeyPress1);
         document.addEventListener('keydown', handleKeyPress2);
         document.addEventListener('keyup', handleKeyrelease);
-        return ()=>
+		window.addEventListener('beforeunload', handleBeforeUnload);
+        return () =>
         {
-            clearInterval(interval);
+			clearTimeout(timeout);
             document.removeEventListener('keydown', handleKeyPress1);
             document.removeEventListener('keydown', handleKeyPress2);
             document.removeEventListener('keyup', handleKeyrelease);
+			window.removeEventListener('beforeunload', handleBeforeUnload);
         };
     });
 

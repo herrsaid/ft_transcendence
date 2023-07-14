@@ -288,15 +288,18 @@ div.edit_username input{
     font-weight: bold;
     padding-bottom: 2%;
     cursor: pointer;
+    justify-content: space-between;
 }
 
+
+
 .Friends .friend img{
-    width: 20%;
+    width: 70px;
+    border-radius: 50%;
 }
 
 p.enligne{
     color: var(--color-light);
-    font-weight: bold;
 }
 
 
@@ -467,3 +470,6 @@ p.enligne{
     overflow: auto;
     height: 100dvh;
   }
+
+
+  

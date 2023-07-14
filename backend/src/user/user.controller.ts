@@ -23,6 +23,16 @@ export class UserController {
 
     }
 
+
+    // @UseGuards(AuthGuard)
+    @Get('/friends')
+    getFriends(@Req() req:Request)
+    {
+        const tocken_part = req.headers['authorization'].split(' ')
+        const decodedJwtAccessToken = this.jwtService.decode(tocken_part[1]);
+        return this.userService.findAllFriends(decodedJwtAccessToken['sub'])
+    }
+
     @Get(':id')
     findOne(@Param('id') id:number)
     {

@@ -1,26 +1,14 @@
 "use client"
-import './profile.css'
-import {Friends, Groups, ProfileAvatar, ProfileInfo, History, Achievevements} from './index'
+import '../../profile/profile.css'
+import {Friends, Groups, ProfileAvatar, ProfileInfo, History, Achievevements} from '../../profile/index'
+import SideNavBar_Res from '../../Components/SideNavBar_Res/SideNavBar_Res';
 
-import { useState, useEffect } from 'react'
 
-export default  function Profile()
+
+export default  function User()
 {
-    const [mydata, setData] = useState([])
-    const cookieStore = document.cookie;
-    useEffect(()=>{
-        var arr = cookieStore.split("=");
     
-        fetch("http://localhost:1337/user/me", {
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${arr[1]}`,
-             },
-          }).then((response) => response.json())
-          .then(data => setData(data))  
-    },[]);
 
-    console.log(mydata)
     return(
         <div className="profile_container">
             
@@ -30,16 +18,16 @@ export default  function Profile()
                         
                         <div className="side_two_info">
 
-                            <ProfileAvatar  img={mydata.profile_img}   username={mydata.username}/>
+                            {/* <ProfileAvatar  img={mydata.profile_img}   username={mydata.username}/>
                             <ProfileInfo location={mydata.location} totalgame={mydata.totalgame}
                             loss={mydata.loss} wins={mydata.wins} rank={mydata.rank}
                             
-                            />
+                            /> */}
 
                         </div>
                         <History/>
                     </div>
-            <div className="Profile">
+            {/* <div className="Profile">
                     <div className="side_one">
                         <Friends/>
                         <Groups/>        
@@ -50,7 +38,7 @@ export default  function Profile()
                         <Achievevements/>
                         
                     </div>
-            </div>
+            </div> */}
 
         </div>
         </div>
