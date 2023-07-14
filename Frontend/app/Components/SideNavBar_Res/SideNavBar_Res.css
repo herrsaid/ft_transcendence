@@ -28,7 +28,7 @@
 .Content button 
 {
     /* background-color: red; */
-    padding-top: 100px;
+    padding: 50px 10px;
 }
 
 .Logout
@@ -44,9 +44,7 @@
     padding-top: 250px;
 }
 
-.Mobile
+.profile-btn:hover
 {
-    background-color: rebeccapurple;
-    width: 100dvh;
-    height: 60px;
+    background-color: #19659b;
 }

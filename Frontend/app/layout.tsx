@@ -1,4 +1,4 @@
-import zabiHeader from './Components/Header/zabiHeader'
+import Header from './Components/Header'
 import SideNavBar_Res from './Components/SideNavBar_Res/SideNavBar_Res'
 import './globals.css'
 // import { Inter } from 'next/font/google'
@@ -9,7 +9,6 @@ export const metadata = {
   title: 'PingPong',
   description: 'PingPong Game 2023',
   viewport: 'width=device-width, initial-scale=1.0',
-
 }
 
 //className={inter.className}  this give me a error !!!!!
@@ -25,7 +24,7 @@ export default function RootLayout({
       <body >
         <div className='Site'>
           <div className='Header'>
-            <zabiHeader/>
+            <Header/>
           </div>
           <div className='NavChild'>
             <SideNavBar_Res/>

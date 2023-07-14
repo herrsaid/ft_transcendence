@@ -6,11 +6,7 @@ import { BsFillChatFill } from "react-icons/bs";
 import { CgProfile, CgLogOut } from "react-icons/cg";
 import { GiPingPongBat } from "react-icons/gi";
 import { IoSettingsSharp } from 'react-icons/io5'
-
-function Pc()
-{
-
-}
+import Link  from "next/link";
 
 export default function SideNavBar_Res()
 {
@@ -24,13 +20,14 @@ export default function SideNavBar_Res()
                         {/* <AiOutlineHome size={40} /> */}
                 </div>
                 <div className="Content">
-                    <button><CgProfile size={40}/></button>
-                    <button><GiPingPongBat size={40}/></button>
-                    <button> <BsFillChatFill size={40}/> </button>
-                    <button><IoSettingsSharp size={40} /></button>
+                    {/* <button className="profile-btn"><CgProfile size={40}/></button> */}
+                    <Link href='/profile'><button className="profile-btn"><CgProfile size={40}/></button></Link>
+                    <Link href='/PingPong'><button className="profile-btn"><GiPingPongBat size={40}/></button></Link>
+                    <Link href='/community'><button className="profile-btn"> <BsFillChatFill size={40}/> </button></Link>
+                    <Link href='/profile'><button className="profile-btn"><IoSettingsSharp size={40} /></button></Link>
                 </div>
                 <div className='Logout'>
-                    <button><CgLogOut size={40}/></button>
+                    <button className="profile-btn"><CgLogOut size={40}/></button>
                 </div>
             </div>
         </>
