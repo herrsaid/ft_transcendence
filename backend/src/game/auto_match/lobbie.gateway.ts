@@ -10,7 +10,7 @@ import {
     PingPongGamePlayEntity,
   } from '../PingPong.Entity';
   
-  export const arr: GameUserSettingsEntity[] = [];
+  export let arr: GameUserSettingsEntity[] = [];
   export const GameArr: PingPongGamePlayEntity[] = [];
   export function getSocketById(
     socketId: string,
@@ -75,8 +75,8 @@ import {
     }
     @SubscribeMessage('leave_user')
     handleDisconnect(client: Socket): void {
-      arr.splice(arr.findIndex((elm) => elm.ID === client.id));
-      console.log('old User leave party');
+      arr = arr.filter((elm) => elm.ID !== client.id);
+      console.log(client.id + ' leave party');
       console.log('arr_content: ', arr);
     }
   }

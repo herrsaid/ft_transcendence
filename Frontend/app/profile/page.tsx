@@ -1,7 +1,7 @@
 "use client"
 import './profile.css'
 import {Friends, Groups, ProfileAvatar, ProfileInfo, History, Achievevements} from './index'
-import SideNavBar_Res from '../Components/SideNavBar_Res/SideNavBar_Res';
+
 import { useState, useEffect } from 'react'
 
 export default  function Profile()

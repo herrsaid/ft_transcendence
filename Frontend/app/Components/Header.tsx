@@ -1,36 +1,43 @@
 'use client'
 
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import Icon from './Icon';
 import Link from 'next/link';
 import './Header.css'
 import MovingLine from './MovingLine';
 
-let old_pos = 0;
+let old_pos: number = 0;
 export default function Header(props: any)
 {
   useEffect(() =>
     {
       let idd = document.getElementById(props.idd);
-      let txt = idd.querySelector("button");
+      let txt: HTMLButtonElement | null;
+      if(idd !== null)
+        txt = idd.querySelector("button");
       function start()
       {
-        const buttonRect = idd.getBoundingClientRect();
-        idd.style.transform = "scale(1.5)";
-        txt.style.textShadow = "2px 2px 10px rgba(255, 255, 255, 1)";
-        const xstart =  buttonRect.left;
+        if(idd !== null && txt !== null)
+        {
+          const buttonRect = idd.getBoundingClientRect();
+          idd.style.transform = "scale(1.5)";
+          txt.style.textShadow = "2px 2px 10px rgba(255, 255, 255, 1)";
+          const xstart =  buttonRect.left;
           const xend = (buttonRect.left+buttonRect.width);
           props.setTargetX({start: xstart,end: xend});
+        }
       }
       start();
       setInterval(()=>
       {
-        const buttonRect = idd.getBoundingClientRect();
-        let size;
+        let size: number = 0;
+        let buttonRect: DOMRect | undefined;
+        if(idd !== null)
+          buttonRect = idd.getBoundingClientRect();
         const divnarbar = document.getElementById("DivNavBar");
         if(divnarbar != null)
           size = divnarbar.getBoundingClientRect().width;
-        if(old_pos != size || old_pos === 0)
+        if((old_pos != size || old_pos === 0) && buttonRect !== undefined)
         {
           old_pos = size;
           const xstart =  buttonRect.left;
@@ -43,13 +50,15 @@ export default function Header(props: any)
       for(let a=0;a < 6 ; a++)
         { 
           let idd= document.getElementById(a.toString());
-          if(idd.style.transform ==  "scale(1.5)")
+          if(idd !== null)
           {
-            const buttonRect = idd.getBoundingClientRect();
-            const xstart =  buttonRect.left;
-            const xend = (buttonRect.left+buttonRect.width);
-            props.setTargetX({start: xstart,end: xend});
-          
+            if(idd.style.transform ==  "scale(1.5)")
+            {
+              const buttonRect = idd.getBoundingClientRect();
+              const xstart =  buttonRect.left;
+              const xend = (buttonRect.left+buttonRect.width);
+              props.setTargetX({start: xstart,end: xend});
+            }
           }
         }
     }
@@ -60,34 +69,34 @@ export default function Header(props: any)
       <div  className="Header" onMouseLeave={handlemouseleave}>
         <div id="DivNavBar" >
           <Link href="/">
-          <div className= "Legends">
-            <Icon title="Legends" setTargetX={props.setTargetX} idd="0"/>
-          </div>
+            <div className= "Legends">
+              <Icon title="Legends" setTargetX={props.setTargetX} idd="0"/>
+            </div>
           </Link>
-          <Link href="/Games">
-          <div className= "Games" >
-            <Icon title="Games" setTargetX={props.setTargetX} idd="1"/>
-          </div>
+          <Link href="/PingPong">
+            <div className= "PingPong" >
+              <Icon title="PingPong" setTargetX={props.setTargetX} idd="1"/>
+            </div>
           </Link>
           <Link href="/Stream">
-          <div className= "Stream">
-            <Icon title="Stream" setTargetX={props.setTargetX} idd="2"/>
-          </div>
+            <div className= "Stream">
+              <Icon title="Stream" setTargetX={props.setTargetX} idd="2"/>
+            </div>
           </Link>
           <Link href="/Search">
-          <div className= "Search">
-            <Icon title="Search" setTargetX={props.setTargetX} idd="3"/>
-          </div>
+            <div className= "Search">
+              <Icon title="Search" setTargetX={props.setTargetX} idd="3"/>
+            </div>
           </Link>
           <Link href="/Notification">
-          <div className= "Notification">
-            <Icon title="Notification" setTargetX={props.setTargetX} idd="4"/>
-          </div>
+            <div className= "Notification">
+              <Icon title="Notification" setTargetX={props.setTargetX} idd="4"/>
+            </div>
           </Link>
           <Link href="/profile">
-          <div className= "Profilelink">
-            <Icon title="Profile" setTargetX={props.setTargetX} idd="5"/>
-          </div>
+            <div className= "Profilelink">
+              <Icon title="Profile" setTargetX={props.setTargetX} idd="5"/>
+            </div>
           </Link>
         </div>
           <MovingLine targetX={props.targetX} />
