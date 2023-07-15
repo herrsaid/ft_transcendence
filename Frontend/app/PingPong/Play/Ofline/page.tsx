@@ -19,25 +19,17 @@ export default function PingPong()
   const PingPongStyle = {
       top: "20%",
       left: "10%",
-      width: "80%",
-      height: "40%",
   };
   const ballStyle = {
       left: `${ballxpos}%`,
       top: `${ballypos}%`,
-      width: "25px",
-      height: "25px",
   };
   const ping2style = {
       top: `${ping2ypos}%`,
       left: "99.5%",
-      width: "0.5%",
-      height: "15%",
   };
   const ping1style = {
       top: `${ping1ypos}%`,
-      width: "0.5%",
-      height: "15%",
   };
 
 	function getpos()
@@ -232,21 +224,23 @@ export default function PingPong()
 
     return(
         <main className="absolute inset-x-0 inset-y-0">
-            <div id="informaion">
-                <div id="user1">mabdelou</div>
-                <div id="user2">aabdelou</div>
-                <div id="result1">{result1}</div>
-                <div id="center">-</div>
-                <div id="result2">{result2}</div>
-            </div>
-            <div  style={PingPongStyle} id="PingPong_Game">
-                <div id="ping1" style={ping1style}></div>
-                <div id="ping2"  style={ping2style}></div>
-                <div id="ball" style={ballStyle}></div>
-            </div>
-            <div id="map_name">
-                <div>Map-V{MapNumber}</div>
-            </div>
+			<div id="Game">
+				<div id="informaion">
+            	    <div id="user1">mabdelou</div>
+            	    <div id="user2">aabdelou</div>
+            	    <div id="result1">{result1}</div>
+            	    <div id="center">-</div>
+            	    <div id="result2">{result2}</div>
+            	</div>
+            	<div  style={PingPongStyle} id="PingPong_Game">
+            	    <div id="ping1" style={ping1style}></div>
+            	    <div id="ping2"  style={ping2style}></div>
+            	    <div id="ball" style={ballStyle}></div>
+            	</div>
+            	<div id="map_name">
+            	    <div>Map-V{MapNumber}</div>
+            	</div>
+			</div>
         </main>
         );
 }
