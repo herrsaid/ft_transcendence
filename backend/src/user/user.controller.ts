@@ -16,10 +16,15 @@ export class UserController {
     
     @UseGuards(AuthGuard)
     @Get('me')
-    profileInfo(@Req() req:Request)
+    profileInfo(@Req() req)
     {
-        const tocken_part = req.headers['authorization'].split(' ')
-        const decodedJwtAccessToken = this.jwtService.decode(tocken_part[1]);
+        
+        let cookie_str = req?.headers?.cookie
+        let position = cookie_str.search("n=");
+          
+        let result = cookie_str.substr(position + 2);
+        
+        const decodedJwtAccessToken = this.jwtService.decode(result);
         
         return this.userService.findOne(decodedJwtAccessToken['sub'])
 

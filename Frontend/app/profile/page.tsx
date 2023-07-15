@@ -7,15 +7,12 @@ import { useState, useEffect } from 'react'
 export default  function Profile()
 {
     const [mydata, setData] = useState([])
-    const cookieStore = document.cookie;
+    
     useEffect(()=>{
-        var arr = cookieStore.split("=");
     
         fetch("http://localhost:1337/user/me", {
             method: 'GET',
-            headers: {
-                Authorization: `Bearer ${arr[1]}`,
-             },
+            credentials: "include"
           }).then((response) => response.json())
           .then(data => setData(data))  
     },[]);
