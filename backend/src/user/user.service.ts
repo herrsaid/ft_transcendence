@@ -31,4 +31,14 @@ export class UserService {
         const user = await this.userRepo.create(createUserDto);
         return await this.userRepo.save(user);
     }
+
+
+
+    // async createImage() {
+    //     return this.imageRepository.save(image);
+    //   }
+    
+    //   async getImage(id: number) {
+    //     return this.userRepo.
+    //   }
 }

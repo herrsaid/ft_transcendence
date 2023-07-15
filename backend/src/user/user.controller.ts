@@ -1,8 +1,10 @@
-import { Body, Controller, Get, Param, Post, Req, Request, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, FileTypeValidator, Get, MaxFileSizeValidator, Param, ParseFilePipe, Post, Req, Request, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { CreateUserDto } from './dto/createUserDto';
 import { UserService } from './user.service';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { JwtService } from '@nestjs/jwt';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 
 
 @Controller('user')
@@ -21,6 +23,42 @@ export class UserController {
         
         return this.userService.findOne(decodedJwtAccessToken['sub'])
 
+    }
+
+
+    @Post('edit/avatar')
+        @UseInterceptors(FileInterceptor('file',
+        {
+            storage: diskStorage({
+                destination: './uploadedFiles/avatars',
+                filename: (req, file, cb) => {
+                    cb(null, file.originalname)
+                }
+              })
+        }
+        ))
+        async uploadFile(@UploadedFile(
+            new ParseFilePipe({
+                validators: [
+                    new FileTypeValidator({ fileType: '.(png|jpeg|jpg)' }),
+                    new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 4 }),
+                  ],
+            }),
+
+        ) file: Express.Multer.File)
+        
+        {
+
+            // return this.userService.addAvatar(request.user.id, {
+            //     path: file.path,
+            //     filename: file.originalname,
+            //     mimetype: file.mimetype
+            //   });
+        console.log(file);
+        return {
+            statusCode: 200,
+            data: file.path,
+          };
     }
 
 

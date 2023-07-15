@@ -18,11 +18,21 @@ import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './auth/constants';
 import { GameModule } from './game/PingPong.module';
 import { Achievevement } from './entities/achievevements.entity';
+import { MulterModule } from '@nestjs/platform-express';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+
 @Module({
-  imports: [GameModule, AuthModule, TypeOrmModule.forRoot(config), UserModule, TypeOrmModule.forFeature([User,Achievevement]), JwtModule.register({
+  imports: [GameModule, AuthModule, TypeOrmModule.forRoot(config),
+   
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..')
+    }),
+    UserModule, TypeOrmModule.forFeature([User,Achievevement]), JwtModule.register({
     global: true,
     secret: jwtConstants.secret,
     signOptions: { expiresIn: '1d' },
+   
   }),],
   controllers: [AppController, TestController, AuthController, UserController],
 

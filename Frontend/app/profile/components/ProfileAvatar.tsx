@@ -1,3 +1,4 @@
+"use client"
 import ProfileInfoNav from "./ProfileInfoNav";
 import "../profile.css"
 
@@ -10,7 +11,31 @@ interface props{
     username:string
 }
 
+
+
 const ProfileAvatar = (props:props) => {
+
+
+    
+
+
+const upload = () => {
+   
+    var avatar = document.querySelector('input[type="file"]')
+
+var data = new FormData()
+data.append('file', avatar.files[0])
+data.append('user', 'hubot')
+
+fetch('http://localhost:1337/user/edit/avatar', {
+  method: 'POST',
+  body: data
+})
+  };
+
+
+
+const avatar = document.getElementById('avatar');
     return (
         <div>
 
@@ -19,7 +44,12 @@ const ProfileAvatar = (props:props) => {
                     <img src={props.img} ></img>
                     <label>
                     <FaPen/>
-                    <input type="file" name="myfile" ></input>
+                    <form >
+                        
+                        <input type="file" id="avatar" name="file" onChange={upload}/>
+                        
+                    </form>
+                    
                     </label>
                     
                 </div>
@@ -35,5 +65,8 @@ const ProfileAvatar = (props:props) => {
                 </div>
         </div>
     );
+
+
+    
 };
 export default ProfileAvatar;
