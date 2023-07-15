@@ -22,25 +22,17 @@ export default function PingPong()
 	const PingPongStyle = {
 		top: "20%",
 		left: "10%",
-		width: "80%",
-		height: "40%",
 	};
 	const ballStyle = {
 		left: `${ballxpos}%`,
 		top: `${ballypos}%`,
-		width: "25px",
-		height: "25px",
 	};
 	const ping2style = {
 		top: `${ping2ypos}%`,
 		left: "99.5%",
-		width: "0.5%",
-		height: "15%",
 	};
 	const ping1style = {
 		top: `${ping1ypos}%`,
-		width: "0.5%",
-		height: "15%",
 	};
 	function getpos()
 	{
@@ -255,7 +247,7 @@ export default function PingPong()
     return(
         <main className="absolute inset-x-0 inset-y-0">
 			<div id="Game">
-            	<div id="information">
+				<div id="informaion">
             	    <div id="user1">mabdelou</div>
             	    <div id="user2">aabdelou</div>
             	    <div id="result1">{result1}</div>
@@ -272,5 +264,5 @@ export default function PingPong()
             	</div>
 			</div>
         </main>
-        );
+    );
 }
