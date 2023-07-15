@@ -1,12 +1,22 @@
+#Game
+{
+    position: absolute;
+    width: 60vh;
+    height:100%;
+    left:50%;
+    top:50%;
+    transform: translate(-50%,-50%);
+}
+
 #informaion
 {
     background-color: rgba(0, 0, 0, 0.4);
     position: relative;
     border-top-left-radius:  25px;
     border-top-right-radius:  25px;
-    height: 5%;
-    width: 40%;
-    left:30%;
+    height: 2.5%;
+    width: 30vh;
+    left:36%;
     top:20%;
 }
 
@@ -16,23 +26,31 @@
     background-color: rgba(0, 0, 0, 0.4);
     position: relative;
     border-radius: 25px;
-
+    width: 60vh;
+    height: 40%;
 }
+
 #ping1
 {
     position: absolute;
     background-color: white;
+    width: 0.35vh;
+    height: 15%;
 }
 #ping2
 {
-    position: absolute;
+    position: absolute; 
     background-color: white;
+    width: 0.35vh;
+    height: 15%;
 }
 #ball
 {
     position: absolute;
     background-color: white;
     border-radius: 100%;
+    width: 1.7vh;
+      height: 5%;
 
 }
 #user1
@@ -41,7 +59,7 @@
     position: absolute;
     left: 15%;
     top: 25%;
-    font-size: 2vw;
+    font-size: 1.5vh;
 }
 #user2
 {
@@ -49,7 +67,7 @@
     position: absolute;
     left: 65%;
     top: 25%;
-    font-size: 2vw;
+    font-size: 1.5vh;
 }
 #result1
 {
@@ -57,7 +75,7 @@
     position: absolute;
     left: 42%;
     top: 25%;
-    font-size: 2vw;
+    font-size: 1.5vh;
 }
 #result2
 {
@@ -65,7 +83,7 @@
     position: absolute;
     left: 56%;
     top: 25%;
-    font-size: 2vw;
+    font-size: 1.5vh;
 }
 #center
 {
@@ -73,7 +91,7 @@
     position: absolute;
     left: 50%;
     top: 25%;
-    font-size: 2vw;
+    font-size: 1.5vh;
 }
 
 #map_name
@@ -82,16 +100,17 @@
     position: relative;
     border-bottom-left-radius: 25px;
     border-bottom-right-radius:  25px;
-    height: 5%;
-    width: 40%;
-    left:30%;
+    height: 2.5%;
+    width: 30vh;
+    left:36%;
     top:20%;
 }
+
 #map_name div
 {
     color: white;
     position: absolute;
     left: 40%;
     top: 25%;
-    font-size: 2vw;
+    font-size: 1.5vh;
 }

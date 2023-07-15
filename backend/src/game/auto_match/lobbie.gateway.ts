@@ -16,7 +16,9 @@ import {
     socketId: string,
     server: Server,
   ): Socket | undefined {
-    return server.sockets.sockets.get(socketId);
+    if(socketId !== undefined && server != undefined)
+      return server.sockets.sockets.get(socketId);
+    return undefined;
   }
   @WebSocketGateway(1339, {
     cors: { origin: '*', credentials: true },

@@ -6,7 +6,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    width:70%;
+    width: 50vh;
     height: 60%;
     background-color: rgba(0, 0, 0, 0.3);
     border-radius: 2%;
@@ -17,7 +17,7 @@
     position: relative;
     top: 4%;
     text-align: center;
-    font-size: 3vmin;
+    font-size: 3vh;
     color: white;
     z-index: 1;
 }
@@ -27,10 +27,10 @@
     position: relative;
     display: flex;
     top: 15%;
-    font-size: 2vmin;
+    font-size: 1.5vh;
     color: white;
     z-index: 1;
-    width: 100%;
+    width: 50vh;
     height: 5%;
 }
 
@@ -45,7 +45,7 @@
     position: absolute;
     display: flex;
     height: 5%;
-    width: 50%;
+    width: 25vh;
     left: 35%;
     top: 60%;
     background-color: white;
@@ -54,11 +54,11 @@
 #scroll
 {
     position: absolute;
-    height: 15px;
-    width: 15px;
+    height: 30%;
+    width: 2vh;
     background-color: white;
     border-radius: 25px;
-    top: 45%;
+    top: 47%;
     z-index: 2;
 }
 
@@ -97,7 +97,7 @@
     width: 100%;
     height:5%;
     top: 22.5%;
-    font-size: 2vmin;
+    font-size: 1.7vh;
     color: white;
     z-index: 1;
 }
@@ -148,7 +148,7 @@
     width: 100%;
     height:5%;
     top: 30%;
-    font-size: 2vmin;
+    font-size: 1.7vh;
     color: white;
     z-index: 1;
 }
@@ -164,7 +164,7 @@
     position: absolute;
     width: 10%;
     height: 100%;
-    left: 56%;
+    left: 66%;
     background-color: rgb(39, 141, 214,1);
     border-radius: 10px;
     text-align: center;
@@ -175,7 +175,7 @@
     position: absolute;
     width: 10%;
     height: 100%;
-    left: 35%;
+    left: 46%;
     background-color: rgb(39, 141, 214,0.4);
     border-radius: 10px;
     text-align: center;
@@ -188,7 +188,7 @@
     width: 100%;
     height:5%;
     top: 37.5%;
-    font-size: 2vmin;
+    font-size: 1.7vh;
     color: white;
     opacity: 0;
 }
@@ -204,7 +204,7 @@
     position: absolute;
     width: 10%;
     height: 100%;
-    left: 35%;
+    left: 46%;
     background-color: rgb(39, 141, 214,0.4);
     border-radius: 10px;
     text-align: center;
@@ -216,7 +216,7 @@
     position: absolute;
     width: 10%;
     height: 100%;
-    left: 56%;
+    left: 66%;
     background-color: rgb(39, 141, 214,1);
     border-radius: 10px;
     text-align: center;
@@ -230,7 +230,7 @@
     width: 100%;
     height:5%;
     top: 45%;
-    font-size: 2vmin;
+    font-size: 1.7vh;
     color: white;
     opacity: 0;
 }
@@ -246,7 +246,7 @@
     position: absolute;
     width: 10%;
     height: 100%;
-    left: 56%;
+    left: 66%;
     background-color: rgb(39, 141, 214,0.4);
     border-radius: 10px;
     text-align: center;
@@ -258,7 +258,7 @@
     position: absolute;
     width: 10%;
     height: 100%;
-    left: 35%;
+    left: 46%;
     background-color: rgb(39, 141, 214,1);
     border-radius: 10px;
     text-align: center;
