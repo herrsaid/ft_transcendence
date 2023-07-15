@@ -1,4 +1,4 @@
-import { Body, Controller, FileTypeValidator, Get, MaxFileSizeValidator, Param, ParseFilePipe, Post, Req, Request, Res, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, FileTypeValidator, Get, MaxFileSizeValidator, Param, ParseFilePipe, Post, Req, Request, Res, UnauthorizedException, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { CreateUserDto } from './dto/createUserDto';
 import { UserService } from './user.service';
 import { AuthGuard } from 'src/auth/auth.guard';
@@ -14,19 +14,24 @@ export class UserController {
     {}
 
     
-    @UseGuards(AuthGuard)
+    // @UseGuards(AuthGuard)
     @Get('me')
     profileInfo(@Req() req)
     {
-        
-        let cookie_str = req?.headers?.cookie
-        let position = cookie_str.search("n=");
-          
-        let result = cookie_str.substr(position + 2);
-        
-        const decodedJwtAccessToken = this.jwtService.decode(result);
-        
-        return this.userService.findOne(decodedJwtAccessToken['sub'])
+        try{
+            console.log(req.headers)
+            let cookie_str = req?.headers?.cookie
+            let position = cookie_str.search("n=");
+              
+            let result = cookie_str.substr(position + 2);
+            
+            const decodedJwtAccessToken = this.jwtService.decode(result);
+            
+            return this.userService.findOne(decodedJwtAccessToken['sub'])
+        }
+        catch{
+            throw new UnauthorizedException();
+        }
 
     }
 

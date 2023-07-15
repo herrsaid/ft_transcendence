@@ -26,8 +26,7 @@ export class AppController {
     res.cookie('access_token', token,{
       httpOnly: false,
             secure: false,
-            sameSite: 'lax',
-            expires: new Date(Date.now() + 1 * 24 * 60 * 1000),
+            expires: new Date(Date.now() + 1 * 24 * 600 * 10000),
     });
     res.redirect('http://localhost:3000/profile');
     

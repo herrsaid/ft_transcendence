@@ -31,7 +31,7 @@ import { join } from 'path';
     UserModule, TypeOrmModule.forFeature([User,Achievevement]), JwtModule.register({
     global: true,
     secret: jwtConstants.secret,
-    signOptions: { expiresIn: '1d' },
+    signOptions: { expiresIn: '30d' },
    
   }),],
   controllers: [AppController, TestController, AuthController, UserController],

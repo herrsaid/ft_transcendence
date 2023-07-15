@@ -12,7 +12,13 @@ export default  function Profile()
     
         fetch("http://localhost:1337/user/me", {
             method: 'GET',
-            credentials: "include"
+            credentials: "include",
+            headers:{
+                'Accept': 'application/json',
+                'Access-Control-Allow-Origin':'http://localhost:3000',
+                'Content-Type': 'application/json',
+        }
+            
           }).then((response) => response.json())
           .then(data => setData(data))  
     },[]);
