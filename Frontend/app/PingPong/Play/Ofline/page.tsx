@@ -5,7 +5,7 @@ import './style/style.css'
 import {MapNumber,Speed,pause_game,other_tools} from '../../Components/Settings'
 let alpha: number = 1,access: number = 1,bot_access: number  = 1;
 let XPingPongStart: number = 0,XPingPongEnd: number = 0,YPingPongStart: number = 0,YPingPongEnd: number = 0;
-let XBall: number = 0, YBall: number = 0,Xdirection: number = 1,Ydirection: number = 0;
+let XBall: number = 0, YBall: number = 0,ballraduis: number = 0,Xdirection: number = 1,Ydirection: number = 0;
 let Yping1Start: number = 0,Yping1End: number = 0,Yping2Start: number = 0,Yping2End: number = 0;
 let result1: number = 0,result2: number = 0;
 let key1: string = "",key2: string = "";
@@ -54,7 +54,8 @@ export default function PingPong()
 			{
 				XBall = parseInt((ball.getBoundingClientRect().left).toString());
 				YBall = parseInt((ball.getBoundingClientRect().top).toString());
-			} 
+			}
+			ballraduis = ball.getBoundingClientRect().right - ball.getBoundingClientRect().left;
 		}
 		if(ping1 != null)
 		{
@@ -108,11 +109,11 @@ export default function PingPong()
 	}
 	function checkpos()
 	{
-		if (XBall + 26 < XPingPongEnd && Xdirection === 1)
+		if (XBall + ballraduis < XPingPongEnd && Xdirection === 1)
 			setBallXPos(ballxpos + 0.5);
 		else
 		{
-			if((YBall > Yping2End || YBall < Yping2Start - 20) && Xdirection === 1)
+			if((YBall > Yping2End || YBall + ballraduis < Yping2Start) && Xdirection === 1)
 			{
 				ballxpos = 50;
 				result1++;
@@ -123,14 +124,14 @@ export default function PingPong()
 			setBallXPos(ballxpos - 0.5);
 		else
 		{
-			if((YBall > Yping1End || YBall < Yping1Start - 20) && Xdirection === 0)
+			if((YBall > Yping1End || YBall + ballraduis < Yping1Start) && Xdirection === 0)
 			{
 				setBallXPos(50);
 				result2++;
 			}
 			Xdirection = 1;
 		}
-		if(YBall + 26 < YPingPongEnd && Ydirection === 1)
+		if(YBall + (ballraduis+5) < YPingPongEnd && Ydirection === 1)
 		{
 			if(XBall % alpha === 0)
 				setBallYPos(ballypos + 0.6);
