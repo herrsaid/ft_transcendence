@@ -14,24 +14,14 @@ export class UserController {
     {}
 
     
-    // @UseGuards(AuthGuard)
+    @UseGuards(AuthGuard)
     @Get('me')
     profileInfo(@Req() req)
     {
-        try{
-            console.log(req.headers)
-            let cookie_str = req?.headers?.cookie
-            let position = cookie_str.search("n=");
-              
-            let result = cookie_str.substr(position + 2);
-            
-            const decodedJwtAccessToken = this.jwtService.decode(result);
-            
-            return this.userService.findOne(decodedJwtAccessToken['sub'])
-        }
-        catch{
-            throw new UnauthorizedException();
-        }
+        
+        const tocken_part = req.headers['authorization'].split(' ')
+        const decodedJwtAccessToken = this.jwtService.decode(tocken_part[1]);
+        return this.userService.findOne(decodedJwtAccessToken['sub'])
 
     }
 

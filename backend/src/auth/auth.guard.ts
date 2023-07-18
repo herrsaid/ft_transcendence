@@ -8,6 +8,7 @@ import {
   } from '@nestjs/common';
   import { JwtService } from '@nestjs/jwt';
   import { jwtConstants } from './constants';
+  import { Request } from 'express';
 
   
   @Injectable()
@@ -35,30 +36,9 @@ import {
       return true;
     }
   
-    private extractTokenFromHeader(@Req() req) :string{
-      // console.log("==========");
-      let cookie_str = req?.headers?.cookie
-      // console.log(cookie_str)
-
-      if (cookie_str)
-      {
-        try
-        {
-
-          let position = cookie_str.search("n=");
-          
-          let result = cookie_str.substr(position + 2);
-          // console.log(result)
-        
-          return result;
-        }
-        catch{
-            return "no token"
-        }
-
-      }
-      else
-        return "no token"
+    private extractTokenFromHeader(request: Request): string | undefined {
+      const [type, token] = request.headers.authorization?.split(' ') ?? [];
+      return type === 'Bearer' ? token : undefined;
     }
   }
   

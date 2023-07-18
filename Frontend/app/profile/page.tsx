@@ -4,6 +4,7 @@ import {Friends, Groups, ProfileAvatar, ProfileInfo, History, Achievevements} fr
 
 import { useState, useEffect } from 'react'
 
+import Cookies from 'js-cookie';
 export default  function Profile()
 {
     const [mydata, setData] = useState([])
@@ -12,11 +13,8 @@ export default  function Profile()
     
         fetch("http://localhost:1337/user/me", {
             method: 'GET',
-            credentials: "include",
             headers:{
-                'Accept': 'application/json',
-                'Access-Control-Allow-Origin':'http://localhost:3000',
-                'Content-Type': 'application/json',
+                Authorization: `Bearer ${Cookies.get('access_token')}`
         }
             
           }).then((response) => response.json())
