@@ -18,17 +18,19 @@ a{
   text-decoration: none;
 }
 
+
+/*32cd66*/
 :root{
-  --color-light:#fff;
+  --color-light:#000;
   --color-dark:#000;
   --color-border:#642ADF;
-  --color-bg: #363636;
-  --primary-color: #4a4646;
-  --color-btn: #278dd6;
+  --color-bg: #fff;
+  --primary-color: #fff;
+  --color-btn: #32cd66;
 }
 
 body{
-  background-color: #ffffff;
+  background-color: #fff;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
