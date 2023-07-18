@@ -1,6 +1,6 @@
 "use client"
 import '../profile/profile.css'
-import {Friends, Groups, ProfileAvatar, ProfileInfo, History, Achievevements} from '../profile/index'
+import {ProfileAvatar, ProfileInfo} from './index'
 import { useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react'
 import Cookies from 'js-cookie';
@@ -44,21 +44,9 @@ export default  function User()
                             />
 
                         </div>
-                        {/* <History/> */}
-                    </div>
-            {/* <div className="Profile">
-                    <div className="side_one">
-                        <Friends/>
-                        <Groups/>        
-                    </div>
-
-                    <div className="side_three">
-
-                        <Achievevements/>
                         
-                    </div>
-            </div> */}
 
+        </div>
         </div>
         </div>
     );
