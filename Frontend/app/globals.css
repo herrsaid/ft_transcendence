@@ -21,12 +21,12 @@ a{
 
 /*32cd66*/
 :root{
-  --color-light:#000;
+  --color-light:#FFF;
   --color-dark:#000;
   --color-border:#642ADF;
   --color-bg: #fff;
   --primary-color: #fff;
-  --color-btn: #32cd66;
+  --color-btn: #5A96E3;
 }
 
 body{
