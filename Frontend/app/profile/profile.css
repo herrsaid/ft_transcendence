@@ -131,8 +131,14 @@
 
 .side_two_info .profile_avatar img{
     width: 130px;
-    border: 2px solid var(--color-btn);
+    border: 1px solid var(--color-btn);
     border-radius: 50%;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+.side_two_info .profile_avatar img:hover{
+    border: 5px solid var(--color-btn);
         
 }
 
@@ -215,6 +221,10 @@ div.victory_div{
     border-radius: 13px;
     margin-bottom: 5%;
     background-color: var(--color-btn);
+    box-shadow: 0px 4px 4px 4px #eee;
+    
+
+
 }
 
 div.victory_div p{
@@ -294,6 +304,7 @@ div.edit_username input{
     padding-bottom: 2%;
     cursor: pointer;
     justify-content: space-between;
+    box-shadow: 0px 4px 4px 4px #eee;
 }
 
 
@@ -329,6 +340,7 @@ p.enligne{
     padding-right: 10px;
     justify-content: space-between;
     cursor: pointer;
+    box-shadow: 0px 4px 4px 4px #eee;
 }
 
 .Groups .group h4{
@@ -353,6 +365,7 @@ p.enligne{
     margin-bottom: 10px;
     display: flex;
     justify-content: space-around;
+    box-shadow: 0px 4px 4px 4px #eee;
 }
 
 .one_achievements h3{
@@ -480,6 +493,24 @@ p.enligne{
     flex: 4;
     overflow: auto;
     height: 100dvh;
+  }
+
+
+  .add_friend_btn{
+    background-color: var(--color-btn);
+    width: 120px;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    transition: 0.4s;
+    box-shadow: 0px 4px 4px 4px #eee;
+    
+  }
+
+  .add_friend_btn:hover{
+    background-color: #fff;
+    color: var(--color-btn);
+    border: 1px solid var(--color-btn);
   }
 
 
