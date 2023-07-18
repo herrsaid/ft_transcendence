@@ -2,8 +2,9 @@
 import { useEffect } from "react";
 import p5 from "p5";
 import './Game.css'
+import { None } from "framer-motion";
 
-let GameWidth: number = 800,GameHeight: number = 400;
+let GameWidth: number = 800,GameHeight: number = 400,GameSpeed: number = 4;
 let BallWidth: number = 15, BallHeight = 15, BallXpos: number = GameWidth/2, BallYpos: number = GameHeight/2;
 let Racket1Width: number = 10, Racket1Height = 60, Racket1Xpos: number = 5, Racket1Ypos: number = 170;
 let Racket2Width: number = 10, Racket2Height = 60, Racket2Xpos: number = 785, Racket2Ypos: number = 170;
@@ -51,33 +52,63 @@ function Result2(p5: p5,res2: string, x: number, y: number)
   p5.text(res2, x, y);
   p5.fill(255, 204, 0);
 }
-
-function BallAnimation(p5: p5)
+function GetAlpha(p5: p5,BallYpos: number, RacketYpos: number, RacketHeight: number): undefined
 {
   let ballYpos_racket: number;
-  if(BallYpos < Racket1Ypos || BallYpos > (Racket1Ypos + Racket1Height))
-    ballYpos_racket = BallYpos - Racket1Ypos;
+      if(BallYpos > RacketYpos || BallYpos < (RacketYpos + RacketHeight))
+       ballYpos_racket = BallYpos - RacketYpos;
+      else
+        ballYpos_racket = 0;
+      let ballYpos_racket_par_100: number = p5.int(ballYpos_racket/(p5.int(RacketHeight/10)));
+      alpha = ballYpos_racket_par_100 - (10 - ballYpos_racket_par_100);
+      if(alpha === 0|| alpha === 10)
+        alpha = 9;
+      if(alpha > 0)
+        alpha -= 10;
+      else if(alpha < 0)
+        alpha += 10;
+      if(ballYpos_racket_par_100 > 5)
+        BallYDirection = 1;
+      else
+        BallYDirection = -1;
+}
+function BallAnimation(p5: p5)
+{
+  BallXpos += (BallXDirection * GameSpeed);
+  if(BallYpos < Racket2Ypos || BallYpos > (Racket2Ypos + Racket2Height))
+  {
+    if(BallXpos > GameWidth)
+    {
+      BallXDirection = -1;
+      Result1Val++;
+      BallXpos = GameWidth/2;
+    }
+  }
   else
-    ballYpos_racket = 0;
-  let ballYpos_racket_par_100: number = ballYpos_racket/(Racket1Height/10);
-  let alpha2 = (ballYpos_racket_par_100 - (100 - ballYpos_racket_par_100)) / 10;
-  if(BallXpos > (GameWidth-(BallWidth+Racket1Width)))
   {
-    BallXDirection = -1;
-    if(BallYpos < Racket1Ypos || BallYpos > (Racket1Ypos + Racket1Height))
-      BallXpos = GameWidth/2;
-    else
-      alpha2 = alpha;
+    if(BallXpos > (GameWidth-(BallWidth+Racket1Width)))
+    {
+      BallXDirection = -1;
+      GetAlpha(p5,BallYpos,Racket2Ypos,Racket2Height);
+    }
   }
-  if(BallXpos < (BallWidth + Racket2Width))
+  if(BallYpos < Racket1Ypos || BallYpos > (Racket1Ypos + Racket1Height))
   {
-    BallXDirection = +1;
-    if(BallYpos < Racket2Ypos || BallYpos > (Racket2Ypos + Racket2Height))
+    if(BallXpos < 0)
+    {
+      BallXDirection = +1;
+      Result2Val++;
       BallXpos = GameWidth/2;
-    else
-      alpha2 = alpha;
+    }
   }
-    BallXpos += BallXDirection;
+  else
+  {
+    if(BallXpos < (BallWidth + Racket2Width))
+    {
+      BallXDirection = +1;
+      GetAlpha(p5,BallYpos,Racket1Ypos,Racket1Height);
+    }
+  }
   if(BallXpos % alpha === 0)
   {
     if(BallYpos > GameHeight-BallHeight/2)
@@ -86,6 +117,22 @@ function BallAnimation(p5: p5)
       BallYDirection = +1
     BallYpos += BallYDirection;
   }
+}
+
+function Racket1Animation(p5: p5): undefined
+{
+  if(p5.key == 'w' && (Racket1Ypos > 0))
+    Racket1Ypos -= GameSpeed;
+  else if (p5.key == 's' && (Racket1Ypos < (GameHeight - Racket1Height)))
+    Racket1Ypos += GameSpeed;
+}
+
+function Racket2Animation(p5: p5): undefined
+{
+  if(p5.key == 'ArrowUp' && (Racket2Ypos > 0))
+    Racket2Ypos -= GameSpeed;
+  else if (p5.key == 'ArrowDown' && (Racket2Ypos < (GameHeight - Racket2Height)))
+    Racket2Ypos += GameSpeed;
 }
 
 const Game = () => {
@@ -100,13 +147,15 @@ const Game = () => {
       p5.draw = () => {
         p5.background(25);
         BallAnimation(p5);
+        Racket1Animation(p5);
+        Racket2Animation(p5);
         gamediv.center();
         LineCenter(p5);
+        Result1(p5, p5.str(Result1Val),Result1Xpos,Result1Ypos);
+        Result2(p5, p5.str(Result2Val),Result2Xpos,Result2Ypos);
         Ball(p5,BallXpos,BallYpos,BallWidth,BallHeight);
         Racket1(p5,Racket1Xpos,Racket1Ypos,Racket1Width,Racket1Height);
         Racket2(p5,Racket2Xpos,Racket2Ypos,Racket2Width,Racket2Height);
-        Result1(p5,Result1Val.toString(),Result1Xpos,Result1Ypos);
-        Result2(p5,Result2Val.toString(),Result2Xpos,Result2Ypos);
       };
     };
 
