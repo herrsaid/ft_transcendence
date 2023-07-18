@@ -4,12 +4,12 @@ import p5 from "p5";
 import './Game.css'
 
 let GameWidth: number = 800,GameHeight: number = 400;
-let BallWidth: number = 25, BallHeight = 25, BallXpos: number = 400, BallYpos: number = 200;
+let BallWidth: number = 15, BallHeight = 15, BallXpos: number = GameWidth/2, BallYpos: number = GameHeight/2;
 let Racket1Width: number = 10, Racket1Height = 60, Racket1Xpos: number = 5, Racket1Ypos: number = 170;
 let Racket2Width: number = 10, Racket2Height = 60, Racket2Xpos: number = 785, Racket2Ypos: number = 170;
 let Result1Val: number = 0, Result1Xpos: number = 350, Result1Ypos: number = 25;
 let Result2Val: number = 0, Result2Xpos: number = 450, Result2Ypos: number = 25;
-let BallXDirection: number = 1, BallYDirection: number = 1, alpha: number = 1;
+let BallXDirection: number = 1, BallYDirection: number = 1, alpha: number = -1;
 let gamediv: p5.Renderer;
 
 function Ball(p5: p5, x: number, y: number, w: number, h: number)
@@ -19,6 +19,7 @@ function Ball(p5: p5, x: number, y: number, w: number, h: number)
 }
 function LineCenter(p5: p5)
 {
+  p5.fill('yellow');
   for(let a=0;a<400;a+=35)
     p5.rect(397.5, a, 5, 30,20);
 }
@@ -53,16 +54,35 @@ function Result2(p5: p5,res2: string, x: number, y: number)
 
 function BallAnimation(p5: p5)
 {
-  if(BallXpos > 775)
+  let ballYpos_racket: number;
+  if(BallYpos < Racket1Ypos || BallYpos > (Racket1Ypos + Racket1Height))
+    ballYpos_racket = BallYpos - Racket1Ypos;
+  else
+    ballYpos_racket = 0;
+  let ballYpos_racket_par_100: number = ballYpos_racket/(Racket1Height/10);
+  let alpha2 = (ballYpos_racket_par_100 - (100 - ballYpos_racket_par_100)) / 10;
+  if(BallXpos > (GameWidth-(BallWidth+Racket1Width)))
+  {
     BallXDirection = -1;
-  if(BallXpos < 25)
+    if(BallYpos < Racket1Ypos || BallYpos > (Racket1Ypos + Racket1Height))
+      BallXpos = GameWidth/2;
+    else
+      alpha2 = alpha;
+  }
+  if(BallXpos < (BallWidth + Racket2Width))
+  {
     BallXDirection = +1;
-  BallXpos += BallXDirection;
+    if(BallYpos < Racket2Ypos || BallYpos > (Racket2Ypos + Racket2Height))
+      BallXpos = GameWidth/2;
+    else
+      alpha2 = alpha;
+  }
+    BallXpos += BallXDirection;
   if(BallXpos % alpha === 0)
   {
-    if(BallYpos > 387.5)
+    if(BallYpos > GameHeight-BallHeight/2)
       BallYDirection = -1
-    if(BallYpos < 12.5)
+    if(BallYpos < BallHeight/2)
       BallYDirection = +1
     BallYpos += BallYDirection;
   }
@@ -81,6 +101,7 @@ const Game = () => {
         p5.background(25);
         BallAnimation(p5);
         gamediv.center();
+        LineCenter(p5);
         Ball(p5,BallXpos,BallYpos,BallWidth,BallHeight);
         Racket1(p5,Racket1Xpos,Racket1Ypos,Racket1Width,Racket1Height);
         Racket2(p5,Racket2Xpos,Racket2Ypos,Racket2Width,Racket2Height);
