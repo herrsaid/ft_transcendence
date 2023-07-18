@@ -60,12 +60,13 @@
 
 div.chat-info
 {
-    background-color: #bdbdbd;
+    background-color: #eee;
     display: flex;
     flex:1;
     flex-direction: row;
     align-items: center;
     padding-left: 1%;
+    color: black;
 }
 
 .chat-messages
@@ -120,7 +121,7 @@ input:focus
 .profile_box
 {
     margin: 2px;
-    background-color: #bdbdbd;
+    background-color: #eee;
     display: flex;
     flex-direction: row;
     height: 70px;
