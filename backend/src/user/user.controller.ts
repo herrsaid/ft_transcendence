@@ -49,11 +49,6 @@ export class UserController {
         
         {
 
-            // return this.userService.addAvatar(request.user.id, {
-            //     path: file.path,
-            //     filename: file.originalname,
-            //     mimetype: file.mimetype
-            //   });
         console.log(file);
         return {
             statusCode: 200,
@@ -62,7 +57,7 @@ export class UserController {
     }
 
 
-    // @UseGuards(AuthGuard)
+    @UseGuards(AuthGuard)
     @Get('/friends')
     getFriends(@Req() req:Request)
     {

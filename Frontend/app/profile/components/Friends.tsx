@@ -1,7 +1,7 @@
 'use client'
 import OneFriend from "./OneFriend";
 import { useState, useEffect } from 'react'
-
+import Cookies from 'js-cookie';
 
 
 
@@ -9,14 +9,14 @@ import { useState, useEffect } from 'react'
 const Friends = () => {
 
     const [Friends, setfriends] = useState([])
-    const cookieStore = document.cookie;
+    
     useEffect(()=>{
-        var arr = cookieStore.split("=");
+        
     
         fetch("http://localhost:1337/user/friends", {
             method: 'GET',
             headers: {
-                Authorization: `Bearer ${arr[1]}`,
+                Authorization: `Bearer ${Cookies.get('access_token')}`,
              },
           }).then((response) => response.json())
           .then(data => setfriends(data))  

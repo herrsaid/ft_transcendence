@@ -26,7 +26,6 @@ export default  function Profile()
         <div className="profile_container">
             
         <div className="all_profile">
-            {/*  */}
         <div className="side_two">
                         
                         <div className="side_two_info">
