@@ -15,6 +15,12 @@ export class UserService {
     }
 
 
+    async findOneByUsername(username:string)
+    {
+        return await this.userRepo.findOne({where:{username:username}})
+    }
+
+
     async findAllFriends(id:number)
     {
         return await this.userRepo.find( { where: {id: Not(id)}})

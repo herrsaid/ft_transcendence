@@ -66,6 +66,12 @@ export class UserController {
         return this.userService.findAllFriends(decodedJwtAccessToken['sub'])
     }
 
+    @Get(':username')
+    findOneByUsername(@Param('username') username:string)
+    {
+        return this.userService.findOneByUsername(username);
+    }
+
     @Get(':id')
     findOne(@Param('id') id:number)
     {

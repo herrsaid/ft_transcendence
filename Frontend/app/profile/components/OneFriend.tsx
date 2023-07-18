@@ -12,7 +12,7 @@ const OneFriend = (props:props) => {
     return (
 
 
-            <Link href={`/user/${props.id}`}>
+            <Link href={`/user?username=${props.username}`}>
         <div className="friend">
         <div className="inside_friend">
             <img src={props.image} alt="" />

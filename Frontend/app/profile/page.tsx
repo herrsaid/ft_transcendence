@@ -3,8 +3,9 @@ import './profile.css'
 import {Friends, Groups, ProfileAvatar, ProfileInfo, History, Achievevements} from './index'
 
 import { useState, useEffect } from 'react'
-
 import Cookies from 'js-cookie';
+
+
 export default  function Profile()
 {
     const [mydata, setData] = useState([])
