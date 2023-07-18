@@ -1,5 +1,5 @@
 .all{
-    color: white;
+    color: rgb(0, 0, 0);
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -8,11 +8,10 @@
 
 .groups
 {
+    background-color: #eee;
     height: 95dvh;
     border: 1px solid;
-    border-color: #4a4646;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 25px;
+    border-color: #d2d0d0;
     flex: 1;
 }
 
@@ -27,32 +26,21 @@
         display: none;
     }
 }
-.chat
-{
-    background-color: rgba(0, 0, 0, 0.5);
-    /* flex-direction: column; */
-    border-radius: 25px;
-    flex: 2;
-    justify-content: space-between;
-}
 .friends
 {
+    background-color: #eee;
     border: 1px solid;
-    border-color: #4a4646;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 25px;
+    border-color: #d2d0d0;
     flex: 1;
     width:350px
 }
 
 .chat-box{
     display:flex;
-    border-radius: 25px;
     justify-content: space-between;
     flex-direction: column;
     height: 95dvh;
     flex: 2;
-    margin: 5px;
 }
 
 .chat-box .chat-send-message form
@@ -60,7 +48,6 @@
     text-align: center;
     vertical-align: middle;
     align-items: center;
-    /* margin-top: 1dvh; */
     bottom: 0px;
 }
 
@@ -73,24 +60,19 @@
 
 div.chat-info
 {
-    border-radius: 25px;
-    background-color: #4a4646;
+    background-color: #bdbdbd;
     display: flex;
     flex:1;
     flex-direction: row;
     align-items: center;
     padding-left: 1%;
-    margin: 5px;
 }
 
 .chat-messages
 {
     display: flex;
     flex-direction: column;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 25px;
     border: 1px solid;
-    border-color: #4a4646;
     flex:10;
     padding: 20px;
 }
@@ -98,14 +80,13 @@ div.chat-info
 .chat-send-message
 {
     vertical-align: bottom;
-    background-color: rgba(0, 0, 0, 0.5);
     border-radius: 25px;
     flex:1;
 } 
 
 .chat-send-message input
 {
-    background-color: #4a4646;
+    background-color: #bdbdbd;
     border-radius: 15px;
     width: 90%;
     height: 40px;
@@ -139,10 +120,16 @@ input:focus
 .profile_box
 {
     margin: 2px;
-    background-color: #4a4646;
+    background-color: #bdbdbd;
     display: flex;
     flex-direction: row;
     height: 70px;
+}
+
+.profile_box:hover
+{
+    cursor: pointer;
+    background-color: #ddd;
 }
 
 .groups .chat-header
@@ -217,7 +204,6 @@ body {
 
 .send-btn
 {
-    background-color: var(--color-btn);
     border-radius: 50%;
     height: 30px;
     width: 30px;
