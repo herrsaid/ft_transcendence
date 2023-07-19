@@ -102,6 +102,7 @@ export default function Community()
                 </div>
                 <div className='chats'>
                  <Profile_box/>
+                 <Profile_box/>
                  {Porfiles}
                 </div>
              </div>
