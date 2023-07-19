@@ -12,7 +12,7 @@ let Racket2Width: number = 10, Racket2Height = 60, Racket2Xpos: number = 785, Ra
 let Result1Val: number = 0, Result1Xpos: number = 350, Result1Ypos: number = 25;
 let Result2Val: number = 0, Result2Xpos: number = 450, Result2Ypos: number = 25;
 let BallXDirection: number = 1, BallYDirection: number = 1, alpha: number = -1;
-let gamediv: p5.Renderer,first_conection_val:boolean=false;
+let gamediv: p5.Renderer,first_conection_val:boolean=false,KeyPress:string='';
 
 function Ball(p5: p5, x: number, y: number, w: number, h: number)
 {
@@ -57,12 +57,12 @@ function GetAlpha(p5: p5,BallYpos: number, RacketYpos: number, RacketHeight: num
 {
   let ballYpos_racket: number;
       if(BallYpos > RacketYpos || BallYpos < (RacketYpos + RacketHeight))
-       ballYpos_racket = BallYpos - RacketYpos;
+        ballYpos_racket = BallYpos - RacketYpos;
       else
         ballYpos_racket = 0;
       let ballYpos_racket_par_100: number = p5.int(ballYpos_racket/(p5.int(RacketHeight/10)));
       alpha = ballYpos_racket_par_100 - (10 - ballYpos_racket_par_100);
-      if(alpha === 0|| alpha === 10)
+      if(alpha === -10|| alpha === 10)
         alpha = 9;
       if(alpha > 0)
         alpha -= 10;
@@ -129,6 +129,13 @@ function Racket1Animation(p5: p5): undefined
     rlt1: Result1Val,
     rlt2: Result2Val,
   }
+  if(p5.mouseY > 0 && p5.mouseY < 400 && p5.mouseX > 0 && p5.mouseX < 400)
+  {
+    if(p5.mouseY< Racket1Ypos)
+      Racket1Ypos -= GameSpeed;
+    else if(p5.mouseY > (Racket1Ypos + Racket1Height))
+      Racket1Ypos += GameSpeed;
+  }
   if((p5.key == 'w' || p5.key == 'ArrowUp') && (Racket1Ypos > 0))
     Racket1Ypos -= GameSpeed;
   else if ((p5.key == 's' || p5.key == 'ArrowDown') && (Racket1Ypos < (GameHeight - Racket1Height)))
@@ -142,6 +149,13 @@ function Racket1Animation(p5: p5): undefined
 
 function Racket2Animation(p5: p5): undefined
 {
+  if(p5.mouseY > 0 && p5.mouseY < 400 && p5.mouseX > 400 && p5.mouseX < 800)
+  {
+    if(p5.mouseY< Racket2Ypos)
+      Racket2Ypos -= GameSpeed;
+    else if(p5.mouseY > (Racket2Ypos + Racket2Height))
+      Racket2Ypos += GameSpeed;
+  }
   if((p5.key == 'w' || p5.key == 'ArrowUp') && (Racket2Ypos > 0))
     Racket2Ypos -= GameSpeed;
   else if ((p5.key == 's' || p5.key == 'ArrowDown') && (Racket2Ypos < (GameHeight - Racket2Height)))
@@ -194,6 +208,9 @@ const Game = () => {
         Racket1(p5,Racket1Xpos,Racket1Ypos,Racket1Width,Racket1Height);
         Racket2(p5,Racket2Xpos,Racket2Ypos,Racket2Width,Racket2Height);
       };
+      p5.keyReleased = () =>{
+        p5.key = '';
+      }
     };
 
     new p5(sketch);

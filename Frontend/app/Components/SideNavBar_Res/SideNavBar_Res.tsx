@@ -22,7 +22,7 @@ export default function SideNavBar_Res()
                 <div className="Content">
                     {/* <button className="profile-btn"><CgProfile size={40}/></button> */}
                     <Link href='/profile'><button className="profile-btn"><CgProfile size={40}/></button></Link>
-                    <Link href='/PingPong'><button className="profile-btn"><GiPingPongBat size={40}/></button></Link>
+                    <Link href='/Game/Lobbie'><button className="profile-btn"><GiPingPongBat size={40}/></button></Link>
                     <Link href='/community'><button className="profile-btn"> <BsFillChatFill size={40}/> </button></Link>
                     <Link href='/profile'><button className="profile-btn"><IoSettingsSharp size={40} /></button></Link>
                 </div>

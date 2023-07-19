@@ -24,7 +24,7 @@ export default function SideNavBar()
                     </a>
                 </li>
                 <li>
-                    <a href="/PingPong">
+                    <a href="/Game/Lobbie">
                         <span className="icon"><i className="fas fa-desktop"></i></span>
                         <span className="item"><FaGamepad/></span>
                     </a>

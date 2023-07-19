@@ -61,7 +61,7 @@ function GetAlpha(p5: p5,BallYpos: number, RacketYpos: number, RacketHeight: num
         ballYpos_racket = 0;
       let ballYpos_racket_par_100: number = p5.int(ballYpos_racket/(p5.int(RacketHeight/10)));
       alpha = ballYpos_racket_par_100 - (10 - ballYpos_racket_par_100);
-      if(alpha === 0|| alpha === 10)
+      if(alpha === -10|| alpha === 10)
         alpha = 9;
       if(alpha > 0)
         alpha -= 10;
@@ -157,6 +157,9 @@ const Game = () => {
         Racket1(p5,Racket1Xpos,Racket1Ypos,Racket1Width,Racket1Height);
         Racket2(p5,Racket2Xpos,Racket2Ypos,Racket2Width,Racket2Height);
       };
+      p5.keyReleased = () =>{
+        p5.key = '';
+      }
     };
 
     new p5(sketch);
