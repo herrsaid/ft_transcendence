@@ -17,7 +17,7 @@ export class GameUserSettingsEntity {
 export class PingPongGamePlayEntity {
   @IsNumber()
   @IsNotEmpty()
-  ping2ypos: number;
+  ping1ypos: number;
   @IsNumber()
   @IsNotEmpty()
   ballypos: number;
