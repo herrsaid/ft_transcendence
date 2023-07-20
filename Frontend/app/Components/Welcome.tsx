@@ -25,10 +25,10 @@ export default function Welcome()
                 </div>
 
 
-                <div className="table">
+                {/* <div className="table">
     <div className="net"></div>
     <div className="ball"></div>
-  </div>
+  </div> */}
 
                 </div>
 

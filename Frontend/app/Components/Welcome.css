@@ -9,11 +9,12 @@
   .main_home{
     position: absolute;
     left: 50%;
-    top:25%;
+    top:50%;
     transform: translate(-50%, -50%);
-    background: linear-gradient(90deg,#092962, #000);
+    background: var(--color-btn);
     border-radius: 10px;
     padding: 20px;
+    box-shadow: 0px 4px 4px 4px #eee;
   }
 
 
@@ -38,30 +39,22 @@
     border: 2px solid var(--color-light);
     color: var(--color-light);
     font-size: 15px;
-    transition: 0.3s;
+    transition: 0.4s;
     margin-right: 5px;
     margin-bottom: 5px;
+    margin: 10px 20px;
     
   }
 
   .main_home button:hover{
     
     background-color: var(--color-light);
-    color: #092962;
-
+    color: var(--color-btn);
+    border: 3px solid var(--color-light);
+    scale: 1.1;
     
   }
 
-
-
-
-  body {
-    background-color: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
   
    .table {
     position: relative;
