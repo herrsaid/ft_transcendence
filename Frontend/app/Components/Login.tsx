@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import './Welcome.css'
+import './Login.css'
 
 export default function Welcome()
 {

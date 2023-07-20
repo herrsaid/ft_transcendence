@@ -1,12 +1,10 @@
-import Image from 'next/image'
-import styles from './page.module.css'
-import Welcome from './Components/Welcome'
-import NavBar from './Components/NavBar/NavBar'
+import Login from './Components/Login'
+
 
 export default function App() {
   return (
     <>
-        <Welcome/>
+        <Login/>
     </>
   )
 }
