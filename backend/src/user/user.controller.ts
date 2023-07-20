@@ -23,7 +23,7 @@ export class UserController {
         
         const tocken_part = req.headers['authorization'].split(' ')
         const decodedJwtAccessToken = this.jwtService.decode(tocken_part[1]);
-        return this.userService.findOne(decodedJwtAccessToken['sub'])
+        return this.userService.findOne(decodedJwtAccessToken['id'])
         
     }
     
@@ -33,7 +33,7 @@ export class UserController {
     {
         const tocken_part = req.headers['authorization'].split(' ')
         const decodedJwtAccessToken = this.jwtService.decode(tocken_part[1]);
-        return this.userService.findAllFriends(decodedJwtAccessToken['sub'])
+        return this.userService.findAllFriends(decodedJwtAccessToken['id'])
     }
     
     @Get(':username')
