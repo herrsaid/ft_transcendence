@@ -37,6 +37,8 @@ export default  function User()
                         
                         <div className="side_two_info">
 
+
+                            
                             <ProfileAvatar  img={mydata.profile_img}   username={mydata.username}/>
                             <ProfileInfo location={mydata.location} totalgame={mydata.totalgame}
                             loss={mydata.loss} wins={mydata.wins} rank={mydata.rank}

@@ -493,7 +493,7 @@ p.enligne{
   .profile_container{
     display: flex;
     flex-direction: row;
-    /* color: var(--color-light); */
+
   }
 
   .all_profile{
@@ -503,21 +503,36 @@ p.enligne{
   }
 
 
+
+  .profile_avatar{
+    border :1px solid var(--color-btn);
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    box-shadow: 0px 4px 4px 4px #eee;
+    margin: auto;
+  }
+
   .add_friend_btn{
-    background-color: var(--color-btn);
+    background-color: #fff;
     width: 120px;
     border: none;
     padding: 10px;
     border-radius: 5px;
-    transition: 0.4s;
-    box-shadow: 0px 4px 4px 4px #eee;
+    transition: 0.5s;
+    
+    margin: 10px;
+    border: 1px solid var(--color-btn);
+    color: var(--color-btn);
     
   }
 
   .add_friend_btn:hover{
-    background-color: #fff;
+    background-color: var(--color-btn);
     color: var(--color-btn);
-    border: 1px solid var(--color-btn);
+    border: 1px solid transparent;
+    scale: 1.1;
+    color: #fff;
   }
 
 

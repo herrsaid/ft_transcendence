@@ -16,6 +16,11 @@ const ProfileAvatar = (props:props) => {
         <div>
 
             <div className="profile_avatar">
+                
+
+
+
+
                 <div className="avatar_edit_real">
                     <img src={props.img} ></img>
                     
@@ -25,10 +30,13 @@ const ProfileAvatar = (props:props) => {
                         </div>
                         <div>
                             <button className="add_friend_btn">Add Friend</button>
+                            <button className="add_friend_btn">message</button>
                         </div>
+                </div>
+                
                                
                 </div>
-        </div>
+        
     );
 
 
