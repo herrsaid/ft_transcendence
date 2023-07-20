@@ -21,8 +21,10 @@ export default  function Profile()
           }).then((response) => response.json())
           .then(data => setData(data))  
     },[]);
-
-    console.log(mydata)
+    sessionStorage.setItem('isLoget', 'true');
+    sessionStorage.setItem('avatar', mydata.profile_img);
+    sessionStorage.setItem('username', mydata.username);
+    sessionStorage.setItem('userId', mydata.id);
     return(
         <div className="profile_container">
             

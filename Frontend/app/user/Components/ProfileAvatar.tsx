@@ -26,7 +26,7 @@ const ProfileAvatar = (props:props) => {
                     
                 </div>
                         <div>
-                        <p className="username">{props.username}</p>
+                        <p className="username_user">{props.username}</p>
                         </div>
                         <div>
                             <button className="add_friend_btn">Add Friend</button>
