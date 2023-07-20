@@ -71,6 +71,18 @@ export class UserController {
     getFriendRequestStatus(@Param('receiverId') receiverStringId:string, @Request() req)
     {
         const receiverId = parseInt(receiverStringId);
+        // console.log(receiverId);
+        // return {
+        //     status : 'pending'
+        // };
+        // if (Number.isNaN(receiverId))
+        // {
+        //     return {
+        //         status : 'pending'
+        //     };
+        // }
+        delete(req.user.iat)
+        delete(req.user.exp)
         return this.userService.getFriendRequestStatus(receiverId, req.user);
     }
 
