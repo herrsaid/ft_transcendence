@@ -35,7 +35,7 @@
     width: 45px;
     height: 45px;
     border-radius: 50%;
-    margin-right: 15px;
+    margin-right: 40px;
 }
 
 .profile-img img
@@ -44,4 +44,18 @@
     height: 45px;
     border-radius: 50%;
     border: 2px solid white;
+}
+
+.login
+{
+    background-color: #eee;
+    height: 30px;
+    width: 80px;
+    color: rgb(37, 36, 36);
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+.login:hover{
+    background-color: #ddd;
 }
