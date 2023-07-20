@@ -1,6 +1,7 @@
 'use client';
 import './Header.css'
 import { useState, useEffect } from 'react'
+import Link from 'next/link';
 
 function Login()
 {
@@ -11,7 +12,7 @@ function Login()
             {open && <div className='modal'>
                 <ul>
                     <li>
-                        <h1>Profile</h1>
+                        <Link href='/profile'><h1>Profile</h1></Link>
                     </li>
                     <li>
                         <h1>Setting</h1>
