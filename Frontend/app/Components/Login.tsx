@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import './Welcome.css'
+import './Login.css'
 
 export default function Welcome()
 {
@@ -25,10 +25,10 @@ export default function Welcome()
                 </div>
 
 
-                <div className="table">
+                {/* <div className="table">
     <div className="net"></div>
     <div className="ball"></div>
-  </div>
+  </div> */}
 
                 </div>
 

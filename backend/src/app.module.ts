@@ -21,6 +21,7 @@ import { Achievevement } from './entities/achievevements.entity';
 import { MulterModule } from '@nestjs/platform-express';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { FriendRequest } from './entities/friend-request.entity';
 
 @Module({
   imports: [GameModule, AuthModule, TypeOrmModule.forRoot(config),
@@ -28,7 +29,7 @@ import { join } from 'path';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..')
     }),
-    UserModule, TypeOrmModule.forFeature([User,Achievevement]), JwtModule.register({
+    UserModule, TypeOrmModule.forFeature([User,Achievevement,FriendRequest]), JwtModule.register({
     global: true,
     secret: jwtConstants.secret,
     signOptions: { expiresIn: '30d' },
