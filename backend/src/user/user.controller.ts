@@ -56,9 +56,11 @@ export class UserController {
 
     @UseGuards(AuthGuard)
     @Post('friend-request/send/:receiverId')
-    sendFriendRequest(@Param('receiverId') receiverStringId:string, @Request() req): Observable<FriendRequest_Interface | {error :string}>
+    sendFriendRequest(@Param('receiverId') receiverStringId:string, @Request() req)
     {
         const receiverId = parseInt(receiverStringId);
+        delete(req.user.iat)
+        delete(req.user.exp)
         
         return this.userService.sendFriendRequest(receiverId, req.user);
     }

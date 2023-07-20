@@ -536,4 +536,18 @@ p.enligne{
   }
 
 
+  .request_sent{
+    background-color: #fff;
+    width: 120px;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    transition: 0.5s;
+    
+    margin: 10px;
+    border: 1px solid green;
+    color: green;
+  }
+
+
   

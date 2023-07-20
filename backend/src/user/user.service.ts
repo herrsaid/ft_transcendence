@@ -20,9 +20,9 @@ export class UserService {
     }
 
 
-    findOneById(id:number)
+    findOneById(id:number): Observable<User>
     {
-        return  this.userRepo.findOne({where:{id:id}})
+        return  from(this.userRepo.findOne({where:{id:id}}))
     }
 
 
@@ -68,28 +68,32 @@ export class UserService {
     sendFriendRequest(receiverId: number, creator: User)
     {
         if (receiverId === creator.id)
-            return of({error: 'It is not possible to add yourself'});
-        // return this.findOneById(receiverId).pipe(
-        //     switchMap((receiver:User) => {
-        //         return this.hasRequestBeenSentOrRecieved(creator, receiver).pipe(
-        //             switchMap((hasRequestBeenSentOrRecieved:boolean) => {
-        //                 if (hasRequestBeenSentOrRecieved) return of({error:'A Friend request has already been sent of received to your account!'})
+        return of({error: 'It is not possible to add yourself'});
+        
+        return this.findOneById(receiverId).pipe(
 
-        //                 let friendRequest: FriendRequest_Interface = {
-        //                     creator,
-        //                     receiver,
-        //                     status: 'pending'
-        //                 }
-        //                 return from(this.FriendRequestRepo.save(friendRequest));
-        //             })
-        //         );
-        //     }),
-        // );
+            switchMap((receiver:User) => {
+                return this.hasRequestBeenSentOrRecieved(creator, receiver).pipe(
+                    switchMap((hasRequestBeenSentOrRecieved:boolean) => {
+                        if (hasRequestBeenSentOrRecieved) return of({error:'A Friend request has already been sent of received to your account!'})
+
+                        let friendRequest: FriendRequest_Interface = {
+                            creator,
+                            receiver,
+                            status: 'pending'
+                        }
+
+                        return from(this.FriendRequestRepo.save(friendRequest));
+                    })
+                );
+            }),
+        );
+        
     }
 
 
     getFriendRequestStatus(receiverId:number, currentUser:User){
-        return this.findOneById(receiverId).catch(
+        return this.findOneById(receiverId).pipe(
             switchMap((receiver:User) => {
                 return from(this.FriendRequestRepo.findOne({
                     where: [
@@ -107,13 +111,13 @@ export class UserService {
                 }));
             }),
 
-            // switchMap((friendRequest: FriendRequest_Interface) => {
-            //     if (friendRequest?.receiver.id === currentUser.id)
-            //     {
-            //         return of({status: 'waiting-for-current-user-response'});
-            //     }
-            //     return of({status: friendRequest?.status || 'not-sent'});
-            // }),
+            switchMap((friendRequest: FriendRequest_Interface) => {
+                if (friendRequest?.receiver.id === currentUser.id)
+                {
+                    return of({status: 'waiting-for-current-user-response'});
+                }
+                return of({status: friendRequest?.status || 'not-sent'});
+            }),
 
             );
     }

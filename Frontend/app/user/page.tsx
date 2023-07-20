@@ -26,7 +26,7 @@ export default  function User()
           .then(data => setData(data))  
     },[]);
 
-    console.log(mydata)
+    // console.log(mydata)
 
 
     return(
@@ -39,7 +39,7 @@ export default  function User()
 
 
                             
-                            <ProfileAvatar  img={mydata.profile_img}   username={mydata.username}/>
+                            <ProfileAvatar  img={mydata.profile_img}   username={mydata.username} id={mydata.id}/>
                             <ProfileInfo location={mydata.location} totalgame={mydata.totalgame}
                             loss={mydata.loss} wins={mydata.wins} rank={mydata.rank}
                             
