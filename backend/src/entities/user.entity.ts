@@ -1,5 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Achievevement } from "./achievevements.entity";
+import { FriendRequest } from "./friend-request.entity";
 
 @Entity()
 export class User{
@@ -40,7 +41,11 @@ export class User{
     score:number;
 
 
-    // @OneToMany(type => Achievevement, achievevement => achievevement.user)
-    // achievevements: Achievevement[];
+    @OneToMany(() => FriendRequest, (friendRequest) => friendRequest.creator)
+    sentFriendRequest: FriendRequest[];
+
+
+    @OneToMany(() => FriendRequest, (friendRequest) => friendRequest.receiver)
+    receivedFriendRequest: FriendRequest[];
 
 }

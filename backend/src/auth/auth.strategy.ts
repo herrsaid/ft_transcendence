@@ -19,8 +19,6 @@ export class AuthStrategy extends PassportStrategy(Strategy, '42') {
   async validate(accessToken: string, refreshToken: string, profile: any): Promise<any> {
     
 
-
-    console.log(profile)
     const {name, emails, photos} = profile
 
         const user_check = await this.UserService.findUserByEmail(emails[0].value);
