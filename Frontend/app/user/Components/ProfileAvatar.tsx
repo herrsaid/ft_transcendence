@@ -50,7 +50,6 @@ const ProfileAvatar = (props:props) => {
            
     },[props.id]);
 
-    // console.log(button_str)
     console.log(mydata.status)
     
     return (
