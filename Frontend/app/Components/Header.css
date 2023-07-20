@@ -59,3 +59,32 @@
 .login:hover{
     background-color: #ddd;
 }
+
+.modal
+{
+    position: relative;
+    background-color: rgb(255, 255, 255);
+    right: 30px;
+    top: 5px;
+    width: 100px;
+    height: 100px;
+    color: black;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 2px 4px 10px 0px rgba(0,0,0,0.31);
+}
+
+.modal h1
+{
+    color: black;
+}
+.modal li
+{
+    margin-top: 10px;
+}
+
+.modal li:hover
+{
+    cursor: pointer;
+    background-color: #ddd;
+}
