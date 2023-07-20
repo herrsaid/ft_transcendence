@@ -44,12 +44,6 @@ import {
 
 	}
     handleDisconnect(client: Socket): void {
-      //  const socket: Socket = getSocketById(Player2Arr[0], this.server);
-      //  const socket1: Socket = getSocketById(Player2Arr[1], this.server);
-      //   if(socket !== undefined)
-      //     socket.emit('conection_closed');
-      //   if(socket1 !== undefined)
-      //     socket1.emit('conection_closed');
       Player2Arr = Player2Arr.filter((elem) => elem !== client.id);
       console.log(client.id + ' leave party');
       console.log('Player2Arr_content: ', Player2Arr);

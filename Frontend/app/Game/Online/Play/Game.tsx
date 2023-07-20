@@ -4,15 +4,13 @@ import p5 from "p5";
 import './Game.css'
 import { player1, player2 } from '../Socket/start_game_socket'
 import { host ,Speed} from '../../Lobbie/Settings/Settings'
-import { BsRocket } from "react-icons/bs";
 let GameWidth: number = 800,GameHeight: number = 400,GameSpeed: number = 4;
 let BallWidth: number = 15, BallHeight = 15, BallXpos: number = GameWidth/2, BallYpos: number = GameHeight/2;
 let Racket1Width: number = 10, Racket1Height = 60, Racket1Xpos: number = 5, Racket1Ypos: number = 170;
 let Racket2Width: number = 10, Racket2Height = 60, Racket2Xpos: number = 785, Racket2Ypos: number = 170;
 let Result1Val: number = 0, Result1Xpos: number = 350, Result1Ypos: number = 25;
 let Result2Val: number = 0, Result2Xpos: number = 450, Result2Ypos: number = 25;
-let BallXDirection: number = 1, BallYDirection: number = 1, alpha: number = -1;
-let gamediv: p5.Renderer,first_conection_val:boolean=false,KeyPress:string='';
+let gamediv: p5.Renderer,first_conection_val:boolean=false;
 
 function Ball(p5: p5, x: number, y: number, w: number, h: number)
 {
@@ -53,73 +51,85 @@ function Result2(p5: p5,res2: string, x: number, y: number)
   p5.text(res2, x, y);
   p5.fill(255, 204, 0);
 }
-function GetAlpha(p5: p5,BallYpos: number, RacketYpos: number, RacketHeight: number): undefined
+// function GetAlpha(p5: p5,BallYpos: number, RacketYpos: number, RacketHeight: number): undefined
+// {
+//   let ballYpos_racket: number;
+//       if(BallYpos > RacketYpos || BallYpos < (RacketYpos + RacketHeight))
+//         ballYpos_racket = BallYpos - RacketYpos;
+//       else
+//         ballYpos_racket = 0;
+//       let ballYpos_racket_par_100: number = p5.int(ballYpos_racket/(p5.int(RacketHeight/10)));
+//       alpha = ballYpos_racket_par_100 - (10 - ballYpos_racket_par_100);
+//       if(alpha === -10|| alpha === 10)
+//         alpha = 9;
+//       if(alpha > 0)
+//         alpha -= 10;
+//       else if(alpha < 0)
+//         alpha += 10;
+//       if(ballYpos_racket_par_100 > 5)
+//         BallYDirection = 1;
+//       else
+//         BallYDirection = -1;
+// }
+// function BallAnimation(p5: p5)
+// {
+//   BallXpos += (BallXDirection * GameSpeed);
+//   if(BallYpos < Racket2Ypos || BallYpos > (Racket2Ypos + Racket2Height))
+//   {
+//     if(BallXpos > GameWidth)
+//     {
+//       BallXDirection = -1;
+//       Result1Val++;
+//       BallXpos = GameWidth/2;
+//     }
+//   }
+//   else
+//   {
+//     if(BallXpos > (GameWidth-(BallWidth+Racket1Width)))
+//     {
+//       BallXDirection = -1;
+//       GetAlpha(p5,BallYpos,Racket2Ypos,Racket2Height);
+//     }
+//   }
+//   if(BallYpos < Racket1Ypos || BallYpos > (Racket1Ypos + Racket1Height))
+//   {
+//     if(BallXpos < 0)
+//     {
+//       BallXDirection = +1;
+//       Result2Val++;
+//       BallXpos = GameWidth/2;
+//     }
+//   }
+//   else
+//   {
+//     if(BallXpos < (BallWidth + Racket2Width))
+//     {
+//       BallXDirection = +1;
+//       GetAlpha(p5,BallYpos,Racket1Ypos,Racket1Height);
+//     }
+//   }
+//   if(BallXpos % alpha === 0)
+//   {
+//     if(BallYpos > GameHeight-BallHeight/2)
+//       BallYDirection = -1
+//     if(BallYpos < BallHeight/2)
+//       BallYDirection = +1
+//     BallYpos += BallYDirection;
+//   }
+// }
+function BallAnimation ()
 {
-  let ballYpos_racket: number;
-      if(BallYpos > RacketYpos || BallYpos < (RacketYpos + RacketHeight))
-        ballYpos_racket = BallYpos - RacketYpos;
-      else
-        ballYpos_racket = 0;
-      let ballYpos_racket_par_100: number = p5.int(ballYpos_racket/(p5.int(RacketHeight/10)));
-      alpha = ballYpos_racket_par_100 - (10 - ballYpos_racket_par_100);
-      if(alpha === -10|| alpha === 10)
-        alpha = 9;
-      if(alpha > 0)
-        alpha -= 10;
-      else if(alpha < 0)
-        alpha += 10;
-      if(ballYpos_racket_par_100 > 5)
-        BallYDirection = 1;
-      else
-        BallYDirection = -1;
+  player1.on('BallPos',(GameInfo)=> 
+  {
+    BallXpos = GameInfo.BallXpos;
+    BallYpos = GameInfo.BallYpos;
+  });
+  player2.on('BallPos',(GameInfo)=> 
+  {
+    BallXpos = GameInfo.BallXpos;
+    BallYpos = GameInfo.BallYpos;
+  });
 }
-function BallAnimation(p5: p5)
-{
-  BallXpos += (BallXDirection * GameSpeed);
-  if(BallYpos < Racket2Ypos || BallYpos > (Racket2Ypos + Racket2Height))
-  {
-    if(BallXpos > GameWidth)
-    {
-      BallXDirection = -1;
-      Result1Val++;
-      BallXpos = GameWidth/2;
-    }
-  }
-  else
-  {
-    if(BallXpos > (GameWidth-(BallWidth+Racket1Width)))
-    {
-      BallXDirection = -1;
-      GetAlpha(p5,BallYpos,Racket2Ypos,Racket2Height);
-    }
-  }
-  if(BallYpos < Racket1Ypos || BallYpos > (Racket1Ypos + Racket1Height))
-  {
-    if(BallXpos < 0)
-    {
-      BallXDirection = +1;
-      Result2Val++;
-      BallXpos = GameWidth/2;
-    }
-  }
-  else
-  {
-    if(BallXpos < (BallWidth + Racket2Width))
-    {
-      BallXDirection = +1;
-      GetAlpha(p5,BallYpos,Racket1Ypos,Racket1Height);
-    }
-  }
-  if(BallXpos % alpha === 0)
-  {
-    if(BallYpos > GameHeight-BallHeight/2)
-      BallYDirection = -1
-    if(BallYpos < BallHeight/2)
-      BallYDirection = +1
-    BallYpos += BallYDirection;
-  }
-}
-
 function Racket1Animation(p5: p5): undefined
 {
   const host_data = {
@@ -193,11 +203,9 @@ const Game = () => {
       p5.draw = () => {
         first_conection();
         p5.background(25);
+        BallAnimation();
         if (host)
-        {
-          BallAnimation(p5);
           Racket1Animation(p5);
-        }
         else
           Racket2Animation(p5);
         gamediv.center();
