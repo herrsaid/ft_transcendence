@@ -121,7 +121,7 @@ input:focus
 .profile_box
 {
     margin: 2px;
-    background-color: #eee;
+    background-color: var(--color-btn);
     display: flex;
     flex-direction: row;
     height: 70px;
@@ -130,7 +130,7 @@ input:focus
 .profile_box:hover
 {
     cursor: pointer;
-    background-color: #ddd;
+    background-color: rgb(148, 179, 233);
 }
 
 .groups .chat-header
