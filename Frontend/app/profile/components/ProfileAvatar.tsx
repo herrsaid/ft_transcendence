@@ -2,7 +2,7 @@
 import ProfileInfoNav from "./ProfileInfoNav";
 import "../profile.css"
 
-import {FaPen} from 'react-icons/fa'
+import {FaPen, FaUpload} from 'react-icons/fa'
 
 
 
@@ -41,9 +41,9 @@ const avatar = document.getElementById('avatar');
 
             <div className="profile_avatar">
                 <div className="avatar_edit_real">
-                    <img src={props.img} ></img>
+                    <img src={props.img} className="my_profile_img"></img>
                     <label>
-                    <FaPen/>
+                    <FaUpload/>
                     <form >
                         
                         <input type="file" id="avatar" name="file" onChange={upload}/>
