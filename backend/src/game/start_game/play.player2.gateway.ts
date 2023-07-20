@@ -10,7 +10,8 @@ import {
   } from '../PingPong.Entity';
   import { Socket, Server } from 'socket.io';
   import { getSocketById } from '../auto_match/lobbie.gateway';
-  import { Player1Arr, server1 } from './play.player1.gateway'
+  import { Player1Arr, server1 } from './play.player1.gateway';
+  import { GameHead } from '../game_brain/game_server_logic';
   export let Player2Arr: string[] = [];
   export let server2: Server;
   @WebSocketGateway(1341, {
@@ -31,6 +32,7 @@ import {
     @SubscribeMessage('send_player2_data')
     handleSendUser2Data(client: Socket, data: number): void {
       server2 = this.server;
+      GameHead.SetRacket2Ypos(data);
       const socket: Socket = getSocketById(Player1Arr[0], server1);
       if (socket != undefined) {
         socket.emit('send_player1_data', data);

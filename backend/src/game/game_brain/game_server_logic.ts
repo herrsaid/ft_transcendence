@@ -3,6 +3,27 @@ import { GameAttribute } from "./game_server_attribute";
 
 @Injectable()
 export class GameLogic extends GameAttribute{
+    CheckAlpha(BallYpos: number, RacketYpos: number, RacketHeight: number): undefined
+    {
+      let ballYpos_racket: number;
+          if(BallYpos > RacketYpos || BallYpos < (RacketYpos + RacketHeight))
+            ballYpos_racket = BallYpos - RacketYpos;
+          else
+            ballYpos_racket = 0;
+          let ballYpos_racket_par_100: number = Math.floor((ballYpos_racket/(RacketHeight/10)));
+          this.Alpha = ballYpos_racket_par_100 - (10 - ballYpos_racket_par_100);
+          Math.floor(this.Alpha);
+          if(this.Alpha === -10|| this.Alpha === 10)
+            this.Alpha = 9;
+          if(this.Alpha > 0)
+            this.Alpha -= 10;
+          else if(this.Alpha < 0)
+            this.Alpha += 10;
+          if(ballYpos_racket_par_100 > 5)
+            this.BallYdirection = 1;
+          else
+            this.BallYdirection = -1;
+    }
     test()
     {
         console.log("------------------------------------");
@@ -26,11 +47,6 @@ export class GameLogic extends GameAttribute{
         console.log("this.Alpha "+ this.Alpha);
         console.log("this.Sleep "+ this.Sleep);
         console.log("------------------------------------");
-        this.BallXpos += (this.BallXdirection * this.GameSpeed);
-        if(this.BallXpos > this.GameWidth)
-            this.BallXdirection  = -1;
-        if(this.BallXpos < 0)
-            this.BallXdirection  = 1;
 
         this.BallXpos += (this.BallXdirection * this.GameSpeed);
         if(this.BallYpos < this.Racket2Ypos || this.BallYpos > (this.Racket2Ypos + this.Racket2Height))
@@ -45,10 +61,10 @@ export class GameLogic extends GameAttribute{
         }
         else
         {
-            if(this.BallXpos > (this.GameWidth-(this.BallWidth+this.Racket1Width)))
+            if(this.BallXpos > (this.GameWidth-this.BallWidth))
             {
                 this.BallXdirection = -1;
-            // GetAlpha(this.BallYpos,this.Racket2Ypos,this.Racket2Height);
+                this.CheckAlpha(this.BallYpos,this.Racket2Ypos,this.Racket2Height);
             }
         }
         if(this.BallYpos < this.Racket1Ypos || this.BallYpos > (this.Racket1Ypos + this.Racket1Height))
@@ -63,10 +79,10 @@ export class GameLogic extends GameAttribute{
         }
         else
         {
-            if(this.BallXpos < (this.BallWidth + this.Racket2Width))
+            if(this.BallXpos < this.BallWidth)
             {
                 this.BallXdirection = +1;
-            // GetAlpha(this.BallYpos,this.Racket1Ypos,this.Racket1Height);
+                this.CheckAlpha(this.BallYpos,this.Racket1Ypos,this.Racket1Height);
             }
         }
         if(this.BallXpos % this.Alpha === 0)

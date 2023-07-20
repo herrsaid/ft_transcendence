@@ -19,6 +19,8 @@ export class GameAttribute extends BallsAttribute{
             this.GameWidth = 800;
             this.GameHeight = 400;
             this.GameSpeed = 2;
+            this.Result1Val = 0;
+            this.Result2Val = 0;
             this.Alpha = 1;
             this.Sleep = 0
             this.BallXpos = this.GameWidth/2;
@@ -27,11 +29,11 @@ export class GameAttribute extends BallsAttribute{
             this.BallYdirection = 1;
             this.BallWidth = this.GameWidth/32;
             this.BallHeight =  this.GameHeight/16;
-            this.Racket1Height = this.GameHeight/6;
+            this.Racket1Height = Math.floor(this.GameHeight/6);
             this.Racket1Ypos =  (this.GameHeight/2) - (this.Racket1Height/2);
             this.Racket1Width = this.GameWidth/80;
             this.Racket1Xpos = 5;
-            this.Racket2Height = this.GameHeight/6;
+            this.Racket2Height = Math.floor(this.GameHeight/6);
             this.Racket2Ypos = (this.GameHeight/2) - (this.Racket1Height/2);
             this.Racket2Width = this.GameWidth/80;
             this.Racket2Xpos = this.GameWidth - (this.Racket2Width-5);
