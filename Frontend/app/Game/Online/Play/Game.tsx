@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import p5 from "p5";
 import './Game.css'
 import { player1, player2 } from '../Socket/start_game_socket'
-import { host ,Speed} from '../../Lobbie/Settings/Settings'
+import { host ,Speed,myusername,enemmyusername} from '../../Lobbie/Settings/Settings'
 let GameWidth: number = 800,GameHeight: number = 400,GameSpeed: number = 4;
 let BallWidth: number = 15, BallHeight = 15, BallXpos: number = GameWidth/2, BallYpos: number = GameHeight/2;
 let Racket1Width: number = 10, Racket1Height = 60, Racket1Xpos: number = 5, Racket1Ypos: number = 170;
@@ -39,7 +39,8 @@ function Result1(p5: p5,res1: string, x: number, y: number)
 {
   p5.textSize(30);
   p5.fill('blue');
-  p5.text('mabdelou', 170, 25);
+  if(myusername)
+  p5.text(myusername, 170, 25);
   p5.text(res1, x, y);
 }
 
@@ -47,7 +48,8 @@ function Result2(p5: p5,res2: string, x: number, y: number)
 {
   p5.textSize(30);
   p5.fill('red');
-  p5.text('aabdelou', 500, 25);
+  if(enemmyusername)
+    p5.text(enemmyusername, 500, 25);
   p5.text(res2, x, y);
   p5.fill(255, 204, 0);
 }
@@ -112,10 +114,10 @@ function first_conection()
   if(first_conection_val === false)
 		{
 			first_conection_val = true;
-			if(host)
-				player1.emit('first_conection');
-			else
-				player2.emit('first_conection');
+        if(host)
+				  player1.emit('first_conection');
+        else
+				  player2.emit('first_conection');
 		}
 }
 const Game = () => {

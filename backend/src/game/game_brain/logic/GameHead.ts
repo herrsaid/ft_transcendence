@@ -15,6 +15,7 @@ export class GameHead{
     protected Player2Client: Socket;
     protected Alpha: number;
     protected Sleep: number;
+    protected GameStatus: number;
     protected BallXpos:number;
     protected BallYpos:number;
     protected BallXdirection: number;
@@ -41,6 +42,7 @@ export class GameHead{
         this.Player2ID = '';
         this.Alpha = 1;
         this.Sleep = 0;
+        this.GameStatus = 0;
         this.BallXpos = this.GameWidth/2;
         this.BallYpos = this.GameHeight/2;
         this.BallXdirection = 1;
@@ -68,6 +70,14 @@ export class GameHead{
     SetGameSpeed(GameSpeed: number)
     {
         this.GameSpeed = GameSpeed;
+    }
+    GetGameStatus(): number
+    {
+       return  this.GameStatus;
+    }
+    SetGameStatus(GameStatus: number)
+    {
+        this.GameStatus = GameStatus;
     }
     SetPlayer1ID(Player1: string)
     {

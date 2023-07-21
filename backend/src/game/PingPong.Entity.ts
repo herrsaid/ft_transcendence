@@ -7,6 +7,9 @@ export class GameUserSettingsEntity {
   @IsNumber()
   @IsNotEmpty()
   MapNumber: number;
+  @IsNotEmpty()
+  @IsString()
+  myusername: string;
   @IsString()
   @IsNotEmpty()
   ID?: string;

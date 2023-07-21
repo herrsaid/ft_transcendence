@@ -23,16 +23,17 @@ import { exit } from 'process';
         if(OBJ.GameHead.find((elem)=> elem.GetPlayer1ID() === Player1ID) === undefined
         && OBJ.GameHead.find((elem)=> elem.GetPlayer2ID() === Player2ID) === undefined)
         {
-          console.log(Player1ID,Player2ID);
-          console.log("here");
+          // console.log(Player1ID,Player2ID);
+          // console.log("here");
           OBJ.GameHead.push(new GameHead());
+          OBJ.GameHead[OBJ.GameHead.length - 1].SetGameStatus(1);
           OBJ.GameHead[OBJ.GameHead.length - 1].SetPlayer1ID(Player1ID);
           OBJ.GameHead[OBJ.GameHead.length - 1].SetPlayer2ID(Player2ID);
         }
         for(let a = 0 ; a<OBJ.GameHead.length; a++ )
         {
-          if(OBJ.GameHead[a].GetSleep() <= 0 && OBJ.GameHead[a].GetPlayer1ID() != '' && OBJ.GameHead[a].GetPlayer2ID() != '')
-          OBJ.GameHead[a].test();
+          if(OBJ.GameHead[a].GetSleep() <= 0 && OBJ.GameHead[a].GetGameStatus() === 1)
+            OBJ.GameHead[a].test();
           else
             OBJ.GameHead[a].SetSleep(OBJ.GameHead[a].GetSleep() - 16);
           const Gameinfo = 
@@ -54,6 +55,7 @@ import { exit } from 'process';
       {
         {
           OBJ.GameHead.push(new GameHead());
+          OBJ.GameHead[0].SetGameStatus(1);
           OBJ.GameHead[0].SetPlayer1ID(Player1ID);
           OBJ.GameHead[0].SetPlayer2ID(Player2ID);
         }

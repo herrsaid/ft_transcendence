@@ -9,6 +9,8 @@ export let pause_game: number = 0;
 export let other_tools: number = 0;
 export let host: boolean = false;
 export let Online: number = 1;
+export let myusername: string | null = '';
+export let enemmyusername: string | null = '';
 function change_map_value(param: number)
 {
     for(let a=1;a<4;a++)
@@ -103,10 +105,12 @@ function is_Online_mod(router: any)
         socket.on('join_user', (data) => {
             console.log(data);
         });
-        socket.emit('send_data',{Speed,MapNumber,});
-        socket.on('send_data', (data) => {
+        myusername = sessionStorage.getItem('username');
+        socket.emit('send_data',{Speed,MapNumber,myusername,});
+        socket.on('send_data', (username,data) => {
+            enemmyusername = username;
             host = data;
-            console.log(host);
+            console.log(enemmyusername);
             socket.disconnect();
             router.replace('/Game//Online/Play');
         });

@@ -40,11 +40,15 @@ import {
 	@SubscribeMessage('conection_closed')
 	handleconection_closed(client: Socket): void {
     if(OBJ.GameHead)
-        OBJ.GameHead = OBJ.GameHead.filter((obj) => obj.GetPlayer2ID() !== client.id);
+      for(let a = 0 ; a<OBJ.GameHead.length; a++ )
+        if(OBJ.GameHead[a].GetPlayer2ID() === client.id)
+          OBJ.GameHead[a].SetGameStatus(0);
 	}
     handleDisconnect(client: Socket): void {
       if(OBJ.GameHead)
-        OBJ.GameHead = OBJ.GameHead.filter((obj) => obj.GetPlayer2ID() !== client.id);
+        for(let a = 0 ; a<OBJ.GameHead.length; a++ )
+          if(OBJ.GameHead[a].GetPlayer2ID() === client.id)
+            OBJ.GameHead[a].SetGameStatus(0);
   }
   
 }
