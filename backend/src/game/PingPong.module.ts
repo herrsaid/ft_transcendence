@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { PingPongGateway } from './auto_match/lobbie.gateway';
 import { PlayPlayer1Gateway } from './start_game/play.player1.gateway';
 import { PlayPlayer2Gateway } from './start_game/play.player2.gateway';
-import { GameLogic } from './game_brain/game_server_logic';
+import { GameHead } from './game_brain/logic/GameHead';
 import { ScheduleModule } from '@nestjs/schedule';
 import { BallGateway } from './start_game/play.ball.gateway';
 @Module({
@@ -10,6 +10,6 @@ import { BallGateway } from './start_game/play.ball.gateway';
     ScheduleModule.forRoot()
   ],
   controllers: [],
-  providers: [PingPongGateway,PlayPlayer1Gateway,PlayPlayer2Gateway,BallGateway,GameLogic],
+  providers: [PingPongGateway,PlayPlayer1Gateway,PlayPlayer2Gateway,BallGateway,GameHead],
 })
 export class GameModule {}

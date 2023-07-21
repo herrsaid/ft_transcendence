@@ -29,9 +29,9 @@ import {
     @SubscribeMessage('join_user')
     handleJoinUser(client: Socket, data: string): void {
       if (arr.find((elm) => elm.ID === client.id)) return;
-      else {
-        console.log('user_joined: ', data);
-      }
+      // else {
+      //   console.log('user_joined: ', data);
+      // }
     }
     @SubscribeMessage('send_data')
     handleSendData(client: Socket, data: GameUserSettingsEntity): void {
@@ -42,7 +42,7 @@ import {
         console.log('update');
       } else {
         arr.push(data);
-        console.log('push');
+        // console.log('push');
         for (let a = 0; a < arr.length; a++) {
           getSocketById(arr[a].ID, this.server).emit(
             'join_user',
@@ -64,7 +64,7 @@ import {
                 return elm;
             });
             if (elem1 != undefined) {
-              console.log('data_has_been_send: ');
+              // console.log('data_has_been_send: ');
               getSocketById(elem.ID, this.server).emit('send_data', true);
               getSocketById(elem1.ID, this.server).emit('send_data', false);
               elem.UsedStatus = true;
@@ -73,13 +73,13 @@ import {
           }
         }
       }
-      console.log('arr_content: ', arr);
+      // console.log('arr_content: ', arr);
     }
-    @SubscribeMessage('leave_user')
+    // @SubscribeMessage('leave_user')
     handleDisconnect(client: Socket): void {
       arr = arr.filter((elm) => elm.ID !== client.id);
-      console.log(client.id + ' leave party');
-      console.log('arr_content: ', arr);
+      // console.log(client.id + ' leave party');
+      // console.log('arr_content: ', arr);
     }
   }
   
