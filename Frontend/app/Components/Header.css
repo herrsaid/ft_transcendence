@@ -6,6 +6,7 @@
     justify-content: space-between;
     padding-top: 20px;
     padding: 10px;
+    
 }
 
 .logo-search
@@ -20,14 +21,18 @@
     border-radius: 25px;
     margin-left: 25px;
     height: 30px;
-    background-color: var(--color-btn);
+    /* background-color: var(--second-color); */
+    background-color: transparent;
     border: 1px #eee solid;
     padding-left: 5px;
+    display: none;
 }
 .logo-search h1
 {
     font-size: 30px;
-    font-family: 'Pangolin';
+    color: var(--second-color);
+    font-weight: bold;
+    /* font-family: 'Pangolin'; */
 }
 
 .profile-img

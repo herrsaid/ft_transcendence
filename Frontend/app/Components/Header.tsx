@@ -8,7 +8,7 @@ function Login()
     const [open, setOpen] = useState(false);
     return(
         <div>
-            <img onClick={()=>{setOpen(!open)}} src="https://randomuser.me/api/portraits/women/3.jpg" alt="test" />
+            <img onClick={()=>{setOpen(!open)}} src={sessionStorage.getItem('avatar')} alt="test" />
             {open && <div className='modal'>
                 <ul>
                     <li>

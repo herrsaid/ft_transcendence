@@ -13,14 +13,34 @@ interface props{
 
 const ProfileAvatar = (props:props) => {
 
-
-    const [is_clicked, setclicked] = useState(false)
+    let button_placeholder = 'request';
+    // const [is_clicked, setclicked] = useState(false)
     const [mydata, setData] = useState([])
-    const [button_str, setButtonstr] = useState(null)
+   
     
-    const handel_click = () =>
+    
+    
+    useEffect(()=>{
+        
+        if (props.id != undefined)
+        {
+            fetch(`http://localhost:1337/user/friend-request/status/${props.id}`, {
+                method: 'GET',
+                headers:{
+                    Authorization: `Bearer ${Cookies.get('access_token')}`
+                }
+                
+            }).then((response) => response.json())
+            .then(data => setData(data))
+            
+            
+        }
+        
+    },[props.id]);
+
+    const send_request = () =>
     {
-        setclicked(!is_clicked)
+        // setclicked(!is_clicked)
         fetch(`http://localhost:1337/user/friend-request/send/${props.id}`, {
             method: 'POST',
             headers:{
@@ -30,28 +50,20 @@ const ProfileAvatar = (props:props) => {
           }).then((response) => response.json())
           .then(data => setData(data))
     }
-
-
-    useEffect(()=>{
-        // console.log(props.id)
-        if (props.id != undefined)
-        {
-            fetch(`http://localhost:1337/user/friend-request/status/${props.id}`, {
-                method: 'GET',
-                headers:{
-                    Authorization: `Bearer ${Cookies.get('access_token')}`
-            }
-                
-              }).then((response) => response.json())
-              .then(data => setData(data))
-              
-
-        }
-           
-    },[props.id]);
+    
 
     console.log(mydata.status)
     
+    if (mydata.status === 'pending')
+        button_placeholder = 'cancel';
+    else if (mydata.status === 'not-sent')
+        button_placeholder = 'request';
+    else if (mydata.status === 'waiting-for-current-user-response')
+        button_placeholder = 'accept';
+    else if (mydata.status === 'accepted')
+        button_placeholder = 'unfriend';
+    else if (mydata.status === 'declined')
+        button_placeholder = 'request';
     return (
         <div>
 
@@ -69,7 +81,7 @@ const ProfileAvatar = (props:props) => {
                         <p className="username_user">{props.username}</p>
                         </div>
                         <div>
-                            <button className={mydata.status == 'pending' ? 'request_sent' : 'add_friend_btn'} onClick={handel_click}>{mydata.status == 'pending' ? 'cancel' : 'send request'}</button>
+                            <button className={mydata.status == 'pending' ? 'request_sent' : 'add_friend_btn'} onClick={send_request}>{button_placeholder}</button>
                             <button className="add_friend_btn">message</button>
                         </div>
                 </div>

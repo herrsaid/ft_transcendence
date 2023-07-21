@@ -131,19 +131,19 @@
 
 .side_two_info .profile_avatar img{
     width: 130px;
-    border: 1px solid var(--color-btn);
+    border: 1px solid var(--second-color);
     border-radius: 50%;
     transition: 0.5s;
     cursor: pointer;
 }
 
 .side_two_info .profile_avatar img:hover{
-    border: 5px solid var(--color-btn);
+    border: 5px solid var(--second-color);
         
 }
 
 .side_two_info .profile_avatar img.my_profile_img:hover{
-    border: 5px solid var(--color-btn);
+    border: 5px solid var(--second-color);
     filter: blur(4px);
         
 }
@@ -158,7 +158,7 @@
 
 
 .info{
-    background-color: var(--color-btn);
+    background-color: var(--second-color);
     border-radius: 25px;
     height: fit-content;
     color:var(--color-light);
@@ -226,7 +226,7 @@ div.victory_div{
     padding: 2%;
     border-radius: 13px;
     margin-bottom: 5%;
-    background-color: var(--color-btn);
+    background-color: var(--second-color);
     box-shadow: 0px 4px 4px 4px #eee;
     
 
@@ -297,7 +297,7 @@ div.edit_username input{
 
 .Friends .friend{
     width: 90%;
-    background-color: var(--color-btn);
+    background-color: var(--second-color);
     color: var(--color-light);
     margin: 10px 0px;
     padding-left: 4%;
@@ -333,7 +333,7 @@ p.enligne{
 
 .Groups .group{
     width: 90%;
-    background-color: var(--color-btn);
+    background-color: var(--second-color);
     color: var(--color-light);
     margin: 10px 0px;
     padding-left: 4%;
@@ -360,7 +360,7 @@ p.enligne{
 
 
 .one_achievements{
-    background-color: var(--color-btn);
+    background-color: var(--second-color);
    
     padding: 30px;
     margin: auto;
@@ -393,7 +393,7 @@ p.enligne{
 
 
 .side_two_nav button{
-    background-color:var(--color-btn);
+    background-color:var(--second-color);
     padding: 10px;
     outline: none;
     border-radius: 8px;
@@ -466,7 +466,7 @@ p.enligne{
     position: absolute;
     top: 10px;
     right: 10px;
-    background: var(--color-btn);
+    background: var(--second-color);
     border: none;
     font-size: 18px;
     cursor: pointer;
@@ -476,7 +476,7 @@ p.enligne{
   }
 
   .update_info_button{
-    background: var(--color-btn);
+    background: var(--second-color);
     border: none;
     font-size: 18px;
     cursor: pointer;
@@ -505,7 +505,7 @@ p.enligne{
 
 
   .profile_avatar{
-    border :1px solid var(--color-btn);
+    border :1px solid var(--second-color);
     padding: 20px;
     border-radius: 10px;
     width: 80%;
@@ -522,14 +522,14 @@ p.enligne{
     transition: 0.5s;
     
     margin: 10px;
-    border: 1px solid var(--color-btn);
-    color: var(--color-btn);
+    border: 1px solid var(--second-color);
+    color: var(--second-color);
     
   }
 
   .add_friend_btn:hover{
-    background-color: var(--color-btn);
-    color: var(--color-btn);
+    background-color: var(--second-color);
+    color: var(--second-color);
     border: 1px solid transparent;
     scale: 1.1;
     color: #fff;

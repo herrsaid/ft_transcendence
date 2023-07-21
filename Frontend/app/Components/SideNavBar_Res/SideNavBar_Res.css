@@ -1,13 +1,14 @@
 
 .NavBar{
-    height: 96dvh;
+    height: 80dvh;
     width: 60px;
-    background-color: var(--color-btn);
+    background-color: var(--second-color);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     color: white;
-    border-top: 1px solid var(--primary-color);
+    border-radius: 20px;
+    /* border-top: 1px solid var(--primary-color); */
 }
 
 .Setting
@@ -44,7 +45,7 @@
     padding-top: 250px;
 }
 
-.profile-btn:hover
+/* .profile-btn:hover
 {
     background-color: #19659b;
-}
+} */

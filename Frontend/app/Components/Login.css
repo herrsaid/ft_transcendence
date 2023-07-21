@@ -34,8 +34,8 @@ justify-items: center;
     width: 160px;
     height: 45px;
     outline: 0px;
-    border-radius: 20px;
-    background-color: var(--color-btn);
+    border-radius: 14px;
+    background-color: var(--second-color);
     border: 2px solid var(--color-light);
     color: var(--color-light);
     font-size: 15px;
@@ -51,7 +51,7 @@ justify-items: center;
   .main_home button:hover{
     
     background-color: var(--color-light);
-    color: var(--color-btn);
+    color: var(--second-color);
     border: 3px solid var(--color-light);
     scale: 1.4;
     

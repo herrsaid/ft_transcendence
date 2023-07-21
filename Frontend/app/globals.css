@@ -27,6 +27,7 @@ a{
   --color-bg: #fff;
   --primary-color: #fff;
   --color-btn: #5A96E3;
+  --second-color:#717070;
 }
 
 body{
@@ -47,16 +48,19 @@ body{
 {
   width: 100dvw;
   height: 60px;
-  background-color: var(--color-btn);
+  background-color: transparent;
 }
 
 .NavChild
 {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between;
   width: 100dvw;
   height: 95.5dvh;
-  overflow: auto;
+  overflow: auto; */
+  justify-content: center;
+align-items: center;
+justify-items: center;
   /* border: 4px solid #278dd6 ; */
 }
 
