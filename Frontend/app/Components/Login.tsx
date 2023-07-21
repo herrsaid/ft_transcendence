@@ -9,13 +9,21 @@ export default function Welcome()
 
 
         
-                <div className="container">
+                <div className="container_login">
            
-                <div className="main_home">
+                
+
+
+              <div className='bg_gif_login'>
+
+              </div>
+
+
+              <div className="main_home">
                     <h2>Welcome to legends</h2>
                     <p>Play PingPong with your friends online</p>
                     <Link href="http://localhost:1337/auth/42">
-                        <button>Sign in with 42</button>
+                        <button className="intra_button">Sign in with 42</button>
                     </Link>
 
                     <Link href="http://localhost:1337">
@@ -23,12 +31,6 @@ export default function Welcome()
                     </Link>
                     
                 </div>
-
-
-                {/* <div className="table">
-    <div className="net"></div>
-    <div className="ball"></div>
-  </div> */}
 
                 </div>
 

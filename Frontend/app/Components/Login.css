@@ -1,41 +1,41 @@
 .w{
-    max-width: 100%;
     color:var(--color-light);
-    padding: 30px;
-
   }
 
+
+.container_login{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+align-items: center;
+justify-items: center;
+}
 
   .main_home{
-    position: absolute;
-    left: 50%;
-    top:50%;
-    transform: translate(-50%, -50%);
-    background: var(--color-btn);
-    border-radius: 10px;
+    flex: 1 40%;
+    color: var(--color-btn);
     padding: 20px;
-    box-shadow: 0px 4px 4px 4px #eee;
+   
   }
 
 
-  .main_home h2{
-    font-size: 28px;
-    margin-bottom: 25px;
-    font-weight: bold;
+  .bg_gif_login{
+    flex: 1 60%;
+    height: 40dvh;
+    background-image: url("../../public/help.gif");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    
   }
 
-  .main_home p{
-    font-size: 17px;
-    margin-bottom: 20px;
-
-  }
 
   .main_home button{
     width: 160px;
     height: 45px;
     outline: 0px;
     border-radius: 20px;
-    background-color: transparent;
+    background-color: var(--color-btn);
     border: 2px solid var(--color-light);
     color: var(--color-light);
     font-size: 15px;
@@ -43,6 +43,8 @@
     margin-right: 5px;
     margin-bottom: 5px;
     margin: 10px 20px;
+    padding: 10px;
+    
     
   }
 
@@ -51,7 +53,7 @@
     background-color: var(--color-light);
     color: var(--color-btn);
     border: 3px solid var(--color-light);
-    scale: 1.1;
+    scale: 1.4;
     
   }
 
@@ -95,6 +97,15 @@
     animation: pingPong 2s infinite linear;
   }
   
+
+
+
+
+
+
+
+
+
   @keyframes pingPong {
     0% {
       left: 50%;
