@@ -20,12 +20,13 @@ justify-items: center;
 
 
   .bg_gif_login{
-    flex: 1 60%;
-    height: 40dvh;
-    background-image: url("../../public/help.gif");
+    flex: 1  5%;
+    height: 80dvh;
+    /* background-image: url("../../public/help.gif");
     background-position: center;
     background-size: cover;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; */
+
     
   }
 
@@ -34,9 +35,9 @@ justify-items: center;
     width: 160px;
     height: 45px;
     outline: 0px;
-    border-radius: 14px;
+    border-radius: 12px;
     background-color: var(--second-color);
-    border: 2px solid var(--color-light);
+    /* border: 2px solid var(--color-light); */
     color: var(--color-light);
     font-size: 15px;
     transition: 0.4s;
@@ -57,6 +58,19 @@ justify-items: center;
     
   }
 
+
+  .main_home h2{
+    font-size: 30px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+  }
+
+
+  .main_home p{
+    font-size: 20px;
+    margin-bottom: 40px;
+    margin-left: 10px;
+  }
   
    .table {
     position: relative;

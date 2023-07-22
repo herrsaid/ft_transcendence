@@ -84,31 +84,31 @@ export class GameHead{
     }
     test()
     {
-        console.log("------------------------------------");
-        console.log("this.BallXpos: "+ this.BallXpos);
-        console.log("this.BallYpos: "+ this.BallYpos);
-        console.log("this.BallXdirection: "+ this.BallXdirection);
-        console.log("this.BallYdirection: "+ this.BallYdirection);
-        console.log("this.BallWidth: "+ this.BallWidth);
-        console.log("this.BallHeight: "+ this.BallHeight);
-        console.log("this.Racket1Height: "+ this.Racket1Height);
-        console.log("this.Racket1Ypos: "+ this.Racket1Ypos);
-        console.log("this.Racket1Width: "+ this.Racket1Width);
-        console.log("this.Racket1Xpos: "+ this.Racket1Xpos);
-        console.log("this.Racket2Height: "+ this.Racket2Height);
-        console.log("this.Racket2Ypos: "+ this.Racket2Ypos);
-        console.log("this.Racket2Width: "+ this.Racket2Width);
-        console.log("this.Player1ID: "+ this.Player1ID);
-        console.log("this.Player2ID: "+ this.Player2ID);
-        console.log("this.Racket1Xpos: "+ this.Racket2Xpos);
-        console.log("this.GameWidth "+ this.GameWidth);
-        console.log("this.GameHeight "+ this.GameHeight);
-        console.log("this.GameStatus "+ this.GameStatus );
-        console.log("this.GameSpeed "+ this.GameSpeed );
-        console.log("this.GamePoints "+ this.GamePoints );
-        console.log("this.Alpha "+ this.Alpha);
-        console.log("this.Sleep "+ this.Sleep);
-        console.log("------------------------------------");
+        // console.log("------------------------------------");
+        // console.log("this.BallXpos: "+ this.BallXpos);
+        // console.log("this.BallYpos: "+ this.BallYpos);
+        // console.log("this.BallXdirection: "+ this.BallXdirection);
+        // console.log("this.BallYdirection: "+ this.BallYdirection);
+        // console.log("this.BallWidth: "+ this.BallWidth);
+        // console.log("this.BallHeight: "+ this.BallHeight);
+        // console.log("this.Racket1Height: "+ this.Racket1Height);
+        // console.log("this.Racket1Ypos: "+ this.Racket1Ypos);
+        // console.log("this.Racket1Width: "+ this.Racket1Width);
+        // console.log("this.Racket1Xpos: "+ this.Racket1Xpos);
+        // console.log("this.Racket2Height: "+ this.Racket2Height);
+        // console.log("this.Racket2Ypos: "+ this.Racket2Ypos);
+        // console.log("this.Racket2Width: "+ this.Racket2Width);
+        // console.log("this.Player1ID: "+ this.Player1ID);
+        // console.log("this.Player2ID: "+ this.Player2ID);
+        // console.log("this.Racket1Xpos: "+ this.Racket2Xpos);
+        // console.log("this.GameWidth "+ this.GameWidth);
+        // console.log("this.GameHeight "+ this.GameHeight);
+        // console.log("this.GameStatus "+ this.GameStatus );
+        // console.log("this.GameSpeed "+ this.GameSpeed );
+        // console.log("this.GamePoints "+ this.GamePoints );
+        // console.log("this.Alpha "+ this.Alpha);
+        // console.log("this.Sleep "+ this.Sleep);
+        // console.log("------------------------------------");
 
         this.BallXpos += (this.BallXdirection * this.GameSpeed);
         if(this.BallYpos < this.Racket2Ypos || this.BallYpos > (this.Racket2Ypos + this.Racket2Height))
