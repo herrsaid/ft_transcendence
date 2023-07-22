@@ -10,7 +10,7 @@ let Racket1Width: number = 10, Racket1Height = 60, Racket1Xpos: number = 5, Rack
 let Racket2Width: number = 10, Racket2Height = 60, Racket2Xpos: number = 785, Racket2Ypos: number = 170;
 let Result1Val: number = 0, Result1Xpos: number = 350, Result1Ypos: number = 25;
 let Result2Val: number = 0, Result2Xpos: number = 450, Result2Ypos: number = 25;
-let gamediv: p5.Renderer,first_conection_val:boolean=false;
+let gamediv: p5.Renderer,first_conection_val:boolean=false, message: string = '';
 
 function Ball(p5: p5, x: number, y: number, w: number, h: number)
 {
@@ -126,6 +126,41 @@ async function first_conection()
 				  player2.emit('first_conection',{Speed,Points});
 		}
 }
+
+function GameStatusChecker(p5: p5): boolean
+{
+  if(host)
+  {
+		player1.on('GameEnd',(data: string)=>
+    {
+      message = data;
+    });
+    if(message !== '')
+    {
+      p5.background(0);
+      p5.fill(255,255,255);
+      p5.text(message, 350, 220);
+      return false;
+    }
+  }
+  else
+  {
+		player2.on('GameEnd',(data: string)=>
+    {
+      message = data;
+    });
+    if(message !== '')
+    {
+      p5.background(0);
+      p5.fill(255,255,255);
+      p5.text(message, 350, 220);
+      return false;
+    }
+
+  }
+  return true;
+}
+
 const Game = () => {
   useEffect(() => {
     let x = 25;
@@ -137,19 +172,22 @@ const Game = () => {
       
       p5.draw = () => {
         first_conection();
-        p5.background(25);
-        BallAnimation();
-        if (host)
-          Racket1Animation(p5);
-        else
-          Racket2Animation(p5);
-        gamediv.center();
-        LineCenter(p5);
-        Result1(p5, p5.str(Result1Val),Result1Xpos,Result1Ypos);
-        Result2(p5, p5.str(Result2Val),Result2Xpos,Result2Ypos);
-        Ball(p5,BallXpos,BallYpos,BallWidth,BallHeight);
-        Racket1(p5,Racket1Xpos,Racket1Ypos,Racket1Width,Racket1Height);
-        Racket2(p5,Racket2Xpos,Racket2Ypos,Racket2Width,Racket2Height);
+        if(GameStatusChecker(p5))
+        {
+          p5.background(25);
+          BallAnimation();
+          if (host)
+            Racket1Animation(p5);
+          else
+            Racket2Animation(p5);
+          gamediv.center();
+          LineCenter(p5);
+          Result1(p5, p5.str(Result1Val),Result1Xpos,Result1Ypos);
+          Result2(p5, p5.str(Result2Val),Result2Xpos,Result2Ypos);
+          Ball(p5,BallXpos,BallYpos,BallWidth,BallHeight);
+          Racket1(p5,Racket1Xpos,Racket1Ypos,Racket1Width,Racket1Height);
+          Racket2(p5,Racket2Xpos,Racket2Ypos,Racket2Width,Racket2Height);
+        }
       };
       p5.keyReleased = () =>{
         p5.key = '';
