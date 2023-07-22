@@ -39,7 +39,7 @@
     padding-bottom: 10px;
     overflow-y: auto;
     height: 350px;
-    box-shadow: 0px 4px 4px 4px #eee;
+    /* box-shadow: 0px 4px 4px 4px #eee; */
 }
 
 .Groups{
@@ -51,7 +51,7 @@
     padding-top: 10px;
     padding-bottom: 10px;
     margin: auto;
-    box-shadow: 0px 4px 4px 4px #eee;
+    /* box-shadow: 0px 4px 4px 4px #eee; */
 }
 
 
@@ -96,7 +96,7 @@
     padding-bottom: 10px;
     margin: auto;
     margin-bottom: 50px;
-    box-shadow: 0px 4px 4px 4px #eee;
+    /* box-shadow: 0px 4px 4px 4px #eee; */
 }
 
 
@@ -163,7 +163,7 @@
     height: fit-content;
     color:var(--color-light);
     padding: 10px;
-    box-shadow: 0px 4px 4px 4px #eee;
+    /* box-shadow: 0px 4px 4px 4px #eee; */
 }
 
 
@@ -210,7 +210,7 @@ div.side_two_history{
     margin-top: 3%;
     overflow-y: auto;
     max-height: 400px;
-    box-shadow: 0px 4px 4px 4px #eee;
+    /* box-shadow: 0px 4px 4px 4px #eee; */
 }
 
 div.side_two_history h2{
@@ -227,7 +227,7 @@ div.victory_div{
     border-radius: 13px;
     margin-bottom: 5%;
     background-color: var(--second-color);
-    box-shadow: 0px 4px 4px 4px #eee;
+    /* box-shadow: 0px 4px 4px 4px #eee; */
     
 
 
@@ -310,7 +310,7 @@ div.edit_username input{
     padding-bottom: 2%;
     cursor: pointer;
     justify-content: space-between;
-    box-shadow: 0px 4px 4px 4px #eee;
+    /* box-shadow: 0px 4px 4px 4px #eee; */
 }
 
 
@@ -346,7 +346,7 @@ p.enligne{
     padding-right: 10px;
     justify-content: space-between;
     cursor: pointer;
-    box-shadow: 0px 4px 4px 4px #eee;
+    /* box-shadow: 0px 4px 4px 4px #eee; */
 }
 
 .Groups .group h4{
@@ -371,7 +371,7 @@ p.enligne{
     margin-bottom: 10px;
     display: flex;
     justify-content: space-around;
-    box-shadow: 0px 4px 4px 4px #eee;
+    /* box-shadow: 0px 4px 4px 4px #eee; */
 }
 
 .one_achievements h3{
@@ -509,7 +509,7 @@ p.enligne{
     padding: 20px;
     border-radius: 10px;
     width: 80%;
-    box-shadow: 0px 4px 4px 4px #eee;
+    /* box-shadow: 0px 4px 4px 4px #eee; */
     margin: auto;
   }
 
