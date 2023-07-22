@@ -42,17 +42,29 @@ import {
 	@SubscribeMessage('conection_closed')
 	handleconection_closed(client: Socket): void {
     if(OBJ.GameHead)
+    {
       for(let a = 0 ; a<OBJ.GameHead.length; a++ )
+      { 
         if(OBJ.GameHead[a].Player1ID === client.id)
+        { 
           OBJ.GameHead[a].GameStatus = 0;
-    OBJ.GameHead.filter((obj) => obj.Player1ID !== Player1ID);
+          OBJ.GameHead[a].Player1ID = '';
+        }
+      }
+    }
   }
     handleDisconnect(client: Socket): void {
       if(OBJ.GameHead)
+      {
         for(let a = 0 ; a<OBJ.GameHead.length; a++ )
+        { 
           if(OBJ.GameHead[a].Player1ID === client.id)
+          { 
             OBJ.GameHead[a].GameStatus = 0;
-      OBJ.GameHead.filter((obj) => obj.Player1ID !== Player1ID);
+            OBJ.GameHead[a].Player1ID = '';
+          }
+        }
+      }
     }
   }
   
