@@ -26,13 +26,13 @@ import {
       {
         for(let a = 0 ; a<OBJ.GameHead.length; a++ )
         {
-          if(OBJ.GameHead[a].GetPlayer2ID() === client.id)
+          if(OBJ.GameHead[a].Player2ID === client.id)
           {
-            if(OBJ.GameHead[a].GetPlayer2Client() === undefined)
-              OBJ.GameHead[a].SetPlayer2Client(client)
-            OBJ.GameHead[a].SetRacket2Ypos(data);
-            if(OBJ.GameHead[a].GetPlayer1Client() != undefined)
-              OBJ.GameHead[a].GetPlayer1Client().emit('send_player1_data', data);
+            if(OBJ.GameHead[a].Player2Client === undefined)
+              OBJ.GameHead[a].Player2Client = client;
+            OBJ.GameHead[a].Racket1Ypos = data;
+            if(OBJ.GameHead[a].Player1Client != undefined)
+              OBJ.GameHead[a].Player1Client.emit('send_player1_data', data);
           }
         }
     }
@@ -41,14 +41,16 @@ import {
 	handleconection_closed(client: Socket): void {
     if(OBJ.GameHead)
       for(let a = 0 ; a<OBJ.GameHead.length; a++ )
-        if(OBJ.GameHead[a].GetPlayer2ID() === client.id)
-          OBJ.GameHead[a].SetGameStatus(0);
+        if(OBJ.GameHead[a].Player2ID === client.id)
+          OBJ.GameHead[a].GameStatus = 0;
+    OBJ.GameHead.filter((obj) => obj.Player2ID !== Player2ID);
 	}
     handleDisconnect(client: Socket): void {
       if(OBJ.GameHead)
         for(let a = 0 ; a<OBJ.GameHead.length; a++ )
-          if(OBJ.GameHead[a].GetPlayer2ID() === client.id)
-            OBJ.GameHead[a].SetGameStatus(0);
+          if(OBJ.GameHead[a].Player2ID === client.id)
+            OBJ.GameHead[a].GameStatus = 0;
+      OBJ.GameHead.filter((obj) => obj.Player2ID !== Player2ID);
   }
   
 }

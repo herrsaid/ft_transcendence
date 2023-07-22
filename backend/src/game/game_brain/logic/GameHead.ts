@@ -4,32 +4,32 @@ import { Socket } from 'socket.io';
 @Injectable()
 export class GameHead{
     //attributes
-    protected GameWidth:number;
-    protected GameHeight:number;
-    protected GameSpeed:number;
-    protected Result1Val: number;
-    protected Result2Val: number;
-    protected Player1ID: string;
-    protected Player2ID: string;
-    protected Player1Client: Socket;
-    protected Player2Client: Socket;
-    protected Alpha: number;
-    protected Sleep: number;
-    protected GameStatus: number;
-    protected BallXpos:number;
-    protected BallYpos:number;
-    protected BallXdirection: number;
-    protected BallYdirection: number;
-    protected BallWidth: number;
-    protected BallHeight: number;
-    protected Racket1Xpos: number;
-    protected Racket1Ypos: number;
-    protected Racket1Height: number;
-    protected Racket1Width: number;
-    protected Racket2Xpos: number;
-    protected Racket2Ypos: number;
-    protected Racket2Height: number;
-    protected Racket2Width: number;
+    public GameWidth:number;
+    public GameHeight:number;
+    public GameSpeed:number;
+    public Result1Val: number;
+    public Result2Val: number;
+    public Player1ID: string;
+    public Player2ID: string;
+    public Player1Client: Socket;
+    public Player2Client: Socket;
+    public Alpha: number;
+    public Sleep: number;
+    public GameStatus: number;
+    public BallXpos:number;
+    public BallYpos:number;
+    public BallXdirection: number;
+    public BallYdirection: number;
+    public BallWidth: number;
+    public BallHeight: number;
+    public Racket1Xpos: number;
+    public Racket1Ypos: number;
+    public Racket1Height: number;
+    public Racket1Width: number;
+    public Racket2Xpos: number;
+    public Racket2Ypos: number;
+    public Racket2Height: number;
+    public Racket2Width: number;
     //Constructor
     constructor()
     {
@@ -58,91 +58,7 @@ export class GameHead{
         this.Racket2Width = this.GameWidth/80;
         this.Racket2Xpos = this.GameWidth - (this.Racket2Width-5);
     }
-    //Getters & Setters
-    SetGameWidth(GameWidth: number)
-    {
-        this.GameWidth = GameWidth;
-    }
-    SetGameHiegh(GameHieght: number)
-    {
-        this.GameHeight = GameHieght;
-    }
-    SetGameSpeed(GameSpeed: number)
-    {
-        this.GameSpeed = GameSpeed;
-    }
-    GetGameStatus(): number
-    {
-       return  this.GameStatus;
-    }
-    SetGameStatus(GameStatus: number)
-    {
-        this.GameStatus = GameStatus;
-    }
-    SetPlayer1ID(Player1: string)
-    {
-        this.Player1ID = Player1;
-    }
-    SetPlayer2ID(Player2: string)
-    {
-        this.Player2ID = Player2;
-    }
-    GetPlayer1ID(): string
-    {
-        return this.Player1ID;
-    }
-    GetPlayer2ID(): string
-    {
-        return this.Player2ID;
-    }
-    SetPlayer1Client(Player1Client: Socket)
-    {
-        this.Player1Client = Player1Client;
-    }
-    SetPlayer2Client(Player2Client: Socket)
-    {
-        this.Player2Client = Player2Client;
-    }
-    GetPlayer1Client(): Socket
-    {
-        return this.Player1Client;
-    }
-    GetPlayer2Client(): Socket
-    {
-        return this.Player2Client;
-    }
-    SetSleep(Sleep:number)
-    {
-        this.Sleep = Sleep;
-    }
-    GetSleep():number 
-    {
-        return this.Sleep;
-    }
-    GetResult1Val():number 
-    {
-        return this.Result1Val;
-    }
-    GetResult2Val():number 
-    {
-        return this.Result2Val;
-    }
-    GetBallXpos():number 
-    {
-        return this.BallXpos;
-    }
-    GetBallYpos():number 
-    {
-        return this.BallYpos;
-    }
-    SetRacket1Ypos(Racket1Ypos: number)
-    {
-        this.Racket1Ypos = Racket1Ypos;
-    }
-    SetRacket2Ypos(Racket2Ypos: number)
-    {
-        this.Racket2Ypos = Racket2Ypos;
-    }
+
     CheckAlpha(BallYpos: number, RacketYpos: number, RacketHeight: number): undefined
     {
         let ballYpos_racket: number;
@@ -228,9 +144,9 @@ export class GameHead{
         if(this.BallXpos % this.Alpha === 0)
         {
             if(this.BallYpos > this.GameHeight-this.BallHeight/2)
-            this.BallYdirection = -1
+                this.BallYdirection = -1
             if(this.BallYpos < this.BallHeight/2)
-            this.BallYdirection = +1
+                this.BallYdirection = +1
             this.BallYpos += this.BallYdirection;
         }
     }

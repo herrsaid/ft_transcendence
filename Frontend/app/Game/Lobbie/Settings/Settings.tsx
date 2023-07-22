@@ -110,7 +110,7 @@ function is_Online_mod(router: any)
         socket.on('send_data', (username,data) => {
             enemmyusername = username;
             host = data;
-            console.log(enemmyusername);
+            console.log(host);
             socket.disconnect();
             router.replace('/Game//Online/Play');
         });

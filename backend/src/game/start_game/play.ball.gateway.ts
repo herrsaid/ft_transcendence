@@ -20,45 +20,41 @@ import { exit } from 'process';
     {
       if(OBJ.GameHead.length)
       {
-        if(OBJ.GameHead.find((elem)=> elem.GetPlayer1ID() === Player1ID) === undefined
-        && OBJ.GameHead.find((elem)=> elem.GetPlayer2ID() === Player2ID) === undefined)
+        if(OBJ.GameHead.find((elem)=> elem.Player1ID === Player1ID) === undefined
+        && OBJ.GameHead.find((elem)=> elem.Player2ID === Player2ID) === undefined)
         {
-          // console.log(Player1ID,Player2ID);
-          // console.log("here");
           OBJ.GameHead.push(new GameHead());
-          OBJ.GameHead[OBJ.GameHead.length - 1].SetGameStatus(1);
-          OBJ.GameHead[OBJ.GameHead.length - 1].SetPlayer1ID(Player1ID);
-          OBJ.GameHead[OBJ.GameHead.length - 1].SetPlayer2ID(Player2ID);
+          OBJ.GameHead[OBJ.GameHead.length - 1].GameStatus = 1;
+          OBJ.GameHead[OBJ.GameHead.length - 1].Player1ID = Player1ID;
+          OBJ.GameHead[OBJ.GameHead.length - 1].Player2ID = Player2ID;
         }
         for(let a = 0 ; a<OBJ.GameHead.length; a++ )
         {
-          if(OBJ.GameHead[a].GetSleep() <= 0 && OBJ.GameHead[a].GetGameStatus() === 1)
+          if(OBJ.GameHead[a].Sleep <= 0 && OBJ.GameHead[a].GameStatus === 1)
             OBJ.GameHead[a].test();
           else
-            OBJ.GameHead[a].SetSleep(OBJ.GameHead[a].GetSleep() - 16);
+            OBJ.GameHead[a].Sleep = OBJ.GameHead[a].Sleep - 16;
           const Gameinfo = 
           {
-            BallXpos: OBJ.GameHead[a].GetBallXpos(),
-            BallYpos: OBJ.GameHead[a].GetBallYpos(),
-            Result1Val: OBJ.GameHead[a].GetResult1Val(),
-            Result2Val: OBJ.GameHead[a].GetResult2Val(),
+            BallXpos: OBJ.GameHead[a].BallXpos,
+            BallYpos: OBJ.GameHead[a].BallYpos,
+            Result1Val: OBJ.GameHead[a].Result1Val,
+            Result2Val: OBJ.GameHead[a].Result2Val,
           }
-          if (OBJ.GameHead[a].GetPlayer1Client() != undefined) {
-            OBJ.GameHead[a].GetPlayer1Client().emit('BallPos', Gameinfo);
+          if (OBJ.GameHead[a].Player1Client != undefined) {
+            OBJ.GameHead[a].Player1Client.emit('BallPos', Gameinfo);
           }
-          if (OBJ.GameHead[a].GetPlayer2Client() != undefined) {
-            OBJ.GameHead[a].GetPlayer2Client().emit('BallPos', Gameinfo);
+          if (OBJ.GameHead[a].Player2Client != undefined) {
+            OBJ.GameHead[a].Player2Client.emit('BallPos', Gameinfo);
           }
         }
       }
       else if(Player1ID !== '' && Player2ID !== '')
       {
-        {
           OBJ.GameHead.push(new GameHead());
-          OBJ.GameHead[0].SetGameStatus(1);
-          OBJ.GameHead[0].SetPlayer1ID(Player1ID);
-          OBJ.GameHead[0].SetPlayer2ID(Player2ID);
-        }
+          OBJ.GameHead[0].GameStatus = 1;
+          OBJ.GameHead[0].Player1ID = Player1ID;
+          OBJ.GameHead[0].Player2ID = Player2ID;
       }
     }
   }

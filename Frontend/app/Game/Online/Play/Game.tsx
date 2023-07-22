@@ -55,58 +55,64 @@ function Result2(p5: p5,res2: string, x: number, y: number)
 }
 function BallAnimation ()
 {
-  player1.on('BallPos',(GameInfo)=> 
+  if(host)
+  {  
+    player1.on('BallPos',(GameInfo)=>
+    {
+      BallXpos = GameWidth - GameInfo.BallXpos;
+      BallYpos = GameHeight -  GameInfo.BallYpos;
+      Result1Val = GameInfo.Result1Val;
+      Result2Val = GameInfo.Result2Val;
+    });
+  }
+  else
   {
-    BallXpos = GameInfo.BallXpos;
-    BallYpos = GameInfo.BallYpos;
-    Result1Val = GameInfo.Result1Val;
-    Result2Val = GameInfo.Result2Val;
-  });
-  player2.on('BallPos',(GameInfo)=> 
-  {
-    BallXpos = GameInfo.BallXpos;
-    BallYpos = GameInfo.BallYpos;
-    Result1Val = GameInfo.Result1Val;
-    Result2Val = GameInfo.Result2Val;
-  });
+    player2.on('BallPos',(GameInfo)=>
+    {
+      BallXpos = GameInfo.BallXpos;
+      BallYpos = GameInfo.BallYpos;
+      Result1Val = GameInfo.Result2Val;
+      Result2Val = GameInfo.Result1Val;
+    });
+  }
 }
 function Racket1Animation(p5: p5): undefined
 {
-  if(p5.mouseY > 0 && p5.mouseY < 400 && p5.mouseX > 0 && p5.mouseX < 400)
+  if((p5.key == 'w' || p5.key == 'ArrowUp') && (Racket1Ypos > 0))
+    Racket1Ypos -= GameSpeed;
+  else if ((p5.key == 's' || p5.key == 'ArrowDown') && (Racket1Ypos < (GameHeight - Racket1Height)))
+    Racket1Ypos += GameSpeed;
+  else if(p5.mouseY > 0 && p5.mouseY < 400 && p5.mouseX > 0 && p5.mouseX < 400)
   {
     if(p5.mouseY< Racket1Ypos)
       Racket1Ypos -= GameSpeed;
     else if(p5.mouseY > (Racket1Ypos + Racket1Height))
       Racket1Ypos += GameSpeed;
   }
-  if((p5.key == 'w' || p5.key == 'ArrowUp') && (Racket1Ypos > 0))
-    Racket1Ypos -= GameSpeed;
-  else if ((p5.key == 's' || p5.key == 'ArrowDown') && (Racket1Ypos < (GameHeight - Racket1Height)))
-    Racket1Ypos += GameSpeed;
-  player1.emit('send_player1_data',Racket1Ypos);
+  player1.emit('send_player1_data',(GameHeight - Racket1Height) - Racket1Ypos);
 	player1.on('send_player1_data',(data)=> 
   {
-    Racket2Ypos = data;
+    Racket2Ypos = (GameHeight - Racket2Height) - data;
   });
 }
 
 function Racket2Animation(p5: p5): undefined
 {
-  if(p5.mouseY > 0 && p5.mouseY < 400 && p5.mouseX > 400 && p5.mouseX < 800)
+  if((p5.key == 'w' || p5.key == 'ArrowUp') && (Racket1Ypos > 0))
+    Racket1Ypos -= GameSpeed;
+  else if ((p5.key == 's' || p5.key == 'ArrowDown') && (Racket1Ypos < (GameHeight - Racket1Height)))
+    Racket1Ypos += GameSpeed;
+  else if(p5.mouseY > 0 && p5.mouseY < 400 && p5.mouseX > 0 && p5.mouseX < 400)
   {
-    if(p5.mouseY< Racket2Ypos)
-      Racket2Ypos -= GameSpeed;
-    else if(p5.mouseY > (Racket2Ypos + Racket2Height))
-      Racket2Ypos += GameSpeed;
+    if(p5.mouseY< Racket1Ypos)
+      Racket1Ypos -= GameSpeed;
+    else if(p5.mouseY > (Racket1Ypos + Racket1Height))
+      Racket1Ypos += GameSpeed;
   }
-  if((p5.key == 'w' || p5.key == 'ArrowUp') && (Racket2Ypos > 0))
-    Racket2Ypos -= GameSpeed;
-  else if ((p5.key == 's' || p5.key == 'ArrowDown') && (Racket2Ypos < (GameHeight - Racket2Height)))
-    Racket2Ypos += GameSpeed;
-  player2.emit('send_player2_data',Racket2Ypos);
+  player2.emit('send_player2_data', Racket1Ypos);
 	player2.on('send_player2_data',(data)=> 
   {
-    Racket1Ypos = data;
+    Racket2Ypos =  data;
   });
 }
 function first_conection()
