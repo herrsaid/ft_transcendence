@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import p5 from "p5";
 import './Game.css'
 import { player1, player2 } from '../Socket/start_game_socket'
-import { host ,Speed,myusername,enemmyusername} from '../../Lobbie/Settings/Settings'
+import { host ,Speed,Points,myusername,enemmyusername} from '../../Lobbie/Settings/Settings'
 let GameWidth: number = 800,GameHeight: number = 400,GameSpeed: number = 4;
 let BallWidth: number = 15, BallHeight = 15, BallXpos: number = GameWidth/2, BallYpos: number = GameHeight/2;
 let Racket1Width: number = 10, Racket1Height = 60, Racket1Xpos: number = 5, Racket1Ypos: number = 170;
@@ -115,15 +115,15 @@ function Racket2Animation(p5: p5): undefined
     Racket2Ypos =  data;
   });
 }
-function first_conection()
+async function first_conection()
 {
   if(first_conection_val === false)
 		{
 			first_conection_val = true;
         if(host)
-				  player1.emit('first_conection');
+				  player1.emit('first_conection',{Speed,Points});
         else
-				  player2.emit('first_conection');
+				  player2.emit('first_conection',{Speed,Points});
 		}
 }
 const Game = () => {

@@ -6,8 +6,8 @@ import {
   } from '@nestjs/websockets';
   import { Socket, Server } from 'socket.io';
   import { OBJ } from '../game_brain/logic/game_server_class';
-  export let Player1ID: string = '';
-  let none:Socket;
+  export let Player1ID: string = '',speed1: number = 0,points1: number = 0;
+  let none: Socket;
   @WebSocketGateway(1340, {
     cors: { origin: '*', credentials: true },
   })
@@ -15,8 +15,11 @@ import {
     @WebSocketServer()
     server: Server;
     @SubscribeMessage('first_conection')
-    handleFirst_conct(client: Socket): void {
-        Player1ID = client.id;
+    handleFirst_conct(client: Socket, data): void {
+      Player1ID = client.id;
+      speed1 = data.Speed;
+      points1 = data.Points;
+      console.log(data);
       console.log('Player1Arr_content: ', Player1ID);
     }
     @SubscribeMessage('send_player1_data')

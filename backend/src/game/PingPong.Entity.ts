@@ -6,7 +6,7 @@ export class GameUserSettingsEntity {
   Speed: number;
   @IsNumber()
   @IsNotEmpty()
-  MapNumber: number;
+  Points: number;
   @IsNotEmpty()
   @IsString()
   myusername: string;

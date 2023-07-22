@@ -3,7 +3,7 @@
 import "./Settings.css"
 import { socket } from '../../Online/Socket/auto_match_socket'
 
-export let MapNumber: number = 3;
+export let Points: number = 30;
 export let Speed: number = 1;
 export let pause_game: number = 0;
 export let other_tools: number = 0;
@@ -15,14 +15,14 @@ function change_map_value(param: number)
 {
     for(let a=1;a<4;a++)
     {
-        const mapv = document.getElementById(`mapv${a}`);
+        const mapv = document.getElementById(`points${a}`);
         if(mapv !== null)
             mapv.style.backgroundColor = " rgb(39, 141, 214,0.4)";
     }
-    const changemap= document.getElementById(`mapv${param}`);
+    const changemap= document.getElementById(`points${param}`);
     if(changemap !== null)
         changemap.style.backgroundColor = " rgb(39, 141, 214,1)";
-    MapNumber = param;
+    Points = param*10;
 }
 
 function change_online_value(param: number)
@@ -106,7 +106,7 @@ function is_Online_mod(router: any)
             console.log(data);
         });
         myusername = sessionStorage.getItem('username');
-        socket.emit('send_data',{Speed,MapNumber,myusername,});
+        socket.emit('send_data',{Speed,Points,myusername,});
         socket.on('send_data', (username,data) => {
             enemmyusername = username;
             host = data;
@@ -157,23 +157,23 @@ const PingPongSettings = ({ router }: any) =>
                 <div id="speed_scrool">
                 </div>
             </div>
-            <div id="map">
-                <p id="map_p">
-                    Map :
+            <div id="points">
+                <p id="points_p">
+                    Points :
                 </p>
-                <button  onClick={()=> change_map_value(1)} id="mapv1">
+                <button  onClick={()=> change_map_value(1)} id="points1">
                     <p>
-                        v1
+                        10
                     </p>
                 </button>
-                <button onClick={()=> change_map_value(2)} id="mapv2">
+                <button onClick={()=> change_map_value(2)} id="points2">
                     <p>
-                        v2
+                        20
                     </p>
                 </button>
-                <button onClick={()=> change_map_value(3)} id="mapv3">
+                <button onClick={()=> change_map_value(3)} id="points3">
                     <p>
-                        v3
+                        30
                     </p>
                 </button>
             </div>

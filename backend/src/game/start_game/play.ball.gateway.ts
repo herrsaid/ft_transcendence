@@ -5,8 +5,8 @@ import {
   import { Socket } from 'socket.io';
   import { Interval } from "@nestjs/schedule";
   import { getSocketById } from '../auto_match/lobbie.gateway';
-  import { Player1ID} from './play.player1.gateway'
-  import { Player2ID} from './play.player2.gateway'
+  import { Player1ID,speed1,points1} from './play.player1.gateway'
+  import { Player2ID,speed2,points2} from './play.player2.gateway'
   import { GameHead } from '../game_brain/logic/GameHead';
   import { OBJ } from '../game_brain/logic/game_server_class';
 import { exit } from 'process';
@@ -24,6 +24,8 @@ import { exit } from 'process';
         && OBJ.GameHead.find((elem)=> elem.Player2ID === Player2ID) === undefined)
         {
           OBJ.GameHead.push(new GameHead());
+          OBJ.GameHead[OBJ.GameHead.length - 1].GameSpeed = speed1;
+          OBJ.GameHead[OBJ.GameHead.length - 1].GamePoints= points1;
           OBJ.GameHead[OBJ.GameHead.length - 1].GameStatus = 1;
           OBJ.GameHead[OBJ.GameHead.length - 1].Player1ID = Player1ID;
           OBJ.GameHead[OBJ.GameHead.length - 1].Player2ID = Player2ID;
@@ -52,6 +54,8 @@ import { exit } from 'process';
       else if(Player1ID !== '' && Player2ID !== '')
       {
           OBJ.GameHead.push(new GameHead());
+          OBJ.GameHead[0].GameSpeed = speed1;
+          OBJ.GameHead[0].GamePoints= points1;
           OBJ.GameHead[0].GameStatus = 1;
           OBJ.GameHead[0].Player1ID = Player1ID;
           OBJ.GameHead[0].Player2ID = Player2ID;

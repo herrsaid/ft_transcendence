@@ -58,7 +58,7 @@ import {
               if (
                 elm.UsedStatus === false &&
                 elm.Speed === elem.Speed &&
-                elm.MapNumber === elem.MapNumber &&
+                elm.Points === elem.Points &&
                 elm.ID !== elem.ID
               )
                 return elm;

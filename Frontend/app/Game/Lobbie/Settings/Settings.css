@@ -90,7 +90,7 @@
 }
 
 
-#map
+#points
 {
     position: relative;
     display: flex;
@@ -102,13 +102,13 @@
     z-index: 1;
 }
 
-#map_p
+#points_p
 {
     position: relative;
     left: 15%;
 }
 
-#mapv1
+#points1
 {
     position: absolute;
     width: 10%;
@@ -119,7 +119,7 @@
     text-align: center;
 }
 
-#mapv2
+#points2
 {
     position: absolute;
     width: 10%;
@@ -130,7 +130,7 @@
     text-align: center;
 }
 
-#mapv3
+#points3
 {
     position: absolute;
     width: 10%;
