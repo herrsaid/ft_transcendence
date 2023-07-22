@@ -27,7 +27,10 @@ a{
   --color-bg: #fff;
   --primary-color: #fff;
   --color-btn: #5A96E3;
-  --second-color:#717070;
+  --second-color:#18184a;
+  --header-color:#39396f;
+  --side-bar-color:#24234f;
+  --button-color:#5e52fe;
 }
 
 body{
