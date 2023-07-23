@@ -1,17 +1,31 @@
 'use client'
 import { useEffect } from "react";
 import p5 from "p5";
-import './Game.css'
-import { player1, player2 } from '../Socket/start_game_socket'
-import { host ,Speed,Points,myusername,enemmyusername} from '../../Lobbie/Settings/Settings'
-let GameWidth: number = 800,GameHeight: number = 400,GameSpeed: number = 4;
-let BallWidth: number = 15, BallHeight = 15, BallXpos: number = GameWidth/2, BallYpos: number = GameHeight/2;
-let Racket1Width: number = 10, Racket1Height = 60, Racket1Xpos: number = 5, Racket1Ypos: number = 170;
-let Racket2Width: number = 10, Racket2Height = 60, Racket2Xpos: number = 785, Racket2Ypos: number = 170;
+import './Game.css';
+import { player1, player2 } from '../Socket/start_game_socket';
+import { host ,Speed,Points,myusername,enemmyusername} from '../../Lobbie/Settings/Settings';
+
+let GameWidth: number = 800, GameHeight: number = 400, GameSpeed: number = 4;
+let BallWidth: number = GameWidth/52, BallHeight = GameHeight/26, BallXpos: number = GameWidth/2, BallYpos: number = GameHeight/2;
+let Racket1Width: number = GameWidth/80, Racket1Height =  Math.floor(GameHeight/6), Racket1Xpos: number = 5, Racket1Ypos: number = (GameHeight/2) - (Racket1Height/2);
+let Racket2Width: number = GameWidth/80, Racket2Height =  Math.floor(GameHeight/6), Racket2Xpos: number = GameWidth-15, Racket2Ypos: number = (GameHeight/2) - (Racket1Height/2);
 let Result1Val: number = 0, Result1Xpos: number = 350, Result1Ypos: number = 25;
 let Result2Val: number = 0, Result2Xpos: number = 450, Result2Ypos: number = 25;
-let gamediv: p5.Renderer,first_conection_val:boolean=false, message: string = '';
+let first_conection_val:boolean=false, message: string = '';
 
+function ConvertServerData(ServerData:number,Mood:number)
+{
+  if(Mood)
+    return(Math.floor(((ServerData* 100)/800)* (GameWidth/100)));
+  return(Math.floor(((ServerData* 100)/400)* (GameHeight/100)));
+}
+
+function ConvertClientData(ClientData:number,Mood:number)
+{
+  if(Mood)
+    return(Math.floor(((ClientData* 100)/GameWidth)* (800/100)));
+  return(Math.floor(((ClientData* 100)/GameHeight)* (400/100)));
+}
 function Ball(p5: p5, x: number, y: number, w: number, h: number)
 {
   p5.fill(255,255,255);
@@ -20,8 +34,8 @@ function Ball(p5: p5, x: number, y: number, w: number, h: number)
 function LineCenter(p5: p5)
 {
   p5.fill('yellow');
-  for(let a=0;a<400;a+=35)
-    p5.rect(397.5, a, 5, 30,20);
+  for(let a=0;a<GameWidth/2;a+=35)
+    p5.rect(GameWidth/2, a, 5, 30,20);
 }
 function Racket1(p5: p5, x: number, y: number, w: number, h: number)
 {
@@ -37,7 +51,7 @@ function Racket2(p5: p5, x: number, y: number, w: number, h: number)
 
 function Result1(p5: p5,res1: string, x: number, y: number)
 {
-  p5.textSize(30);
+  p5.textSize(GameWidth/26);
   p5.fill('blue');
   if(myusername)
   p5.text(myusername, 170, 25);
@@ -46,7 +60,7 @@ function Result1(p5: p5,res1: string, x: number, y: number)
 
 function Result2(p5: p5,res2: string, x: number, y: number)
 {
-  p5.textSize(30);
+  p5.textSize(GameWidth/26);
   p5.fill('red');
   if(enemmyusername)
     p5.text(enemmyusername, 500, 25);
@@ -59,20 +73,20 @@ function BallAnimation ()
   {  
     player1.on('BallPos',(GameInfo)=>
     {
-      BallXpos = GameWidth - GameInfo.BallXpos;
-      BallYpos = GameHeight -  GameInfo.BallYpos;
-      Result1Val = GameInfo.Result1Val;
-      Result2Val = GameInfo.Result2Val;
+      BallXpos = GameWidth - ConvertServerData(GameInfo.BallXpos,1);
+      BallYpos = GameHeight -  ConvertServerData(GameInfo.BallYpos,0);
+      Result1Val = GameInfo.Result2Val;
+      Result2Val = GameInfo.Result1Val;
     });
   }
   else
   {
     player2.on('BallPos',(GameInfo)=>
     {
-      BallXpos = GameInfo.BallXpos;
-      BallYpos = GameInfo.BallYpos;
-      Result1Val = GameInfo.Result2Val;
-      Result2Val = GameInfo.Result1Val;
+      BallXpos = ConvertServerData(GameInfo.BallXpos,1);
+      BallYpos = ConvertServerData(GameInfo.BallYpos,0);
+      Result1Val = GameInfo.Result1Val;
+      Result2Val = GameInfo.Result2Val;
     });
   }
 }
@@ -82,17 +96,18 @@ function Racket1Animation(p5: p5): undefined
     Racket1Ypos -= GameSpeed;
   else if ((p5.key == 's' || p5.key == 'ArrowDown') && (Racket1Ypos < (GameHeight - Racket1Height)))
     Racket1Ypos += GameSpeed;
-  else if(p5.mouseY > 0 && p5.mouseY < 400 && p5.mouseX > 0 && p5.mouseX < 400)
+  else if(p5.mouseY > 0 && p5.mouseY < GameHeight && p5.mouseX > 0 && p5.mouseX < GameHeight)
   {
     if(p5.mouseY< Racket1Ypos)
       Racket1Ypos -= GameSpeed;
     else if(p5.mouseY > (Racket1Ypos + Racket1Height))
       Racket1Ypos += GameSpeed;
   }
-  player1.emit('send_player1_data',(GameHeight - Racket1Height) - Racket1Ypos);
+  player1.emit('send_player1_data',ConvertClientData(((GameHeight - Racket1Height) - Racket1Ypos),0));
 	player1.on('send_player1_data',(data)=> 
   {
-    Racket2Ypos = (GameHeight - Racket2Height) - data;
+    Racket2Ypos =  ConvertServerData(((GameHeight - Racket2Height) - data),0);
+    console.log(GameHeight,Racket2Height,data,((GameHeight - Racket2Height) - data),ConvertServerData(((GameHeight - Racket2Height) - data),0));
   });
 }
 
@@ -102,20 +117,21 @@ function Racket2Animation(p5: p5): undefined
     Racket1Ypos -= GameSpeed;
   else if ((p5.key == 's' || p5.key == 'ArrowDown') && (Racket1Ypos < (GameHeight - Racket1Height)))
     Racket1Ypos += GameSpeed;
-  else if(p5.mouseY > 0 && p5.mouseY < 400 && p5.mouseX > 0 && p5.mouseX < 400)
+  else if(p5.mouseY > 0 && p5.mouseY < GameHeight && p5.mouseX > 0 && p5.mouseX < GameHeight)
   {
     if(p5.mouseY< Racket1Ypos)
       Racket1Ypos -= GameSpeed;
     else if(p5.mouseY > (Racket1Ypos + Racket1Height))
       Racket1Ypos += GameSpeed;
   }
-  player2.emit('send_player2_data', Racket1Ypos);
+  player2.emit('send_player2_data', ConvertClientData(Racket1Ypos,0));
+  console.log(GameHeight,Racket1Ypos);
 	player2.on('send_player2_data',(data)=> 
   {
-    Racket2Ypos =  data;
+    Racket2Ypos =  ConvertServerData(data,0);
   });
 }
-async function first_conection()
+function first_conection()
 {
   if(first_conection_val === false)
 		{
@@ -127,8 +143,36 @@ async function first_conection()
 		}
 }
 
+function NewValue()
+{
+  if(window.innerWidth/2 !== GameWidth || window.innerWidth/4 !== GameHeight)
+  {
+    GameWidth = window.innerWidth/2;
+    GameHeight =  window.innerWidth/4;
+    BallWidth = GameWidth/52;
+    BallHeight = GameHeight/26;
+    BallXpos = GameWidth/2;
+    BallYpos = GameHeight/2;
+    Racket1Width = GameWidth/80;
+    Racket1Height = Math.floor(GameHeight/6);
+    Racket1Xpos = GameWidth/160;
+    Racket1Ypos = (GameHeight/2) - (Racket1Height/2);
+    Racket2Width = GameWidth/80;
+    Racket2Height = Math.floor(GameHeight/6);
+    Racket2Xpos = GameWidth-((GameWidth/80)+(GameWidth/160));
+    Racket2Ypos = (GameHeight/2) - (Racket2Height/2);
+    Result1Xpos  = GameWidth/2 - GameWidth/12;
+    Result1Ypos = GameHeight/10;
+    Result1Val  = 0;
+    Result2Xpos  = GameWidth/2 + GameWidth/16;
+    Result2Ypos = GameHeight/10;
+    Result2Val  = 0;
+  }
+}
+
 function GameStatusChecker(p5: p5): boolean
 {
+  p5.textSize(GameWidth/26);
   if(host)
   {
 		player1.on('GameEnd',(data: string)=>
@@ -139,7 +183,7 @@ function GameStatusChecker(p5: p5): boolean
     {
       p5.background(0);
       p5.fill(255,255,255);
-      p5.text(message, 350, 220);
+      p5.text(message, GameWidth/2 - GameWidth/12, GameHeight/2 + GameHeight/12);
       return false;
     }
   }
@@ -153,7 +197,7 @@ function GameStatusChecker(p5: p5): boolean
     {
       p5.background(0);
       p5.fill(255,255,255);
-      p5.text(message, 350, 220);
+      p5.text(message, GameWidth/2 - GameWidth/12, GameHeight/2 + GameHeight/12);
       return false;
     }
 
@@ -163,24 +207,23 @@ function GameStatusChecker(p5: p5): boolean
 
 const Game = () => {
   useEffect(() => {
-    let x = 25;
-
     const sketch = (p5: p5) => {
       p5.setup = () => {
-        gamediv = p5.createCanvas(800, 400).parent('sketch-container').center();
       };
       
       p5.draw = () => {
+        // console.log(innerWidth,innerWidth)
+        NewValue();
         first_conection();
         if(GameStatusChecker(p5))
         {
+          p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').center();
           p5.background(25);
           BallAnimation();
           if (host)
             Racket1Animation(p5);
           else
             Racket2Animation(p5);
-          gamediv.center();
           LineCenter(p5);
           Result1(p5, p5.str(Result1Val),Result1Xpos,Result1Ypos);
           Result2(p5, p5.str(Result2Val),Result2Xpos,Result2Ypos);

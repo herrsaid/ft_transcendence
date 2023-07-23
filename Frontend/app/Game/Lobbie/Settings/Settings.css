@@ -114,7 +114,7 @@
     width: 10%;
     height: 100%;
     left: 35%;
-    background-color: rgb(39, 141, 214,0.4);
+    background-color: rgb(57, 57, 111,0.4);
     border-radius: 10px;
     text-align: center;
 }
@@ -125,7 +125,7 @@
     width: 10%;
     height: 100%;
     left: 56%;
-    background-color: rgb(39, 141, 214,0.4);
+    background-color: rgb(57, 57, 111,0.4);
     border-radius: 10px;
     text-align: center;
 }
@@ -136,7 +136,7 @@
     width: 10%;
     height: 100%;
     left: 76%;
-    background-color: rgb(39, 141, 214,1);
+    background-color: rgb(57, 57, 111,1);
     border-radius: 10px;
     text-align: center;
 }
@@ -165,7 +165,7 @@
     width: 10%;
     height: 100%;
     left: 66%;
-    background-color: rgb(39, 141, 214,1);
+    background-color: rgb(57, 57, 111,1);
     border-radius: 10px;
     text-align: center;
 }
@@ -176,7 +176,7 @@
     width: 10%;
     height: 100%;
     left: 46%;
-    background-color: rgb(39, 141, 214,0.4);
+    background-color: rgb(57, 57, 111,0.4);
     border-radius: 10px;
     text-align: center;
 }
@@ -205,7 +205,7 @@
     width: 10%;
     height: 100%;
     left: 46%;
-    background-color: rgb(39, 141, 214,0.4);
+    background-color: rgb(57, 57, 111,0.4);
     border-radius: 10px;
     text-align: center;
     /* z-index: -1; */
@@ -217,7 +217,7 @@
     width: 10%;
     height: 100%;
     left: 66%;
-    background-color: rgb(39, 141, 214,1);
+    background-color: rgb(57, 57, 111,1);
     border-radius: 10px;
     text-align: center;
     /* z-index: -1; */
@@ -247,7 +247,7 @@
     width: 10%;
     height: 100%;
     left: 66%;
-    background-color: rgb(39, 141, 214,0.4);
+    background-color: rgb(57, 57, 111,0.4);
     border-radius: 10px;
     text-align: center;
     /* z-index: -1; */
@@ -259,7 +259,7 @@
     width: 10%;
     height: 100%;
     left: 46%;
-    background-color: rgb(39, 141, 214,1);
+    background-color: rgb(57, 57, 111,1);
     border-radius: 10px;
     text-align: center;
     /* z-index: -1; */
@@ -272,7 +272,7 @@
     height: 6%;
     top: 87.5%;
     left: 40%;
-    background-color: rgb(39, 141, 214,0.6);
+    background-color: rgb(57, 57, 111,0.6);
     border-radius: 15px;
     text-align: center;
 }
