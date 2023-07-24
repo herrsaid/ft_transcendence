@@ -106,8 +106,7 @@ function Racket1Animation(p5: p5): undefined
   player1.emit('send_player1_data',ConvertClientData(((GameHeight - Racket1Height) - Racket1Ypos),0));
 	player1.on('send_player1_data',(data)=> 
   {
-    Racket2Ypos =  ConvertServerData(((GameHeight - Racket2Height) - data),0);
-    console.log(GameHeight,Racket2Height,data,((GameHeight - Racket2Height) - data),ConvertServerData(((GameHeight - Racket2Height) - data),0));
+    Racket2Ypos =  (GameHeight - Racket2Height) - ConvertServerData(data,0);
   });
 }
 
@@ -125,7 +124,6 @@ function Racket2Animation(p5: p5): undefined
       Racket1Ypos += GameSpeed;
   }
   player2.emit('send_player2_data', ConvertClientData(Racket1Ypos,0));
-  console.log(GameHeight,Racket1Ypos);
 	player2.on('send_player2_data',(data)=> 
   {
     Racket2Ypos =  ConvertServerData(data,0);
@@ -147,25 +145,25 @@ function NewValue()
 {
   if(window.innerWidth/2 !== GameWidth || window.innerWidth/4 !== GameHeight)
   {
-    GameWidth = window.innerWidth/2;
-    GameHeight =  window.innerWidth/4;
-    BallWidth = GameWidth/52;
-    BallHeight = GameHeight/26;
-    BallXpos = GameWidth/2;
-    BallYpos = GameHeight/2;
-    Racket1Width = GameWidth/80;
+    GameWidth = Math.floor(window.innerWidth/2);
+    GameHeight =  Math.floor(window.innerWidth/4);
+    BallWidth = Math.floor(GameWidth/52);
+    BallHeight = Math.floor(GameHeight/26);
+    BallXpos = Math.floor(GameWidth/2);
+    BallYpos = Math.floor(GameHeight/2);
+    Racket1Width = Math.floor(GameWidth/80);
     Racket1Height = Math.floor(GameHeight/6);
-    Racket1Xpos = GameWidth/160;
-    Racket1Ypos = (GameHeight/2) - (Racket1Height/2);
-    Racket2Width = GameWidth/80;
+    Racket1Xpos = Math.floor(GameWidth/160);
+    Racket1Ypos = Math.floor((GameHeight/2) - (Racket1Height/2));
+    Racket2Width = Math.floor(GameWidth/80);
     Racket2Height = Math.floor(GameHeight/6);
-    Racket2Xpos = GameWidth-((GameWidth/80)+(GameWidth/160));
-    Racket2Ypos = (GameHeight/2) - (Racket2Height/2);
-    Result1Xpos  = GameWidth/2 - GameWidth/12;
-    Result1Ypos = GameHeight/10;
+    Racket2Xpos = Math.floor(GameWidth-((GameWidth/80)+(GameWidth/160)));
+    Racket2Ypos = Math.floor((GameHeight/2) - (Racket2Height/2));
+    Result1Xpos  = Math.floor(GameWidth/2 - GameWidth/12);
+    Result1Ypos = Math.floor(GameHeight/10);
     Result1Val  = 0;
-    Result2Xpos  = GameWidth/2 + GameWidth/16;
-    Result2Ypos = GameHeight/10;
+    Result2Xpos  = Math.floor(GameWidth/2 + GameWidth/16);
+    Result2Ypos = Math.floor(GameHeight/10);
     Result2Val  = 0;
   }
 }
@@ -212,7 +210,6 @@ const Game = () => {
       };
       
       p5.draw = () => {
-        // console.log(innerWidth,innerWidth)
         NewValue();
         first_conection();
         if(GameStatusChecker(p5))
