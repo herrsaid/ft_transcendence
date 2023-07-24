@@ -237,7 +237,6 @@ const Game = () => {
           Racket1(p5,Racket1Xpos,Racket1Ypos,Racket1Width,Racket1Height);
           Racket2(p5,Racket2Xpos,Racket2Ypos,Racket2Width,Racket2Height);
         }
-        // NewValue();
       };
       p5.keyReleased = () =>{
         p5.key = '';
