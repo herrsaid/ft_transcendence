@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import p5 from "p5";
 import './Game.css';
 import { player1, player2 } from '../Socket/start_game_socket';
-import { host ,Speed,Points,myusername,enemmyusername} from '../../Lobbie/Settings/Settings';
+import { host, Access, Speed, Points, myusername, enemmyusername} from '../../Lobbie/Settings/Settings';
 
 let GameWidth: number = 800, GameHeight: number = 400, GameSpeed: number = 4;
 let BallWidth: number = GameWidth/52, BallHeight = GameHeight/26, BallXpos: number = GameWidth/2, BallYpos: number = GameHeight/2;
@@ -54,7 +54,7 @@ function Result1(p5: p5,res1: string, x: number, y: number)
   p5.textSize(GameWidth/26);
   p5.fill('blue');
   if(myusername)
-  p5.text(myusername, 170, 25);
+    p5.text(myusername, x - GameWidth/5, y);
   p5.text(res1, x, y);
 }
 
@@ -63,7 +63,7 @@ function Result2(p5: p5,res2: string, x: number, y: number)
   p5.textSize(GameWidth/26);
   p5.fill('red');
   if(enemmyusername)
-    p5.text(enemmyusername, 500, 25);
+    p5.text(enemmyusername, x + GameWidth/16, y);
   p5.text(res2, x, y);
   p5.fill(255, 204, 0);
 }
@@ -211,6 +211,15 @@ const Game = () => {
       
       p5.draw = () => {
         NewValue();
+        // if(!Access)
+        // {
+        //   p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').center();
+        //   p5.textSize(GameWidth/26);
+        //   p5.background(0);
+        //   p5.fill(255,255,255);
+        //   p5.text("please sign-in before playing", GameWidth/2 - GameWidth/4, GameHeight/2 + GameHeight/24);
+        //   return ;
+        // }
         first_conection();
         if(GameStatusChecker(p5))
         {

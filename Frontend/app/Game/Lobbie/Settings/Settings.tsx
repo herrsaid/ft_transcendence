@@ -2,6 +2,7 @@
 
 import "./Settings.css"
 import { socket } from '../../Online/Socket/auto_match_socket'
+import { Dispatch, SetStateAction, useState } from "react";
 
 export let Points: number = 30;
 export let Speed: number = 1;
@@ -9,8 +10,10 @@ export let pause_game: number = 0;
 export let other_tools: number = 0;
 export let host: boolean = false;
 export let Online: number = 1;
-export let myusername: string | null = '';
-export let enemmyusername: string | null = '';
+export let Access: number = 0;
+export let myusername: string | null = sessionStorage.getItem('username');;
+export let enemmyusername: string | null = null;
+
 function change_map_value(param: number)
 {
     for(let a=1;a<4;a++)
@@ -94,22 +97,25 @@ function change_pausegame_value(param: number)
     pause_game = param;
 }
 
-function is_Online_mod(router: any)
+function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<string>>)
 {
     const settings = document.getElementById("Settings")
-    if(Online === 1)
+    if (myusername === null)
+    setWarning("please make sure that you are [log-in]");
+    else if(Online === 1)
     {
+        setWarning('');
         if(settings !== null)
             settings.style.filter = "blur(15px)";
-        socket.emit('join_user','new User join party');
+            socket.emit('join_user','new User join party');
         socket.on('join_user', (data) => {
             console.log(data);
         });
-        myusername = sessionStorage.getItem('username');
         socket.emit('send_data',{Speed,Points,myusername,});
         socket.on('send_data', (username,data) => {
             enemmyusername = username;
             host = data;
+            Access = 1;
             console.log(host);
             socket.disconnect();
             router.replace('/Game//Online/Play');
@@ -141,6 +147,7 @@ function change_pos(param :number)
 
 const PingPongSettings = ({ router }: any) => 
 {
+    const [Warning, setWarning] = useState("");
     return(
         <div id="Settings">
             <p id="Game_title">
@@ -222,7 +229,8 @@ const PingPongSettings = ({ router }: any) =>
                     </p>
                 </button>
             </div>
-                <button onClick={() => {is_Online_mod(router)}} id="play">
+                <div id="warning">{Warning}</div>
+                <button onClick={() => {is_Online_mod(router,setWarning)}} id="play">
                     <p>
                         Play
                     </p>

@@ -13,8 +13,6 @@ export class GameUserSettingsEntity {
   @IsString()
   @IsNotEmpty()
   ID?: string;
-  @IsBoolean()
-  UsedStatus?: boolean;
 }
 
 export class PingPongGamePlayEntity {
