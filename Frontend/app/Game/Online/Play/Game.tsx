@@ -161,10 +161,10 @@ function NewValue()
     // Racket2Ypos = Math.floor((GameHeight/2) - (Racket2Height/2));
     Result1Xpos  = Math.floor(GameWidth/2 - GameWidth/12);
     Result1Ypos = Math.floor(GameHeight/10);
-    Result1Val  = 0;
+    // Result1Val  = 0;
     Result2Xpos  = Math.floor(GameWidth/2 + GameWidth/16);
     Result2Ypos = Math.floor(GameHeight/10);
-    Result2Val  = 0;
+    // Result2Val  = 0;
   }
 }
 
