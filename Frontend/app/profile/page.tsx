@@ -4,10 +4,12 @@ import {Friends, Groups, ProfileAvatar, ProfileInfo, History, Achievevements} fr
 
 import { useState, useEffect } from 'react'
 import Cookies from 'js-cookie';
+import Link from 'next/link';
 
 
 export default  function Profile()
 {
+    const userId = '123';
     const [mydata, setData] = useState([])
     
     useEffect(()=>{
@@ -27,7 +29,7 @@ export default  function Profile()
     sessionStorage.setItem('userId', mydata.id);
     return(
         <div className="profile_container">
-            
+
         <div className="all_profile">
         <div className="side_two">
                         

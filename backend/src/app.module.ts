@@ -22,9 +22,12 @@ import { MulterModule } from '@nestjs/platform-express';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { FriendRequest } from './entities/friend-request.entity';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [GameModule, AuthModule, TypeOrmModule.forRoot(config),
+
+    ConfigModule.forRoot({isGlobal: true }),
    
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..')
