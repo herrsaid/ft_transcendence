@@ -1,9 +1,9 @@
 'use client'
 import { useEffect } from "react";
 import p5 from "p5";
-import './Game.css';
-import { player1, player2 } from '../Socket/start_game_socket';
-import { host, Access, Speed, Points, myusername, enemmyusername} from '../../Lobbie/Settings/Settings';
+import './Stream.css';
+import { player1 } from '../../Game/Online/Socket/start_game_socket';
+import { Access,RoomNumber } from '../page';
 
 let GameWidth: number = 800, GameHeight: number = 400, GameSpeed: number = 4;
 let BallWidth: number = GameWidth/52, BallHeight = GameHeight/26, BallXpos: number = GameWidth/2, BallYpos: number = GameHeight/2;
@@ -11,7 +11,7 @@ let Racket1Width: number = GameWidth/80, Racket1Height =  Math.floor(GameHeight/
 let Racket2Width: number = GameWidth/80, Racket2Height =  Math.floor(GameHeight/6), Racket2Xpos: number = GameWidth-15, Racket2Ypos: number = (GameHeight/2) - (Racket1Height/2);
 let Result1Val: number = 0, Result1Xpos: number = 350, Result1Ypos: number = 25;
 let Result2Val: number = 0, Result2Xpos: number = 450, Result2Ypos: number = 25;
-let first_conection_val:boolean=false, message: string = '';
+let first_conection_val:boolean=false, message: string = '',Player2UserName:string ="",Player1UserName:string ="";
 
 function ConvertServerData(ServerData:number,Mood:number)
 {
@@ -20,12 +20,6 @@ function ConvertServerData(ServerData:number,Mood:number)
   return(Math.floor(((ServerData* 100)/400)* (GameHeight/100)));
 }
 
-function ConvertClientData(ClientData:number,Mood:number)
-{
-  if(Mood)
-    return(Math.floor(((ClientData* 100)/GameWidth)* (800/100)));
-  return(Math.floor(((ClientData* 100)/GameHeight)* (400/100)));
-}
 function Ball(p5: p5, x: number, y: number, w: number, h: number)
 {
   p5.fill(255,255,255);
@@ -53,8 +47,8 @@ function Result1(p5: p5,res1: string, x: number, y: number)
 {
   p5.textSize(GameWidth/26);
   p5.fill('blue');
-  if(myusername)
-    p5.text(myusername, x - GameWidth/5, y);
+  if(Player1UserName)
+    p5.text(Player1UserName, x - GameWidth/5, y);
   p5.text(res1, x, y);
 }
 
@@ -62,83 +56,34 @@ function Result2(p5: p5,res2: string, x: number, y: number)
 {
   p5.textSize(GameWidth/26);
   p5.fill('red');
-  if(enemmyusername)
-    p5.text(enemmyusername, x + GameWidth/16, y);
+  if(Player2UserName)
+    p5.text(Player2UserName, x + GameWidth/16, y);
   p5.text(res2, x, y);
   p5.fill(255, 204, 0);
 }
-function BallAnimation ()
-{
-  if(host)
-  {  
-    player1.on('BallPos',(GameInfo)=>
-    {
-      BallXpos = GameWidth - ConvertServerData(GameInfo.BallXpos,1);
-      BallYpos = GameHeight -  ConvertServerData(GameInfo.BallYpos,0);
-      Result1Val = GameInfo.Result2Val;
-      Result2Val = GameInfo.Result1Val;
-    });
-  }
-  else
-  {
-    player2.on('BallPos',(GameInfo)=>
-    {
-      BallXpos = ConvertServerData(GameInfo.BallXpos,1);
-      BallYpos = ConvertServerData(GameInfo.BallYpos,0);
-      Result1Val = GameInfo.Result1Val;
-      Result2Val = GameInfo.Result2Val;
-    });
-  }
-}
-function Racket1Animation(p5: p5): undefined
-{
-  if((p5.key == 'w' || p5.key == 'ArrowUp') && (Racket1Ypos > 0))
-    Racket1Ypos -= GameSpeed;
-  else if ((p5.key == 's' || p5.key == 'ArrowDown') && (Racket1Ypos < (GameHeight - Racket1Height)))
-    Racket1Ypos += GameSpeed;
-  else if(p5.mouseY > 0 && p5.mouseY < GameHeight && p5.mouseX > 0 && p5.mouseX < GameHeight)
-  {
-    if(p5.mouseY< Racket1Ypos)
-      Racket1Ypos -= GameSpeed;
-    else if(p5.mouseY > (Racket1Ypos + Racket1Height))
-      Racket1Ypos += GameSpeed;
-  }
-  player1.emit('send_player1_data',ConvertClientData(((GameHeight - Racket1Height) - Racket1Ypos),0));
-	player1.on('send_player1_data',(data)=> 
-  {
-    Racket2Ypos =  (GameHeight - Racket2Height) - ConvertServerData(data,0);
-  });
-}
 
-function Racket2Animation(p5: p5): undefined
-{
-  if((p5.key == 'w' || p5.key == 'ArrowUp') && (Racket1Ypos > 0))
-    Racket1Ypos -= GameSpeed;
-  else if ((p5.key == 's' || p5.key == 'ArrowDown') && (Racket1Ypos < (GameHeight - Racket1Height)))
-    Racket1Ypos += GameSpeed;
-  else if(p5.mouseY > 0 && p5.mouseY < GameHeight && p5.mouseX > 0 && p5.mouseX < GameHeight)
-  {
-    if(p5.mouseY< Racket1Ypos)
-      Racket1Ypos -= GameSpeed;
-    else if(p5.mouseY > (Racket1Ypos + Racket1Height))
-      Racket1Ypos += GameSpeed;
-  }
-  player2.emit('send_player2_data', ConvertClientData(Racket1Ypos,0));
-	player2.on('send_player2_data',(data)=> 
-  {
-    Racket2Ypos =  ConvertServerData(data,0);
-  });
-}
 function first_conection()
 {
   if(first_conection_val === false)
 		{
 			first_conection_val = true;
-        if(host)
-				  player1.emit('first_conection',{Speed,Points,myusername});
-        else
-				  player2.emit('first_conection',{Speed,Points,myusername});
+      player1.emit("new_spectator",RoomNumber);
 		}
+}
+
+function GetPlayersData()
+{
+  player1.on('send_players_data',(data)=>
+  {
+    Racket1Ypos = ConvertServerData(data.Racket1Ypos,0);
+    Racket2Ypos = ConvertServerData(data.Racket2Ypos,0);
+    BallXpos = ConvertServerData(data.BallXpos,1);
+    BallYpos = ConvertServerData(data.BallYpos,0);
+    Result1Val = data.Result1Val;
+    Result2Val = data.Result2Val;
+    Player1UserName = data.Player2UserName;
+    Player2UserName = data.Player1UserName;
+  });
 }
 
 function NewValue()
@@ -168,41 +113,6 @@ function NewValue()
   }
 }
 
-function GameStatusChecker(p5: p5): boolean
-{
-  p5.textSize(GameWidth/26);
-  if(host)
-  {
-		player1.on('GameEnd',(data: string)=>
-    {
-      message = data;
-    });
-    if(message !== '')
-    {
-      p5.background(0);
-      p5.fill(255,255,255);
-      p5.text(message, GameWidth/2 - GameWidth/12, GameHeight/2 + GameHeight/12);
-      return false;
-    }
-  }
-  else
-  {
-		player2.on('GameEnd',(data: string)=>
-    {
-      message = data;
-    });
-    if(message !== '')
-    {
-      p5.background(0);
-      p5.fill(255,255,255);
-      p5.text(message, GameWidth/2 - GameWidth/12, GameHeight/2 + GameHeight/12);
-      return false;
-    }
-
-  }
-  return true;
-}
-
 const Game = () => {
   useEffect(() => {
     const sketch = (p5: p5) => {
@@ -210,6 +120,7 @@ const Game = () => {
       };
       
       p5.draw = () => {
+        GetPlayersData();
         NewValue();
         if(!Access)
         {
@@ -221,15 +132,8 @@ const Game = () => {
           return ;
         }
         first_conection();
-        if(GameStatusChecker(p5))
-        {
           p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').center();
           p5.background(25);
-          BallAnimation();
-          if (host)
-          Racket1Animation(p5);
-          else
-          Racket2Animation(p5);
           LineCenter(p5);
           Result1(p5, p5.str(Result1Val),Result1Xpos,Result1Ypos);
           Result2(p5, p5.str(Result2Val),Result2Xpos,Result2Ypos);
@@ -238,10 +142,6 @@ const Game = () => {
           Racket2(p5,Racket2Xpos,Racket2Ypos,Racket2Width,Racket2Height);
         }
       };
-      p5.keyReleased = () =>{
-        p5.key = '';
-      }
-    };
 
     new p5(sketch);
   }, []);

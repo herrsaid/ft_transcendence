@@ -6,7 +6,7 @@ import {
   } from '@nestjs/websockets';
   import { Socket, Server } from 'socket.io';
   import { OBJ } from './play.ball.gateway';
-  export let Player2ID: string = '',speed2: number = 0,points2: number = 0;
+  export let Player2ID: string = '',speed2: number = 0,points2: number = 0,myusername2:string = '';;
   let none: Socket;
   @WebSocketGateway(1341, {
     cors: { origin: '*', credentials: true },
@@ -19,6 +19,7 @@ import {
       Player2ID = client.id;
       speed2 = data.Speed;
       points2 = data.Points;
+      myusername2 = data.myusername;
       console.log(data);
       console.log('Player2Arr_content: ', Player2ID);
     }

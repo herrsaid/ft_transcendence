@@ -1,9 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { Socket } from 'socket.io';
+import { GameStream } from "../methods/Game_stream_attribute";
 
 @Injectable()
-export class GameHead{
+export class GameHead extends GameStream{
     //attributes
+    public GameStreamObj: GameStream[];
     public GameWidth:number;
     public GameHeight:number;
     public GameSpeed:number;
@@ -13,6 +15,8 @@ export class GameHead{
     public Result2Val: number;
     public Player1ID: string;
     public Player2ID: string;
+    public Player1UserName: string;
+    public Player2UserName: string;
     public Player1Client: Socket;
     public Player2Client: Socket;
     public Alpha: number;
@@ -34,6 +38,8 @@ export class GameHead{
     //Constructor
     constructor()
     {
+        super();
+        this.GameStreamObj = [];
         this.GameWidth = 800;
         this.GameHeight = 400;
         this.GameSpeed = 1;

@@ -1,0 +1,39 @@
+#Rooms
+{
+    position: relative;
+    left: 10%;
+    width: 75%;
+    height: 75vw;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+#Room
+{
+    position: relative;
+    top:15%;
+    margin-top: 25px;
+    left: 10%;
+    width: 75%;
+    height: 5vw;
+    background-color: rgb(57, 57, 111,0.4);
+    border-radius: 5px;
+}
+
+#Room p
+{
+    text-align: center;
+
+}
+
+#Watch
+{
+    position:relative;
+    text-align: center;
+    left:90%;
+}
+
+#Watch p
+{
+    
+}
