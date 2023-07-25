@@ -2,12 +2,13 @@ import {
     WebSocketGateway,
     WebSocketServer,
   } from '@nestjs/websockets';
-  import { Socket } from 'socket.io';
   import { Interval } from "@nestjs/schedule";
   import { Player1ID,speed1,points1} from './play.player1.gateway'
   import { Player2ID,speed2,points2} from './play.player2.gateway'
   import { GameHead } from '../game_brain/logic/GameHead';
-  import { OBJ } from '../game_brain/logic/game_server_class';
+  import { GameObj } from '../game_brain/logic/game_server_class';
+
+  export let OBJ = new GameObj();
   @WebSocketGateway(1340, {
     cors: { origin: '*', credentials: true },
   })
@@ -31,15 +32,15 @@ import {
         for(let a = 0 ; a<OBJ.GameHead.length; a++ )
         {
           if(OBJ.GameHead[a].Sleep <= 0 && OBJ.GameHead[a].GameStatus === 1)
-            OBJ.GameHead[a].test();
+          OBJ.GameHead[a].test();
           else
           {
             if(!OBJ.GameHead[a].GameStatus)
             {
               if(OBJ.GameHead[a].Player1ID === '')
-                OBJ.GameHead[a].Player2Client.emit('GameEnd',"YOU WIN");
+              OBJ.GameHead[a].Player2Client.emit('GameEnd',"YOU WIN");
               else if(OBJ.GameHead[a].Player2ID === '')
-                OBJ.GameHead[a].Player1Client.emit('GameEnd',"YOU WIN");
+              OBJ.GameHead[a].Player1Client.emit('GameEnd',"YOU WIN");
               else if(OBJ.GameHead[a].GamePoints >=  OBJ.GameHead[a].Result1Val)
               {
                 OBJ.GameHead[a].Player1Client.emit('GameEnd',"YOU WIN");
@@ -50,22 +51,28 @@ import {
                 OBJ.GameHead[a].Player1Client.emit('GameEnd',"YOU LOSE");
                 OBJ.GameHead[a].Player2Client.emit('GameEnd',"YOU WIN");
               }
-              // OBJ.GameHead = OBJ.GameHead.filter((obj) => obj.Player1ID !== '' &&  obj.Player2ID !== '');
+              console.log('['+OBJ.GameHead.length+']');
+              OBJ.GameHead = OBJ.GameHead.filter((obj) => obj.Player1ID !== '' &&  obj.Player2ID !== '');
+              console.log('['+OBJ.GameHead.length+']');
             }
-            OBJ.GameHead[a].Sleep = OBJ.GameHead[a].Sleep - 16;
+            if(OBJ.GameHead.length)
+              OBJ.GameHead[a].Sleep = OBJ.GameHead[a].Sleep - 16;
           }
-            const Gameinfo = 
+          if(OBJ.GameHead.length)
           {
-            BallXpos: OBJ.GameHead[a].BallXpos,
-            BallYpos: OBJ.GameHead[a].BallYpos,
-            Result1Val: OBJ.GameHead[a].Result1Val,
-            Result2Val: OBJ.GameHead[a].Result2Val,
-          }
-          if (OBJ.GameHead[a].Player1Client != undefined) {
-            OBJ.GameHead[a].Player1Client.emit('BallPos', Gameinfo);
-          }
-          if (OBJ.GameHead[a].Player2Client != undefined) {
-            OBJ.GameHead[a].Player2Client.emit('BallPos', Gameinfo);
+              const Gameinfo = 
+            {
+              BallXpos: OBJ.GameHead[a].BallXpos,
+              BallYpos: OBJ.GameHead[a].BallYpos,
+              Result1Val: OBJ.GameHead[a].Result1Val,
+              Result2Val: OBJ.GameHead[a].Result2Val,
+            }
+            if (OBJ.GameHead[a].Player1Client != undefined) {
+              OBJ.GameHead[a].Player1Client.emit('BallPos', Gameinfo);
+            }
+            if (OBJ.GameHead[a].Player2Client != undefined) {
+              OBJ.GameHead[a].Player2Client.emit('BallPos', Gameinfo);
+            }
           }
         }
       }

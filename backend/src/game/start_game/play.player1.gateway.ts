@@ -5,7 +5,7 @@ import {
     WebSocketServer,
   } from '@nestjs/websockets';
   import { Socket, Server } from 'socket.io';
-  import { OBJ } from '../game_brain/logic/game_server_class';
+  import { OBJ } from './play.ball.gateway';
   export let Player1ID: string = '',speed1: number = 0,points1: number = 0;
   let none: Socket;
   @WebSocketGateway(1340, {

@@ -11,7 +11,7 @@ export let other_tools: number = 0;
 export let host: boolean = false;
 export let Online: number = 1;
 export let Access: number = 0;
-export let myusername: string | null = sessionStorage.getItem('username');;
+export let myusername: string | null = sessionStorage.getItem('username');
 export let enemmyusername: string | null = null;
 
 function change_map_value(param: number)
