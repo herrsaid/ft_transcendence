@@ -24,10 +24,13 @@ export class WebsockGateway {
       console.log(this.online_users)
     }catch(error){
       console.log('l9lawi ladkhlti')
-      socket.disconnect();
+      socket.disconnect();   
     }
   }
-
+  // handleDisconnection()
+  // {
+  //   console.log(socket.id)
+  // }
   getSocketId(dst_id: number)
   {
     for (let i = 0; i < this.online_users.length; i++)
@@ -47,6 +50,7 @@ export class WebsockGateway {
       console.log('user not online');
     }
     client.broadcast.to(dst).emit('message', payload.content)
+    // client.broadcast.emit('message', payload);
     return 'Hello world!';
   }
 }
