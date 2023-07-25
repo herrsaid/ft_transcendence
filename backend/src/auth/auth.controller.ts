@@ -2,10 +2,11 @@ import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Request, Response } from 'express';
 import { AuthService } from './auth.service';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authservice: AuthService) {}
+  constructor(private readonly authservice: AuthService, private readonly configService: ConfigService) {}
 
 
   
@@ -29,7 +30,10 @@ export class AuthController {
             secure: false,
             expires: new Date(Date.now() + 1 * 24 * 600 * 10000),
     });
-    res.redirect('http://localhost:3000/profile');
+
+    const front_url = this.configService.get<string>('FRONT_IP');
+    res.redirect('http://localhost:3000/profile')
+    // res.redirect(`${front_url}/profile`);
       return this.authservice.loginIntra42(req);
   }
 }

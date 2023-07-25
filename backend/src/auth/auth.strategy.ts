@@ -3,13 +3,14 @@ import { Injectable } from '@nestjs/common';
 import { Strategy } from 'passport-42';
 import { UserService } from 'src/user/user.service';
 import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthStrategy extends PassportStrategy(Strategy, '42') {
-  constructor(private readonly UserService:UserService, private jwtService: JwtService) {
+  constructor(private readonly UserService:UserService, private jwtService: JwtService, private readonly configService: ConfigService) {
     super({
-      clientID: 'u-s4t2ud-c23c837b8aa6b7a4f906cc1ec6663ee2f70ab478c53bd43763996d7c479c8d26',
-      clientSecret: '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',
+      clientID: configService.get<string>('CLIENT_ID_42'),
+      clientSecret: configService.get<string>('CLIENT_SECRET_42'),
       callbackURL: 'http://localhost:1337/auth/42/callback',
       
       

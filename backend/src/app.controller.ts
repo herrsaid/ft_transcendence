@@ -3,11 +3,12 @@ import { AppService } from './app.service';
 
 import {AuthGuard} from "@nestjs/passport"
 import { Request, Response } from 'express';
+import { ConfigService } from '@nestjs/config';
 
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService, private readonly configService: ConfigService) {}
 
   @Get()
   @UseGuards(AuthGuard('google'))
@@ -28,6 +29,8 @@ export class AppController {
             secure: false,
             expires: new Date(Date.now() + 1 * 24 * 600 * 10000),
     });
+    const front_url = this.configService.get<string>('FRONT_IP');
+    // res.redirect(`${front_url}/profile`);
     res.redirect('http://localhost:3000/profile');
     
     return this.appService.googleLogin(req)

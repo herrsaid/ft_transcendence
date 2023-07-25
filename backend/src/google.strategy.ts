@@ -3,15 +3,16 @@ import { Strategy, VerifyCallback } from "passport-google-oauth20"
 import { Injectable, Res } from "@nestjs/common";
 import { UserService } from "./user/user.service";
 import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from "@nestjs/config";
 
 @Injectable()
 
 export class GoogleStrategy extends PassportStrategy(Strategy, 'google')
 {
-    constructor(private readonly UserService:UserService, private jwtService: JwtService){
+    constructor(private readonly UserService:UserService, private jwtService: JwtService, private readonly configService: ConfigService){
         super({
-            clientID: '601566209551-rrmmg509qmjtgrmmgei05kqs9a2jjs6j.apps.googleusercontent.com',
-            clientSecret: "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",
+            clientID: configService.get<string>('CLIENT_ID'),
+            clientSecret: configService.get<string>('CLIENT_SECRET'),
             callbackURL: "http://localhost:1337/auth/google/callback",
             scope: ['email', 'profile']
         });
