@@ -296,6 +296,25 @@
     }
 }
 
+@keyframes Animation2 {
+    0%
+    {
+        left:25%;
+    }
+    25%
+    {
+        left:24%;
+    }
+    75%
+    {
+        left:26%;
+    }
+    100%
+    {
+        left:25%;
+    }
+}
+
 #warning
 {
     position: relative;
@@ -305,5 +324,4 @@
     font-size: 1vw;
     top:62.5%;
     left: 25%;
-    animation: Animation 1s 7;
 }

@@ -100,8 +100,17 @@ function change_pausegame_value(param: number)
 function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<string>>)
 {
     const settings = document.getElementById("Settings")
-    if (myusername === null)
-    setWarning("please make sure that you are [log-in]");
+    if (myusername === null && Online === 1)
+    {
+        setWarning("please make sure that you are [log-in]");
+        const Warn = document.getElementById("warning");
+        if(Warn)
+        {
+            Warn.style.animation = "none";
+            void Warn.offsetHeight;
+            Warn.style.animation = "Animation2 0.2s 3";
+        }
+    }
     else if(Online === 1)
     {
         setWarning('');
