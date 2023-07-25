@@ -3,7 +3,7 @@ import ProfileInfoNav from "./ProfileInfoNav";
 import "../profile.css"
 
 import {FaPen, FaUpload} from 'react-icons/fa'
-
+import Cookies from 'js-cookie';
 
 
 interface props{
@@ -28,7 +28,10 @@ data.append('file', avatar.files[0])
 data.append('user', 'hubot')
 
 fetch('http://localhost:1337/user/edit/avatar', {
-  method: 'POST',
+  method: 'PUT',
+  headers: {
+    Authorization: `Bearer ${Cookies.get('access_token')}`,
+ },
   body: data
 })
   };

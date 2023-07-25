@@ -12,3 +12,17 @@ export class CreateUserDto{
     profile_img?:string;
 
 }
+
+
+export class updateUsername{
+
+    @IsString()
+    username:string;
+}
+
+
+export class updateAvatar{
+
+    @IsString()
+    profile_img:string;
+}

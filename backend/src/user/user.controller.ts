@@ -1,5 +1,5 @@
 import { Body, Controller, FileTypeValidator, Get, MaxFileSizeValidator, Param, ParseFilePipe, Post, Put, Req, Request, Res, UnauthorizedException, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
-import { CreateUserDto } from './dto/createUserDto';
+import { CreateUserDto, updateUsername } from './dto/createUserDto';
 import { UserService } from './user.service';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { JwtService } from '@nestjs/jwt';
@@ -98,7 +98,7 @@ export class UserController {
 
 
 
-    @Post('edit/avatar')
+    @Put('edit/avatar')
         @UseInterceptors(FileInterceptor('file',
         {
             storage: diskStorage({
@@ -109,7 +109,7 @@ export class UserController {
               })
         }
         ))
-        async uploadFile(@UploadedFile(
+        async uploadFile(@Request() req, @UploadedFile(
             new ParseFilePipe({
                 validators: [
                     new FileTypeValidator({ fileType: '.(png|jpeg|jpg)' }),
@@ -121,13 +121,20 @@ export class UserController {
         
         {
 
-        return {
-            statusCode: 200,
-            data: file.path,
-          };
+        const tocken_part = req.headers['authorization'].split(' ')
+        const decodedJwtAccessToken = this.jwtService.decode(tocken_part[1]);
+        const id = decodedJwtAccessToken['id'];
+
+        return this.userService.updateAvatar(id, {"profile_img" : file.path});
     }
 
-
+    @UseGuards(AuthGuard)
+    @Put('edit/:id')
+    updateUsername(@Param('id') stringId:string, @Body() updateUsername: updateUsername)
+    {
+        const id = parseInt(stringId);
+        return this.userService.updateUsername(id, updateUsername);
+    }
 
     @Get(':id')
     findOne(@Param('id') id:number)

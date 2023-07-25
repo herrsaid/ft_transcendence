@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/createUserDto';
+import { CreateUserDto, updateAvatar, updateUsername } from './dto/createUserDto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
 import { Not, Repository } from 'typeorm';
@@ -46,6 +46,22 @@ export class UserService {
     async create(createUserDto:CreateUserDto)
     {
         const user = await this.userRepo.create(createUserDto);
+        return await this.userRepo.save(user);
+    }
+
+
+    async updateUsername(id:number, updateUsername: updateUsername)
+    {
+        const user = await this.userRepo.findOne({where:{id:id}});
+        Object.assign(user, updateUsername);
+        return await this.userRepo.save(user);
+    }
+
+
+    async updateAvatar(id:number, updateAvatar: updateAvatar)
+    {
+        const user = await this.userRepo.findOne({where:{id:id}});
+        Object.assign(user, updateAvatar);
         return await this.userRepo.save(user);
     }
 
