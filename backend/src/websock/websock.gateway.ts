@@ -4,6 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { jwtConstants } from '../auth/constants';
 import { subscribe } from 'diagnostics_channel';
 import { PassThrough } from 'stream';
+import { Index } from 'typeorm';
 const jwt = require('jsonwebtoken');
 
 @WebSocketGateway(3030, {cors:{
@@ -15,22 +16,24 @@ export class WebsockGateway {
   server: Server;
 
   online_users = [];
+  user_id:number;
   handleConnection(socket: Socket)
   {
     try{
       const token = socket.handshake.headers.authorization;
       const payload = jwt.verify(token, 'complexkey3884-asgfgsd,s33003400mmdma-434-4das111!!!!!+++')
+      this.user_id = payload.id;
       this.online_users.push({socket_id:socket.id,user_id:payload.id})
-      console.log(this.online_users)
+      console.log(this.online_users, this.online_users.length)
     }catch(error){
       console.log('l9lawi ladkhlti')
       socket.disconnect();   
     }
   }
-  // handleDisconnection()
-  // {
-  //   console.log(socket.id)
-  // }
+  handleDisconnect(socket: Socket)
+  {
+    this.online_users.splice(this.online_users.findIndex(obj => obj.socket_id = socket.id), 1);
+  }
   getSocketId(dst_id: number)
   {
     for (let i = 0; i < this.online_users.length; i++)
