@@ -95,24 +95,31 @@ function Chat()
     let msg = messages
     const send = (e: any) => {
         e.preventDefault();
-        console.log(val);
-        socket.emit('message', {src:sessionStorage.getItem('userId'),dst:con.id, content:val});
-        msg.push({key:mkey,content:val, class:'me'})
-        setMkey(mkey + 1)
-        setMssages(msg);
-        console.log(con.id);
-        setValue('');
+        const env = process.env.NEXT_PUBLIC_SOCKET;
+        console.log(env);
+        if (val != '')
+        {
+            socket.emit('message', {src:sessionStorage.getItem('userId'),dst:con.id, content:val});
+            msg.push({key:mkey,content:val, class:'me'})
+            setMkey(mkey + 1)
+            setMssages(msg);
+            console.log(con.id);
+            setValue('');
+        }
     };
     const [rerender, setRerender] = useState(false);
     useEffect (() =>{
         socket.on('message', (data:any) => {
-            msg.push({key:mkey,content:data, class:'you'})
-            setMkey(mkey + 1)
-            setRerender(true);
-            setMssages(msg)
+            if (data != '')
+            {
+                msg.push({key:mkey,content:data, class:'you'})
+                setMkey(mkey + 1)
+                setRerender(true);
+                setMssages(msg)
+            }
         })
     }, []);
-    console.count('times')
+    console.count(process.env.SOCKET_URL)
     return(
         <div className='chat-box'>
             <div className='chat-info'>
