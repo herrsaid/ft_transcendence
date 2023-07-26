@@ -16,13 +16,11 @@ export class WebsockGateway {
   server: Server;
 
   online_users = [];
-  user_id:number;
   handleConnection(socket: Socket)
   {
     try{
       const token = socket.handshake.headers.authorization;
       const payload = jwt.verify(token, 'complexkey3884-asgfgsd,s33003400mmdma-434-4das111!!!!!+++')
-      this.user_id = payload.id;
       this.online_users.push({socket_id:socket.id,user_id:payload.id})
       console.log(this.online_users, this.online_users.length)
     }catch(error){
@@ -32,7 +30,8 @@ export class WebsockGateway {
   }
   handleDisconnect(socket: Socket)
   {
-    this.online_users.splice(this.online_users.findIndex(obj => obj.socket_id = socket.id), 1);
+    // console.log(socket.id, this.online_users.findIndex(obj => obj.socket_id == socket.id))
+    this.online_users.splice(this.online_users.findIndex(obj => obj.socket_id == socket.id), 1);
   }
   getSocketId(dst_id: number)
   {
