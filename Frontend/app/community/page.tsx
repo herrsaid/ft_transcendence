@@ -91,33 +91,27 @@ function Chat()
     const inputRef = useRef(null);
     const [val, setValue] = useState('')
     const [messages, setMssages] = useState([]);
+    const [mkey, setMkey] = useState(0);
     let msg = messages
     const send = (e: any) => {
         e.preventDefault();
         console.log(val);
         socket.emit('message', {src:sessionStorage.getItem('userId'),dst:con.id, content:val});
-        msg.push({content:val, class:'me'})
+        msg.push({key:mkey,content:val, class:'me'})
+        setMkey(mkey + 1)
         setMssages(msg);
         console.log(con.id);
         setValue('');
-        con.setId(7);
     };
-    const callback = (data:any) =>{
-        setMssages(data);
-    }
+    const [rerender, setRerender] = useState(false);
     useEffect (() =>{
         socket.on('message', (data:any) => {
-            console.log(messages);
-            msg.push({content:data, class:'you'})
-            callback(msg)
+            msg.push({key:mkey,content:data, class:'you'})
+            setMkey(mkey + 1)
+            setRerender(true);
+            setMssages(msg)
         })
     }, []);
-    // if (connected)
-    // {
-    //     socket.on("message", (data) => {
-    //         console.log(data);
-    //     })
-    // }
     console.count('times')
     return(
         <div className='chat-box'>
@@ -132,7 +126,7 @@ function Chat()
             </div>
             <div className='chat-messages'>
                 <div className='messagat'>
-                    {messages.map((data) => {return (<Message class={data.class} content={data.content} />)})}
+                    {messages.map((data) => {return (<Message key={data.key} class={data.class} content={data.content} />)})}
                 </div>
             <div className='chat-send-message'>
                 <form onSubmit={send}>
