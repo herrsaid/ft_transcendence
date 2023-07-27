@@ -51,7 +51,7 @@ export class WebsockGateway {
     {
       console.log('user not online');
     }
-    client.broadcast.to(dst).emit('message', payload.content)
+    client.broadcast.to(dst).emit('message', payload)
     // client.broadcast.emit('message', payload);
     return 'Hello world!';
   }

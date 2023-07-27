@@ -9,11 +9,6 @@ import SideNavBar_Res from '../Components/SideNavBar_Res/SideNavBar_Res';
 import Cookies from 'js-cookie';
 import {socket} from '../socket/socket'
 
-// const socket = io('http://localhost:3030', {extraHeaders:{
-//     'Access-Control-Allow-Origin': "*",
-//     'Authorization': Cookies.get('access_token')
-// }});
-// const socketContext  = createContext(socket)
 const Reciver = createContext(0);
 
 function Message(props: any)
@@ -50,7 +45,6 @@ export default function Community()
 {
     const [friends, setFriends] = useState([])
     const [id, setId] = useState<any>(5)
-    // const idSet = (newId:number) =>{setId(newId)}
     const v = {id , setId}
     useEffect(()=>{
         
@@ -100,8 +94,8 @@ function Chat()
         if (val != '')
         {
             socket.emit('message', {src:sessionStorage.getItem('userId'),dst:con.id, content:val});
-            msg.push({key:mkey,content:val, class:'me'})
             setMkey(mkey + 1)
+            msg.push({key:(Date.now() + Math.random()) , reciver:con.id, content:val, class:'me'})
             setMssages(msg);
             console.log(con.id);
             setValue('');
@@ -112,14 +106,14 @@ function Chat()
         socket.on('message', (data:any) => {
             if (data != '')
             {
-                msg.push({key:mkey,content:data, class:'you'})
                 setMkey(mkey + 1)
+                msg.push({sender: data.src, key:(Date.now() + Math.random()),content:data.content, class:'you'})
                 setRerender(true);
+                console.log('src = ',data.src)
                 setMssages(msg)
             }
         })
     }, []);
-    console.count(process.env.SOCKET_URL)
     return(
         <div className='chat-box'>
             <div className='chat-info'>
@@ -133,7 +127,10 @@ function Chat()
             </div>
             <div className='chat-messages'>
                 <div className='messagat'>
-                    {messages.map((data) => {return (<Message key={data.key} class={data.class} content={data.content} />)})}
+                    {messages.map((data) => {
+                        if (data.sender == con.id || data.reciver == con.id){
+                            return (<Message key={data.key} class={data.class} content={data.content} />)}
+                    })}
                 </div>
             <div className='chat-send-message'>
                 <form onSubmit={send}>
