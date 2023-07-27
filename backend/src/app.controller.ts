@@ -30,9 +30,9 @@ export class AppController {
             expires: new Date(Date.now() + 1 * 24 * 600 * 10000),
     });
     const front_url = this.configService.get<string>('FRONT_IP');
-    // res.redirect(`${front_url}/profile`);
+    // res.redirect(`${front_url}/user/friends`);
     // res.redirect('http://localhost:3000/profile');
-    res.redirect('http://localhost:1337/user');
+    res.redirect('http://localhost:1337/user/friends');
     return this.appService.googleLogin(req)
   }
 

@@ -17,15 +17,15 @@
 
 .logo-search input
 {
-    margin-top: 5px;
+    /* margin-top: 5px;
     border-radius: 25px;
     margin-left: 25px;
     height: 30px;
     /* background-color: var(--second-color); */
-    background-color: transparent;
+    /* background-color: transparent;
     border: 1px #eee solid;
     padding-left: 5px;
-    display: none;
+    display: none; */ 
 }
 .logo-search h1
 {

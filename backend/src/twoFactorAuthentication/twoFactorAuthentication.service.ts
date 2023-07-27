@@ -15,8 +15,6 @@ export class TwoFactorAuthenticationService {
     async generateTwoFactorAuthenticationSecret(user: User) {
     const secret = authenticator.generateSecret();
  
-
-    // console.log(user);
     console.log(secret)
 
     const otpauthUrl = authenticator.keyuri(user.email, this.configService.get('TWO_FACTOR_AUTHENTICATION_APP_NAME'), secret);
@@ -56,7 +54,7 @@ export class TwoFactorAuthenticationService {
     //   token: twoFactorAuthenticationCode,
     //   secret: user.twoFactorAuthenticationSecret
     // })
-    
+
     if (twoFactorAuthenticationCode === user.twoFactorAuthenticationSecret)
         return true;
     return false;

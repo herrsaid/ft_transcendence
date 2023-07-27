@@ -2,6 +2,7 @@
 import './Header.css'
 import { useState, useEffect } from 'react'
 import Link from 'next/link';
+import SearchInput from './SearchInput';
 
 function Login()
 {
@@ -32,9 +33,9 @@ export default  function Header()
     useEffect(()=>{setLogin(<Login></Login>)},[])
     return(
         <div className="header">
-            <div className='logo-search'>
+            <div className='flex flex-col'>
                 <h1>42PONG</h1>
-                <input type="text" />
+                <SearchInput/>
             </div>
             <div className='profile'>
                 <div className='profile-img'>
