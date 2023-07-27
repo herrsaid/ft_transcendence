@@ -85,7 +85,6 @@ function Chat()
     const inputRef = useRef(null);
     const [val, setValue] = useState('')
     const [messages, setMssages] = useState([]);
-    const [mkey, setMkey] = useState(0);
     let msg = messages
     const send = (e: any) => {
         e.preventDefault();
@@ -94,26 +93,24 @@ function Chat()
         if (val != '')
         {
             socket.emit('message', {src:sessionStorage.getItem('userId'),dst:con.id, content:val});
-            setMkey(mkey + 1)
             msg.push({key:(Date.now() + Math.random()) , reciver:con.id, content:val, class:'me'})
             setMssages(msg);
             console.log(con.id);
             setValue('');
         }
     };
-    const [rerender, setRerender] = useState(false);
+    const [rerender, setRerender] = useState(0);
     useEffect (() =>{
         socket.on('message', (data:any) => {
             if (data != '')
             {
-                setMkey(mkey + 1)
+                setRerender(0)
                 msg.push({sender: data.src, key:(Date.now() + Math.random()),content:data.content, class:'you'})
-                setRerender(true);
-                console.log('src = ',data.src)
+                console.log(rerender)
                 setMssages(msg)
             }
         })
-    }, []);
+    }, [rerender]);
     return(
         <div className='chat-box'>
             <div className='chat-info'>
