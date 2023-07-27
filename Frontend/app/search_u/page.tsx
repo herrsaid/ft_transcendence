@@ -5,18 +5,21 @@ import { useState } from "react";
 import Cookies from 'js-cookie';
 
 import useSWR from "swr"
+import OneFriend from "../profile/components/OneFriend";
 
 
 const fetchUsers = async (url:string) => {
     const res = await fetch(url, {
             method: 'GET',
             headers: {
-                Authorization: `Bearer ${Cookies.get('access_token')}`,
-             },
-          }).then((response) => response.json())
-          .then(data => data)
+                Authorization: `Bearer ${Cookies.get('access_token')}`
+             }});
 
     console.log(res)
+    if (!res.ok)
+    {
+        throw new Error("failed to fetch users");
+    }
     return res.json();
 }
 
@@ -32,11 +35,21 @@ export default function SearchPage()
     );
 
     
-    // console.log(data);
+    console.log(data);
+
+    if (!data)
+        return null;
     return(
        <>
        <div>
-       SearchPage
+       {data.map(user => {
+        return <OneFriend key={user.id} 
+        image={user.profile_img}  
+        username={user.username} 
+        status={user.status}
+        id={user.id}
+        />
+    })}
 
        </div>
        </>
