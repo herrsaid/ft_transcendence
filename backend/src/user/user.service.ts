@@ -14,6 +14,22 @@ export class UserService {
     @InjectRepository(FriendRequest) private readonly FriendRequestRepo : Repository<FriendRequest>)
     {}
 
+
+
+
+    async setTwoFactorAuthenticationSecret(secret: string, userId: number) {
+        return this.userRepo.update(userId, {
+          twoFactorAuthenticationSecret: secret
+        });
+    }
+
+
+    async turnOnTwoFactorAuthentication(userId: number) {
+        return this.userRepo.update(userId, {
+          isTwoFactorAuthenticationEnabled: true
+        });
+    }
+
     async findOne(id:number)
     {
         return await this.userRepo.findOne({where:{id:id}})

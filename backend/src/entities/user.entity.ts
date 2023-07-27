@@ -15,6 +15,14 @@ export class User{
     @Column({unique: true, nullable: false})
     email:string;
 
+    @Column({ nullable: true })
+    twoFactorAuthenticationSecret?: string;
+
+
+    @Column({ default: false })
+    isTwoFactorAuthenticationEnabled: boolean;
+
+    
     @Column({default:"/avatar.png"})
     profile_img:string;
 

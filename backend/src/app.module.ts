@@ -23,6 +23,8 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { FriendRequest } from './entities/friend-request.entity';
 import { ConfigModule } from '@nestjs/config';
+import { TwoFactorAuthenticationController } from './twoFactorAuthentication/twoFactorAuthentication.controller';
+import { TwoFactorAuthenticationService } from './twoFactorAuthentication/twoFactorAuthentication.service';
 
 @Module({
   imports: [GameModule, AuthModule, TypeOrmModule.forRoot(config),
@@ -32,13 +34,15 @@ import { ConfigModule } from '@nestjs/config';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..')
     }),
-    UserModule, TypeOrmModule.forFeature([User,Achievevement,FriendRequest]), JwtModule.register({
+    UserModule,
+  
+    TypeOrmModule.forFeature([User,Achievevement,FriendRequest]), JwtModule.register({
     global: true,
     secret: jwtConstants.secret,
     signOptions: { expiresIn: '30d' },
    
   }),],
-  controllers: [AppController, TestController, AuthController, UserController],
+  controllers: [AppController, TestController, AuthController, UserController, TwoFactorAuthenticationController],
 
   providers: [
     AppService,
@@ -47,6 +51,7 @@ import { ConfigModule } from '@nestjs/config';
     AuthStrategy,
     GoogleStrategy,
     UserService,
+    TwoFactorAuthenticationService,
   ],
 })
 export class AppModule {}
