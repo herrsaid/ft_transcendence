@@ -31,8 +31,8 @@ export class AppController {
     });
     const front_url = this.configService.get<string>('FRONT_IP');
     // res.redirect(`${front_url}/user/friends`);
-    // res.redirect('http://localhost:3000/profile');
-    res.redirect('http://localhost:1337/user/friends');
+    res.redirect('http://localhost:3000/profile');
+    // res.redirect('http://localhost:1337/user/friends');
     return this.appService.googleLogin(req)
   }
 
