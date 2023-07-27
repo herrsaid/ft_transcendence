@@ -42,6 +42,8 @@ export default function SearchPage()
     return(
        <>
        <div>
+       <div className="Friends">
+            
        {data.map(user => {
         return <OneFriend key={user.id} 
         image={user.profile_img}  
@@ -50,7 +52,7 @@ export default function SearchPage()
         id={user.id}
         />
     })}
-
+</div>
        </div>
        </>
     );
