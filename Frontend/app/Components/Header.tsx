@@ -33,7 +33,7 @@ export default  function Header()
     useEffect(()=>{setLogin(<Login></Login>)},[])
     return(
         <div className="header">
-            <div className='flex flex-col items-center'>
+            <div className='logo-search'>
                 <h1>42PONG</h1>
                 <SearchInput/>
             </div>
