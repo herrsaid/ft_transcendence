@@ -1,5 +1,5 @@
-import { Body, Controller, FileTypeValidator, Get, MaxFileSizeValidator, Param, ParseFilePipe, Post, Put, Req, Request, Res, UnauthorizedException, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
-import { CreateUserDto, updateUsername } from './dto/createUserDto';
+import { Body, Controller, FileTypeValidator, Get, MaxFileSizeValidator, Param, ParseFilePipe, Post, Put, Query, Req, Request, Res, UnauthorizedException, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { CreateUserDto, filterUsersdto, updateUsername } from './dto/createUserDto';
 import { UserService } from './user.service';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { JwtService } from '@nestjs/jwt';
@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { FriendRequestStatus, FriendRequest_Interface } from 'src/entities/friend-request.interface';
 
 
+
 @Controller('user')
 export class UserController {
     
@@ -16,6 +17,28 @@ export class UserController {
     {}
     
     
+
+
+
+
+
+    @UseGuards(AuthGuard)
+    @Get('search')
+    async getUsersSearch(@Req() req)
+    {
+        const builder = await this.userService.getUsersSearch('user');
+
+
+        if (req.query.q)
+        {
+            builder.where("user.username LIKE :q ", {q : `%${req.query.q}%`})
+        }
+        return await builder.getMany();
+        
+    }
+
+
+
     @UseGuards(AuthGuard)
     @Get('me')
     profileInfo(@Req() req)

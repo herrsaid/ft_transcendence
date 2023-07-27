@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto, updateAvatar, updateUsername } from './dto/createUserDto';
+import { CreateUserDto, filterUsersdto, updateAvatar, updateUsername } from './dto/createUserDto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user.entity';
 import { Not, Repository } from 'typeorm';
@@ -16,6 +16,12 @@ export class UserService {
 
 
 
+
+
+    async getUsersSearch(alias:string)
+    {
+        return this.userRepo.createQueryBuilder(alias);
+    }
 
     async setTwoFactorAuthenticationSecret(secret: string, userId: number) {
         return this.userRepo.update(userId, {

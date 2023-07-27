@@ -26,3 +26,9 @@ export class updateAvatar{
     @IsString()
     profile_img:string;
 }
+
+export class filterUsersdto{
+
+    @IsString()
+    search:string;
+}
