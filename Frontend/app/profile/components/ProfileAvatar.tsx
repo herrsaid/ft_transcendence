@@ -16,29 +16,24 @@ interface props{
 const ProfileAvatar = (props:props) => {
 
 
-    
 
-
-const upload = () => {
+        const upload = () => {
    
-    var avatar = document.querySelector('input[type="file"]')
+            var avatar = document.querySelector('input[type="file"]')
 
-var data = new FormData()
-data.append('file', avatar.files[0])
-data.append('user', 'hubot')
+            var data = new FormData()
+            data.append('file', avatar.files[0])
+            data.append('user', 'hubot')
 
-fetch('http://localhost:1337/user/edit/avatar', {
-  method: 'PUT',
-  headers: {
-    Authorization: `Bearer ${Cookies.get('access_token')}`,
- },
-  body: data
-})
-  };
+            fetch('http://localhost:1337/user/edit/avatar', {
+                method: 'PUT',
+                headers: {
+                Authorization: `Bearer ${Cookies.get('access_token')}`,
+                    },
+                body: data
+            })
+            };
 
-
-
-const avatar = document.getElementById('avatar');
     return (
         <div>
 

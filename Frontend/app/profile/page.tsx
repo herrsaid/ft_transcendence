@@ -2,31 +2,45 @@
 import './profile.css'
 import {Friends, Groups, ProfileAvatar, ProfileInfo, History, Achievevements} from './index'
 
-import { useState, useEffect } from 'react'
 import Cookies from 'js-cookie';
-import Link from 'next/link';
+import useSWR from "swr"
+import { useRouter } from 'next/navigation';
 
 
 export default  function Profile()
 {
-    const userId = '123';
-    const [mydata, setData] = useState([])
-    
-    useEffect(()=>{
-    
-        fetch("http://localhost:1337/user/me", {
+    const router = useRouter();
+
+    const fetchProfileData = async (url:string) => {
+        const res = await fetch(url, {
             method: 'GET',
-            headers:{
+            headers: {
                 Authorization: `Bearer ${Cookies.get('access_token')}`
-        }
-            
-          }).then((response) => response.json())
-          .then(data => setData(data))  
-    },[]);
-    sessionStorage.setItem('isLoget', 'true');
-    sessionStorage.setItem('avatar', mydata.profile_img);
-    sessionStorage.setItem('username', mydata.username);
-    sessionStorage.setItem('userId', mydata.id);
+             }});
+
+    if (res.status == 401)
+        router.replace("/")
+             
+    if (!res.ok)
+        throw new Error("failed to fetch users");
+    return res.json();
+}
+
+
+    const {data, isLoading} = useSWR(`http://localhost:1337/user/me`,
+    fetchProfileData
+    );
+
+    let stored_data = ['true', data?.profile_img, data?.username, data?.id]
+    sessionStorage.setItem('isLoget', stored_data[0]);
+    sessionStorage.setItem('avatar', stored_data[1] );
+    sessionStorage.setItem('username', stored_data[2]);
+    sessionStorage.setItem('userId', stored_data[3]);
+
+
+    if (!data)
+        return null;
+    
     return(
         <div className="profile_container">
 
@@ -35,9 +49,9 @@ export default  function Profile()
                         
                         <div className="side_two_info">
 
-                            <ProfileAvatar  img={mydata.profile_img}   username={mydata.username}/>
-                            <ProfileInfo location={mydata.location} totalgame={mydata.totalgame}
-                            loss={mydata.loss} wins={mydata.wins} rank={mydata.rank}
+                            <ProfileAvatar  img={data.profile_img}   username={data.username}/>
+                            <ProfileInfo location={data.location} totalgame={data.totalgame}
+                            loss={data.loss} wins={data.wins} rank={data.rank}
                             
                             />
 
