@@ -1,19 +1,16 @@
 import {
     ClassSerializerInterceptor,
     Controller,
-    Header,
     Post,
     UseInterceptors,
     Res,
     UseGuards,
     Req,
-    Get,
     HttpCode,
     Body,
     UnauthorizedException,
   } from '@nestjs/common';
   import { TwoFactorAuthenticationService } from './twoFactorAuthentication.service';
-  import { Response } from 'express';
 import RequestWithUser from './requestWithUser.interface';
 import { AuthGuard } from 'src/auth/guard/auth.guard';
 import { UserService } from 'src/user/user.service';

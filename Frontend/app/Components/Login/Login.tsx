@@ -26,7 +26,7 @@ export default function Welcome()
                         <button className="intra_button">Sign in with 42</button>
                     </Link>
 
-                    <Link href="http://localhost:1337">
+                    <Link href="http://localhost:1337/auth/google">
                         <button>Sign in with Google</button>
                     </Link>
                     

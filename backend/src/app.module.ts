@@ -26,6 +26,8 @@ import { ConfigModule } from '@nestjs/config';
 import { TwoFactorAuthenticationController } from './twoFactorAuthentication/twoFactorAuthentication.controller';
 import { TwoFactorAuthenticationService } from './twoFactorAuthentication/twoFactorAuthentication.service';
 import { AuthenticationService } from './twoFactorAuthentication/authentication.service';
+import { GoogleAuthController } from './auth/google/googleauth.controller';
+import { GoogleAuthService } from './auth/google/googleauth.service';
 
 @Module({
   imports: [GameModule, AuthModule, TypeOrmModule.forRoot(config),
@@ -43,7 +45,7 @@ import { AuthenticationService } from './twoFactorAuthentication/authentication.
     signOptions: { expiresIn: '30d' },
    
   }),],
-  controllers: [AppController, TestController, AuthController, UserController, TwoFactorAuthenticationController],
+  controllers: [AppController, TestController, AuthController, UserController, TwoFactorAuthenticationController, GoogleAuthController],
 
   providers: [
     AppService,
@@ -53,7 +55,8 @@ import { AuthenticationService } from './twoFactorAuthentication/authentication.
     GoogleStrategy,
     UserService,
     TwoFactorAuthenticationService,
-    AuthenticationService
+    AuthenticationService,
+    GoogleAuthService
   ],
 })
 export class AppModule {}
