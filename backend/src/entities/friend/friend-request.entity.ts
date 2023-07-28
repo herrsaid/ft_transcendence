@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "../user/user.entity";
-import { FriendRequest_Status } from "./friend-request.interface";
+import { FriendRequest_Status } from "./interfaces/friend-request.interface";
 
 @Entity()
 export class FriendRequest{

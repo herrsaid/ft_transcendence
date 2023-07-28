@@ -10,12 +10,12 @@ import {
     Body,
     UnauthorizedException,
   } from '@nestjs/common';
-  import { TwoFactorAuthenticationService } from './twoFactorAuthentication.service';
-import RequestWithUser from './requestWithUser.interface';
+  import { TwoFactorAuthenticationService } from '../services/twoFactorAuthentication.service';
+import RequestWithUser from '../interfaces/requestWithUser.interface';
 import { AuthGuard } from 'src/auth/guard/auth.guard';
-import { UserService } from 'src/user/user.service';
-import { TwoFactorAuthenticationCodeDto } from './dto/TwoFactorAuthenticationCodeDto';
-import { AuthenticationService } from './authentication.service';
+import { UserService } from 'src/user/services/user.service';
+import { TwoFactorAuthenticationCodeDto } from '../dto/TwoFactorAuthenticationCodeDto';
+import { AuthenticationService } from '../services/authentication.service';
 
  
    
