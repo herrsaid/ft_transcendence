@@ -25,6 +25,7 @@ import { FriendRequest } from './entities/friend-request.entity';
 import { ConfigModule } from '@nestjs/config';
 import { TwoFactorAuthenticationController } from './twoFactorAuthentication/twoFactorAuthentication.controller';
 import { TwoFactorAuthenticationService } from './twoFactorAuthentication/twoFactorAuthentication.service';
+import { AuthenticationService } from './twoFactorAuthentication/authentication.service';
 
 @Module({
   imports: [GameModule, AuthModule, TypeOrmModule.forRoot(config),
@@ -52,6 +53,7 @@ import { TwoFactorAuthenticationService } from './twoFactorAuthentication/twoFac
     GoogleStrategy,
     UserService,
     TwoFactorAuthenticationService,
+    AuthenticationService
   ],
 })
 export class AppModule {}

@@ -18,6 +18,7 @@ import RequestWithUser from './requestWithUser.interface';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { UserService } from 'src/user/user.service';
 import { TwoFactorAuthenticationCodeDto } from './dto/TwoFactorAuthenticationCodeDto';
+import { AuthenticationService } from './authentication.service';
 
  
    
@@ -27,6 +28,7 @@ import { TwoFactorAuthenticationCodeDto } from './dto/TwoFactorAuthenticationCod
     constructor(
       private readonly twoFactorAuthenticationService: TwoFactorAuthenticationService,
       private readonly userService: UserService,
+      private readonly authenticationService: AuthenticationService
     ) {}
    
     @UseGuards(AuthGuard)
@@ -77,9 +79,9 @@ import { TwoFactorAuthenticationCodeDto } from './dto/TwoFactorAuthenticationCod
       throw new UnauthorizedException('Wrong authentication code');
     }
  
-    // const accessTokenCookie = this.authenticationService.getCookieWithJwtAccessToken(request.user.id, true);
+    const accessTokenCookie = this.authenticationService.getCookieWithJwtAccessToken(request.user.id, true);
  
-    // request.res.setHeader('Set-Cookie', [accessTokenCookie]);
+    request.res.setHeader('Set-Cookie', [accessTokenCookie]);
  
     return request.user;
   }
