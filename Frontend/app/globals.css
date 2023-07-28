@@ -20,7 +20,6 @@ a{
 }
 
 
-/*32cd66*/
 :root{
   --color-light:#FFF;
   --color-dark:#000;
@@ -51,28 +50,23 @@ body{
 
 .Header
 {
-  width: 100dvw;
-  height: 60px;
+  max-width: 100%;
   background-color: transparent;
+  
 }
 
 .NavChild
 {
   display: flex;
-  /* justify-content: space-between;
-  width: 100dvw;
-  height: 95.5dvh;
-  overflow: auto; */
+  
   justify-content: center;
 align-items: center;
 justify-items: center;
-  /* border: 4px solid #278dd6 ; */
   overflow: hidden;
 }
 
 .child
 {
-  /* height: 96dvh; */
   flex: 1;
   overflow: hidden;
 }

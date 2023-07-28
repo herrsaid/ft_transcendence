@@ -20,13 +20,13 @@ export default function SearchInput()
 
 
     return(
-        <form className="flex justify-center" onSubmit={onSearch}>
+        <form className="flex justify-self-auto" onSubmit={onSearch}>
 
             <input  
             value={searchQuery}
     
             onChange={(event) => setsearchQuery(event.target.value)}
-            className="w-96 sm:px-5 sm:py-3 flex-1 text-zinc-200 bg-zinc-800
+            className="ml-20 justify-self-auto sm:px-5 sm:py-3 flex-1 text-zinc-200 bg-zinc-800
             focus:bg-black rounded-full focus:outline-none " placeholder="Search for user"/>
 
         </form>
