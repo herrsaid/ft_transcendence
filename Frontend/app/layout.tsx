@@ -1,4 +1,4 @@
-import Header from './Components/Header'
+import Header from './Components/Header/Header'
 import SideNavBar_Res from './Components/SideNavBar_Res/SideNavBar_Res'
 import './globals.css'
 // import { Inter } from 'next/font/google'

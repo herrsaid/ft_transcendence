@@ -15,7 +15,7 @@ import {
   import { TwoFactorAuthenticationService } from './twoFactorAuthentication.service';
   import { Response } from 'express';
 import RequestWithUser from './requestWithUser.interface';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from 'src/auth/guard/auth.guard';
 import { UserService } from 'src/user/user.service';
 import { TwoFactorAuthenticationCodeDto } from './dto/TwoFactorAuthenticationCodeDto';
 import { AuthenticationService } from './authentication.service';

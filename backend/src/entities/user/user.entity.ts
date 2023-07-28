@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Achievevement } from "./achievevements.entity";
-import { FriendRequest } from "./friend-request.entity";
+import { Achievevement } from "../achievevements/achievevements.entity";
+import { FriendRequest } from "../friend/friend-request.entity";
 
 @Entity()
 export class User{

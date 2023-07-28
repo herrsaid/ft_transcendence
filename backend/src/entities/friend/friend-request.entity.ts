@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { User } from "./user.entity";
+import { User } from "../user/user.entity";
 import { FriendRequest_Status } from "./friend-request.interface";
 
 @Entity()

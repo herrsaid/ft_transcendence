@@ -1,7 +1,7 @@
 import { MessageBody, SubscribeMessage, WebSocketGateway, ConnectedSocket, WebSocketServer } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io'
 import { JwtService } from '@nestjs/jwt';
-import { jwtConstants } from '../auth/constants';
+import { jwtConstants } from '../auth/guard/constants';
 import { subscribe } from 'diagnostics_channel';
 import { PassThrough } from 'stream';
 import { Index } from 'typeorm';

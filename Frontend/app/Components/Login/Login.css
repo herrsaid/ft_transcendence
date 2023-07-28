@@ -72,53 +72,7 @@ justify-items: center;
     margin-left: 10px;
   }
   
-   .table {
-    position: relative;
-    width: 600px;
-    height: 300px;
-    
-    background-image: url("../../public/bg.jpg");
-    background-position: center;
-    background-size: cover;
-    border-radius: 10px;
-    overflow: hidden;
-    background-repeat: no-repeat;
-    animation: rotateTable 4s linear;
-    border: 2px solid #fff;
-    opacity: 1;
-
-  }
   
-  .net {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 2px;
-    height: 100%;
-    background-color: #fff;
-  }
-  
-  .ball {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 20px;
-    height: 20px;
-    background-color: #fff;
-    border-radius: 50%;
-    animation: pingPong 2s infinite linear;
-  }
-  
-
-
-
-
-
-
-
-
 
   @keyframes pingPong {
     0% {
@@ -132,38 +86,4 @@ justify-items: center;
     }
   }
   
-  
-  
-  
-  
-  @keyframes rotateTable {
-    0% {
-      transform: rotate(0deg);
-      opacity: 0.8;
-    }
-  
-  
-    20% {
-      transform: rotate(90deg);
-      opacity: 0.7;
-    }
-  
-    70% {
-      transform: rotate(190deg);
-
-      opacity: 0.5;
-    }
-    100% {
-      transform: rotate(360deg);
-     opacity: 1; 
-    }
-  }
-
-
-  @media (max-width: 767px) {
-    .table {
-      width: 300px;
-      height: 150px;
-    }
-  }
   

@@ -10,6 +10,11 @@ export default function SearchInput()
     const [searchQuery, setsearchQuery] = useState("");
     const router = useRouter();
 
+
+
+
+
+    
     const onSearch = (event:React.FormEvent) =>
     {
         event.preventDefault();

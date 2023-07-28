@@ -1,12 +1,12 @@
 import { Body, Controller, FileTypeValidator, Get, MaxFileSizeValidator, Param, ParseFilePipe, Post, Put, Query, Req, Request, Res, UnauthorizedException, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { CreateUserDto, filterUsersdto, updateUsername } from './dto/createUserDto';
 import { UserService } from './user.service';
-import { AuthGuard } from 'src/auth/auth.guard';
+import { AuthGuard } from 'src/auth/guard/auth.guard';
 import { JwtService } from '@nestjs/jwt';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { Observable } from 'rxjs';
-import { FriendRequestStatus, FriendRequest_Interface } from 'src/entities/friend-request.interface';
+import { FriendRequestStatus, FriendRequest_Interface } from 'src/entities/friend/friend-request.interface';
 
 
 

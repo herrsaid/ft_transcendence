@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto, filterUsersdto, updateAvatar, updateUsername } from './dto/createUserDto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'src/entities/user.entity';
+import { User } from 'src/entities/user/user.entity';
 import { Not, Repository } from 'typeorm';
 import { Observable, from, of, switchMap } from 'rxjs';
-import { FriendRequest } from 'src/entities/friend-request.entity';
-import { FriendRequest_Interface, FriendRequest_Status } from 'src/entities/friend-request.interface';
+import { FriendRequest } from 'src/entities/friend/friend-request.entity';
+import { FriendRequest_Interface, FriendRequest_Status } from 'src/entities/friend/friend-request.interface';
 
 @Injectable()
 export class UserService {

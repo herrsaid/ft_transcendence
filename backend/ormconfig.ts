@@ -1,6 +1,6 @@
-import { Achievevement } from "src/entities/achievevements.entity";
-import { FriendRequest } from "src/entities/friend-request.entity";
-import { User } from "src/entities/user.entity";
+import { Achievevement } from "src/entities/achievevements/achievevements.entity";
+import { FriendRequest } from "src/entities/friend/friend-request.entity";
+import { User } from "src/entities/user/user.entity";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
 
 
