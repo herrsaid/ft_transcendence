@@ -84,33 +84,36 @@ function Chat()
     const con = useContext(Reciver);
     const inputRef = useRef(null);
     const [val, setValue] = useState('')
-    const [messages, setMssages] = useState([]);
+    const [messages, setMessages] = useState([]);
     let msg = messages
-    const send = (e: any) => {
-        e.preventDefault();
-        const env = process.env.NEXT_PUBLIC_SOCKET;
-        console.log(env);
-        if (val != '')
-        {
-            socket.emit('message', {src:sessionStorage.getItem('userId'),dst:con.id, content:val});
-            msg.push({key:(Date.now() + Math.random()) , reciver:con.id, content:val, class:'me'})
-            setMssages(msg);
-            console.log(con.id);
-            setValue('');
-        }
-    };
-    const [rerender, setRerender] = useState(0);
+    const [rerender, setRerender] = useState(1);
     useEffect (() =>{
         socket.on('message', (data:any) => {
             if (data != '')
             {
-                setRerender(0)
+                // setRerender(0)
                 msg.push({sender: data.src, key:(Date.now() + Math.random()),content:data.content, class:'you'})
-                console.log(rerender)
-                setMssages(msg)
+                setMessages(msg)
+                console.log(messages)
+                console.count('useEffecte')
+                setRerender(Math.random());
+                // setRerender(rerender + 1)
             }
         })
-    }, [rerender]);
+        return () => {
+            socket.disconnect();}
+    }, []);
+    const send = (e: any) => {
+        e.preventDefault();
+        if (val != '')
+        {
+            socket.emit('message', {src:sessionStorage.getItem('userId'),dst:con.id, content:val});
+            msg.push({key:(Date.now() + Math.random()) , reciver:con.id, content:val, class:'me'})
+            setMessages(msg);
+            console.log(con.id);
+            setValue('');
+        }
+    };
     return(
         <div className='chat-box'>
             <div className='chat-info'>
