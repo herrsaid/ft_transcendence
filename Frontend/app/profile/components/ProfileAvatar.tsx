@@ -25,7 +25,8 @@ const ProfileAvatar = (props:props) => {
             data.append('file', avatar.files[0])
             data.append('user', 'hubot')
 
-            fetch('http://10.11.6.7:1337/user/edit/avatar', {
+            
+            fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/edit/avatar`, {
                 method: 'PUT',
                 headers: {
                 Authorization: `Bearer ${Cookies.get('access_token')}`,

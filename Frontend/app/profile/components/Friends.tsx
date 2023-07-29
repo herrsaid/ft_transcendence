@@ -28,7 +28,7 @@ const Friends = () => {
 }
 
 
-    const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_FRONT_IP}/user/friends`,
+    const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friends`,
     fetchFriends
     );
 

@@ -48,7 +48,7 @@ export default function Community()
     const v = {id , setId}
     useEffect(()=>{
         
-        fetch(`${process.env.NEXT_PUBLIC_FRONT_IP}/user/friends`, {
+        fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friends`, {
             method: 'GET',
             headers:{
                 Authorization: `Bearer ${Cookies.get('access_token')}`
