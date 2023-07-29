@@ -30,7 +30,7 @@ export default function SearchPage()
     const query = searchParams.get('q')
     const encodedsearchQuery = encodeURI(query || "");
 
-    const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_FRONT_IP}user/search?q=${encodedsearchQuery}`,
+    const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}user/search?q=${encodedsearchQuery}`,
     fetchUsers
     );
 
