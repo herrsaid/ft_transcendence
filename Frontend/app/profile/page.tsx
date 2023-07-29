@@ -27,7 +27,7 @@ export default  function Profile()
 }
 
 
-    const {data, isLoading} = useSWR(`http://localhost:1337/user/me`,
+    const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_FRONT_IP}/user/me`,
     fetchProfileData
     );
 

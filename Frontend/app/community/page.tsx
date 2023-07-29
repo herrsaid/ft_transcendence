@@ -48,7 +48,7 @@ export default function Community()
     const v = {id , setId}
     useEffect(()=>{
         
-        fetch("http://localhost:1337/user/friends", {
+        fetch(`${process.env.NEXT_PUBLIC_FRONT_IP}/user/friends`, {
             method: 'GET',
             headers:{
                 Authorization: `Bearer ${Cookies.get('access_token')}`
