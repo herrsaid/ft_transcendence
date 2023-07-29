@@ -32,8 +32,8 @@ export class AuthController {
     });
 
     const front_url = this.configService.get<string>('FRONT_IP');
-    res.redirect('http://localhost:3000/profile')
-    // res.redirect(`${front_url}/profile`);
+    res.redirect(`${front_url}/profile`);
+
       return this.authservice.loginIntra42(req);
   }
 }

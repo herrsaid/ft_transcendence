@@ -11,7 +11,7 @@ export class AuthStrategy extends PassportStrategy(Strategy, '42') {
     super({
       clientID: configService.get<string>('CLIENT_ID_42'),
       clientSecret: configService.get<string>('CLIENT_SECRET_42'),
-      callbackURL: 'http://localhost:1337/auth/42/callback',
+      callbackURL: configService.get<string>('INTRA_CALL_BACK'),
       
       
     });

@@ -54,7 +54,7 @@ export class UserService {
     }
 
 
-    async findAllFriends(id:number)
+    async findAllUserNotMe(id:number)
     {
         return await this.userRepo.find( { where: {id: Not(id)}})
     }
@@ -182,11 +182,33 @@ export class UserService {
     }
 
 
+
+
     getFriendRequest(currentUser:User)
     {
         return from(this.FriendRequestRepo.find({
             where :[{receiver:currentUser}]
         }))
     }
+
+
+
+
+    async getAllMyFriends(currentUser: User): Promise<User[]> {
+        const users = await this.userRepo
+          .createQueryBuilder('user')
+          .leftJoin(
+            FriendRequest,
+            'friendRequest',
+            'friendRequest.receiverId = user.id AND friendRequest.status = :status OR friendRequest.creatorId = user.id AND friendRequest.status = :status',
+            { status: 'accepted' }
+          )
+          .where('user.id != :currentUserId', { currentUserId: currentUser.id })
+          .andWhere('(friendRequest.creatorId = :currentUserId OR friendRequest.receiverId = :currentUserId)', { currentUserId: currentUser.id })
+          .getMany();
+    
+        return users;
+      }
+
 
 }

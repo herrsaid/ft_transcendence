@@ -43,22 +43,18 @@ export class UserController {
     @Get('me')
     profileInfo(@Req() req)
     {
-        
-        const tocken_part = req.headers['authorization'].split(' ')
-        const decodedJwtAccessToken = this.jwtService.decode(tocken_part[1]);
-        return this.userService.findOne(decodedJwtAccessToken['id'])
-        
+        return this.userService.findOne(req.user.id);   
     }
     
     @UseGuards(AuthGuard)
-    @Get('/friends')
-    getFriends(@Req() req:Request)
+    @Get('friends')
+    getAllUsers(@Req() req)
     {
-        const tocken_part = req.headers['authorization'].split(' ')
-        const decodedJwtAccessToken = this.jwtService.decode(tocken_part[1]);
-        return this.userService.findAllFriends(decodedJwtAccessToken['id'])
+        return this.userService.findAllUserNotMe(req.user.id);
     }
     
+
+    @UseGuards(AuthGuard)
     @Get(':username')
     findOneByUsername(@Param('username') username:string)
     {
@@ -116,6 +112,15 @@ export class UserController {
     getFriendRequest(@Request() req)
     {
         return this.userService.getFriendRequest(req.user);
+    }
+
+
+
+    @UseGuards(AuthGuard)
+    @Get('friends/me')
+    getMyFriends(@Request() req)
+    {
+        return this.userService.getAllMyFriends(req.user);
     }
 
 
