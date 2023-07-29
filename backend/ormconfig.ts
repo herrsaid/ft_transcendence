@@ -1,3 +1,4 @@
+import { Messages } from "Database/entity/Message.entity";
 import { Achievevement } from "src/entities/achievevements/achievevements.entity";
 import { FriendRequest } from "src/entities/friend/friend-request.entity";
 import { User } from "src/entities/user/user.entity";
@@ -11,7 +12,7 @@ const config : PostgresConnectionOptions = {
     port: 5432,
     username: "postgres",
     password: "postgres",
-    entities:[User,Achievevement,FriendRequest],
+    entities:[User,Achievevement,FriendRequest, Messages],
     synchronize: true,
 };
 
