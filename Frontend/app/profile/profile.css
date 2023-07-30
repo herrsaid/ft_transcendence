@@ -43,7 +43,7 @@
 }
 
 .Groups{
-    width: 80%;
+    /* width: 80%; */
     height: 60dvh;
     background-color: var(--primary-color);
     border-radius: 17px;
@@ -492,15 +492,16 @@ p.enligne{
   
 
   .profile_container{
-    display: flex;
-    flex-direction: row;
+    /* display: flex;
+    flex-direction: row; */
 
   }
 
   .all_profile{
-    flex: 4;
+    /* flex: 4;
     overflow: auto;
-    height: 100dvh;
+    height: 100dvh; */
+    /* overflow-x: auto; */
   }
 
 
@@ -553,6 +554,11 @@ p.enligne{
 
 .icon_profile{
     color: red;
+}
+
+.group_name{
+    cursor: pointer;
+    font-size: 20px;
 }
 
   body{

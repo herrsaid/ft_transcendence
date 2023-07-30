@@ -1,4 +1,4 @@
-import { Avatar, AvatarGroup } from "@chakra-ui/react";
+import { Avatar, AvatarGroup, Box, Flex, Spacer } from "@chakra-ui/react";
 import Cookies from 'js-cookie';
 import { useRouter } from "next/navigation";
 import useSWR from "swr"
@@ -40,19 +40,25 @@ const OneGroup = () => {
     }
 
     return (
-        <div className="group">
-        <div className="inside_group">
-            
-            <h4>Legends</h4>
-            </div>
+                    <Flex>
 
-            <p className="memebers">
-                <AvatarGroup size='md' max={5}>
+                    <Box p='4'>
+
+                    <h4 className="group_name">Legends</h4>
+
+                    </Box>
+
+                    <Spacer />
+
+                    <Box p='4' >
+
+                    <AvatarGroup size='md' max={5}>
   {myFriends ? myFriends : "No memebers!"}
 </AvatarGroup>
-                </p>
 
-        </div>
+                    </Box>
+
+                    </Flex>
         
     );
 };
