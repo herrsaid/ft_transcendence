@@ -1,4 +1,4 @@
-import { IsEmail, IsNumberString, IsString, isString } from "class-validator";
+import { IsBoolean, IsEmail, IsNumberString, IsString, isBoolean, isString } from "class-validator";
 
 export class CreateUserDto{
 
@@ -31,4 +31,10 @@ export class filterUsersdto{
 
     @IsString()
     search:string;
+}
+
+export class updateAvatar_bol{
+
+    @IsBoolean()
+    is_profile_img_updated:boolean;
 }

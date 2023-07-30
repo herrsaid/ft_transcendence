@@ -22,6 +22,10 @@ export class User{
     @Column({ default: false })
     isTwoFactorAuthenticationEnabled: boolean;
 
+
+    @Column({ default: false })
+    is_profile_img_updated: boolean;
+
     
     @Column({default:"/avatar.png"})
     profile_img:string;

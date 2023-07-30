@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto, filterUsersdto, updateAvatar, updateUsername } from '../dto/createUserDto';
+import { CreateUserDto, filterUsersdto, updateAvatar, updateAvatar_bol, updateUsername } from '../dto/createUserDto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user/user.entity';
 import { Not, Repository } from 'typeorm';
@@ -84,6 +84,7 @@ export class UserService {
     {
         const user = await this.userRepo.findOne({where:{id:id}});
         Object.assign(user, updateAvatar);
+        this.update_is_profile_img_updated(id, {"is_profile_img_updated" : true})
         return await this.userRepo.save(user);
     }
 
@@ -192,6 +193,12 @@ export class UserService {
     }
 
 
+    async update_is_profile_img_updated(id:number, updateAvatar_bol: updateAvatar_bol)
+    {
+        const user = await this.userRepo.findOne({where:{id:id}});
+        Object.assign(user, updateAvatar_bol);
+        return await this.userRepo.save(user);
+    }
 
 
     async getAllMyFriends(currentUser: User): Promise<User[]> {
@@ -208,6 +215,12 @@ export class UserService {
           .getMany();
     
         return users;
+      }
+
+
+      getCookieForLogOut()
+      {
+        return `access_token=; HttpOnly; Path=/; Max-Age=0`;
       }
 
 

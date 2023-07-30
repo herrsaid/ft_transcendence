@@ -38,7 +38,7 @@ import { Messages } from 'Database/entity/Message.entity';
     ConfigModule.forRoot({isGlobal: true }),
    
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..')
+      rootPath: join(__dirname, '..', 'client')
     }),
     UserModule,
   

@@ -35,7 +35,7 @@ export default  function Profile()
 
     let stored_data = ['true', data?.profile_img, data?.username, data?.id]
     sessionStorage.setItem('isLoget', stored_data[0]);
-    sessionStorage.setItem('avatar', stored_data[1] );
+    
     sessionStorage.setItem('username', stored_data[2]);
     sessionStorage.setItem('userId', stored_data[3]);
 
@@ -58,7 +58,7 @@ export default  function Profile()
                 
                 <div className="side_two_info">
 
-                    <ProfileAvatar  img={data.profile_img}   username={data.username}/>
+                    <ProfileAvatar  img={data.profile_img}   username={data.username} avatar_updated={data.is_profile_img_updated}/>
                     <ProfileInfo location={data.location} totalgame={data.totalgame}
                     loss={data.loss} wins={data.wins} rank={data.rank}
                     
