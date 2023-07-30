@@ -79,3 +79,7 @@ justify-items: center;
 body {
   scrollbar-width: none;
 }
+
+body{
+  background-color: var(--back-color);
+}

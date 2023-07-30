@@ -5,6 +5,7 @@ import {Friends, Groups, ProfileAvatar, ProfileInfo, History, Achievevements} fr
 import Cookies from 'js-cookie';
 import useSWR from "swr"
 import { useRouter } from 'next/navigation';
+import { Container, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 
 
 export default  function Profile()
@@ -42,36 +43,74 @@ export default  function Profile()
         return null;
     
     return(
-        <div className="profile_container">
+        
 
-        <div className="all_profile">
-        <div className="side_two">
-                        
-                        <div className="side_two_info">
 
-                            <ProfileAvatar  img={data.profile_img}   username={data.username}/>
-                            <ProfileInfo location={data.location} totalgame={data.totalgame}
-                            loss={data.loss} wins={data.wins} rank={data.rank}
-                            
-                            />
+        // <Container maxW='2xl' >
+            <div className="profile_container">
 
-                        </div>
-                        <History/>
-                    </div>
-            <div className="Profile">
-                    <div className="side_one">
-                        <Friends/>
-                        <Groups/>        
-                    </div>
 
-                    <div className="side_three">
 
-                        <Achievevements/>
-                        
-                    </div>
+
+
+
+
+<div className="all_profile">
+<div className="side_two">
+                
+                <div className="side_two_info">
+
+                    <ProfileAvatar  img={data.profile_img}   username={data.username}/>
+                    <ProfileInfo location={data.location} totalgame={data.totalgame}
+                    loss={data.loss} wins={data.wins} rank={data.rank}
+                    
+                    />
+
+                </div>
+                
             </div>
 
-        </div>
-        </div>
+    
+
+
+            <Tabs isFitted variant='enclosed'>
+  <TabList mb='1em'>
+    <Tab>History</Tab>
+    <Tab>Friends</Tab>
+    <Tab>Groups</Tab>
+    <Tab>Achievevements</Tab>
+  </TabList>
+  <TabPanels>
+    <TabPanel>
+    <History/>
+    </TabPanel>
+    <TabPanel>
+    <Friends/>
+    
+    </TabPanel>
+    <TabPanel>
+    <Groups/>
+    </TabPanel>
+    <TabPanel>
+    <Achievevements/>
+    </TabPanel>
+  </TabPanels>
+</Tabs>
+    {/* <div className="Profile">
+            <div className="side_one">
+                        
+            </div>
+
+            <div className="side_three">
+
+               
+                
+            </div>
+    </div> */}
+
+</div>
+</div>
+    //   </Container>
+        
     );
 }

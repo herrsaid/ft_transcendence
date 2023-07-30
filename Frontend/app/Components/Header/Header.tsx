@@ -3,6 +3,7 @@ import './Header.css'
 import { useState, useEffect } from 'react'
 import Link from 'next/link';
 import SearchInput from '../SearchInput/SearchInput';
+import { Box, Button, ButtonGroup, Flex, Heading, Spacer } from '@chakra-ui/react';
 
 function Login()
 {
@@ -32,16 +33,49 @@ export default  function Header()
     const [login, setLogin] = useState(<button className='login'>Login</button>);
     useEffect(()=>{setLogin(<Login></Login>)},[])
     return(
-        <div className="header">
-            <div className='logo-search'>
-                <h1>42PONG</h1>
-                <SearchInput/>
-            </div>
-            <div className='profile'>
-                <div className='profile-img'>
-                    {login}
+
+<Flex minWidth='max-content' alignItems='center' gap='2'>
+
+<Box p='2'>
+
+  <Heading size='md'> <h1 className="logo-search">42PONG</h1></Heading>
+
+</Box>
+
+<Spacer />
+
+<ButtonGroup gap='2'>
+
+<SearchInput/>
+
+<div className='profile'>
+           <div className='profile-img'>
+                   {login}
                 </div>
-            </div>
-        </div>
+             </div>
+
+</ButtonGroup>
+
+</Flex>
+
+
+
+
+
+
+
+
+
+        // <div className="header">
+        //     <div className='logo-search'>
+        //         <h1>42PONG</h1>
+        //         <SearchInput/>
+        //     </div>
+        //     <div className='profile'>
+        //         <div className='profile-img'>
+        //             {login}
+        //         </div>
+        //     </div>
+        // </div>
     )
 }
