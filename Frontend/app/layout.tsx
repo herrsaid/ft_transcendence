@@ -1,6 +1,7 @@
 import Header from './Components/Header/Header'
 import SideNavBar_Res from './Components/SideNavBar_Res/SideNavBar_Res'
 import './globals.css'
+import { Providers } from "./providers";
 // import { Inter } from 'next/font/google'
 
 // const inter = Inter({ subsets: ['latin'] })
@@ -22,6 +23,7 @@ export default function RootLayout({
     
     <html lang="en">
       <body >
+      <Providers>
         <div className='Site'>
           <div className='Header'>
             <Header/>
@@ -33,6 +35,7 @@ export default function RootLayout({
             </div>
           </div>
         </div>
+        </Providers>
       </body>
     </html>
   )

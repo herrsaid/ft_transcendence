@@ -9,7 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@chakra-ui/react": "^2.7.1",
+    "@chakra-ui/next-js": "^2.1.5",
+    "@chakra-ui/react": "^2.8.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fontsource/jua": "^5.0.1",
@@ -20,7 +21,7 @@
     "@types/react": "18.2.7",
     "@types/react-dom": "18.2.4",
     "bootstrap": "^5.2.3",
-    "framer-motion": "^10.12.16",
+    "framer-motion": "^10.15.0",
     "js-cookie": "^3.0.5",
     "next": "^13.4.3",
     "p5": "^1.7.0",

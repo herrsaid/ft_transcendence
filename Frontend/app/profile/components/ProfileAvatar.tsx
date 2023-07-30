@@ -4,6 +4,7 @@ import "../profile.css"
 
 import {FaPen, FaUpload} from 'react-icons/fa'
 import Cookies from 'js-cookie';
+import { Image } from "@chakra-ui/react";
 
 
 interface props{
@@ -40,7 +41,13 @@ const ProfileAvatar = (props:props) => {
 
             <div className="profile_avatar">
                 <div className="avatar_edit_real">
-                    <img src={props.img} className="my_profile_img"></img>
+                    {/* <img src={props.img} className="my_profile_img"></img> */}
+                    <Image
+  borderRadius='full'
+  boxSize='100px'
+  src={props.img}
+  alt='Dan Abramov'
+/>
                     <label>
                     <FaUpload/>
                     <form >

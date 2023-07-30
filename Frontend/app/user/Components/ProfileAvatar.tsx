@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import "../../profile/profile.css"
 import Cookies from 'js-cookie';
+import { Avatar, AvatarBadge, Image, Stack } from "@chakra-ui/react";
 
 interface props{
     img:string,
@@ -74,8 +75,23 @@ const ProfileAvatar = (props:props) => {
 
 
                 <div className="avatar_edit_real">
-                    <img src={props.img} ></img>
+                    {/* <img src={props.img} ></img> */}
+
                     
+                    <Avatar size='xl' name='Segun Adebayo' src={props.img}>
+    <AvatarBadge boxSize='0.8em' bg='green.500' borderColor='#18184a' />
+  </Avatar>
+  
+
+  {/* <Avatar>
+    <AvatarBadge boxSize='1.25em' bg='green.500' />
+  </Avatar> */}
+                    {/* <Image
+  borderRadius='full'
+  boxSize='125px'
+  src={props.img}
+  alt='Dan Abramov'
+/> */}
                 </div> 
                         <div>
                         <p className="username_user">{props.username}</p>
