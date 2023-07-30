@@ -58,24 +58,5 @@ export default  function Header()
 
 </Flex>
 
-
-
-
-
-
-
-
-
-        // <div className="header">
-        //     <div className='logo-search'>
-        //         <h1>42PONG</h1>
-        //         <SearchInput/>
-        //     </div>
-        //     <div className='profile'>
-        //         <div className='profile-img'>
-        //             {login}
-        //         </div>
-        //     </div>
-        // </div>
     )
 }

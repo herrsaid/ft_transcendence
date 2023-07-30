@@ -5,8 +5,8 @@ import {Friends, Groups, ProfileAvatar, ProfileInfo, History, Achievevements} fr
 import Cookies from 'js-cookie';
 import useSWR from "swr"
 import { useRouter } from 'next/navigation';
-import { Container, Tab, TabIndicator, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
-import { FaComments, FaHistory, FaTrophy, FaUsers } from 'react-icons/fa';
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+
 
 
 export default  function Profile()
