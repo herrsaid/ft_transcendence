@@ -44,7 +44,7 @@ function Profile_box(props:any)
 export default function Community()
 {
     const [friends, setFriends] = useState([])
-    const [id, setId] = useState<any>(5)
+    const [id, setId] = useState<any>(1)
     const v = {id , setId}
     useEffect(()=>{
         
@@ -67,7 +67,7 @@ export default function Community()
                     </h1>
                 </div>
                 <div className='chats'>
-                 {friends.map((frnd)=>{return (<Profile_box id={frnd.id} avatar={frnd.profile_img} username={frnd.username} />)})}
+                 {friends.map((frnd:any)=>{return (<Profile_box id={frnd.id} avatar={frnd.profile_img} username={frnd.username} />)})}
                 </div>
              </div>
                 <Chat />
@@ -85,7 +85,7 @@ function Chat()
     const inputRef = useRef(null);
     const [val, setValue] = useState('')
     const [messages, setMessages] = useState([]);
-    let msg = messages
+    let msg : any = messages
     const [rerender, setRerender] = useState(1);
     useEffect (() =>{
         socket.on('message', (data:any) => {

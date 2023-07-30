@@ -28,6 +28,9 @@ import { TwoFactorAuthenticationService } from './twoFactorAuthentication/servic
 import { AuthenticationService } from './twoFactorAuthentication/services/authentication.service';
 import { GoogleAuthController } from './auth/google/controllers/googleauth.controller';
 import { GoogleAuthService } from './auth/google/services/googleauth.service';
+import { MessagesService } from 'Database/services/messages/messages.service';
+import { MessageService } from './message/message.service';
+import { Messages } from 'Database/entity/Message.entity';
 
 @Module({
   imports: [GameModule, AuthModule, TypeOrmModule.forRoot(config),
@@ -39,7 +42,7 @@ import { GoogleAuthService } from './auth/google/services/googleauth.service';
     }),
     UserModule,
   
-    TypeOrmModule.forFeature([User,Achievevement,FriendRequest]), JwtModule.register({
+    TypeOrmModule.forFeature([User,Achievevement,FriendRequest,Messages]), JwtModule.register({
     global: true,
     secret: jwtConstants.secret,
     signOptions: { expiresIn: '30d' },
@@ -56,7 +59,9 @@ import { GoogleAuthService } from './auth/google/services/googleauth.service';
     UserService,
     TwoFactorAuthenticationService,
     AuthenticationService,
-    GoogleAuthService
+    GoogleAuthService,
+    MessagesService,
+    MessageService,
   ],
 })
 export class AppModule {}
