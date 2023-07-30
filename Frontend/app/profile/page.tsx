@@ -5,7 +5,7 @@ import {Friends, Groups, ProfileAvatar, ProfileInfo, History, Achievevements} fr
 import Cookies from 'js-cookie';
 import useSWR from "swr"
 import { useRouter } from 'next/navigation';
-import { Container, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+import { Container, Tab, TabIndicator, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 
 
 export default  function Profile()
@@ -44,9 +44,6 @@ export default  function Profile()
     
     return(
         
-
-
-        // <Container maxW='2xl' >
             <div className="profile_container">
 
 
@@ -73,44 +70,36 @@ export default  function Profile()
     
 
 
-            <Tabs isFitted variant='enclosed'>
-  <TabList mb='1em'>
-    <Tab>History</Tab>
-    <Tab>Friends</Tab>
-    <Tab>Groups</Tab>
-    <Tab>Achievevements</Tab>
-  </TabList>
-  <TabPanels>
-    <TabPanel>
-    <History/>
-    </TabPanel>
-    <TabPanel>
-    <Friends/>
+            <Tabs position="relative" variant='soft-rounded' colorScheme='blue' isFitted>
+                        <TabList mb='1em'>
+                            <Tab>History</Tab>
+                            <Tab>Friends</Tab>
+                            <Tab>Groups</Tab>
+                            <Tab>Achievevements</Tab>
+                        </TabList>
+
+                 
+                        <TabPanels>
+                            <TabPanel>
+                            <History/>
+                            </TabPanel>
+                            <TabPanel>
+                            <Friends/>
+                            
+                            </TabPanel>
+                            <TabPanel>
+                            <Groups/>
+                            </TabPanel>
+                            <TabPanel>
+                            <Achievevements/>
+                            </TabPanel>
+                        </TabPanels>
+                </Tabs>
     
-    </TabPanel>
-    <TabPanel>
-    <Groups/>
-    </TabPanel>
-    <TabPanel>
-    <Achievevements/>
-    </TabPanel>
-  </TabPanels>
-</Tabs>
-    {/* <div className="Profile">
-            <div className="side_one">
-                        
-            </div>
-
-            <div className="side_three">
-
-               
-                
-            </div>
-    </div> */}
 
 </div>
 </div>
-    //   </Container>
+    
         
     );
 }
