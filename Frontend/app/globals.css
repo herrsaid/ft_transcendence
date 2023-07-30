@@ -81,5 +81,5 @@ body {
 }
 
 body{
-  background-color: var(--back-color);
+  background-color: var(--back-color) !important;
 }

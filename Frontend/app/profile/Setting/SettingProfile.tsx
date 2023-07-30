@@ -1,5 +1,6 @@
+import { Switch } from '@chakra-ui/react';
 import '../profile.css'
-import Switch from '@mui/material/Switch';
+
 
 
 const SettingProfile = () => {
@@ -9,7 +10,7 @@ const SettingProfile = () => {
         <div className="setting_page">
             <div className="setting_security">
                 <h2>Security</h2>
-                <h3>2FA <Switch {...label} defaultChecked />  </h3>
+                <h3>2FA <Switch size='lg' />  </h3>
             </div>
 
             <div className="setting_profile_info">

@@ -62,6 +62,8 @@ const ProfileAvatar = (props:props) => {
 
 
                         <div>
+
+                            
                         <p className="username">{props.username}</p>
                         </div>
                         <div>

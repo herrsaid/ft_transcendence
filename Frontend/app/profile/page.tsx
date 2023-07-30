@@ -6,6 +6,7 @@ import Cookies from 'js-cookie';
 import useSWR from "swr"
 import { useRouter } from 'next/navigation';
 import { Container, Tab, TabIndicator, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+import { FaComments, FaHistory, FaTrophy, FaUsers } from 'react-icons/fa';
 
 
 export default  function Profile()
@@ -72,9 +73,9 @@ export default  function Profile()
 
             <Tabs position="relative" variant='soft-rounded' colorScheme='blue' isFitted>
                         <TabList mb='1em'>
-                            <Tab>History</Tab>
-                            <Tab>Friends</Tab>
-                            <Tab>Groups</Tab>
+                            <Tab>History </Tab>
+                            <Tab>Friends </Tab>
+                            <Tab>Community </Tab>
                             <Tab>Achievevements</Tab>
                         </TabList>
 
