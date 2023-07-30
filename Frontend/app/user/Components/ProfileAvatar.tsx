@@ -24,7 +24,7 @@ const ProfileAvatar = (props:props) => {
         
         if (props.id != undefined)
         {
-            fetch(`http://localhost:1337/user/friend-request/status/${props.id}`, {
+            fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/status/${props.id}`, {
                 method: 'GET',
                 headers:{
                     Authorization: `Bearer ${Cookies.get('access_token')}`
@@ -41,7 +41,7 @@ const ProfileAvatar = (props:props) => {
     const send_request = () =>
     {
         // setclicked(!is_clicked)
-        fetch(`http://localhost:1337/user/friend-request/send/${props.id}`, {
+        fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/send/${props.id}`, {
             method: 'POST',
             headers:{
                 Authorization: `Bearer ${Cookies.get('access_token')}`

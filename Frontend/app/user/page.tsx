@@ -16,7 +16,7 @@ export default  function User()
     
     useEffect(()=>{
     
-        fetch(`http://localhost:1337/user/${username}`, {
+        fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/${username}`, {
             method: 'GET',
             headers:{
                 Authorization: `Bearer ${Cookies.get('access_token')}`

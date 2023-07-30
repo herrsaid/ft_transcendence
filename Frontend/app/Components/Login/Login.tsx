@@ -18,15 +18,15 @@ export default function Welcome()
 
               </div>
 
-
               <div className="main_home">
                     <h2>Welcome to legends</h2>
                     <p>Play PingPong with your friends online</p>
-                    <Link href="http://localhost:1337/auth/42">
+                    
+                    <Link href={`${process.env.NEXT_PUBLIC_BACK_IP}/auth/42`}>
                         <button className="intra_button">Sign in with 42</button>
                     </Link>
 
-                    <Link href="http://localhost:1337/auth/google">
+                    <Link href={`${process.env.NEXT_PUBLIC_BACK_IP_G}/auth/google`}>
                         <button>Sign in with Google</button>
                     </Link>
                     
