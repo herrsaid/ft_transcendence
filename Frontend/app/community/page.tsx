@@ -44,7 +44,7 @@ function Profile_box(props:any)
 export default function Community()
 {
     const [friends, setFriends] = useState([])
-    const [id, setId] = useState<any>(1)
+    const [id, setId] = useState<any>(5)
     const v = {id , setId}
     useEffect(()=>{
         
@@ -85,7 +85,39 @@ function Chat()
     const inputRef = useRef(null);
     const [val, setValue] = useState('')
     const [messages, setMessages] = useState([]);
-    let msg : any = messages
+    let zabi
+    const myId = sessionStorage.getItem('userId')
+    let msg: any[] = messages
+    console.log('id', myId)
+    useEffect(()=>{
+        
+        fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/messages?id=${myId}`, {
+            method: 'GET',
+            headers:{
+                Authorization: `Bearer ${Cookies.get('access_token')}`
+            }
+            
+        }).then((response) => response.json())
+        .then(data => setMessages(data))
+        console.log(msg)
+    },[]);
+    // useEffect(()=>{
+    // let maped = false
+    // if (maped == false)
+    // {
+    //     console.log(maped)
+    //     msg = msg.map((data) => {
+    //         console.count('maped');
+    //         if (data.src == myId)
+    //             return {key:(Date.now() + Math.random()) , reciver:data.dst, content:data.content, class:'me'}
+    //         else
+    //             return {sender:data.src, key:(Date.now() + Math.random()),content:data.content, class:'you'}
+    //     })
+    //     maped = true
+    //     // setMaped(true);
+    // }
+    // },[])
+    // console.log(msg)
     const [rerender, setRerender] = useState(1);
     useEffect (() =>{
         socket.on('message', (data:any) => {
@@ -93,8 +125,8 @@ function Chat()
             {
                 // setRerender(0)
                 msg.push({sender: data.src, key:(Date.now() + Math.random()),content:data.content, class:'you'})
-                setMessages(msg)
-                console.log(messages)
+                //setMessages(msg)
+                console.log(msg)
                 console.count('useEffecte')
                 setRerender(Math.random());
                 // setRerender(rerender + 1)
@@ -108,7 +140,7 @@ function Chat()
         if (val != '')
         {
             socket.emit('message', {src:sessionStorage.getItem('userId'),dst:con.id, content:val});
-            msg.push({key:(Date.now() + Math.random()) , reciver:con.id, content:val, class:'me'})
+            msg.push({key:(Date.now() + Math.random()) , reciver:con.id, content:val, class:'me', src:myId, dst:con,})
             setMessages(msg);
             console.log(con.id);
             setValue('');
@@ -127,7 +159,7 @@ function Chat()
             </div>
             <div className='chat-messages'>
                 <div className='messagat'>
-                    {messages.map((data) => {
+                    {msg.map((data) => {
                         if (data.sender == con.id || data.reciver == con.id){
                             return (<Message key={data.key} class={data.class} content={data.content} />)}
                     })}

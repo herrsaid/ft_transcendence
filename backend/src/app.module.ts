@@ -31,6 +31,7 @@ import { GoogleAuthService } from './auth/google/services/googleauth.service';
 import { MessagesService } from 'Database/services/messages/messages.service';
 import { MessageService } from './message/message.service';
 import { Messages } from 'Database/entity/Message.entity';
+import { MessagesController } from './messages/messages.controller';
 
 @Module({
   imports: [GameModule, AuthModule, TypeOrmModule.forRoot(config),
@@ -48,7 +49,7 @@ import { Messages } from 'Database/entity/Message.entity';
     signOptions: { expiresIn: '30d' },
    
   }),],
-  controllers: [AppController, TestController, AuthController, UserController, TwoFactorAuthenticationController, GoogleAuthController],
+  controllers: [AppController, TestController, AuthController, UserController, TwoFactorAuthenticationController, GoogleAuthController, MessagesController],
 
   providers: [
     AppService,
