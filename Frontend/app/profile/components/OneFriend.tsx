@@ -15,19 +15,15 @@ const OneFriend = (props:props) => {
             <Link href={`/user?username=${props.username}`}>
         <div className="friend">
         <div className="inside_friend">
-            {/* <img src={props.image} alt="" /> */}
            
     <Avatar size='md' name='Dan Abrahmov' src={props.image} >
     <AvatarBadge boxSize='1em' bg='green.500' borderColor='#18184a'/>
     </Avatar>
-  
- 
-            {/* <p>{props.username}</p> */}
+
         </div>
 
         <p className="enligne">
         {props.username}
-            {/* {props.status?"Active" : "Offline"} */}
         </p>
         
     </div>

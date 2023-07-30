@@ -4,10 +4,35 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link';
 import SearchInput from '../SearchInput/SearchInput';
 import { Box, Button, ButtonGroup, Flex, Heading, Spacer } from '@chakra-ui/react';
+import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
+
 
 function Login()
 {
     const [open, setOpen] = useState(false);
+    const router = useRouter();
+    const logout = async ()  => {
+   
+        
+
+        
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/log-out`, {
+            method: 'POST',
+            headers: {
+            Authorization: `Bearer ${Cookies.get('access_token')}`,
+                },
+        });
+
+        console.log(res.status)
+        if (res.status == 401)
+            router.replace("/")
+        else if (res.status == 200)
+            router.replace("/")
+             
+    if (!res.ok)
+        throw new Error("failed to fetch users");
+        };
     return(
         <div>
             <img onClick={()=>{setOpen(!open)}} src={sessionStorage.getItem('avatar')} alt="test" />
@@ -20,7 +45,8 @@ function Login()
                         <h1>Setting</h1>
                     </li>
                     <li>
-                        <h1>Logout</h1>
+                        <button onClick={logout}><h1>Logout</h1></button>
+                        
                     </li>
                 </ul>
             </div>}
@@ -58,24 +84,5 @@ export default  function Header()
 
 </Flex>
 
-
-
-
-
-
-
-
-
-        // <div className="header">
-        //     <div className='logo-search'>
-        //         <h1>42PONG</h1>
-        //         <SearchInput/>
-        //     </div>
-        //     <div className='profile'>
-        //         <div className='profile-img'>
-        //             {login}
-        //         </div>
-        //     </div>
-        // </div>
     )
 }

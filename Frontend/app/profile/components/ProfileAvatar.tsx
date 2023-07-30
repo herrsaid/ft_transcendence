@@ -9,14 +9,15 @@ import { Image } from "@chakra-ui/react";
 
 interface props{
     img:string,
-    username:string
+    username:string,
+    avatar_updated:boolean
 }
 
 
 
 const ProfileAvatar = (props:props) => {
 
-
+    let new_src_img;
 
         const upload = () => {
    
@@ -36,6 +37,17 @@ const ProfileAvatar = (props:props) => {
             })
             };
 
+
+            if (props.avatar_updated)
+            {
+                new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + props.img;
+                sessionStorage.setItem('avatar', new_src_img );
+            }
+            else
+                sessionStorage.setItem('avatar', props.img );
+                
+            
+
     return (
         <div>
 
@@ -45,7 +57,7 @@ const ProfileAvatar = (props:props) => {
                     <Image
   borderRadius='full'
   boxSize='100px'
-  src={props.img}
+  src={props.avatar_updated ? new_src_img : props.img}
   alt='Dan Abramov'
 />
                     <label>
@@ -62,6 +74,8 @@ const ProfileAvatar = (props:props) => {
 
 
                         <div>
+
+                            
                         <p className="username">{props.username}</p>
                         </div>
                         <div>

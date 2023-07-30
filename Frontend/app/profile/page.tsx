@@ -5,7 +5,8 @@ import {Friends, Groups, ProfileAvatar, ProfileInfo, History, Achievevements} fr
 import Cookies from 'js-cookie';
 import useSWR from "swr"
 import { useRouter } from 'next/navigation';
-import { Container, Tab, TabIndicator, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+
 
 
 export default  function Profile()
@@ -34,7 +35,7 @@ export default  function Profile()
 
     let stored_data = ['true', data?.profile_img, data?.username, data?.id]
     sessionStorage.setItem('isLoget', stored_data[0]);
-    sessionStorage.setItem('avatar', stored_data[1] );
+    
     sessionStorage.setItem('username', stored_data[2]);
     sessionStorage.setItem('userId', stored_data[3]);
 
@@ -57,7 +58,7 @@ export default  function Profile()
                 
                 <div className="side_two_info">
 
-                    <ProfileAvatar  img={data.profile_img}   username={data.username}/>
+                    <ProfileAvatar  img={data.profile_img}   username={data.username} avatar_updated={data.is_profile_img_updated}/>
                     <ProfileInfo location={data.location} totalgame={data.totalgame}
                     loss={data.loss} wins={data.wins} rank={data.rank}
                     
@@ -72,9 +73,9 @@ export default  function Profile()
 
             <Tabs position="relative" variant='soft-rounded' colorScheme='blue' isFitted>
                         <TabList mb='1em'>
-                            <Tab>History</Tab>
-                            <Tab>Friends</Tab>
-                            <Tab>Groups</Tab>
+                            <Tab>History </Tab>
+                            <Tab>Friends </Tab>
+                            <Tab>Community </Tab>
                             <Tab>Achievevements</Tab>
                         </TabList>
 

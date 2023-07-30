@@ -7,6 +7,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { Observable } from 'rxjs';
 import { FriendRequestStatus, FriendRequest_Interface } from 'src/entities/friend/interfaces/friend-request.interface';
+import { join } from 'path';
 
 
 
@@ -125,7 +126,7 @@ export class UserController {
 
 
 
-
+    @UseGuards(AuthGuard)
     @Put('edit/avatar')
         @UseInterceptors(FileInterceptor('file',
         {
@@ -148,12 +149,16 @@ export class UserController {
         ) file: Express.Multer.File)
         
         {
+            // const genereted_file_name = req.user.username + file.filename
+            // console.log(genereted_file_name)
+        return this.userService.updateAvatar(req.user.id, {"profile_img" : file.filename});
+    }
 
-        const tocken_part = req.headers['authorization'].split(' ')
-        const decodedJwtAccessToken = this.jwtService.decode(tocken_part[1]);
-        const id = decodedJwtAccessToken['id'];
 
-        return this.userService.updateAvatar(id, {"profile_img" : file.path});
+    @Get('profile-img/:path')
+    getProfileImage(@Param('path') path, @Res() res)
+    {
+        return res.sendFile(join(process.cwd(), 'uploadedFiles/avatars/' + path));
     }
 
     @UseGuards(AuthGuard)
@@ -174,6 +179,23 @@ export class UserController {
     create(@Body() CreateUserDto: CreateUserDto)
     {
         return this.userService.create(CreateUserDto);
+    }
+
+
+    @UseGuards(AuthGuard)
+    @Post('log-out')
+    logOut(@Req() request, @Res() response) {
+        
+        response.cookie('access_token', '',{
+            httpOnly: false,
+                  secure: false,
+                  path: "/",
+                  maxAge: 0,
+                //   expires: new Date(Date.now() + 1 * 24 * 600 * 10000),
+                 
+          });
+    //   response.setHeader('Set-Cookie', this.userService.getCookieForLogOut());
+      return response.sendStatus(200);
     }
    
 }
