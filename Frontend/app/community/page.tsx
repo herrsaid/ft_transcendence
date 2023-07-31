@@ -8,7 +8,7 @@ import { useState, useEffect, useRef, useContext, createContext } from 'react'
 import SideNavBar_Res from '../Components/SideNavBar_Res/SideNavBar_Res';
 import Cookies from 'js-cookie';
 import {socket} from '../socket/socket'
-
+import Messages from '../messages/messages';
 const Reciver = createContext(0);
 
 function Message(props: any)
@@ -89,18 +89,18 @@ function Chat()
     const myId = sessionStorage.getItem('userId')
     let msg: any[] = messages
     console.log('id', myId)
-    useEffect(()=>{
+    // useEffect(()=>{
         
-        fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/messages?id=${myId}`, {
-            method: 'GET',
-            headers:{
-                Authorization: `Bearer ${Cookies.get('access_token')}`
-            }
+    //     fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/messages?id=${myId}`, {
+    //         method: 'GET',
+    //         headers:{
+    //             Authorization: `Bearer ${Cookies.get('access_token')}`
+    //         }
             
-        }).then((response) => response.json())
-        .then(data => setMessages(data))
-        console.log(msg)
-    },[]);
+    //     }).then((response) => response.json())
+    //     .then(data => setMessages(data))
+    //     console.log(msg)
+    // },[]);
     // useEffect(()=>{
     // let maped = false
     // if (maped == false)
@@ -117,7 +117,7 @@ function Chat()
     //     // setMaped(true);
     // }
     // },[])
-    // console.log(msg)
+    console.log('messages',Messages)
     const [rerender, setRerender] = useState(1);
     useEffect (() =>{
         socket.on('message', (data:any) => {
