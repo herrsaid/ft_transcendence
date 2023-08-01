@@ -21,7 +21,7 @@ const ProfileAvatar = (props:props) => {
     const router = useRouter();
     
     let button_placeholder = 'request';
-    const [mydata, setData] = useState([])
+    const [status, setstatus] = useState("")
    
   
 
@@ -60,12 +60,30 @@ const ProfileAvatar = (props:props) => {
         }
             
           }).then((response) => response.json())
-          .then(data => setData(data))
+          .then(data => setstatus("cancel"))
     }
     
 
-    console.log(data.status)
+
+    const handel_response_user = (friendRequestId:string, user_response:string) =>
+    {
+        fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/response/${friendRequestId}`, {
+            method: 'PUT',
+            headers:{
+                Authorization: `Bearer ${Cookies.get('access_token')}`,
+                'Content-Type': 'application/json'
+                },
+            body: JSON.stringify({ status: user_response })
+            
+          }).then((response) => response.json())
+          .then(data => setstatus(data.status))
+    }
+
+    console.log(data)
     
+
+
+
     if (data.status === 'pending')
         button_placeholder = 'cancel';
     else if (data.status === 'not-sent')
@@ -76,6 +94,45 @@ const ProfileAvatar = (props:props) => {
         button_placeholder = 'unfriend';
     else if (data.status === 'declined')
         button_placeholder = 'request';
+
+    const handel_all_request = () =>
+    {
+
+        if (data.status === 'pending'){
+            button_placeholder = 'cancel';
+            handel_response_user(data.id, 'not-sent');
+    
+        }
+        else if (data.status === 'not-sent')
+        {
+            button_placeholder = 'request';
+            send_request();
+            console.log("requested")
+        }
+        else if (data.status === 'waiting-for-current-user-response')
+        {
+            button_placeholder = 'accept';
+            handel_response_user(data.id, 'accepted');
+            console.log("accepted")
+        }
+        else if (data.status === 'accepted')
+        {
+            button_placeholder = 'unfriend';
+            handel_response_user(data.id, 'not-sent');
+            console.log("unfriend")
+        }
+        else if (data.status === 'declined')
+        {
+            button_placeholder = 'request';
+            send_request();
+            console.log("requested")
+            // func_do = send_request();
+        }
+        
+        setstatus(button_placeholder)
+    }
+
+
 
 
 
@@ -97,7 +154,7 @@ const ProfileAvatar = (props:props) => {
                             <p className="username_user">{props.username}</p>
                             </div>
                         <div>
-                            <button className={data.status == 'pending' ? 'request_sent' : 'add_friend_btn'} onClick={send_request}>{button_placeholder}</button>
+                            <button className={data.status == 'pending' ? 'request_sent' : 'add_friend_btn'} onClick={handel_all_request}>{status ? status : button_placeholder}</button>
                             <button className="add_friend_btn">message</button>
                         </div>
                 </div>

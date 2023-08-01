@@ -106,8 +106,9 @@ export class UserService {
 
     sendFriendRequest(receiverId: number, creator: User)
     {
+        
         if (receiverId === creator.id)
-        return of({error: 'It is not possible to add yourself'});
+            return of({error: 'It is not possible to add yourself'});
         
         return this.findOneById(receiverId).pipe(
 
@@ -121,6 +122,7 @@ export class UserService {
                             receiver,
                             status: 'pending'
                         }
+                        console.log(friendRequest)
 
                         return from(this.FriendRequestRepo.save(friendRequest));
                     })
@@ -153,9 +155,9 @@ export class UserService {
             switchMap((friendRequest: FriendRequest_Interface) => {
                 if (friendRequest?.receiver.id === currentUser.id)
                 {
-                    return of({status: 'waiting-for-current-user-response'});
+                    return of({status: 'waiting-for-current-user-response', id:friendRequest?.id});
                 }
-                return of({status: friendRequest?.status || 'not-sent'});
+                return of({status: friendRequest?.status || 'not-sent', id: friendRequest?.id});
             }),
 
             );

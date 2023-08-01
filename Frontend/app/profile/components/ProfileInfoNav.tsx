@@ -36,7 +36,7 @@ const ProfileInfoNav = () => {
     {
         event.preventDefault();
        
-        if (username_updated == "" || username_updated.length < 2)
+        if (username_updated.trim() == "" || username_updated.trim().length < 2 || username_updated.includes(' '))
         {
           toast({
             title: 'Username invalid.',
@@ -56,7 +56,16 @@ const ProfileInfoNav = () => {
           body: JSON.stringify({ username: username_updated })
       });
       if (!res.ok)
-          throw new Error("failed to fetch users");
+      {
+        toast({
+          title: 'Username already use.',
+          description: "this username already use.",
+          status: 'error',
+          duration: 9000,
+          isClosable: true,
+        })
+        // throw new Error("failed to fetch users");
+      }
       else
       {
         setusername_updated("")

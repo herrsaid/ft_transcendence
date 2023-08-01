@@ -81,7 +81,8 @@ export class UserController {
         const receiverId = parseInt(receiverStringId);
         delete(req.user.iat)
         delete(req.user.exp)
-        
+        // console.log(receiverId)
+        // console.log(req.user)
         return this.userService.sendFriendRequest(receiverId, req.user);
     }
 
