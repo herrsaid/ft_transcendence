@@ -5,8 +5,8 @@ import {
     WebSocketServer,
   } from '@nestjs/websockets';
   import { Socket, Server } from 'socket.io';
-  import { OBJ } from '../start_game/play.ball.gateway';
-import { GameStream } from '../game_brain/methods/Game_stream_attribute';
+  import { GameStreamAttribute } from '../game_brain/methods/Game_stream_attribute';
+  import { GameObj } from '../start_game/play.ball.gateway';
   let none: Socket;
   @WebSocketGateway(1340, {
     cors: { origin: '*', credentials: true },
@@ -17,44 +17,44 @@ import { GameStream } from '../game_brain/methods/Game_stream_attribute';
     @SubscribeMessage('LoadStream')
     handleLoadStream(client: Socket): void {
       console.log("Connecting");
-      client.emit("LoadStream",OBJ.GameHead.length);
+      client.emit("LoadStream",GameObj.length);
     }
     @SubscribeMessage('new_spectator')
     handleNewSpectator(client: Socket,RoomNumber: number): void {
-      if(OBJ.GameHead.length && OBJ.GameHead[RoomNumber] !== undefined)
-        OBJ.GameHead[RoomNumber].GameStreamObj.push(new GameStream);
-      console.log('new_spectator at: ',RoomNumber,OBJ.GameHead[RoomNumber].GameStreamObj.length );
-      if(OBJ.GameHead.length
-        && OBJ.GameHead[RoomNumber] !== undefined
-        && OBJ.GameHead[RoomNumber].GameStreamObj[OBJ.GameHead[RoomNumber].GameStreamObj.length - 1] !== undefined)
+      if(GameObj.length && GameObj[RoomNumber] !== undefined)
+        GameObj[RoomNumber].StreamsInfo.push(new GameStreamAttribute);
+      console.log('new_spectator at: ',RoomNumber,GameObj[RoomNumber].StreamsInfo.length );
+      if(GameObj.length
+        && GameObj[RoomNumber] !== undefined
+        && GameObj[RoomNumber].StreamsInfo[GameObj[RoomNumber].StreamsInfo.length - 1] !== undefined)
       {
-        OBJ.GameHead[RoomNumber].GameStreamObj[OBJ.GameHead[RoomNumber].GameStreamObj.length - 1].SpectatorID = client.id;
-        OBJ.GameHead[RoomNumber].GameStreamObj[OBJ.GameHead[RoomNumber].GameStreamObj.length - 1].SpectatorSocket = client;
+        GameObj[RoomNumber].StreamsInfo[GameObj[RoomNumber].StreamsInfo.length - 1].SpectatorID = client.id;
+        GameObj[RoomNumber].StreamsInfo[GameObj[RoomNumber].StreamsInfo.length - 1].SpectatorSocket = client;
       }
     }
 	@SubscribeMessage('spectator_leave')
 	handleconection_closed(client: Socket): void {
-    if(OBJ.GameHead)
+    if(GameObj)
     {
-      for(let a = 0 ; a<OBJ.GameHead.length; a++ )
+      for(let a = 0 ; a<GameObj.length; a++ )
       { 
-        if(OBJ.GameHead[a].Player1ID === client.id)
+        if(GameObj[a].PlayersInfo.Player1ID === client.id)
         { 
-          OBJ.GameHead[a].GameStatus = 0;
-          OBJ.GameHead[a].Player1ID = '';
+          GameObj[a].RoomInfo.GameStatus = 0;
+          GameObj[a].PlayersInfo.Player1ID = '';
         }
       }
     }
   }
     handleDisconnect(client: Socket): void {
-      if(OBJ.GameHead)
+      if(GameObj)
       {
-        for(let a = 0 ; a<OBJ.GameHead.length; a++ )
+        for(let a = 0 ; a<GameObj.length; a++ )
         { 
-          if(OBJ.GameHead[a].Player1ID === client.id)
+          if(GameObj[a].PlayersInfo.Player1ID === client.id)
           { 
-            OBJ.GameHead[a].GameStatus = 0;
-            OBJ.GameHead[a].Player1ID = '';
+            GameObj[a].RoomInfo.GameStatus = 0;
+            GameObj[a].PlayersInfo.Player1ID = '';
           }
         }
       }
