@@ -10,13 +10,7 @@ const History = () => {
 
 <OneHistory/>
 <OneHistory/>
-<OneHistory/>
-<OneHistory/>
-<OneHistory/>
-<OneHistory/>
-<OneHistory/>
-<OneHistory/>
-<OneHistory/>
+
 </div>
 
     );
