@@ -27,10 +27,7 @@ const ProfileInfoNav = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [username_updated, setusername_updated] = useState("");
     const router = useRouter();
-    // const btnRef = React.useRef()
-
-
-
+   
 
     const onUpdate_Username = async (event:React.FormEvent) =>
     {

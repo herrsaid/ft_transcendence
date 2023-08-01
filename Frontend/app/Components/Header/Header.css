@@ -26,12 +26,28 @@
     color: var(--second-color);
     font-weight: bold;
     text-shadow: 0px 0px 4px #fff;
+    cursor: pointer;
+    transition: 0.5s;
 }
 
 .logo-search span
 {
     font-size: 28px;
     font-style: italic;
+    transition: 0.5s;
+}
+
+.logo-search span:hover
+{
+    font-size: 30px;
+    color:var(--second-color);
+}
+
+
+.logo-search:hover
+{
+    /* font-size: 30px; */
+    color: #fff;
 }
 
 .profile-img

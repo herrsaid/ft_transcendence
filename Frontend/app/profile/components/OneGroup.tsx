@@ -54,7 +54,7 @@ const OneGroup = () => {
 
                     <Box p='4' >
 
-                    <AvatarGroup size='md' max={7}>
+                    <AvatarGroup size='md' max={9}>
   {myFriends ? myFriends : "No memebers!"}
 </AvatarGroup>
 
