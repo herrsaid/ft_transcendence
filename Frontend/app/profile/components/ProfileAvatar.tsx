@@ -2,9 +2,10 @@
 import ProfileInfoNav from "./ProfileInfoNav";
 import "../profile.css"
 
-import {FaPen, FaUpload} from 'react-icons/fa'
+import {FaUpload} from 'react-icons/fa'
 import Cookies from 'js-cookie';
 import { Image } from "@chakra-ui/react";
+import { useState } from "react";
 
 
 interface props{
@@ -18,36 +19,45 @@ interface props{
 const ProfileAvatar = (props:props) => {
 
     let new_src_img;
+    const [realimg, setrealimg] = useState("");
 
-        const upload = () => {
+        const upload = async () => {
    
             var avatar = document.querySelector('input[type="file"]')
 
             var data = new FormData()
-            data.append('file', avatar.files[0])
+            data.append('file', avatar?.files[0])
             data.append('user', 'hubot')
 
             
-            fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/edit/avatar`, {
+            const  res = await fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/edit/avatar`, {
                 method: 'PUT',
                 headers: {
                 Authorization: `Bearer ${Cookies.get('access_token')}`,
                     },
                 body: data
             })
+            if (!res.ok)
+                throw new Error("failed to fetch users");
+            else
+            {
+                new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + props.img;
+                // setrealimg(new_src_img);
+            }
+                
             };
 
 
             if (props.avatar_updated)
             {
                 new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + props.img;
-                sessionStorage.setItem('avatar', new_src_img );
+                sessionStorage.setItem('avatar', new_src_img);
             }
             else
                 sessionStorage.setItem('avatar', props.img );
                 
-            
 
+    console.log(realimg)
     return (
         <div>
 
