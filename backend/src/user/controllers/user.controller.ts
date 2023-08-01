@@ -149,8 +149,7 @@ export class UserController {
         ) file: Express.Multer.File)
         
         {
-            // const genereted_file_name = req.user.username + file.filename
-            // console.log(genereted_file_name)
+            
         return this.userService.updateAvatar(req.user.id, {"profile_img" : file.filename});
     }
 
@@ -161,12 +160,14 @@ export class UserController {
         return res.sendFile(join(process.cwd(), 'uploadedFiles/avatars/' + path));
     }
 
+
+
+
     @UseGuards(AuthGuard)
-    @Put('edit/:id')
-    updateUsername(@Param('id') stringId:string, @Body() updateUsername: updateUsername)
+    @Put('edit/me/username')
+    updateUsername(@Body() updateUsername: updateUsername, @Request() req)
     {
-        const id = parseInt(stringId);
-        return this.userService.updateUsername(id, updateUsername);
+        return this.userService.updateUsername(req.user.id, updateUsername);
     }
 
     @Get(':id')
