@@ -40,7 +40,7 @@ const ProfileInfoNav = () => {
           <ModalCloseButton />
           <ModalBody >
           <div className="setting_security">
-                <h2>Security</h2>
+                {/* <h2>Security</h2> */}
                 <h3>2FA <Switch size='lg'  m={8} />  </h3>
 
 

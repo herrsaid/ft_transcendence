@@ -5,10 +5,16 @@ interface props{
     image:string,
     username:string,
     status:boolean
-    id:number
+    id:number,
+    avatar_updated:boolean
 }
 
 const OneFriend = (props:props) => {
+    let new_src_img;
+
+    if (props.avatar_updated)
+        new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + props.image;
+
     return (
 
 
@@ -16,7 +22,7 @@ const OneFriend = (props:props) => {
         <div className="friend">
         <div className="inside_friend">
            
-    <Avatar size='md' name='Dan Abrahmov' src={props.image} >
+    <Avatar size='md' name='Dan Abrahmov' src={props.avatar_updated ? new_src_img : props.image} >
     <AvatarBadge boxSize='1em' bg='green.500' borderColor='#18184a'/>
     </Avatar>
 

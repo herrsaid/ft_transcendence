@@ -5,7 +5,7 @@ import useSWR from "swr"
 
 
 const OneGroup = () => {
-
+    let new_src_img:string;
     const router = useRouter();
     let myFriends;
     
@@ -32,9 +32,11 @@ const OneGroup = () => {
     if (data)
     {
         myFriends = data.map(friend => {
+            if (friend.is_profile_img_updated)
+                new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + friend.profile_img;
             return <Avatar key={friend.id} 
             name={friend.username} 
-            src={friend.profile_img}
+            src={friend.is_profile_img_updated ? new_src_img : friend.profile_img}
             />
         })
     }
@@ -52,7 +54,7 @@ const OneGroup = () => {
 
                     <Box p='4' >
 
-                    <AvatarGroup size='md' max={5}>
+                    <AvatarGroup size='md' max={7}>
   {myFriends ? myFriends : "No memebers!"}
 </AvatarGroup>
 

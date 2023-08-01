@@ -1,7 +1,7 @@
 "use client"
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+
 import Cookies from 'js-cookie';
 
 import useSWR from "swr"
@@ -27,7 +27,7 @@ export default function SearchPage()
 {
     
     const searchParams = useSearchParams()
-    const query = searchParams.get('q')
+    const query = searchParams?.get('q')
     const encodedsearchQuery = encodeURI(query || "");
 
     const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/search?q=${encodedsearchQuery}`,
@@ -50,6 +50,7 @@ export default function SearchPage()
         username={user.username} 
         status={user.status}
         id={user.id}
+        avatar_updated={user.is_profile_img_updated}
         />
     })}
 </div>

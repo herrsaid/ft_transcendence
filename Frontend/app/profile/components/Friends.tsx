@@ -42,6 +42,7 @@ const Friends = () => {
             username={friend.username} 
             status={friend.status}
             id={friend.id}
+            avatar_updated={friend.is_profile_img_updated}
             />
         })
     }

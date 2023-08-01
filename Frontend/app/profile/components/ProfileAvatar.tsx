@@ -53,7 +53,7 @@ const ProfileAvatar = (props:props) => {
 
             <div className="profile_avatar">
                 <div className="avatar_edit_real">
-                    {/* <img src={props.img} className="my_profile_img"></img> */}
+                    
                     <Image
   borderRadius='full'
   boxSize='100px'

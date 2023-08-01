@@ -64,7 +64,8 @@ export default  function Header()
 
 <Box p='2'>
 
-  <Heading size='md'> <h1 className="logo-search">42PONG</h1></Heading>
+  {/* <Heading size='md'> <h1 className="logo-search">42PONG</h1></Heading> */}
+  <Heading size='md'> 42PONG</Heading>
 
 </Box>
 

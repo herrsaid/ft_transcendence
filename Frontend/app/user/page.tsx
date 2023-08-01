@@ -1,32 +1,40 @@
 "use client"
 import '../profile/profile.css'
 import {ProfileAvatar, ProfileInfo} from './index'
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useEffect } from 'react'
 import Cookies from 'js-cookie';
-
+import useSWR from "swr"
 
 export default  function User()
 {
-    
+    const router = useRouter();
     const searchParams = useSearchParams()
-    const username = searchParams.get('username')
+    const username = searchParams?.get('username')
 
-    const [mydata, setData] = useState([])
-    
-    useEffect(()=>{
-    
-        fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/${username}`, {
+
+    const fetchUserData = async (url:string) => {
+        const res = await fetch(url, {
             method: 'GET',
-            headers:{
+            headers: {
                 Authorization: `Bearer ${Cookies.get('access_token')}`
-        }
-            
-          }).then((response) => response.json())
-          .then(data => setData(data))  
-    },[]);
+             }});
 
-    // console.log(mydata)
+        if (res.status == 401)
+            router.replace("/")
+             
+        if (!res.ok)
+            throw new Error("failed to fetch users");
+        return res.json();
+    }
+
+
+    const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/${username}`,
+    fetchUserData
+    );
+
+    if (!data)
+        return null;
 
 
     return(
@@ -37,12 +45,9 @@ export default  function User()
                         
                         <div className="side_two_info">
 
-
-                            
-                            <ProfileAvatar  img={mydata.profile_img}   username={mydata.username} id={mydata.id}/>
-                            <ProfileInfo location={mydata.location} totalgame={mydata.totalgame}
-                            loss={mydata.loss} wins={mydata.wins} rank={mydata.rank}
-                            
+                            <ProfileAvatar  img={data.profile_img}   username={data.username} id={data.id} avatar_updated={data.is_profile_img_updated}/>
+                            <ProfileInfo location={data.location} totalgame={data.totalgame}
+                            loss={data.loss} wins={data.wins} rank={data.rank}
                             />
 
                         </div>

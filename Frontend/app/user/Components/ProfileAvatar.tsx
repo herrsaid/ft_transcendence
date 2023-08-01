@@ -2,42 +2,53 @@
 import { useEffect, useState } from "react";
 import "../../profile/profile.css"
 import Cookies from 'js-cookie';
-import { Avatar, AvatarBadge, Image, Stack } from "@chakra-ui/react";
+import useSWR from "swr"
+import { Avatar, AvatarBadge} from "@chakra-ui/react";
+import { useRouter } from "next/navigation";
 
 interface props{
     img:string,
     username:string,
-    id:number
+    id:number,
+    avatar_updated:boolean
 }
 
 
 
 const ProfileAvatar = (props:props) => {
 
+    let new_src_img;
+    const router = useRouter();
+    
     let button_placeholder = 'request';
-    // const [is_clicked, setclicked] = useState(false)
     const [mydata, setData] = useState([])
    
-    
-    
-    
-    useEffect(()=>{
-        
-        if (props.id != undefined)
-        {
-            fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/status/${props.id}`, {
-                method: 'GET',
-                headers:{
-                    Authorization: `Bearer ${Cookies.get('access_token')}`
-                }
-                
-            }).then((response) => response.json())
-            .then(data => setData(data))
-            
-            
-        }
-        
-    },[props.id]);
+  
+
+    const fetchFriendStatus = async (url:string) => {
+        const res = await fetch(url, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${Cookies.get('access_token')}`
+             }});
+
+        if (res.status == 401)
+            router.replace("/")
+             
+        if (!res.ok)
+            throw new Error("failed to fetch users");
+        return res.json();
+    }
+
+
+    const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/status/${props.id}`,
+    fetchFriendStatus
+    );
+
+    if (!data)
+        return null;
+
+
 
     const send_request = () =>
     {
@@ -53,56 +64,42 @@ const ProfileAvatar = (props:props) => {
     }
     
 
-    console.log(mydata.status)
+    console.log(data.status)
     
-    if (mydata.status === 'pending')
+    if (data.status === 'pending')
         button_placeholder = 'cancel';
-    else if (mydata.status === 'not-sent')
+    else if (data.status === 'not-sent')
         button_placeholder = 'request';
-    else if (mydata.status === 'waiting-for-current-user-response')
+    else if (data.status === 'waiting-for-current-user-response')
         button_placeholder = 'accept';
-    else if (mydata.status === 'accepted')
+    else if (data.status === 'accepted')
         button_placeholder = 'unfriend';
-    else if (mydata.status === 'declined')
+    else if (data.status === 'declined')
         button_placeholder = 'request';
-    return (
-        <div>
 
+
+
+
+    if (props.avatar_updated)
+        new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + props.img;
+    return (
+        
             <div className="profile_avatar">
                 
-            
-
-
-
                 <div className="avatar_edit_real">
-                    {/* <img src={props.img} ></img> */}
-
-                    
-                    <Avatar size='xl' name='Segun Adebayo' src={props.img}>
-    <AvatarBadge boxSize='0.8em' bg='green.500' borderColor='#18184a' />
-  </Avatar>
+ 
+                    <Avatar size='xl' name='Segun Adebayo' src={props.avatar_updated ? new_src_img : props.img}>
+                        <AvatarBadge boxSize='0.8em' bg='green.500' borderColor='#18184a' />
+                        </Avatar>
   
-
-  {/* <Avatar>
-    <AvatarBadge boxSize='1.25em' bg='green.500' />
-  </Avatar> */}
-                    {/* <Image
-  borderRadius='full'
-  boxSize='125px'
-  src={props.img}
-  alt='Dan Abramov'
-/> */}
                 </div> 
+                            <div>
+                            <p className="username_user">{props.username}</p>
+                            </div>
                         <div>
-                        <p className="username_user">{props.username}</p>
-                        </div>
-                        <div>
-                            <button className={mydata.status == 'pending' ? 'request_sent' : 'add_friend_btn'} onClick={send_request}>{button_placeholder}</button>
+                            <button className={data.status == 'pending' ? 'request_sent' : 'add_friend_btn'} onClick={send_request}>{button_placeholder}</button>
                             <button className="add_friend_btn">message</button>
                         </div>
-                </div>
-                
-                               
                 </div>
         
     );
