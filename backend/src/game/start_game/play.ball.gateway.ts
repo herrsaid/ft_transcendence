@@ -57,24 +57,28 @@ import {
     }
     end_simulation(Room:number)
     {
-      // playerI left
-      if(GameObj[Room].PlayersInfo.Player1ID === '')
-        GameObj[Room].PlayersInfo.Player2Client.emit('GameEnd',"YOU WIN");
-      // playerII left
-      else if(GameObj[Room].PlayersInfo.Player2ID === '')
-        GameObj[Room].PlayersInfo.Player1Client.emit('GameEnd',"YOU WIN");
       // playerI colect target
-      else if(GameObj[Room].RoomInfo.GamePoints >=  GameObj[Room].PlayersInfo.Result1Val)
+      if(GameObj[Room].RoomInfo.GamePoints >=  GameObj[Room].PlayersInfo.Result1Val
+        && GameObj[Room].PlayersInfo.Player1Client !== undefined
+        && GameObj[Room].PlayersInfo.Player2Client !== undefined)
       {
         GameObj[Room].PlayersInfo.Player1Client.emit('GameEnd',"YOU WIN");
         GameObj[Room].PlayersInfo.Player2Client.emit('GameEnd',"YOU LOSE");
       }
-      // playerII colect target
-      else if(GameObj[Room].RoomInfo.GamePoints >=  GameObj[Room].PlayersInfo.Result2Val)
+        // playerII colect target
+      else if(GameObj[Room].RoomInfo.GamePoints >=  GameObj[Room].PlayersInfo.Result2Val
+        && GameObj[Room].PlayersInfo.Player1Client !== undefined
+        && GameObj[Room].PlayersInfo.Player2Client !== undefined)
       {
         GameObj[Room].PlayersInfo.Player1Client.emit('GameEnd',"YOU LOSE");
         GameObj[Room].PlayersInfo.Player2Client.emit('GameEnd',"YOU WIN");
       }
+      // playerI left
+      else if(GameObj[Room].PlayersInfo.Player1ID === '' && GameObj[Room].PlayersInfo.Player2Client !== undefined)
+        GameObj[Room].PlayersInfo.Player2Client.emit('GameEnd',"YOU WIN");
+      // playerII left
+      else if(GameObj[Room].PlayersInfo.Player2ID === '' && GameObj[Room].PlayersInfo.Player1Client !== undefined)
+        GameObj[Room].PlayersInfo.Player1Client.emit('GameEnd',"YOU WIN");
       // remove Object of this room
       console.log('['+GameObj.length+']');
       GameObj = GameObj.filter((obj) => obj.PlayersInfo.Player1ID !== '' &&  obj.PlayersInfo.Player2ID !== '');

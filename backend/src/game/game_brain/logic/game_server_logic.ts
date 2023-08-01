@@ -63,7 +63,7 @@ export class GameLogic
     }
     Head(data:data)
     {
-        this.debug(data);
+        // this.debug(data);
         // allways let ball move on horizontal if BallXdirection is positive ball move right else ball move left
         data.BallInfo.BallXpos += (data.BallInfo.BallXdirection * data.RoomInfo.GameSpeed);
         //if ballYpos not in the same Rakect2Yposenter enter this condition
@@ -75,7 +75,11 @@ export class GameLogic
                 data.BallInfo.BallXdirection = -1;
                 //if player1 get target of the game then gamestatus will false and the simulation will end
                 if(++data.PlayersInfo.Result1Val >= data.RoomInfo.GamePoints)
+                {
+                    data.PlayersInfo.Player1ID = '';
+                    data.PlayersInfo.Player2ID = '';
                     data.RoomInfo.GameStatus = 0;
+                }
                 data.BallInfo.BallXpos = data.RoomInfo.GameWidth/2;
                 data.RoomInfo.Sleep = 3000;
             }
@@ -99,7 +103,11 @@ export class GameLogic
                 data.BallInfo.BallXdirection = +1;
                 //if player2 get target of the game then gamestatus will false and the simulation will end
                 if(++data.PlayersInfo.Result2Val >= data.RoomInfo.GamePoints)
+                {
+                    data.PlayersInfo.Player1ID = '';
+                    data.PlayersInfo.Player2ID = '';
                     data.RoomInfo.GameStatus = 0;
+                }
                 data.BallInfo.BallXpos = data.RoomInfo.GameWidth/2;
                 data.RoomInfo.Sleep = 3000;
             }

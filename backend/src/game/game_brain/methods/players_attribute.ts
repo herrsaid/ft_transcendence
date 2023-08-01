@@ -11,8 +11,8 @@ export class PlayersAttribute
     public Player2ID: string;
     public Player1UserName: string;
     public Player2UserName: string;
-    public Player1Client: Socket;
-    public Player2Client: Socket;
+    public Player1Client: Socket | undefined;
+    public Player2Client: Socket | undefined;
 
     constructor()
     {
@@ -22,7 +22,7 @@ export class PlayersAttribute
         this.Player2ID = '';
         this.Player1UserName = '';
         this.Player2UserName = '';
-        this.Player1Client = null;
-        this.Player2Client = null;
+        this.Player1Client = undefined;
+        this.Player2Client = undefined;
     }
 }
