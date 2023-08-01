@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import './Login.css'
 
-export default function Welcome()
+export default function Login()
 {
     return(
         <>

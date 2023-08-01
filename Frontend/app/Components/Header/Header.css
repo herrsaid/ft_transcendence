@@ -25,6 +25,13 @@
     font-size: 30px;
     color: var(--second-color);
     font-weight: bold;
+    text-shadow: 0px 0px 4px #fff;
+}
+
+.logo-search span
+{
+    font-size: 28px;
+    font-style: italic;
 }
 
 .profile-img

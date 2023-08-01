@@ -26,9 +26,9 @@ function Login()
 
         console.log(res.status)
         if (res.status == 401)
-            router.replace("/")
+            router.replace("/login")
         else if (res.status == 200)
-            router.replace("/")
+            router.replace("/login")
              
     if (!res.ok)
         throw new Error("failed to fetch users");
@@ -64,8 +64,8 @@ export default  function Header()
 
 <Box p='2'>
 
-  {/* <Heading size='md'> <h1 className="logo-search">42PONG</h1></Heading> */}
-  <Heading size='md'> 42PONG</Heading>
+ <h1 className="logo-search">42<span>PONG</span></h1>
+  {/* <Heading size='md'> 42PONG</Heading> */}
 
 </Box>
 

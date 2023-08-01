@@ -15,7 +15,7 @@ const fetchUsers = async (url:string) => {
                 Authorization: `Bearer ${Cookies.get('access_token')}`
              }});
 
-    console.log(res)
+    // console.log(res)
     if (!res.ok)
     {
         throw new Error("failed to fetch users");

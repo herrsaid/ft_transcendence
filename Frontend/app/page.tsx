@@ -1,10 +1,11 @@
-import Login from './Components/Login/Login'
+import Home from "./Components/Home/Home";
+
 
 
 export default function App() {
   return (
     <>
-        <Login/>
+        <Home/>
     </>
   )
 }

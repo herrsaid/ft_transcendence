@@ -21,7 +21,7 @@ export default  function Profile()
              }});
 
     if (res.status == 401)
-        router.replace("/")
+        router.replace("/login")
              
     if (!res.ok)
         throw new Error("failed to fetch users");
