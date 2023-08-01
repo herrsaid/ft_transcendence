@@ -23,16 +23,13 @@ async function fetchdata() {
                     Authorization: `Bearer ${Cookies.get('access_token')}`
                 }
             })
-        Messages = response.json();
-        console.log('hhhhhh')
-        return Messages.then(data => {return(data)});
+        return response.json();
     }
     catch (error)
     {
         return null
     }
 }
-Messages = fetchdata()
-let msg
-console.log('data', Messages.then(data => {console.log(data)}));
+Messages =  fetchdata();
+console.log('data', Messages);
 export default Messages;
