@@ -25,8 +25,6 @@ import {
     }
     @SubscribeMessage('send_player2_data')
     handleSendUser2Data(client: Socket, data: number): void {
-      if(GameObj)
-      {
         for(let a = 0 ; a<GameObj.length; a++ )
         {
           if(GameObj[a].PlayersInfo.Player2ID === client.id)
@@ -38,12 +36,9 @@ import {
               GameObj[a].PlayersInfo.Player1Client.emit('send_player1_data', data);
           }
         }
-    }
       }
 	@SubscribeMessage('conection_closed')
 	handleconection_closed(client: Socket): void {
-    if(GameObj)
-    {
       for(let a = 0 ; a<GameObj.length; a++ )
       {
         if(GameObj[a].PlayersInfo.Player2ID === client.id)
@@ -52,11 +47,8 @@ import {
           GameObj[a].PlayersInfo.Player2ID = '';
         }
       }
-    }
   }
   handleDisconnect(client: Socket): void {
-    if(GameObj)
-    {
       for(let a = 0 ; a<GameObj.length; a++ )
       {
         if(GameObj[a].PlayersInfo.Player2ID === client.id)
@@ -66,5 +58,4 @@ import {
         }
       }
     }
-  }
 }
