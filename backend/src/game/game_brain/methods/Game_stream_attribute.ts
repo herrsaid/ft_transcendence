@@ -5,8 +5,9 @@ import { Socket } from 'socket.io';
 
 @Injectable()
 
-export class GameStream
+export class GameStreamAttribute
 {
+    //attributes
     public SpectatorID: string;
     public SpectatorSocket: Socket;
 
@@ -16,3 +17,5 @@ export class GameStream
         this.SpectatorSocket = null;
     }
 }
+
+export let StreamsInfo:GameStreamAttribute[] = [];

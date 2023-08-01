@@ -5,10 +5,9 @@ import {
   import { Interval } from "@nestjs/schedule";
   import { Player1ID,speed1,points1,myusername} from './play.player1.gateway'
   import { Player2ID,speed2,points2,myusername2} from './play.player2.gateway'
-  import { GameHead } from '../game_brain/logic/GameHead';
-  import { GameObj } from '../game_brain/logic/game_server_class';
+  import {data,obj } from '../game_brain/logic/game_server_obj';
 
-  export let OBJ = new GameObj();
+  export let GameObj: data[] = [];
   @WebSocketGateway(1340, {
     cors: { origin: '*', credentials: true },
   })
@@ -17,98 +16,99 @@ import {
     @Interval(16)
     handleSendBallPos()
     {
-      if(OBJ.GameHead.length)
+      if(GameObj.length)
       {
-        if(OBJ.GameHead.find((elem)=> elem.Player1ID === Player1ID) === undefined
-        && OBJ.GameHead.find((elem)=> elem.Player2ID === Player2ID) === undefined)
+        if(GameObj.find((elem)=> elem.PlayersInfo.Player1ID === Player1ID) === undefined
+        && GameObj.find((elem)=> elem.PlayersInfo.Player2ID === Player2ID) === undefined)
         {
-          OBJ.GameHead.push(new GameHead());
-          OBJ.GameHead[OBJ.GameHead.length - 1].GameSpeed = speed1| speed2;
-          OBJ.GameHead[OBJ.GameHead.length - 1].GamePoints= points1| points2;
-          OBJ.GameHead[OBJ.GameHead.length - 1].Player1UserName = myusername;
-          OBJ.GameHead[OBJ.GameHead.length - 1].Player2UserName = myusername2;
-          OBJ.GameHead[OBJ.GameHead.length - 1].GamePoints= points1| points2;
-          OBJ.GameHead[OBJ.GameHead.length - 1].GameStatus = 1;
-          OBJ.GameHead[OBJ.GameHead.length - 1].Player1ID = Player1ID;
-          OBJ.GameHead[OBJ.GameHead.length - 1].Player2ID = Player2ID;
+          GameObj.push(obj);
+          GameObj[GameObj.length - 1].RoomInfo.GameSpeed = speed1| speed2;
+          GameObj[GameObj.length - 1].RoomInfo.GamePoints= points1| points2;
+          GameObj[GameObj.length - 1].PlayersInfo.Player1UserName = myusername;
+          GameObj[GameObj.length - 1].PlayersInfo.Player2UserName = myusername2;
+          GameObj[GameObj.length - 1].RoomInfo.GamePoints= points1| points2;
+          GameObj[GameObj.length - 1].RoomInfo.GameStatus = 1;
+          GameObj[GameObj.length - 1].PlayersInfo.Player1ID = Player1ID;
+          GameObj[GameObj.length - 1].PlayersInfo.Player2ID = Player2ID;
         }
-        for(let a = 0 ; a<OBJ.GameHead.length; a++ )
+        for(let a = 0 ; a<GameObj.length; a++ )
         {
-          if(OBJ.GameHead[a].Sleep <= 0 && OBJ.GameHead[a].GameStatus === 1)
+          if(GameObj[a].RoomInfo.Sleep <= 0 && GameObj[a].RoomInfo.GameStatus === 1)
           {
-            OBJ.GameHead[a].test();
-            for(let b = 0 ; b<OBJ.GameHead[a].GameStreamObj.length; b++)
+            GameObj[a].Logic.Head(GameObj[a]);
+            for(let b = 0 ; b<GameObj[a].StreamsInfo.length; b++)
             {
               const  playersdata =
               {
-                Racket1Ypos: OBJ.GameHead[a].Racket1Ypos,
-                Racket2Ypos: OBJ.GameHead[a].Racket2Ypos,
-                BallXpos: OBJ.GameHead[a].BallXpos,
-                BallYpos: OBJ.GameHead[a].BallYpos,
-                Result1Val: OBJ.GameHead[a].Result1Val,
-                Result2Val: OBJ.GameHead[a].Result2Val,
-                Player1UserName: OBJ.GameHead[a].Player1UserName,
-                Player2UserName: OBJ.GameHead[a].Player2UserName,
+                Racket1Ypos: GameObj[a].RacketsInfo.Racket1Ypos,
+                Racket2Ypos: GameObj[a].RacketsInfo.Racket2Ypos,
+                BallXpos: GameObj[a].BallInfo.BallXpos,
+                BallYpos: GameObj[a].BallInfo.BallYpos,
+                Result1Val: GameObj[a].PlayersInfo.Result1Val,
+                Result2Val: GameObj[a].PlayersInfo.Result2Val,
+                Player1UserName: GameObj[a].PlayersInfo.Player1UserName,
+                Player2UserName: GameObj[a].PlayersInfo.Player2UserName,
               }
-              if(OBJ.GameHead[a].GameStreamObj[b].SpectatorSocket)
-                OBJ.GameHead[a].GameStreamObj[b].SpectatorSocket.emit('send_players_data',playersdata);
+              if(GameObj[a].StreamsInfo[b].SpectatorSocket)
+                GameObj[a].StreamsInfo[b].SpectatorSocket.emit('send_players_data',playersdata);
             }
           }
             else
           {
-            if(!OBJ.GameHead[a].GameStatus)
+            if(!GameObj[a].RoomInfo.GameStatus)
             {
-              if(OBJ.GameHead[a].Player1ID === '')
-                OBJ.GameHead[a].Player2Client.emit('GameEnd',"YOU WIN");
-              else if(OBJ.GameHead[a].Player2ID === '')
-                OBJ.GameHead[a].Player1Client.emit('GameEnd',"YOU WIN");
-              else if(OBJ.GameHead[a].GamePoints >=  OBJ.GameHead[a].Result1Val)
+              if(GameObj[a].PlayersInfo.Player1ID === '')
+                GameObj[a].PlayersInfo.Player2Client.emit('GameEnd',"YOU WIN");
+              else if(GameObj[a].PlayersInfo.Player2ID === '')
+                GameObj[a].PlayersInfo.Player1Client.emit('GameEnd',"YOU WIN");
+              else if(GameObj[a].RoomInfo.GamePoints >=  GameObj[a].PlayersInfo.Result1Val)
               {
-                OBJ.GameHead[a].Player1Client.emit('GameEnd',"YOU WIN");
-                OBJ.GameHead[a].Player2Client.emit('GameEnd',"YOU LOSE");
+                GameObj[a].PlayersInfo.Player1Client.emit('GameEnd',"YOU WIN");
+                GameObj[a].PlayersInfo.Player2Client.emit('GameEnd',"YOU LOSE");
               }
-              else if(OBJ.GameHead[a].GamePoints >=  OBJ.GameHead[a].Result2Val)
+              else if(GameObj[a].RoomInfo.GamePoints >=  GameObj[a].PlayersInfo.Result2Val)
               {
-                OBJ.GameHead[a].Player1Client.emit('GameEnd',"YOU LOSE");
-                OBJ.GameHead[a].Player2Client.emit('GameEnd',"YOU WIN");
+                GameObj[a].PlayersInfo.Player1Client.emit('GameEnd',"YOU LOSE");
+                GameObj[a].PlayersInfo.Player2Client.emit('GameEnd',"YOU WIN");
               }
-              console.log('['+OBJ.GameHead.length+']');
-              OBJ.GameHead = OBJ.GameHead.filter((obj) => obj.Player1ID !== '' &&  obj.Player2ID !== '');
-              if(OBJ.GameHead.length === 1 && OBJ.GameHead[0].Player1ID === '' && OBJ.GameHead[0].Player2ID === '')
-                OBJ.GameHead.pop();
-              console.log('['+OBJ.GameHead.length+']');
+              console.log('['+GameObj.length+']');
+              GameObj = GameObj.filter((obj) => obj.PlayersInfo.Player1ID !== '' &&  obj.PlayersInfo.Player2ID !== '');
+              if(GameObj.length === 1 && GameObj[0].PlayersInfo.Player1ID === '' && GameObj[0].PlayersInfo.Player2ID === '')
+                GameObj.pop();
+              console.log('['+GameObj.length+']');
             }
-            if(OBJ.GameHead.length)
-              OBJ.GameHead[a].Sleep = OBJ.GameHead[a].Sleep - 16;
+            if(GameObj.length)
+              GameObj[a].RoomInfo.Sleep = GameObj[a].RoomInfo.Sleep - 16;
           }
-          if(OBJ.GameHead.length)
+          if(GameObj.length)
           {
               const Gameinfo = 
             {
-              BallXpos: OBJ.GameHead[a].BallXpos,
-              BallYpos: OBJ.GameHead[a].BallYpos,
-              Result1Val: OBJ.GameHead[a].Result1Val,
-              Result2Val: OBJ.GameHead[a].Result2Val,
+              BallXpos: GameObj[a].BallInfo.BallXpos,
+              BallYpos: GameObj[a].BallInfo.BallYpos,
+              Result1Val: GameObj[a].PlayersInfo.Result1Val,
+              Result2Val: GameObj[a].PlayersInfo.Result2Val,
             }
-            if (OBJ.GameHead[a].Player1Client != undefined) {
-              OBJ.GameHead[a].Player1Client.emit('BallPos', Gameinfo);
+            if (GameObj[a].PlayersInfo.Player1Client != undefined) {
+              GameObj[a].PlayersInfo.Player1Client.emit('BallPos', Gameinfo);
             }
-            if (OBJ.GameHead[a].Player2Client != undefined) {
-              OBJ.GameHead[a].Player2Client.emit('BallPos', Gameinfo);
+            if (GameObj[a].PlayersInfo.Player2Client != undefined) {
+              GameObj[a].PlayersInfo.Player2Client.emit('BallPos', Gameinfo);
             }
           }
         }
       }
       else if(Player1ID !== '' && Player2ID !== '')
       {
-          OBJ.GameHead.push(new GameHead());
-          OBJ.GameHead[0].GameSpeed = speed1 | speed2;
-          OBJ.GameHead[0].GamePoints= points1 | points2;
-          OBJ.GameHead[0].Player1UserName = myusername;
-          OBJ.GameHead[0].Player2UserName = myusername2;
-          OBJ.GameHead[0].GameStatus = 1;
-          OBJ.GameHead[0].Player1ID = Player1ID;
-          OBJ.GameHead[0].Player2ID = Player2ID;
+          GameObj.push(obj);
+          GameObj[0].RoomInfo.GameSpeed = speed1 | speed2;
+          GameObj[0].RoomInfo.GamePoints= points1 | points2;
+          GameObj[0].PlayersInfo.Player1UserName = myusername;
+          GameObj[0].PlayersInfo.Player2UserName = myusername2;
+          GameObj[0].RoomInfo.GamePoints= points1| points2;
+          GameObj[0].RoomInfo.GameStatus = 1;
+          GameObj[0].PlayersInfo.Player1ID = Player1ID;
+          GameObj[0].PlayersInfo.Player2ID = Player2ID;
       }
     }
   }

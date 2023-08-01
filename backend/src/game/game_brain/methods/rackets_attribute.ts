@@ -1,25 +1,29 @@
-// import { Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
+import { RoomInfo } from "./game_room_attribute";
 
-// @Injectable()
-// export class RacketsAttribute
-// {
-//     //attributes
-//     protected Racket1Xpos: number;
-//     protected Racket1Ypos: number;
-//     protected Racket1Height: number;
-//     protected Racket1Width: number;
-//     protected Racket2Xpos: number;
-//     protected Racket2Ypos: number;
-//     protected Racket2Height: number;
-//     protected Racket2Width: number;
-    
-//     //Setters
-//     SetRacket1Ypos(Racket1Ypos: number)
-//     {
-//         this.Racket1Ypos = Racket1Ypos;
-//     }
-//     SetRacket2Ypos(Racket2Ypos: number)
-//     {
-//         this.Racket2Ypos = Racket2Ypos;
-//     }
-// }
+@Injectable()
+export class RacketsAttribute
+{
+    //attributes
+    public Racket1Xpos: number;
+    public Racket1Ypos: number;
+    public Racket1Height: number;
+    public Racket1Width: number;
+    public Racket2Xpos: number;
+    public Racket2Ypos: number;
+    public Racket2Height: number;
+    public Racket2Width: number;
+    constructor()
+    {
+        this.Racket1Height = Math.floor(RoomInfo.GameHeight/6);
+        this.Racket1Ypos =  (RoomInfo.GameHeight/2) - (this.Racket1Height/2);
+        this.Racket1Width = RoomInfo.GameWidth/80;
+        this.Racket1Xpos = 5;
+        this.Racket2Height = Math.floor(RoomInfo.GameHeight/6);
+        this.Racket2Ypos = (RoomInfo.GameHeight/2) - (this.Racket1Height/2);
+        this.Racket2Width = RoomInfo.GameWidth/80;
+        this.Racket2Xpos = RoomInfo.GameWidth - (this.Racket2Width-5);
+    }
+}
+
+export let RacketsInfo:RacketsAttribute = new RacketsAttribute();
