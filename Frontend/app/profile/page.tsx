@@ -47,12 +47,6 @@ export default  function Profile()
         
             <div className="profile_container">
 
-
-
-
-
-
-
 <div className="all_profile">
 <div className="side_two">
                 
@@ -99,7 +93,7 @@ export default  function Profile()
     
 
 </div>
-</div>
+            </div>
     
         
     );

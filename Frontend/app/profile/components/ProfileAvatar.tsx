@@ -41,8 +41,12 @@ const ProfileAvatar = (props:props) => {
                 throw new Error("failed to fetch users");
             else
             {
+                setrealimg(URL.createObjectURL(avatar?.files[0]));
+                // sessionStorage.setItem('avatar', realimg);
                 new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + props.img;
                 // setrealimg(new_src_img);
+            
+                // console.log(realimg)
             }
                 
             };
@@ -57,7 +61,7 @@ const ProfileAvatar = (props:props) => {
                 sessionStorage.setItem('avatar', props.img );
                 
 
-    console.log(realimg)
+
     return (
         <div>
 
@@ -67,7 +71,7 @@ const ProfileAvatar = (props:props) => {
                     <Image
   borderRadius='full'
   boxSize='100px'
-  src={props.avatar_updated ? new_src_img : props.img}
+  src={props.avatar_updated ? realimg ? realimg  : new_src_img : props.img}
   alt='Dan Abramov'
 />
                     <label>

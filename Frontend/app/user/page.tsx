@@ -2,9 +2,10 @@
 import '../profile/profile.css'
 import {ProfileAvatar, ProfileInfo} from './index'
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState, useEffect } from 'react'
 import Cookies from 'js-cookie';
 import useSWR from "swr"
+import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
+import { Achievevements, Friends, Groups, History } from '../profile';
 
 export default  function User()
 {
@@ -38,23 +39,53 @@ export default  function User()
 
 
     return(
-        <div className="profile_container">
-            
-        <div className="all_profile">
-        <div className="side_two">
-                        
-                        <div className="side_two_info">
+       
+<div className="profile_container">
 
-                            <ProfileAvatar  img={data.profile_img}   username={data.username} id={data.id} avatar_updated={data.is_profile_img_updated}/>
-                            <ProfileInfo location={data.location} totalgame={data.totalgame}
-                            loss={data.loss} wins={data.wins} rank={data.rank}
-                            />
+<div className="all_profile">
+<div className="side_two">
+                
+                <div className="side_two_info">
 
-                        </div>
-                        
+                    <ProfileAvatar  img={data.profile_img}   username={data.username} id={data.id} avatar_updated={data.is_profile_img_updated}/>                     <ProfileInfo location={data.location} totalgame={data.totalgame}
+                    loss={data.loss} wins={data.wins} rank={data.rank}                     />
 
-        </div>
-        </div>
-        </div>
+                 </div>
+                
+</div>
+
+    
+
+
+            <Tabs position="relative" variant='soft-rounded' colorScheme='blue' isFitted>
+                        <TabList mb='1em'>
+                            <Tab>History </Tab>
+                            <Tab>Friends </Tab>
+                            <Tab>Community </Tab>
+                            <Tab>Achievevements</Tab>
+                        </TabList>
+
+                 
+                        <TabPanels>
+                            <TabPanel>
+                            <History/>
+                            </TabPanel>
+                            <TabPanel>
+                            <Friends/>
+                            
+                            </TabPanel>
+                            <TabPanel>
+                            <Groups/>
+                            </TabPanel>
+                            <TabPanel>
+                            <Achievevements/>
+                            </TabPanel>
+                        </TabPanels>
+                </Tabs>
+    
+
+</div>
+ </div>
+
     );
 }
