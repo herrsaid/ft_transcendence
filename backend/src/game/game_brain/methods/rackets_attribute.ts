@@ -26,4 +26,3 @@ export class RacketsAttribute
     }
 }
 
-export let RacketsInfo:RacketsAttribute = new RacketsAttribute();

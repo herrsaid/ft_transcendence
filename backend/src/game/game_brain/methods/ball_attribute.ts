@@ -20,5 +20,3 @@ export class BallsAttribute
         this.BallHeight =  RoomInfo.GameHeight/16;
     }
 }
-
-export let BallInfo:BallsAttribute = new BallsAttribute();

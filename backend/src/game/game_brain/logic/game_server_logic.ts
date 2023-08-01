@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { data } from "./game_server_obj";
+import { data } from "./game_server_class";
 @Injectable()
 export class GameLogic
 {
@@ -63,7 +63,7 @@ export class GameLogic
     }
     Head(data:data)
     {
-        // this.debug(data);
+        this.debug(data);
         // allways let ball move on horizontal if BallXdirection is positive ball move right else ball move left
         data.BallInfo.BallXpos += (data.BallInfo.BallXdirection * data.RoomInfo.GameSpeed);
         //if ballYpos not in the same Rakect2Yposenter enter this condition
@@ -125,5 +125,3 @@ export class GameLogic
         }
     }
 }
-
-export let LogicFunc:GameLogic = new GameLogic();

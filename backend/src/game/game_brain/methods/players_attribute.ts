@@ -20,7 +20,9 @@ export class PlayersAttribute
         this.Result2Val = 0;
         this.Player1ID = '';
         this.Player2ID = '';
+        this.Player1UserName = '';
+        this.Player2UserName = '';
+        this.Player1Client = null;
+        this.Player2Client = null;
     }
 }
-
-export let PlayersInfo:PlayersAttribute = new PlayersAttribute();

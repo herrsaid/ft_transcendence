@@ -17,5 +17,3 @@ export class GameStreamAttribute
         this.SpectatorSocket = null;
     }
 }
-
-export let StreamsInfo:GameStreamAttribute[] = [];

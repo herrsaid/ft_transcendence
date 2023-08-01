@@ -5,7 +5,7 @@ import {
   import { Interval } from "@nestjs/schedule";
   import { Player1ID,speed1,points1,myusername} from './play.player1.gateway'
   import { Player2ID,speed2,points2,myusername2} from './play.player2.gateway'
-  import {data } from '../game_brain/logic/game_server_obj';
+  import {data } from '../game_brain/logic/game_server_class';
 
   export let GameObj: data[] = [];
   @WebSocketGateway(1340, {
@@ -27,11 +27,11 @@ import {
     new_connect()
     {
       GameObj.push(new data());
-      GameObj[GameObj.length - 1].RoomInfo.GameSpeed = speed1| speed2;
-      GameObj[GameObj.length - 1].RoomInfo.GamePoints= points1| points2;
+      GameObj[GameObj.length - 1].RoomInfo.GameSpeed = speed1 | speed2;
+      GameObj[GameObj.length - 1].RoomInfo.GamePoints= points1 | points2;
       GameObj[GameObj.length - 1].PlayersInfo.Player1UserName = myusername;
       GameObj[GameObj.length - 1].PlayersInfo.Player2UserName = myusername2;
-      GameObj[GameObj.length - 1].RoomInfo.GamePoints= points1| points2;
+      GameObj[GameObj.length - 1].RoomInfo.GamePoints= points1 | points2;
       GameObj[GameObj.length - 1].RoomInfo.GameStatus = 1;
       GameObj[GameObj.length - 1].PlayersInfo.Player1ID = Player1ID;
       GameObj[GameObj.length - 1].PlayersInfo.Player2ID = Player2ID;
@@ -122,12 +122,12 @@ import {
           else if(GameObj[a].RoomInfo.Sleep > 0)
               GameObj[a].RoomInfo.Sleep = GameObj[a].RoomInfo.Sleep - 16;
           //call funbnsction that end_simulation
-          else if(!GameObj[a].RoomInfo.GameStatus)
+          else
           {
             this.end_simulation(a);
-            break;
+            a -= 1;
           }
-        }
+          }
       }
       else if(Player1ID !== '' && Player2ID !== '')
         this.first_connect();
