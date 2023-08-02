@@ -92,6 +92,7 @@
     text-align: center;
     border-radius: 5px;
     box-shadow: 2px 4px 10px 0px rgba(0,0,0,0.31);
+    z-index: 111111;
 }
 
 .modal h1
