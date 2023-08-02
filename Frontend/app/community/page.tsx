@@ -115,7 +115,7 @@ function Chat()
         return res.json();
     }
 
-    const {data, error, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/messages?id=${1}`, fetcher)
+    const {data, error, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/messages?id=${myId}`, fetcher)
     console.log(data);
     const [rerender, setRerender] = useState(1);
     console.log('msg = ', msg);
