@@ -1,5 +1,7 @@
 import { io } from 'socket.io-client';
 
-export const socket = io('http://10.11.10.2:1339', {extraHeaders:{
+const URL:string = process.env.AUTO_MATCH_SOCKET!;
+
+export const socket = io(URL, {extraHeaders:{
         'Access-Control-Allow-Origin': "*"
     }});
