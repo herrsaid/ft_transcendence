@@ -44,6 +44,7 @@ function Profile_box(props:any)
 
 export default function Community()
 {
+    let new_src_img:string;
     const [friends, setFriends] = useState([])
     const [id, setId] = useState<any>(5)
     const v = {id , setId}
@@ -58,6 +59,19 @@ export default function Community()
         }).then((response) => response.json())
         .then(data => setFriends(data))  
     },[]);
+
+   
+
+    const newArray = friends.map((frnd:any)=>
+    {
+        if (frnd.is_profile_img_updated)
+        {
+            new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + frnd.profile_img;
+        }
+        return (<Profile_box id={frnd.id} avatar={frnd.is_profile_img_updated ? new_src_img : frnd.profile_img} username={frnd.username} />)
+    })
+
+
     return (
         <Reciver.Provider value={v}>
          <div className="all">
@@ -68,7 +82,7 @@ export default function Community()
                     </h1>
                 </div>
                 <div className='chats'>
-                 {friends.map((frnd:any)=>{return (<Profile_box id={frnd.id} avatar={frnd.profile_img} username={frnd.username} />)})}
+                 {newArray}
                 </div>
              </div>
                 <Chat />
