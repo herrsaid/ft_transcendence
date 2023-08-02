@@ -20,6 +20,7 @@ const ProfileAvatar = (props:props) => {
 
     let new_src_img;
     const [realimg, setrealimg] = useState("");
+    const [first_time, setfirsttime] = useState(false)
 
         const upload = async () => {
    
@@ -42,6 +43,7 @@ const ProfileAvatar = (props:props) => {
             else
             {
                 setrealimg(URL.createObjectURL(avatar?.files[0]));
+                setfirsttime(true);
                 // sessionStorage.setItem('avatar', realimg);
                 new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + props.img;
                 // setrealimg(new_src_img);
@@ -71,7 +73,7 @@ const ProfileAvatar = (props:props) => {
                     <Image
   borderRadius='full'
   boxSize='100px'
-  src={props.avatar_updated ? realimg ? realimg  : new_src_img : props.img}
+  src={props.avatar_updated || first_time ? realimg ? realimg  : new_src_img : props.img}
   alt='Dan Abramov'
 />
                     <label>
