@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   PingPong.module.ts                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/02 10:27:16 by mabdelou          #+#    #+#             */
+/*   Updated: 2023/08/02 10:27:17 by mabdelou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 import { Module } from '@nestjs/common';
 import { PingPongGateway } from './auto_match/lobbie.gateway';
 import { PlayPlayer1Gateway } from './start_game/play.player1.gateway';
