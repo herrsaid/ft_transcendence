@@ -6,13 +6,12 @@
 #    By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/02 10:17:46 by mabdelou          #+#    #+#              #
-#    Updated: 2023/08/02 10:30:36 by mabdelou         ###   ########.fr        #
+#    Updated: 2023/08/02 18:47:04 by mabdelou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 all:
 	docker-compose -f ./docker-compose.yml up
-	script.sh
 	
 status:
 	docker-compose -f ./docker-compose.yml ps

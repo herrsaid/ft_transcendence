@@ -6,7 +6,7 @@
 #    By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/02 10:24:50 by mabdelou          #+#    #+#              #
-#    Updated: 2023/08/02 18:32:11 by mabdelou         ###   ########.fr        #
+#    Updated: 2023/08/02 18:53:30 by mabdelou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,9 +45,11 @@ fi
 [ `uname -s` != "Darwin" ] && return
 
 osascript << EDF
-tell application "Docker"
-    activate
-end tell
+--run Docker Aplication
+
+	tell application "Docker"
+	    activate
+	end tell
 
 tell application "iTerm 2.app"
 	--Create first initial window
@@ -67,7 +69,7 @@ tell application "iTerm 2.app"
 	--Send a command to the secound session
 
         tell session 1 of tab 1 of  window 2
-            write text "sleep 180; cd $HOME/goinfre/ft_transcendence/backend ; npm i ; npm run start:dev"
+            write text "sleep 90; cd $HOME/goinfre/ft_transcendence/backend ; npm i ; npm run start:dev"
         end tell
 
 	--Select the first tab
