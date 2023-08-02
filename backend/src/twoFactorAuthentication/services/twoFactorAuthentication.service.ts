@@ -50,14 +50,11 @@ export class TwoFactorAuthenticationService {
     //later I work with authenticator.verify I dont know why not working now!!
 
 
-    // return authenticator.verify({
-    //   token: twoFactorAuthenticationCode,
-    //   secret: user.twoFactorAuthenticationSecret
-    // })
+    return authenticator.verify({
+      token: twoFactorAuthenticationCode,
+      secret: user.twoFactorAuthenticationSecret
+    })
 
-    if (twoFactorAuthenticationCode === user.twoFactorAuthenticationSecret)
-        return true;
-    return false;
   }
 
 
