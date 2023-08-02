@@ -1,0 +1,10 @@
+.home_page{
+    width: 100dvw;
+    height: 95dvh;
+    background-image: url("../../../public/hero.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    filter: brightness(40%);
+}
