@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   game_server_class.ts                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/02 10:26:35 by mabdelou          #+#    #+#             */
+/*   Updated: 2023/08/02 10:26:36 by mabdelou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 import { RacketsAttribute } from "../methods/rackets_attribute";
 import { BallsAttribute } from "../methods/ball_attribute";
 import { PlayersAttribute } from "../methods/players_attribute";

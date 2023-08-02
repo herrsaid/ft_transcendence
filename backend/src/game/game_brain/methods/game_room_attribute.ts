@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   game_room_attribute.ts                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/02 10:26:44 by mabdelou          #+#    #+#             */
+/*   Updated: 2023/08/02 10:26:45 by mabdelou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 import { Injectable } from "@nestjs/common";
 import { BallsAttribute } from "./ball_attribute";
 
