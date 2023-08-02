@@ -67,8 +67,10 @@ justify-items: center;
 
 .child
 {
-  flex: 1;
+  /* flex: 2; */
+  flex: 1 100%;
   overflow: hidden;
+  max-width: 100dvw;
 }
 
 

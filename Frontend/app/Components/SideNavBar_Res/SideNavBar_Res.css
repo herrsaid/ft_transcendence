@@ -1,6 +1,7 @@
 
 .NavBar{
-    height: 40dvh;
+    min-height: fit-content;
+    height: 500px;
     width: 60px;
     background-color: var(--second-color);
     display: flex;
@@ -8,8 +9,7 @@
     justify-content: space-between;
     color: white;
     border-radius: 50px;
-    /* margin-right: 8px; */
-    /* border-top: 1px solid var(--primary-color); */
+    
 }
 
 .Setting
@@ -30,8 +30,10 @@
 .Content button 
 {
     /* background-color: red; */
-    padding: 50px 10px;
+    padding: 30px 8px;
     transition: 0.5s;
+    border-radius: 14px;
+    margin: 10px 0px;
 }
 
 
