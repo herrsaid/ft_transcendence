@@ -76,7 +76,7 @@ const ProfileAvatar = (props:props) => {
                     
                     <Image
   borderRadius='full'
-  boxSize='110px'
+  boxSize='120px'
   src={props.avatar_updated || first_time ? realimg ? realimg  : !props.avatar_updated ? props.img : new_src_img : props.img}
   alt='Dan Abramov'
 />
