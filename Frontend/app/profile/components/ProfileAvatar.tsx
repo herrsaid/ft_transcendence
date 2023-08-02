@@ -56,11 +56,15 @@ const ProfileAvatar = (props:props) => {
 
             if (props.avatar_updated)
             {
+                console.log("updated...")
                 new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + props.img;
                 sessionStorage.setItem('avatar', new_src_img);
             }
             else
+            {
+                console.log("not updated")
                 sessionStorage.setItem('avatar', props.img );
+            }
                 
 
 
@@ -73,7 +77,7 @@ const ProfileAvatar = (props:props) => {
                     <Image
   borderRadius='full'
   boxSize='100px'
-  src={props.avatar_updated || first_time ? realimg ? realimg  : new_src_img : new_src_img}
+  src={props.avatar_updated || first_time ? realimg ? realimg  : !props.avatar_updated ? props.img : new_src_img : props.img}
   alt='Dan Abramov'
 />
                     <label>
