@@ -63,8 +63,9 @@ export default  function Header()
 <Flex minWidth='max-content' alignItems='center' gap='2'>
 
 <Box p='2'>
-
+<Link href="/">
  <h1 className="logo-search">42<span>PONG</span></h1>
+</Link>
 
 </Box>
 

@@ -1,13 +1,14 @@
 
 .NavBar{
-    height: 80dvh;
+    height: 40dvh;
     width: 60px;
     background-color: var(--second-color);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     color: white;
-    border-radius: 20px;
+    border-radius: 50px;
+    /* margin-right: 8px; */
     /* border-top: 1px solid var(--primary-color); */
 }
 
@@ -30,8 +31,14 @@
 {
     /* background-color: red; */
     padding: 50px 10px;
+    transition: 0.5s;
 }
 
+
+.Content button:hover 
+{
+    background-color: var(--back-color);
+}
 .Logout
 {
     display: flex;

@@ -26,9 +26,9 @@ export default function SideNavBar_Res()
                     <Link href='/community'><button className="profile-btn"> <BsFillChatFill size={40}/> </button></Link>
                     <Link href='/profile'><button className="profile-btn"><IoSettingsSharp size={40} /></button></Link>
                 </div>
-                <div className='Logout'>
+                {/* <div className='Logout'>
                     <button className="profile-btn"><CgLogOut size={40}/></button>
-                </div>
+                </div> */}
             </div>
         </>
     )
