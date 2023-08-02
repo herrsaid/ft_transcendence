@@ -6,7 +6,7 @@
 #    By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/02 10:24:50 by mabdelou          #+#    #+#              #
-#    Updated: 2023/08/02 10:47:36 by mabdelou         ###   ########.fr        #
+#    Updated: 2023/08/02 18:20:08 by mabdelou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,14 +42,9 @@ cat << EDF >> $FileIIPath
         'Access-Control-Allow-Origin': "*"
     }});
 EDF
-cd $HOME/goinfre/ft_transcendence/
-eval cd Frontend/ ; npm i ; npm run dev > 1; cd ..
-eval cd backend/ ; npm i ; npm run start:dev > 2 ; cd ..
 echo "done!"
 else
 cd $HOME/goinfre/ ; git clone git@github.com:herrsaid/ft_transcendence.git
-cd ft_transcendence/Frontend/ ; npm i ; eval npm run dev > ../1 ; cd ..
-cd ft_transcendence/backend/ ; npm i ; eval npm run start:dev > ../2; cd ..
 cat << EDF > $FileIPath
 import { io } from 'socket.io-client';
 
@@ -75,3 +70,40 @@ cat << EDF >> $FileIIPath
 EDF
 echo "creating repo directory && done!"
 fi
+
+[ `uname -s` != "Darwin" ] && return
+
+osascript << EDF
+tell application "Docker"
+    activate
+end tell
+
+tell application "iTerm 2.app"
+	--Create first initial window
+
+	    create window with default profile
+
+    --Create secound initial window
+
+	    create window with default profile
+
+	--Send a command to the first session
+
+        tell session 1 of tab 1 of  window 1
+            write text "cd $HOME/goinfre/ft_transcendence/Frontend ; npm i ; npm run dev"
+        end tell
+
+	--Send a command to the secound session
+
+        tell session 1 of tab 1 of  window 2
+            write text "sleep 180; cd $HOME/goinfre/ft_transcendence/backend ; npm i ; npm run start:dev"
+        end tell
+
+	--Select the first tab
+
+	tell session 1
+		select
+	end tell
+end tell
+
+EDF
