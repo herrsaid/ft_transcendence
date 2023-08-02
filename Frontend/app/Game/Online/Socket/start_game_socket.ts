@@ -1,8 +1,9 @@
 import { io } from 'socket.io-client';
-
-export const player1 = io('http://10.11.10.2:1340', {extraHeaders:{
+const URL:string = process.env.GAME_PLAYER_I_SOCKET!;
+const URL2:string = process.env.GAME_PLAYER_II_SOCKET!;
+export const player1 = io(URL, {extraHeaders:{
         'Access-Control-Allow-Origin': "*"
     }});
-export const player2 = io('http://10.11.10.2:1341', {extraHeaders:{
+export const player2 = io(URL2, {extraHeaders:{
         'Access-Control-Allow-Origin': "*"
     }});

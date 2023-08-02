@@ -6,69 +6,40 @@
 #    By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/02 10:24:50 by mabdelou          #+#    #+#              #
-#    Updated: 2023/08/02 18:20:08 by mabdelou         ###   ########.fr        #
+#    Updated: 2023/08/02 18:32:11 by mabdelou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 #!/bin/bash
 
 MachineLine=$(ifconfig | grep 10.11 | awk '{printf $2}')
-FileIPath="$HOME/goinfre/ft_transcendence/Frontend/app/Game/Online/Socket/auto_match_socket.ts"
-FileIIPath="$HOME/goinfre/ft_transcendence/Frontend/app/Game/Online/Socket/start_game_socket.ts"
+EnvIPath="$HOME/goinfre/ft_transcendence/Frontend/.env.local"
 
 if [ -d "$HOME/goinfre/ft_transcendence" ]; then
-cat << EDF > $FileIPath
-import { io } from 'socket.io-client';
-
-EDF
-echo "export const socket = io('http://$MachineLine:1339', {extraHeaders:{" >> $FileIPath
-cat << EDF >> $FileIPath
-        'Access-Control-Allow-Origin': "*"
-    }});
-EDF
-
-
-cat << EDF > $FileIIPath
-import { io } from 'socket.io-client';
-
-EDF
-echo "export const player1 = io('http://$MachineLine:1340', {extraHeaders:{" >> $FileIIPath
-cat << EDF >> $FileIIPath
-        'Access-Control-Allow-Origin': "*"
-    }});
-EDF
-echo "export const player2 = io('http://$MachineLine:1341', {extraHeaders:{" >> $FileIIPath
-cat << EDF >> $FileIIPath
-        'Access-Control-Allow-Origin': "*"
-    }});
+echo "updating .env"
+cat << EDF > $EnvIPath
+SOCKET_URL=http://$MachineLine:3030
+NEXT_PUBLIC_SOCKET=http://$MachineLine:3030
+NEXT_PUBLIC_BACK_IP=http://$MachineLine:1337
+NEXT_PUBLIC_BACK_IP_G=http://$MachineLine:1337
+AUTO_MATCH_SOCKET=http://$MachineLine:1339
+GAME_PLAYER_I_SOCKET=http://$MachineLine:1340
+GAME_PLAYER_II_SOCKET=http://$MachineLine:1341
 EDF
 echo "done!"
 else
 cd $HOME/goinfre/ ; git clone git@github.com:herrsaid/ft_transcendence.git
-cat << EDF > $FileIPath
-import { io } from 'socket.io-client';
-
+echo "create repo directory && update .envfile"
+cat << EDF > $EnvIPath
+SOCKET_URL=http://$MachineLine:3030
+NEXT_PUBLIC_SOCKET=http://$MachineLine:3030
+NEXT_PUBLIC_BACK_IP=http://$MachineLine:1337
+NEXT_PUBLIC_BACK_IP_G=http://$MachineLine:1337
+AUTO_MATCH_SOCKET=http://$MachineLine:1339
+GAME_PLAYER_I_SOCKET=http://$MachineLine:1340
+GAME_PLAYER_II_SOCKET=http://$MachineLine:1341
 EDF
-echo "export const socket = io('http://$MachineLine:1339', {extraHeaders:{" >> $FileIPath
-cat << EDF >> $FileIPath
-        'Access-Control-Allow-Origin': "*"
-    }});
-EDF
-cat << EDF > $FileIIPath
-import { io } from 'socket.io-client';
-
-EDF
-echo "export const player1 = io('http://$MachineLine:1340', {extraHeaders:{" >> $FileIIPath
-cat << EDF >> $FileIIPath
-        'Access-Control-Allow-Origin': "*"
-    }});
-EDF
-echo "export const player2 = io('http://$MachineLine:1341', {extraHeaders:{" >> $FileIIPath
-cat << EDF >> $FileIIPath
-        'Access-Control-Allow-Origin': "*"
-    }});
-EDF
-echo "creating repo directory && done!"
+echo "done!"
 fi
 
 [ `uname -s` != "Darwin" ] && return
