@@ -45,18 +45,12 @@ export class WebsockGateway {
       if (this.online_users[i].user_id == dst_id)
         return this.online_users[i].socket_id;
     }
-    throw "user Not online";
+    return  "user Not online";
   }
   @SubscribeMessage('message')
   handleMessage(client: Socket, payload: any): string {
     this.MessageService.create(payload);
-    let dst
-    try{
-      dst = this.getSocketId(payload.dst);
-    }catch (error)
-    {
-      console.log('user not online');
-    }
+    let dst = this.getSocketId(payload.dst);
     client.broadcast.to(dst).emit('message', payload)
     // client.broadcast.emit('message', payload);
     return 'Hello world!';
