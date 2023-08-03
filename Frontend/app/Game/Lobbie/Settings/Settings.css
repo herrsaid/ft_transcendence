@@ -6,334 +6,43 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:14 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/02 10:25:15 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/03 08:51:34 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*----------------------------------------------------------------PingPongSettings------------------------------------------------------------------*/
 
-#Settings
+#Rooms
 {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    width: 50vh;
-    height: 60%;
+    position: relative;
+    left: 10%;
+    width: 75%;
+    height: 75vw;
     background-color: rgba(0, 0, 0, 0.3);
-    border-radius: 2%;
+    border-radius: 10px;
 }
 
-#Game_title
+#Room
 {
     position: relative;
-    top: 4%;
-    text-align: center;
-    font-size: 3vh;
-    color: white;
-    z-index: 1;
-}
-
-#speed
-{
-    position: relative;
-    display: flex;
-    top: 15%;
-    font-size: 1.5vh;
-    color: white;
-    z-index: 1;
-    width: 50vh;
-    height: 5%;
-}
-
-#speed_p
-{
-    position: relative;
-    left: 15%;
-}
-
-#speed_scrool
-{
-    position: absolute;
-    display: flex;
-    height: 5%;
-    width: 25vh;
-    left: 35%;
-    top: 60%;
-    background-color: white;
-}
-
-#scroll
-{
-    position: absolute;
-    height: 30%;
-    width: 2vh;
-    background-color: white;
-    border-radius: 25px;
-    top: 47%;
-    z-index: 2;
-}
-
-#p_1
-{
-    position: absolute;
-    bottom: 19%;
-    left: 35%;
-    height: 150%;
-    z-index: 2;
-}
-
-#p_2
-{
-    position: absolute;
-    bottom: 19%;
-    height: 150%;
-    left: 58%;
-    z-index: 2;
-}
-
-#p_4
-{
-    position: absolute;
-    bottom: 19%;
-    height: 150%;
-    left: 81.5%;
-    z-index: 2;
-}
-
-
-#points
-{
-    position: relative;
-    display: flex;
-    width: 100%;
-    height:5%;
-    top: 22.5%;
-    font-size: 1.7vh;
-    color: white;
-    z-index: 1;
-}
-
-#points_p
-{
-    position: relative;
-    left: 15%;
-}
-
-#points1
-{
-    position: absolute;
-    width: 10%;
-    height: 100%;
-    left: 35%;
+    top:15%;
+    margin-top: 25px;
+    left: 10%;
+    width: 75%;
+    height: 5vw;
     background-color: rgb(57, 57, 111,0.4);
-    border-radius: 10px;
+    border-radius: 5px;
+}
+
+#Room p
+{
     text-align: center;
+
 }
 
-#points2
+#Join
 {
-    position: absolute;
-    width: 10%;
-    height: 100%;
-    left: 56%;
-    background-color: rgb(57, 57, 111,0.4);
-    border-radius: 10px;
+    position:relative;
     text-align: center;
-}
-
-#points3
-{
-    position: absolute;
-    width: 10%;
-    height: 100%;
-    left: 76%;
-    background-color: rgb(57, 57, 111,1);
-    border-radius: 10px;
-    text-align: center;
-}
-
-#match_mood
-{
-    position: relative;
-    display: flex;
-    width: 100%;
-    height:5%;
-    top: 30%;
-    font-size: 1.7vh;
-    color: white;
-    z-index: 1;
-}
-
-#match_mood_p
-{
-    position: relative;
-    left: 15%;
-}
-
-#match_mood_1
-{
-    position: absolute;
-    width: 10%;
-    height: 100%;
-    left: 66%;
-    background-color: rgb(57, 57, 111,1);
-    border-radius: 10px;
-    text-align: center;
-}
-
-#match_mood_0
-{
-    position: absolute;
-    width: 10%;
-    height: 100%;
-    left: 46%;
-    background-color: rgb(57, 57, 111,0.4);
-    border-radius: 10px;
-    text-align: center;
-}
-
-#pause_game
-{
-    position: relative;
-    display: flex;
-    width: 100%;
-    height:5%;
-    top: 37.5%;
-    font-size: 1.7vh;
-    color: white;
-    opacity: 0;
-}
-
-#pause_game_p
-{
-    position: relative;
-    left: 15%;
-}
-
-#pause_game_1
-{
-    position: absolute;
-    width: 10%;
-    height: 100%;
-    left: 46%;
-    background-color: rgb(57, 57, 111,0.4);
-    border-radius: 10px;
-    text-align: center;
-    /* z-index: -1; */
-}
-
-#pause_game_0
-{
-    position: absolute;
-    width: 10%;
-    height: 100%;
-    left: 66%;
-    background-color: rgb(57, 57, 111,1);
-    border-radius: 10px;
-    text-align: center;
-    /* z-index: -1; */
-}
-
-#other_tools
-{
-    position: relative;
-    display: flex;
-    width: 100%;
-    height:5%;
-    top: 45%;
-    font-size: 1.7vh;
-    color: white;
-    opacity: 0;
-}
-
-#other_tools_p
-{
-    position: relative;
-    left: 15%;
-}
-
-#other_tools_1
-{
-    position: absolute;
-    width: 10%;
-    height: 100%;
-    left: 66%;
-    background-color: rgb(57, 57, 111,0.4);
-    border-radius: 10px;
-    text-align: center;
-    /* z-index: -1; */
-}
-
-#other_tools_0
-{
-    position: absolute;
-    width: 10%;
-    height: 100%;
-    left: 46%;
-    background-color: rgb(57, 57, 111,1);
-    border-radius: 10px;
-    text-align: center;
-    /* z-index: -1; */
-}
-
-#play
-{
-    position: absolute;
-    width: 20%;
-    height: 6%;
-    top: 87.5%;
-    left: 40%;
-    background-color: rgb(57, 57, 111,0.6);
-    border-radius: 15px;
-    text-align: center;
-}
-
-#play p
-{
-    position: relative;
-    text-align: center;
-    font-size:3vmin;
-}
-
-@keyframes Animation {
-    0% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.1);
-    }
-    100% {
-        transform: scale(1);
-    }
-}
-
-@keyframes Animation2 {
-    0%
-    {
-        left:25%;
-    }
-    25%
-    {
-        left:24%;
-    }
-    75%
-    {
-        left:26%;
-    }
-    100%
-    {
-        left:25%;
-    }
-}
-
-#warning
-{
-    position: relative;
-    text-align: center;
-    color: white;
-    width: 50%;
-    font-size: 1vw;
-    top:62.5%;
-    left: 25%;
+    left:90%;
 }

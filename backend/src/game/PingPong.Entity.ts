@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:14 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/02 10:27:15 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/03 09:20:53 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,6 @@ export class GameUserSettingsEntity {
   @IsNotEmpty()
   @IsString()
   myusername: string;
-  @IsString()
-  @IsNotEmpty()
-  ID?: string;
 }
 
 export class PingPongGamePlayEntity {

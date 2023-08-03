@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:26:31 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/02 10:26:32 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/03 09:48:34 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,76 +17,57 @@ import {
     WebSocketServer,
   } from '@nestjs/websockets';
   import { Socket, Server } from 'socket.io';
+  import { RoomClass } from './auto_match_class/RoomClass';
+  import { PlayerClass } from  './auto_match_class/PlayerClass';
   import {
     GameUserSettingsEntity,
     PingPongGamePlayEntity,
   } from '../PingPong.Entity';
   
-  export let arr: GameUserSettingsEntity[] = [];
-  export const GameArr: PingPongGamePlayEntity[] = [];
-  export function getSocketById(
-    socketId: string,
-    server: Server,
-  ): Socket | undefined {
-    if(socketId !== undefined && server != undefined)
-      return server.sockets.sockets.get(socketId);
-    return undefined;
-  }
+  export let Rooms: RoomClass[] = [];
   @WebSocketGateway(1339, {
     cors: { origin: '*', credentials: true },
   })
   export class PingPongGateway implements OnGatewayDisconnect {
     @WebSocketServer()
-    server: Server;
-    @SubscribeMessage('join_user')
-    handleJoinUser(client: Socket, data: string): void {
-      if (arr.find((elm) => elm.ID === client.id)) return;
-      else {
-        console.log('user_joined: ', data);
-      }
+    
+    @SubscribeMessage('CreateRoom')
+    handleCreateRoom(client: Socket, data: GameUserSettingsEntity): void {
+      
     }
-    @SubscribeMessage('send_data')
-    handleSendData(client: Socket, data: GameUserSettingsEntity): void {
-      data.ID = client.id;
-      if (arr.find((elm) => elm.ID === client.id)) {
-        arr[arr.findIndex((elm) => elm.ID === client.id)] = data;
-        console.log('update');
-      } else {
-          arr.push(data);
-        console.log('push');
-        for (let a = 0; a < arr.length; a++) {
-          getSocketById(arr[a].ID, this.server).emit(
-            'join_user',
-            'new User join party',
-          );
-        }
-      }
-      if (arr.length >= 2) {
-        for (let a = 0; a < arr.length; a++) {
-            const elem = arr[a];
-            const elem1 = arr.find((elm) => {
-              if (
-                elm.myusername !== null &&
-                elm.Speed === elem.Speed &&
-                elm.Points === elem.Points &&
-                elm.ID !== elem.ID
-              )
-                return elm;
-            });
-            if (elem1 != undefined) {
-              console.log('data_has_been_send: ');
-              getSocketById(elem.ID, this.server).emit('send_data', arr[1].myusername,true);
-              getSocketById(elem1.ID, this.server).emit('send_data',  arr[0].myusername,false);
-            }
-        }
-      }
-      console.log('arr_content: ', arr);
+    @SubscribeMessage('JoinUser')
+    handleJoinUser(client: Socket, Room: number): void {
+      // let player_data:PlayerClass;
+      // player_data.Player = data.myusername;
+      // player_data.PlayerId = client.id;
+      // player_data.PlayerSocket = client;
+      // let check:RoomClass = Rooms.find(elem => elem.Points === data.Points && elem.Speed === data.Speed);
+      // if(check !== undefined)
+      // {
+      //   if(check.players.find(elem => elem.PlayerId === client.id) !== undefined) 
+      //     return;
+      //   else
+      //     console.log("Push New User");
+      //   check.players.push(player_data);
+      // }
+      // else
+      // {
+      //   let Room:RoomClass;
+      //   Room.players.push(player_data);
+      //   Room.Speed = data.Speed;
+      //   Room.Points = data.Points;
+      //   Rooms.push(Room);
+      //   console.log("Push New Room");
+      // }
+    }
+    @SubscribeMessage('SendData')
+    handleSendData(client: Socket): void {
+
+              // getSocketById(elem.ID, this.server).emit('send_data', arr[1].myusername,true);
+              // getSocketById(elem1.ID, this.server).emit('send_data',  arr[0].myusername,false);
     }
     // @SubscribeMessage('leave_user')
     handleDisconnect(client: Socket): void {
-      arr = arr.filter((elm) => elm.ID !== client.id);
-      console.log(client.id + ' leave party');
-      console.log('arr_content: ', arr);
     }
   }
   
