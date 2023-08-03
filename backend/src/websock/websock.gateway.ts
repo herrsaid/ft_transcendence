@@ -39,7 +39,7 @@ export class WebsockGateway {
   {
     console.log('disconnected ', socket.id)
     this.online_users.splice(this.online_users.findIndex(obj => obj.socket_id == socket.id), 1);
-    this.UserService.updateStatus(this.online_users.find(obj => obj.socket_id == socket.id), {status:true})
+    this.UserService.updateStatus(this.online_users.find(obj => obj.socket_id == socket.id), {status:false})
   }
   getSocketId(dst_id: number)
   {
