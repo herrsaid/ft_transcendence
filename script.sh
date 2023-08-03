@@ -6,7 +6,7 @@
 #    By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/02 10:24:50 by mabdelou          #+#    #+#              #
-#    Updated: 2023/08/03 17:52:35 by mabdelou         ###   ########.fr        #
+#    Updated: 2023/08/03 18:06:02 by mabdelou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,42 +72,42 @@ EDF
 echo "done!"
 fi
 
-# [ `uname -s` != "Darwin" ] && return
-# open -a "Visual Studio Code" $HOME/goinfre/ft_transcendence
-# osascript << EDF &>/dev/null
-# --run Docker Aplication
+[ `uname -s` != "Darwin" ] && return
+open -a "Visual Studio Code" $HOME/goinfre/ft_transcendence
+osascript << EDF &>/dev/null
+--run Docker Aplication
 
-# 	tell application "Docker"
-# 	    activate
-# 	end tell
+	tell application "Docker"
+	    activate
+	end tell
 
-# tell application "iTerm 2.app"
-# 	--Create first initial window
+tell application "iTerm 2.app"
+	--Create first initial window
 
-# 	    create window with default profile
+	    create window with default profile
 
-#     --Create secound initial window
+    --Create secound initial window
 
-# 	    create window with default profile
+	    create window with default profile
 
-# 	--Send a command to the first session
+	--Send a command to the first session
 
-#         tell session 1 of tab 1 of  window 1
-#             write text "cd $HOME/goinfre/ft_transcendence/Frontend ; npm i ; npm run dev"
-#         end tell
+        tell session 1 of tab 1 of  window 1
+            write text "cd $HOME/goinfre/ft_transcendence/Frontend ; npm i ; npm run dev"
+        end tell
 
-# 	--Send a command to the secound session
+	--Send a command to the secound session
 
-#         tell session 1 of tab 1 of  window 2
-#             write text "sleep 90; cd $HOME/goinfre/ft_transcendence/backend ; npm i ; npm run start:dev"
-#         end tell
+        tell session 1 of tab 1 of  window 2
+            write text "sleep 90; cd $HOME/goinfre/ft_transcendence/backend ; npm i ; npm run start:dev"
+        end tell
 
-# 	--Select the first tab
+	--Select the first tab
 
-# 	tell session 1
-# 		select
-# 	end tell
-# end tell
+	tell session 1
+		select
+	end tell
+end tell
 
-# EDF
-# exit
+EDF
+exit
