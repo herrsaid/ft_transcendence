@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:18 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/03 08:36:48 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/03 10:01:41 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<string>>
         setWarning('');
         if(settings !== null)
             settings.style.filter = "blur(15px)";
-            socket.emit('join_user','new User join party');
+        socket.emit('join_user','new User join party');
         socket.on('join_user', (data) => {
             console.log(data);
         });
