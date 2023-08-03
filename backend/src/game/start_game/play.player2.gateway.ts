@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:06 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/02 10:27:07 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/03 22:21:03 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ import {
     @SubscribeMessage('first_conection')
     handleFirst_conct(client: Socket, data): void {
       Player2ID = client.id;
-      speed2 = data.Speed;
-      points2 = data.Points;
-      myusername2 = data.myusername;
+      speed2 = data.Speed1;
+      points2 = data.Points1;
+      myusername2 = data.myusername1;
       console.log(data);
       console.log('Player2Arr_content: ', Player2ID);
     }

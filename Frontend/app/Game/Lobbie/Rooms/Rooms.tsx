@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:18 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/03 18:44:22 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/03 22:13:55 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ export let enemmyusername2: string | null = null;
 function SpectatorMood(Room: number, router: AppRouterInstance)
 {
   RoomNumber = Room+1;
-  socket.emit('JoinUser',{RoomNumber,myusername2,});
+  let Username = myusername2;
+  socket.emit('JoinUser',{RoomNumber,Username,});
   socket.on('SendData', (username,data) => {
     enemmyusername2 = username;
     host2 = data;

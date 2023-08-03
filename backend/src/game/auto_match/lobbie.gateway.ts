@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:26:31 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/03 18:51:36 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/03 22:15:58 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ import {
           client.emit('JoinRefused','please (log-in/sign-in) to accept your join');
           return ;
         }
-          player_data.Player = data.Username;
+        player_data.Player = data.Username;
         player_data.PlayerId = client.id;
         player_data.PlayerSocket = client;
         if(Rooms[data.RoomNumber].players.length < 2)

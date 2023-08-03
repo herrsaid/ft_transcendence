@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:48 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/03 18:37:03 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/03 22:20:21 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ else
     myusername1 = myusername2;
     enemmyusername1 = enemmyusername2;
 }
-
 function ConvertServerData(ServerData:number,Mood:number)
 {
   if(Mood)
@@ -174,9 +173,9 @@ function first_conection()
 		{
 			first_conection_val = true;
         if(host1)
-				  player1.emit('first_conection',{Speed1,Points1,myusername1});
+				  player1.emit('first_conection',{Speed1,Points1,myusername1,});
         else
-				  player2.emit('first_conection',{Speed1,Points1,myusername1});
+				  player2.emit('first_conection',{Speed1,Points1,myusername1,});
 		}
 }
 

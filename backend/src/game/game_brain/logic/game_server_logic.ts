@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:26:38 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/02 10:26:39 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/03 22:19:13 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ export class GameLogic
         console.log("data.Racket1Xpos: "+ data.RacketsInfo.Racket2Xpos);
         console.log("data.Player1ID: "+ data.PlayersInfo.Player1ID);
         console.log("data.Player2ID: "+ data.PlayersInfo.Player2ID);
+        console.log("data.Player1ID: "+ data.PlayersInfo.Player1UserName);
+        console.log("data.Player2ID: "+ data.PlayersInfo.Player2UserName);
         console.log("data.GameWidth "+ data.RoomInfo.GameWidth);
         console.log("data.GameHeight "+ data.RoomInfo.GameHeight);
         console.log("data.GameStatus "+ data.RoomInfo.GameStatus );
