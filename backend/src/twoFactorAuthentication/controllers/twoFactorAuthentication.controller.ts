@@ -31,7 +31,7 @@ import { AuthenticationService } from '../services/authentication.service';
     @UseGuards(AuthGuard)
     @Post('generate')
     async register(@Res() response, @Req() request: RequestWithUser) {
-      // console.log(request)
+      
       const { otpauthUrl } = await this.twoFactorAuthenticationService.generateTwoFactorAuthenticationSecret(request.user);
    
       return this.twoFactorAuthenticationService.pipeQrCodeStream(response, otpauthUrl);
@@ -52,7 +52,6 @@ import { AuthenticationService } from '../services/authentication.service';
       twoFactorAuthenticationCode, request.user
     );
 
-    // console.log(isCodeValid)
     if (!isCodeValid) {
       throw new UnauthorizedException('Wrong authentication code');
     }

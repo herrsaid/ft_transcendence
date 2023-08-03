@@ -27,6 +27,8 @@ const ProfileInfoNav = () => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [username_updated, setusername_updated] = useState("");
     const router = useRouter();
+    const [isToFactorEnabled, setisToFactorEnabled] = useState(true);
+    
    
 
     const onUpdate_Username = async (event:React.FormEvent) =>
@@ -81,9 +83,12 @@ const ProfileInfoNav = () => {
 
    
 
+    
 
-
-
+    const SwitchHandle = () =>{
+      setisToFactorEnabled(!isToFactorEnabled)
+      router.replace("/2fa")
+    }
 
 
     return (
@@ -107,7 +112,7 @@ const ProfileInfoNav = () => {
 
           <div className="setting_security">
                 <h2>Security</h2>
-                <h3>2FA <Switch size='lg'  m={8} />  </h3>
+                <h3>2FA <Switch size='lg'  m={8}  isChecked={isToFactorEnabled} onChange={SwitchHandle}/>  </h3>
  
             </div>
 

@@ -15,8 +15,6 @@ export class TwoFactorAuthenticationService {
     async generateTwoFactorAuthenticationSecret(user: User) {
     const secret = authenticator.generateSecret();
  
-    console.log(secret)
-
     const otpauthUrl = authenticator.keyuri(user.email, this.configService.get('TWO_FACTOR_AUTHENTICATION_APP_NAME'), secret);
  
     await this.userService.setTwoFactorAuthenticationSecret(secret, user.id);
@@ -34,20 +32,6 @@ export class TwoFactorAuthenticationService {
 
 
   isTwoFactorAuthenticationCodeValid(twoFactorAuthenticationCode: string, user: User) {
-
-
-    console.log('-------------------')
-    console.log(user);
-
-    console.log(twoFactorAuthenticationCode);
-    console.log(user.twoFactorAuthenticationSecret);
-
-    console.log('-------------------')
-    
-
-
-
-    //later I work with authenticator.verify I dont know why not working now!!
 
 
     return authenticator.verify({
