@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:48 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/02 10:25:49 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/03 08:36:48 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@ import { useEffect } from "react";
 import p5 from "p5";
 import './Game.css';
 import { player1, player2 } from '../Socket/start_game_socket';
-import { host, Access, Speed, Points, myusername, enemmyusername} from '../../Lobbie/Settings/Settings';
+import { host, Access, Speed, Points, myusername, enemmyusername} from '../../Lobbie/CreateRoom/Settings/Settings';
 
 let GameWidth: number = 800, GameHeight: number = 400, GameSpeed: number = 4;
 let BallWidth: number = GameWidth/52, BallHeight = GameHeight/26, BallXpos: number = GameWidth/2, BallYpos: number = GameHeight/2;
