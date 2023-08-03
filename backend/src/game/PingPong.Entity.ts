@@ -6,25 +6,31 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:14 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/02 10:27:15 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/03 15:33:43 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import { IsBoolean, IsNotEmpty, IsNumber, IsObject, IsString } from 'class-validator';
+import {IsBoolean, IsNotEmpty, IsNumber, IsObject, IsString } from 'class-validator';
 
-export class GameUserSettingsEntity {
+export class RoomSettingsEntity {
   @IsNumber()
   @IsNotEmpty()
   Speed: number;
   @IsNumber()
   @IsNotEmpty()
   Points: number;
-  @IsNotEmpty()
+  @IsBoolean()
+  RoomMood: boolean;
   @IsString()
-  myusername: string;
-  @IsString()
+  myusername: string | null;
+}
+
+export class UserInfo {
+  @IsNumber()
   @IsNotEmpty()
-  ID?: string;
+  RoomNumber: number;
+  @IsString()
+  Username: string | null;
 }
 
 export class PingPongGamePlayEntity {
@@ -48,5 +54,5 @@ export class PingPongGamePlayEntity {
   ID?: string;
   @IsObject()
   // @IsNumber()
-  obj: GameUserSettingsEntity;
+  obj: RoomSettingsEntity;
 }

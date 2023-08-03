@@ -1,0 +1,48 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Settings.css                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/08/02 10:25:14 by mabdelou          #+#    #+#             */
+/*   Updated: 2023/08/03 08:51:34 by mabdelou         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+/*----------------------------------------------------------------PingPongSettings------------------------------------------------------------------*/
+
+#Rooms
+{
+    position: relative;
+    left: 10%;
+    width: 75%;
+    height: 75vw;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+#Room
+{
+    position: relative;
+    top:15%;
+    margin-top: 25px;
+    left: 10%;
+    width: 75%;
+    height: 5vw;
+    background-color: rgb(57, 57, 111,0.4);
+    border-radius: 5px;
+}
+
+#Room p
+{
+    text-align: center;
+
+}
+
+#Join
+{
+    position:relative;
+    text-align: center;
+    left:90%;
+}

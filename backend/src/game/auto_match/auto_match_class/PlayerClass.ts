@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   page.tsx                                           :+:      :+:    :+:   */
+/*   PlayerClass.ts                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/02 10:25:21 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/03 10:31:36 by mabdelou         ###   ########.fr       */
+/*   Created: 2023/08/03 09:06:23 by mabdelou          #+#    #+#             */
+/*   Updated: 2023/08/03 12:56:34 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import './Rooms/Rooms.css'
-import Rooms from './Rooms/Rooms';
-const page = () => 
-{
-    return(
-        <div id='Game'>
-            <Rooms/>
-        </div>
-    );
-}
+import { Injectable } from "@nestjs/common";
+import { Socket } from 'socket.io';
 
-export default page;
+@Injectable()
+export class PlayerClass{
+    //attributes
+    public Player: string  | null;
+    public PlayerId: string;
+    public PlayerSocket: Socket | undefined;
+    constructor()
+    {
+        this.Player = null;
+        this.PlayerId = "";
+        this.PlayerSocket = undefined;
+    }
+}

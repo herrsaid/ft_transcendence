@@ -6,19 +6,19 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:18 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/02 10:25:19 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/03 15:32:43 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 'use client'
 
 import "./Settings.css"
-import { socket } from '../../Online/Socket/auto_match_socket'
+import { socket } from '../../../Online/Socket/auto_match_socket'
 import { Dispatch, SetStateAction, useState } from "react";
 
 export let Points: number = 30;
 export let Speed: number = 1;
-export let pause_game: number = 0;
+export let pause_game: number = 0,room_mood: number = 0;
 export let other_tools: number = 0;
 export let host: boolean = false;
 export let Online: number = 1;
@@ -46,7 +46,9 @@ function change_online_value(param: number)
     const play = document.getElementById('play');
     const play2 = document.getElementById('play2');
     const other_tools = document.getElementById('other_tools');
-    const pause_game = document.getElementById('pause_game');
+    const pause_game_p = document.getElementById('pause_game_p');
+    const pause_game_0_p = document.getElementById('pause_game_0_p');
+    const pause_game_1_p = document.getElementById('pause_game_1_p');
     for(let a=0;a<2;a++)
     {
         const match_mood_ = document.getElementById(`match_mood_${a}`);
@@ -64,8 +66,14 @@ function change_online_value(param: number)
             play2.style.zIndex = "2";
         if(other_tools !== null)
             other_tools.style.opacity = "0";
-        if(pause_game !== null)
-            pause_game.style.opacity = "0";
+        if(pause_game_p !== null
+            && pause_game_0_p !== null
+            && pause_game_1_p !== null)
+        {
+            pause_game_p.innerHTML = "Room Mood:";
+            pause_game_1_p.innerHTML = "Public";
+            pause_game_0_p.innerHTML = "Private";
+        }
     }
     else
     {
@@ -75,8 +83,14 @@ function change_online_value(param: number)
             play2.style.zIndex = "1";
         if(other_tools !== null)
             other_tools.style.opacity = "1";
-        if(pause_game !== null)
-            pause_game.style.opacity = "1";
+        if(pause_game_p !== null
+            && pause_game_0_p !== null
+            && pause_game_1_p !== null)
+        {
+            pause_game_p.innerHTML = "Pause Game:";
+            pause_game_1_p.innerHTML = "Yes";
+            pause_game_0_p.innerHTML = "No";
+        }
     }
     Online = param;
 }
@@ -107,6 +121,7 @@ function change_pausegame_value(param: number)
     if(changemap !== null)
         changemap.style.backgroundColor = " rgb(57, 57, 111,1)";
     pause_game = param;
+    room_mood = param;
 }
 
 function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<string>>)
@@ -128,12 +143,8 @@ function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<string>>
         setWarning('');
         if(settings !== null)
             settings.style.filter = "blur(15px)";
-            socket.emit('join_user','new User join party');
-        socket.on('join_user', (data) => {
-            console.log(data);
-        });
-        socket.emit('send_data',{Speed,Points,myusername,});
-        socket.on('send_data', (username,data) => {
+        socket.emit('CreateRoom',{Speed,Points,myusername,room_mood,});
+        socket.on('SendData', (username,data) => {
             enemmyusername = username;
             host = data;
             Access = 1;
@@ -222,16 +233,16 @@ const PingPongSettings = ({ router }: any) =>
             </div>
             <div id="pause_game">
                 <p id="pause_game_p">
-                    pause game :
+                    Room Mood:
                 </p>
                 <button onClick={()=> change_pausegame_value(1)} id="pause_game_1">
-                    <p>
-                        Yes
+                    <p id="pause_game_1_p">
+                        Public
                     </p>
                 </button>
                 <button onClick={()=> change_pausegame_value(0)} id="pause_game_0">
-                    <p>
-                        No
+                    <p id="pause_game_0_p">
+                        private
                     </p>
                 </button>
             </div>

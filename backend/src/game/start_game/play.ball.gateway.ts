@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:00 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/02 10:27:01 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/03 14:33:10 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ import {
       GameObj[0].RoomInfo.GamePoints= points1 | points2;
       GameObj[0].PlayersInfo.Player1UserName = myusername;
       GameObj[0].PlayersInfo.Player2UserName = myusername2;
-      GameObj[0].RoomInfo.GamePoints= points1| points2;
       GameObj[0].RoomInfo.GameStatus = 1;
       GameObj[0].PlayersInfo.Player1ID = Player1ID;
       GameObj[0].PlayersInfo.Player2ID = Player2ID;
@@ -43,7 +42,6 @@ import {
       GameObj[GameObj.length - 1].RoomInfo.GamePoints= points1 | points2;
       GameObj[GameObj.length - 1].PlayersInfo.Player1UserName = myusername;
       GameObj[GameObj.length - 1].PlayersInfo.Player2UserName = myusername2;
-      GameObj[GameObj.length - 1].RoomInfo.GamePoints= points1 | points2;
       GameObj[GameObj.length - 1].RoomInfo.GameStatus = 1;
       GameObj[GameObj.length - 1].PlayersInfo.Player1ID = Player1ID;
       GameObj[GameObj.length - 1].PlayersInfo.Player2ID = Player2ID;
