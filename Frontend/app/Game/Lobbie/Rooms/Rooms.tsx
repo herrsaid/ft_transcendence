@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:18 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/03 22:13:55 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/03 22:37:56 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,14 @@ function  GetNumberOfRooms(router: AppRouterInstance)
     let Rooms = document.getElementById('Rooms');
     if(Rooms)
     {
+      Rooms.innerHTML = '';
       for(let a=0;a<Room;a++)
       {
         let element:HTMLElement = document.createElement("div");
         let element_btn:HTMLElement = document.createElement("button");
         element.innerHTML = `<p> Room Number: ${a+1}`;
         element_btn.innerHTML = '<p>Join</p>';
-        element.setAttribute("id",`Room`);
+        element.setAttribute("class",`Room`);
         element_btn.setAttribute("id",`Join`);
         element_btn.onclick= ()=>{SpectatorMood(a,router)};
         element.appendChild(element_btn);
@@ -77,8 +78,8 @@ export default function Rooms() {
   const router: AppRouterInstance = useRouter();
   useEffect(()=>
   {
-    GetNumberOfRooms(router);
-  },[]);
+    setInterval(()=>{GetNumberOfRooms(router);},1000);
+  });
     return (
         <div id="Rooms">
         </div>

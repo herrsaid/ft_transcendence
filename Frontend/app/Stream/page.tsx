@@ -25,6 +25,7 @@ function  GetNumberOfRooms(router: AppRouterInstance)
     let Rooms = document.getElementById('Rooms');
     if(Rooms)
     {
+      Rooms.innerHTML = '';
       console.log("inside Rooms");
       for(let a=0;a<Room;a++)
       {
@@ -49,8 +50,8 @@ export default function Stream() {
   const router: AppRouterInstance = useRouter();
   useEffect(()=>
   {
-    GetNumberOfRooms(router);
-  },[]);
+    setInterval(()=>{GetNumberOfRooms(router);},1000);
+  });
     return (
         <div id="Rooms">
         </div>
