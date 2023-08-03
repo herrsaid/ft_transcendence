@@ -11,12 +11,13 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Messages } from 'Database/entity/Message.entity';
 import { MessageService } from 'src/message/message.service';
+import { UserService } from 'src/user/services/user.service';
 
 @WebSocketGateway(3030, {cors:{
   origin: '*',
   credentials: true}})
 export class WebsockGateway {
-  constructor(private readonly MessageService:MessageService, private jwtService: JwtService) {}
+  constructor(private readonly MessageService:MessageService, private readonly UserService:UserService, private jwtService: JwtService) {}
   @WebSocketServer()
   server: Server;
 
@@ -28,6 +29,7 @@ export class WebsockGateway {
       const payload = jwt.verify(token, 'complexkey3884-asgfgsd,s33003400mmdma-434-4das111!!!!!+++')
       this.online_users.push({socket_id:socket.id,user_id:payload.id})
       console.log(this.online_users, this.online_users.length)
+      
     }catch(error){
       console.log('l9lawi ladkhlti')
       socket.disconnect(); 
