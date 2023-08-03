@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:26:31 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/03 17:52:02 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/03 18:51:36 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ import {
         if(Rooms[data.RoomNumber].players.length < 2)
         {
           Rooms[data.RoomNumber].players.push(player_data);
+          Rooms[data.RoomNumber].players[1].PlayerSocket.emit('SendData',Rooms[data.RoomNumber].players[0].Player,false);
           client.emit('JoinAccepted',Rooms[data.RoomNumber].Speed,Rooms[data.RoomNumber].Points);
         }
         else
@@ -104,7 +105,7 @@ import {
       if(Rooms[data.RoomNumber].players.length === 2)
       {
         Rooms[data.RoomNumber].players[0].PlayerSocket.emit('SendData',Rooms[data.RoomNumber].players[1].Player,true);
-        Rooms[data.RoomNumber].players[1].PlayerSocket.emit('SendData',Rooms[data.RoomNumber].players[0].Player,false);
+        // Rooms[data.RoomNumber].players[1].PlayerSocket.emit('SendData',Rooms[data.RoomNumber].players[0].Player,false);
         console.log("Launch New Room");
       }
       console.log(Rooms);

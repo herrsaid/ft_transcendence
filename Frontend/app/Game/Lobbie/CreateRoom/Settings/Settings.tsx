@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:18 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/03 17:17:11 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/03 18:51:49 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<string>>
             enemmyusername = username;
             host = data;
             Access = 1;
-            console.log(host);
+            console.log(username,host);
             socket.disconnect();
             router.replace('/Game//Online/Play');
         });

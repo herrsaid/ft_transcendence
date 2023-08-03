@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:18 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/03 17:44:36 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/03 18:44:22 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,26 @@ import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 import { useRouter } from 'next/navigation';
 import './Rooms.css';
 
-export let Points: number = 0;
-export let Speed: number = 0;
-export let Access: number = 0,RoomNumber:number = 0;
-export let myusername = sessionStorage.getItem('username');
+export let host2: boolean = false;
+export let Points2: number = 0;
+export let Speed2: number = 0;
+export let Access2: number = 0,RoomNumber:number = 0;
+export let myusername2 = sessionStorage.getItem('username');
+export let enemmyusername2: string | null = null;
 function SpectatorMood(Room: number, router: AppRouterInstance)
 {
-  Access = 1;
   RoomNumber = Room+1;
-  socket.emit('JoinUser',{RoomNumber,myusername,});
+  socket.emit('JoinUser',{RoomNumber,myusername2,});
+  socket.on('SendData', (username,data) => {
+    enemmyusername2 = username;
+    host2 = data;
+    console.log("data: "+enemmyusername2+" "+data);
+  });
   socket.on('JoinAccepted',(speed:number,points: number)=>
   {
-    Speed = speed;
-    Points = points;
+    Access2 = 1;
+    Speed2 = speed;
+    Points2 = points;
     socket.disconnect();
     router.replace(`/Game/Online/Play`);
   });

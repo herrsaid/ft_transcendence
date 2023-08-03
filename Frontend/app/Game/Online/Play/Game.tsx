@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:48 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/03 08:36:48 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/03 18:37:03 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ import p5 from "p5";
 import './Game.css';
 import { player1, player2 } from '../Socket/start_game_socket';
 import { host, Access, Speed, Points, myusername, enemmyusername} from '../../Lobbie/CreateRoom/Settings/Settings';
+import { host2, Access2, Speed2, Points2, myusername2, enemmyusername2} from '../../Lobbie/Rooms/Rooms';
 
 let GameWidth: number = 800, GameHeight: number = 400, GameSpeed: number = 4;
 let BallWidth: number = GameWidth/52, BallHeight = GameHeight/26, BallXpos: number = GameWidth/2, BallYpos: number = GameHeight/2;
@@ -24,6 +25,32 @@ let Racket2Width: number = GameWidth/80, Racket2Height =  Math.floor(GameHeight/
 let Result1Val: number = 0, Result1Xpos: number = 350, Result1Ypos: number = 25;
 let Result2Val: number = 0, Result2Xpos: number = 450, Result2Ypos: number = 25;
 let first_conection_val:boolean=false, message: string = '';
+//-----------------------------------------------------------\\
+let host1: boolean = false;
+let Points1: number = 0;
+let Speed1: number = 0;
+let Access1: number = 0;
+let myusername1 = sessionStorage.getItem('username');
+let enemmyusername1: string | null = null;
+
+if(Access === 1)
+{
+    host1 = host; 
+    Access1 = Access; 
+    Speed1 = Speed; 
+    Points1 = Points; 
+    myusername1 = myusername; 
+    enemmyusername1 = enemmyusername; 
+}
+else
+{
+    host1 = host2;
+    Access1 = Access2;
+    Speed1 = Speed2;
+    Points1 = Points2;
+    myusername1 = myusername2;
+    enemmyusername1 = enemmyusername2;
+}
 
 function ConvertServerData(ServerData:number,Mood:number)
 {
@@ -65,8 +92,8 @@ function Result1(p5: p5,res1: string, x: number, y: number)
 {
   p5.textSize(GameWidth/26);
   p5.fill('blue');
-  if(myusername)
-    p5.text(myusername, x - GameWidth/5, y);
+  if(myusername1)
+    p5.text(myusername1, x - GameWidth/5, y);
   p5.text(res1, x, y);
 }
 
@@ -74,14 +101,14 @@ function Result2(p5: p5,res2: string, x: number, y: number)
 {
   p5.textSize(GameWidth/26);
   p5.fill('red');
-  if(enemmyusername)
-    p5.text(enemmyusername, x + GameWidth/16, y);
+  if(enemmyusername1)
+    p5.text(enemmyusername1, x + GameWidth/16, y);
   p5.text(res2, x, y);
   p5.fill(255, 204, 0);
 }
 function BallAnimation ()
 {
-  if(host)
+  if(host1)
   {  
     player1.on('BallPos',(GameInfo)=>
     {
@@ -146,10 +173,10 @@ function first_conection()
   if(first_conection_val === false)
 		{
 			first_conection_val = true;
-        if(host)
-				  player1.emit('first_conection',{Speed,Points,myusername});
+        if(host1)
+				  player1.emit('first_conection',{Speed1,Points1,myusername1});
         else
-				  player2.emit('first_conection',{Speed,Points,myusername});
+				  player2.emit('first_conection',{Speed1,Points1,myusername1});
 		}
 }
 
@@ -183,7 +210,7 @@ function NewValue()
 function GameStatusChecker(p5: p5): boolean
 {
   p5.textSize(GameWidth/26);
-  if(host)
+  if(host1)
   {
 		player1.on('GameEnd',(data: string)=>
     {
@@ -223,7 +250,7 @@ const Game = () => {
       
       p5.draw = () => {
         NewValue();
-        if(!Access)
+        if(!Access1)
         {
           p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').center();
           p5.textSize(GameWidth/26);
@@ -238,7 +265,7 @@ const Game = () => {
           p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').center();
           p5.background(25);
           BallAnimation();
-          if (host)
+          if (host1)
           Racket1Animation(p5);
           else
           Racket2Animation(p5);
