@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:18 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/03 13:56:09 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/03 17:44:36 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ export let myusername = sessionStorage.getItem('username');
 function SpectatorMood(Room: number, router: AppRouterInstance)
 {
   Access = 1;
-  RoomNumber = Room;
+  RoomNumber = Room+1;
   socket.emit('JoinUser',{RoomNumber,myusername,});
   socket.on('JoinAccepted',(speed:number,points: number)=>
   {

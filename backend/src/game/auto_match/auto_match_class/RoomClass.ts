@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 08:59:47 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/03 15:34:26 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/03 17:12:07 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ export class RoomClass{
         this.players = [];
         this.Speed = 0;
         this.Points = 0;
+        this.RoomMood = false;
     }
 }

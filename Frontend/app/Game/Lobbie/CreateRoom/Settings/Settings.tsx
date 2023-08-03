@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:18 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/03 15:32:43 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/03 17:17:11 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 
 export let Points: number = 30;
 export let Speed: number = 1;
-export let pause_game: number = 0,room_mood: number = 0;
+export let pause_game: number = 0,RoomMood: boolean = false;
 export let other_tools: number = 0;
 export let host: boolean = false;
 export let Online: number = 1;
@@ -121,7 +121,8 @@ function change_pausegame_value(param: number)
     if(changemap !== null)
         changemap.style.backgroundColor = " rgb(57, 57, 111,1)";
     pause_game = param;
-    room_mood = param;
+    if(param)
+        RoomMood = true;
 }
 
 function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<string>>)
@@ -143,7 +144,7 @@ function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<string>>
         setWarning('');
         if(settings !== null)
             settings.style.filter = "blur(15px)";
-        socket.emit('CreateRoom',{Speed,Points,myusername,room_mood,});
+        socket.emit('CreateRoom',{Speed,Points,myusername,RoomMood,});
         socket.on('SendData', (username,data) => {
             enemmyusername = username;
             host = data;
