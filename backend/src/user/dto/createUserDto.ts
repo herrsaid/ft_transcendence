@@ -38,3 +38,10 @@ export class updateAvatar_bol{
     @IsBoolean()
     is_profile_img_updated:boolean;
 }
+
+
+export class updateStatus{
+
+    @IsBoolean()
+    status:boolean;
+}
