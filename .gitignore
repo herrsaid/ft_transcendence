@@ -3,7 +3,8 @@
 node_modules
 .next
 .DS_Store
-.env.local
+./Frontend/.env.local
+./backend/.env
 /data
 # IDE - VSCode
 .vscode/*

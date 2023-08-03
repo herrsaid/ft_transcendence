@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:26:31 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/03 15:36:18 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/03 17:52:02 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,9 @@ import {
       player_data.PlayerId = client.id;
       player_data.PlayerSocket = client;
       let check:RoomClass = Rooms.find(elem => elem.Points === data.Points && elem.Speed === data.Speed);
-      if(check !== undefined)
+      if(check !== undefined && check.RoomMood !== false)
       {
-        if(check.players.find(elem => elem.PlayerId === client.id) !== undefined && check.RoomMood === false)
+        if(check.players.find(elem => elem.PlayerId === client.id) !== undefined)
           return ;
         else
           console.log("Push New User");
@@ -68,6 +68,17 @@ import {
     }
     @SubscribeMessage('JoinUser')
     handleJoinUser(client: Socket, data: UserInfo): void {
+      let Public_Rooms= 0;
+      for(let a = 0;a<Rooms.length;a++)
+      {
+        if(Rooms[a].RoomMood != false)
+          Public_Rooms++;
+        if(Public_Rooms == data.RoomNumber)
+        {
+          data.RoomNumber = a;
+          break;
+        }
+      }
       if(Rooms[data.RoomNumber])
       {
         let player_data:PlayerClass = new PlayerClass;
@@ -101,7 +112,11 @@ import {
     @SubscribeMessage('GetRooms')
     handleGetRooms(client: Socket): void
     {
-      client.emit('GetRooms',Rooms.length);
+      let Public_Rooms= 0;
+      for(let a = 0;a<Rooms.length;a++)
+        if(Rooms[a].RoomMood != false)
+          Public_Rooms++;
+      client.emit('GetRooms',Public_Rooms);
     }
     handleDisconnect(client: Socket): void {
       for(let a = 0;a<Rooms.length; a++)
