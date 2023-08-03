@@ -27,14 +27,19 @@ export class UserController {
     @Get('search')
     async getUsersSearch(@Req() req)
     {
-        const builder = await this.userService.getUsersSearch('user');
-
-
-        if (req.query.q)
+        try
         {
-            builder.where("user.username LIKE :q ", {q : `%${req.query.q}%`})
+            const builder = await this.userService.getUsersSearch('user');
+            if (req.query.q)
+                builder.where("user.username LIKE :q ", {q : `%${req.query.q}%`})
+            return await builder.getMany();
         }
-        return await builder.getMany();
+        catch
+        {
+            throw new UnauthorizedException();
+        }
+
+
         
     }
 
@@ -44,14 +49,26 @@ export class UserController {
     @Get('me')
     profileInfo(@Req() req)
     {
-        return this.userService.findOne(req.user.id);   
+        try
+        {
+            return this.userService.findOne(req.user.id);
+        }
+        catch
+        {
+            throw new UnauthorizedException();
+        }
     }
     
     @UseGuards(AuthGuard)
     @Get('friends')
     getAllUsers(@Req() req)
     {
-        return this.userService.findAllUserNotMe(req.user.id);
+        try{
+            return this.userService.findAllUserNotMe(req.user.id);
+        }
+        catch{
+            throw new UnauthorizedException();
+        }
     }
     
 
@@ -59,6 +76,7 @@ export class UserController {
     @Get(':username')
     findOneByUsername(@Param('username') username:string)
     {
+        //const user = this.userService.findOneByUsername(username);
         return this.userService.findOneByUsername(username);
     }
 
@@ -81,8 +99,6 @@ export class UserController {
         const receiverId = parseInt(receiverStringId);
         delete(req.user.iat)
         delete(req.user.exp)
-        // console.log(receiverId)
-        // console.log(req.user)
         return this.userService.sendFriendRequest(receiverId, req.user);
     }
 

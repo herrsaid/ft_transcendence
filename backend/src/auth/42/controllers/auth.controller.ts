@@ -24,7 +24,7 @@ export class AuthController {
 
     const access_token = this.authservice.loginIntra42(req);
     const token : string = access_token['access_token'];
-   
+    
     res.cookie('access_token', token,{
       httpOnly: false,
             secure: false,
