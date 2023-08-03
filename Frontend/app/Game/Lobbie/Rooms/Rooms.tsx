@@ -1,36 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Settings.tsx                                       :+:      :+:    :+:   */
+/*   Rooms.tsx                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:18 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/03 08:51:25 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/03 13:56:09 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 'use client'
 
 import { useEffect } from 'react';
-import { player1 } from '../../../Game/Online/Socket/start_game_socket'
+import { socket } from '../../Online/Socket/auto_match_socket'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 import { useRouter } from 'next/navigation';
-import './Settings.css';
+import './Rooms.css';
 
-
+export let Points: number = 0;
+export let Speed: number = 0;
 export let Access: number = 0,RoomNumber:number = 0;
+export let myusername = sessionStorage.getItem('username');
 function SpectatorMood(Room: number, router: AppRouterInstance)
 {
   Access = 1;
   RoomNumber = Room;
-    router.replace(`/Game/Online`);
+  socket.emit('JoinUser',{RoomNumber,myusername,});
+  socket.on('JoinAccepted',(speed:number,points: number)=>
+  {
+    Speed = speed;
+    Points = points;
+    socket.disconnect();
+    router.replace(`/Game/Online/Play`);
+  });
+  socket.on('JoinRefused',(data: string)=>
+  {
+    console.log(data);
+  });
 }
 
 function  GetNumberOfRooms(router: AppRouterInstance)
 {
-  player1.emit('LoadRooms');
-  player1.on('LoadRooms',(Room: number)=>
+  socket.emit('GetRooms');
+  socket.on('GetRooms',(Room: number)=>
   {
     console.log(Room);
     let Rooms = document.getElementById('Rooms');

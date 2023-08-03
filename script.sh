@@ -6,7 +6,7 @@
 #    By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/02 10:24:50 by mabdelou          #+#    #+#              #
-#    Updated: 2023/08/02 19:46:36 by mabdelou         ###   ########.fr        #
+#    Updated: 2023/08/03 16:37:45 by mabdelou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,7 +73,7 @@ echo "done!"
 fi
 
 [ `uname -s` != "Darwin" ] && return
-
+open -a "Visual Studio Code" $HOME/goinfre/ft_transcendence
 osascript << EDF
 --run Docker Aplication
 
@@ -110,3 +110,4 @@ tell application "iTerm 2.app"
 end tell
 
 EDF
+exit

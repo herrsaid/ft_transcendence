@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 08:59:47 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/03 09:10:49 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/03 15:34:26 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ import { PlayerClass } from "./PlayerClass";
 export class RoomClass{
     //attributes
     public players: PlayerClass[]
-    
     public Speed: number;
     public Points: number;
+    public RoomMood: boolean;
 
     constructor()
     {

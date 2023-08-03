@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:14 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/02 10:25:15 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/03 15:28:46 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
     height: 60%;
     background-color: rgba(0, 0, 0, 0.3);
     border-radius: 2%;
+    z-index: 0;
 }
 
 #Game_title
@@ -202,7 +203,7 @@
     top: 37.5%;
     font-size: 1.7vh;
     color: white;
-    opacity: 0;
+    opacity: 1;
 }
 
 #pause_game_p
@@ -220,7 +221,6 @@
     background-color: rgb(57, 57, 111,0.4);
     border-radius: 10px;
     text-align: center;
-    /* z-index: -1; */
 }
 
 #pause_game_0
@@ -232,7 +232,48 @@
     background-color: rgb(57, 57, 111,1);
     border-radius: 10px;
     text-align: center;
-    /* z-index: -1; */
+}
+
+#room_mood
+{
+    position: relative;
+    display: flex;
+    width: 100%;
+    height:5%;
+    top: 37.5%;
+    font-size: 1.7vh;
+    color: white;
+    opacity: 1;
+}
+
+#room_mood_p
+{
+    position: relative;
+    left: 15%;
+}
+
+#room_mood_1
+{
+    position: absolute;
+    width: 10%;
+    height: 100%;
+    left: 46%;
+    background-color: rgb(57, 57, 111,0.4);
+    border-radius: 10px;
+    text-align: center;
+    z-index: 1;
+}
+
+#room_mood_0
+{
+    position: absolute;
+    width: 10%;
+    height: 100%;
+    left: 66%;
+    background-color: rgb(57, 57, 111,1);
+    border-radius: 10px;
+    text-align: center;
+    z-index: 1;
 }
 
 #other_tools
@@ -262,7 +303,7 @@
     background-color: rgb(57, 57, 111,0.4);
     border-radius: 10px;
     text-align: center;
-    /* z-index: -1; */
+    z-index: -1;
 }
 
 #other_tools_0
@@ -274,7 +315,7 @@
     background-color: rgb(57, 57, 111,1);
     border-radius: 10px;
     text-align: center;
-    /* z-index: -1; */
+    z-index: -1;
 }
 
 #play
