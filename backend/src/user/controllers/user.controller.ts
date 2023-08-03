@@ -1,4 +1,4 @@
-import { Body, Controller, FileTypeValidator, Get, MaxFileSizeValidator, Param, ParseFilePipe, Post, Put, Query, Req, Request, Res, UnauthorizedException, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, FileTypeValidator, Get, MaxFileSizeValidator, NotFoundException, Param, ParseFilePipe, Post, Put, Query, Req, Request, Res, UnauthorizedException, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { CreateUserDto, filterUsersdto, updateUsername } from '../dto/createUserDto';
 import { UserService } from '../services/user.service';
 import { AuthGuard } from 'src/auth/guard/auth.guard';
@@ -8,8 +8,9 @@ import { diskStorage } from 'multer';
 import { Observable } from 'rxjs';
 import { FriendRequestStatus, FriendRequest_Interface } from 'src/entities/friend/interfaces/friend-request.interface';
 import { join } from 'path';
+import { v4 as uuidv4 } from 'uuid';
 
-
+const v4id = uuidv4()
 
 @Controller('user')
 export class UserController {
@@ -74,19 +75,25 @@ export class UserController {
 
     @UseGuards(AuthGuard)
     @Get(':username')
-    findOneByUsername(@Param('username') username:string)
+    async findOneByUsername(@Param('username') username:string)
     {
-        //const user = this.userService.findOneByUsername(username);
-        return this.userService.findOneByUsername(username);
+        const user = await this.userService.findOneByUsername(username);
+        
+        if (!user)
+            throw new NotFoundException();
+        return user;
     }
 
 
     @UseGuards(AuthGuard)
-    @Get(':userId')
-    findUserById(@Param('userId') userStringId:string)
+    @Get('id/:userId')
+    async findUserById(@Param('userId') userStringId:string)
     {
         const userId = parseInt(userStringId);
-        return this.userService.findOne(userId);
+        const user = await this.userService.findOne(userId);
+        if (!user)
+            throw new NotFoundException();
+        return user;
     }
 
 
@@ -150,7 +157,9 @@ export class UserController {
             storage: diskStorage({
                 destination: './uploadedFiles/avatars',
                 filename: (req, file, cb) => {
-                    cb(null, file.originalname)
+                    let file_part = file.originalname.split('.')
+                    let new_file = file_part[0] + v4id  + "." + file_part[1];
+                    cb(null, new_file)
                 }
               })
         }
@@ -176,7 +185,6 @@ export class UserController {
     {
         return res.sendFile(join(process.cwd(), 'uploadedFiles/avatars/' + path));
     }
-
 
 
 

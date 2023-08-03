@@ -6,6 +6,7 @@ import {FaUpload} from 'react-icons/fa'
 import Cookies from 'js-cookie';
 import { Image } from "@chakra-ui/react";
 import { useState } from "react";
+import { useToast } from '@chakra-ui/react'
 
 
 interface props{
@@ -21,6 +22,7 @@ const ProfileAvatar = (props:props) => {
     let new_src_img;
     const [realimg, setrealimg] = useState("");
     const [first_time, setfirsttime] = useState(false)
+    const toast = useToast()
 
         const upload = async () => {
    
@@ -38,6 +40,18 @@ const ProfileAvatar = (props:props) => {
                     },
                 body: data
             })
+            
+            if (res.status == 400)
+            {
+                toast({
+                    title: 'Invalid File',
+                    description: "Please upload Valid Image type PNG OR JPG OR JPEG, or reduce the file size",
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                  })
+                  return ;
+            }
             if (!res.ok)
                 throw new Error("failed to fetch users");
             else
