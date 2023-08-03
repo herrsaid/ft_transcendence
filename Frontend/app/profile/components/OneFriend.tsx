@@ -23,7 +23,7 @@ const OneFriend = (props:props) => {
         <div className="inside_friend">
            
     <Avatar size='md' name='Dan Abrahmov' src={props.avatar_updated ? new_src_img : props.image} >
-    <AvatarBadge boxSize='1em' bg='green.500' borderColor='#18184a'/>
+    <AvatarBadge boxSize='1em' bg={props.status ? 'green.500' : 'tomato'} borderColor='#18184a'/>
     </Avatar>
 
         </div>

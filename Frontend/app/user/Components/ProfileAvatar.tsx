@@ -10,7 +10,8 @@ interface props{
     img:string,
     username:string,
     id:number,
-    avatar_updated:boolean
+    avatar_updated:boolean,
+    status:boolean
 }
 
 
@@ -146,7 +147,7 @@ const ProfileAvatar = (props:props) => {
                 <div className="avatar_edit_real">
  
                     <Avatar size='xl' name='Segun Adebayo' src={props.avatar_updated ? new_src_img : props.img}>
-                        <AvatarBadge boxSize='0.8em' bg='green.500' borderColor='#18184a' />
+                        <AvatarBadge boxSize='0.8em' bg={props.status ? 'green.500' : 'tomato'} borderColor='#18184a' />
                         </Avatar>
   
                 </div> 

@@ -578,3 +578,9 @@ p.enligne{
   body{
     background-color: var(--back-color) !important;
   }
+
+
+.skeleton{
+    margin: 25px 0px;
+    width: 100%;
+}

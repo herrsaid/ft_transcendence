@@ -6,6 +6,7 @@ import Cookies from 'js-cookie';
 
 import useSWR from "swr"
 import OneFriend from "../profile/components/OneFriend";
+import { Box, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
 
 
 const fetchUsers = async (url:string) => {
@@ -35,7 +36,22 @@ export default function SearchPage()
     );
 
     
-    console.log(data);
+    if (isLoading)
+    {
+        return <div className="profile_container">
+            <div className="all_profile">
+            <div className="side_two">
+            <div className="side_two_info">
+            <Box padding='6' boxShadow='md' bg='#39396f' borderRadius={25}>
+                
+                    <SkeletonCircle size='10' />
+                
+                </Box>
+                </div>
+                </div>
+                </div>   
+        </div>
+    }
 
     if (!data)
         return null;

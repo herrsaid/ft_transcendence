@@ -32,7 +32,7 @@ const Friends = () => {
     fetchFriends
     );
 
-
+    if (isLoading) return <div>loading...</div>
 
     if (data)
     {
