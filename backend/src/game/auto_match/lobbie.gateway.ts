@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:26:31 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/04 15:10:13 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/04 16:37:40 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ import {
       let check:RoomClass = Rooms.find(elem => elem.Points === data.Points && elem.Speed === data.Speed);
       if(check !== undefined && check.RoomMood !== false)
       {
-        console.log("=>>>>>>>>>.: "+ data.RoomMood);
         if(check.players.find(elem => elem.PlayerId === client.id) !== undefined)
           return ;
         else

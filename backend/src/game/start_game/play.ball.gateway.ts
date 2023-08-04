@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:00 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/04 16:09:50 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/04 16:35:48 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ import e from 'express';
         && GameObj[Room].PlayersInfo.Player1Client !== undefined
         && GameObj[Room].PlayersInfo.Player2Client !== undefined)
       {
-        console.log(GameObj[Room].RoomInfo.GamePoints,GameObj[Room].PlayersInfo.Result1Val,"user1");
         GameObj[Room].PlayersInfo.Player1Client.emit('GameEnd',"YOU LOSE");
         GameObj[Room].PlayersInfo.Player2Client.emit('GameEnd',"YOU WIN");
       }
@@ -82,7 +81,6 @@ import e from 'express';
         && GameObj[Room].PlayersInfo.Player1Client !== undefined
         && GameObj[Room].PlayersInfo.Player2Client !== undefined)
       {
-        console.log(GameObj[Room].RoomInfo.GamePoints,GameObj[Room].PlayersInfo.Result1Val,"user2");
         GameObj[Room].PlayersInfo.Player1Client.emit('GameEnd',"YOU WIN");
         GameObj[Room].PlayersInfo.Player2Client.emit('GameEnd',"YOU LOSE");
       }
@@ -127,10 +125,7 @@ import e from 'express';
       {
         if(GameObj.find((elem)=> elem.PlayersInfo.Player1ID === Player1ID) === undefined
         && GameObj.find((elem)=> elem.PlayersInfo.Player2ID === Player2ID) === undefined)
-        {
-          console.log("here");
           this.new_connect()
-        }
           for(let a = 0 ; a<GameObj.length; a++ )
         {
           if(GameObj[a].RoomInfo.Sleep <= 0 && GameObj[a].RoomInfo.GameStatus === 1)
