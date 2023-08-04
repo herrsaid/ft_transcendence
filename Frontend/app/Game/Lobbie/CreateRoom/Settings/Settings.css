@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:14 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/03 15:28:46 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/04 10:43:47 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,14 @@
 
 #Settings
 {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    width: 50vh;
-    height: 60%;
+    position: relative;
+    left: 10%;
+    width: 75%;
+    height: 75vw;
     background-color: rgba(0, 0, 0, 0.3);
-    border-radius: 2%;
+    border-radius: 10px;
     z-index: 0;
 }
-
 #Game_title
 {
     position: relative;
@@ -377,4 +374,79 @@
     font-size: 1vw;
     top:62.5%;
     left: 25%;
+}
+
+/*----------------------------------Room Style-------------------------------*/
+
+#Room{
+
+    position: absolute;
+    filter: blur(0px);
+    top: 33.5%;
+    width: 100%;
+    height: 33%;
+    background-color: rgba(56, 57, 113);
+    border-radius: 2%;
+    z-index: 3;
+}
+
+#Player1name
+{
+    position: absolute;
+    top:5%;
+    left:10%;
+
+}
+
+#Player2name
+{
+    position: absolute;
+    top:5%;
+    left: 75%;
+}
+
+#Player1Pic img
+{
+    position: absolute;
+    border-radius: 25px;
+    top:25%;
+    left:7.5%;
+    width:100px;
+    height: 100px;
+}
+
+#VS
+{
+    position: absolute;
+    font-size: 50px;
+    top:30%;
+    left:45%;
+}
+
+#Player2Pic img
+{
+    position: absolute;
+    border-radius: 25px;
+    top:25%;
+    right:7.5%;
+    width:100px;
+    height: 100px;
+}
+
+
+#start
+{
+    position: absolute;
+    text-align: center;
+    background-color: rgb(24, 24, 74);
+    border-radius: 25px;
+    bottom:7.5%;
+    left: 44%;
+    width:75px;
+    height: 30px;
+}
+#start p 
+{
+    text-align: center;
+    top:25%
 }

@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:18 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/03 22:37:56 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/04 11:51:16 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,15 +47,15 @@ function SpectatorMood(Room: number, router: AppRouterInstance)
     console.log(data);
   });
 }
-
 function  GetNumberOfRooms(router: AppRouterInstance)
 {
   socket.emit('GetRooms');
   socket.on('GetRooms',(Room: number)=>
   {
-    console.log(Room);
     let Rooms = document.getElementById('Rooms');
-    if(Rooms)
+    if( Room === 0 && Rooms)
+      Rooms.innerHTML = '<p> No Rooms available for now </p>';
+    else if(Rooms)
     {
       Rooms.innerHTML = '';
       for(let a=0;a<Room;a++)
@@ -81,7 +81,12 @@ export default function Rooms() {
     setInterval(()=>{GetNumberOfRooms(router);},1000);
   });
     return (
+      <>
         <div id="Rooms">
         </div>
+        <div onClick={()=>{router.replace('/Game/Lobbie/CreateRoom');}} id="CreateRoom">
+            <button> Create Room </button>
+        </div>
+      </>
     )
   }

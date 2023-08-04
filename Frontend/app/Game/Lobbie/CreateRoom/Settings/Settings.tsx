@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:18 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/03 18:51:49 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/04 10:46:03 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,14 +142,45 @@ function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<string>>
     else if(Online === 1)
     {
         setWarning('');
-        if(settings !== null)
-            settings.style.filter = "blur(15px)";
         socket.emit('CreateRoom',{Speed,Points,myusername,RoomMood,});
+        console.log("room:",RoomMood);
+        if(RoomMood === false && settings)
+        {
+            settings.innerHTML = "";
+            let Room:HTMLElement = document.createElement("div");
+            let Player1Pic:HTMLElement = document.createElement("div");
+            let VS:HTMLElement = document.createElement("div");
+            let Player2Pic:HTMLElement = document.createElement("div");
+            let Player1name:HTMLElement = document.createElement("div");
+            let Player2name:HTMLElement = document.createElement("div");
+            let start:HTMLElement = document.createElement("div");
+            Room.setAttribute("id",`Room`);
+            Player1name.setAttribute("id",`Player1name`);
+            Player2name.setAttribute("id",`Player2name`);
+            Player1Pic.setAttribute("id",`Player1Pic`);
+            VS.setAttribute("id",`VS`);
+            Player2Pic.setAttribute("id",`Player2Pic`);
+            start.setAttribute("id",`start`);
+            Player1name.innerHTML = 'mabdelou';
+            Player2name.innerHTML = 'unknown';
+            Player1Pic.innerHTML = `<img src=${sessionStorage.getItem('avatar')!}></img>`;
+            VS.innerHTML = '<p> VS </p>';
+            Player2Pic.innerHTML = `<img src=${sessionStorage.getItem('avatar')!}></img>`;
+            start.innerHTML = `<button> Start </button>`;
+            Room.appendChild(Player1name);
+            Room.appendChild(Player2name);
+            Room.appendChild(Player1Pic);
+            Room.appendChild(VS);
+            Room.appendChild(Player2Pic);
+            Room.appendChild(start);
+            settings.appendChild(Room);
+        }
+        else if(settings)
+            settings.style.filter = "blur(15px)";
         socket.on('SendData', (username,data) => {
             enemmyusername = username;
             host = data;
             Access = 1;
-            console.log(username,host);
             socket.disconnect();
             router.replace('/Game//Online/Play');
         });
