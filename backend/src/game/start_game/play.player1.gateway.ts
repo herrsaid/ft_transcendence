@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:03 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/03 22:20:57 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/04 14:03:09 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,8 @@ import {
         { 
           GameObj[a].RoomInfo.GameStatus = 0;
           GameObj[a].PlayersInfo.Player1ID = '';
+          GameObj[a].PlayersInfo.Player2ID = '';
+          Player1ID = '';
         }
       }
   }
@@ -67,6 +69,8 @@ import {
           { 
             GameObj[a].RoomInfo.GameStatus = 0;
             GameObj[a].PlayersInfo.Player1ID = '';
+            GameObj[a].PlayersInfo.Player2ID = '';
+            Player1ID = '';
           }
         }
       }

@@ -8,6 +8,13 @@
     border-radius: 10px;
 }
 
+#Rooms p 
+{
+    position: relative;
+    text-align: center;
+    font-size: larger;
+}
+
 #Room
 {
     position: relative;
@@ -23,17 +30,23 @@
 #Room p
 {
     text-align: center;
-
+    top: 10%;
 }
 
 #Watch
 {
-    position:relative;
+    position:absolute;
     text-align: center;
     left:90%;
+    bottom: 10%;
 }
 
-#Watch p
+#CreateRoom button
 {
-    
+    position:relative;
+    text-align: center;
+    width: 15%;
+    left:42.5%;
+    top: 5%;
+    background-color: rgb(57, 57, 111,0.4);
 }

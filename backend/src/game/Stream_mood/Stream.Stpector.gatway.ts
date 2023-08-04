@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:10 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/02 10:27:11 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/04 13:14:58 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ import {
     server: Server;
     @SubscribeMessage('LoadStream')
     handleLoadStream(client: Socket): void {
-      console.log("Connecting");
       client.emit("LoadStream",GameObj.length);
     }
     @SubscribeMessage('new_spectator')

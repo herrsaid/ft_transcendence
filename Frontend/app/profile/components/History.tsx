@@ -65,10 +65,9 @@ const History = () => {
 
     return (
 
-<div className="side_two_history">
-        {myHistory ? myHistory : "No History!"}
-</div>
-
+        <div className="side_two_history">
+                {myHistory ? myHistory : "No History!"}
+        </div>
     );
 };
 export default History;

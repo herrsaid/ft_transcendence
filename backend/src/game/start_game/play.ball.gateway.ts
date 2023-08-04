@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:00 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/03 14:33:10 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/04 16:09:50 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ import {
   } from '@nestjs/websockets';
   import { Interval } from "@nestjs/schedule";
   import { Player1ID,speed1,points1,myusername} from './play.player1.gateway'
-  import { Player2ID,speed2,points2,myusername2} from './play.player2.gateway'
+  import { Player2ID,speed2,points2,enemyusername} from './play.player2.gateway'
   import {data } from '../game_brain/logic/game_server_class';
+import e from 'express';
 
   export let GameObj: data[] = [];
   @WebSocketGateway(1340, {
@@ -30,7 +31,7 @@ import {
       GameObj[0].RoomInfo.GameSpeed = speed1 | speed2;
       GameObj[0].RoomInfo.GamePoints= points1 | points2;
       GameObj[0].PlayersInfo.Player1UserName = myusername;
-      GameObj[0].PlayersInfo.Player2UserName = myusername2;
+      GameObj[0].PlayersInfo.Player2UserName = enemyusername;
       GameObj[0].RoomInfo.GameStatus = 1;
       GameObj[0].PlayersInfo.Player1ID = Player1ID;
       GameObj[0].PlayersInfo.Player2ID = Player2ID;
@@ -41,7 +42,7 @@ import {
       GameObj[GameObj.length - 1].RoomInfo.GameSpeed = speed1 | speed2;
       GameObj[GameObj.length - 1].RoomInfo.GamePoints= points1 | points2;
       GameObj[GameObj.length - 1].PlayersInfo.Player1UserName = myusername;
-      GameObj[GameObj.length - 1].PlayersInfo.Player2UserName = myusername2;
+      GameObj[GameObj.length - 1].PlayersInfo.Player2UserName = enemyusername;
       GameObj[GameObj.length - 1].RoomInfo.GameStatus = 1;
       GameObj[GameObj.length - 1].PlayersInfo.Player1ID = Player1ID;
       GameObj[GameObj.length - 1].PlayersInfo.Player2ID = Player2ID;
@@ -68,32 +69,38 @@ import {
     end_simulation(Room:number)
     {
       // playerI colect target
-      if(GameObj[Room].RoomInfo.GamePoints >=  GameObj[Room].PlayersInfo.Result1Val
+      if(GameObj[Room].RoomInfo.GamePoints <=  GameObj[Room].PlayersInfo.Result1Val
         && GameObj[Room].PlayersInfo.Player1Client !== undefined
         && GameObj[Room].PlayersInfo.Player2Client !== undefined)
       {
-        GameObj[Room].PlayersInfo.Player1Client.emit('GameEnd',"YOU WIN");
-        GameObj[Room].PlayersInfo.Player2Client.emit('GameEnd',"YOU LOSE");
-      }
-        // playerII colect target
-      else if(GameObj[Room].RoomInfo.GamePoints >=  GameObj[Room].PlayersInfo.Result2Val
-        && GameObj[Room].PlayersInfo.Player1Client !== undefined
-        && GameObj[Room].PlayersInfo.Player2Client !== undefined)
-      {
+        console.log(GameObj[Room].RoomInfo.GamePoints,GameObj[Room].PlayersInfo.Result1Val,"user1");
         GameObj[Room].PlayersInfo.Player1Client.emit('GameEnd',"YOU LOSE");
         GameObj[Room].PlayersInfo.Player2Client.emit('GameEnd',"YOU WIN");
       }
-      // playerI left
-      else if(GameObj[Room].PlayersInfo.Player1ID === '' && GameObj[Room].PlayersInfo.Player2Client !== undefined)
-        GameObj[Room].PlayersInfo.Player2Client.emit('GameEnd',"YOU WIN");
-      // playerII left
-      else if(GameObj[Room].PlayersInfo.Player2ID === '' && GameObj[Room].PlayersInfo.Player1Client !== undefined)
+        // playerII colect target
+      else if(GameObj[Room].RoomInfo.GamePoints <=  GameObj[Room].PlayersInfo.Result2Val
+        && GameObj[Room].PlayersInfo.Player1Client !== undefined
+        && GameObj[Room].PlayersInfo.Player2Client !== undefined)
+      {
+        console.log(GameObj[Room].RoomInfo.GamePoints,GameObj[Room].PlayersInfo.Result1Val,"user2");
         GameObj[Room].PlayersInfo.Player1Client.emit('GameEnd',"YOU WIN");
+        GameObj[Room].PlayersInfo.Player2Client.emit('GameEnd',"YOU LOSE");
+      }
+      // player leave Room
+      else if(GameObj[Room].PlayersInfo.Player2ID === ''
+        && GameObj[Room].PlayersInfo.Player1Client !== undefined
+        && GameObj[Room].PlayersInfo.Player2Client !== undefined)
+      {
+        GameObj[Room].PlayersInfo.Player1Client.emit('GameEnd',"YOU WIN");
+        GameObj[Room].PlayersInfo.Player2Client.emit('GameEnd',"YOU WIN");
+        
+      }
       // remove Object of this room
       console.log('['+GameObj.length+']');
-      GameObj = GameObj.filter((obj) => obj.PlayersInfo.Player1ID !== '' &&  obj.PlayersInfo.Player2ID !== '');
       if(GameObj.length === 1 && GameObj[0].PlayersInfo.Player1ID === '' && GameObj[0].PlayersInfo.Player2ID === '')
         GameObj.pop();
+      else if(GameObj.length > 1)
+        GameObj = GameObj.filter((obj) => obj.PlayersInfo.Player1ID !== '' &&  obj.PlayersInfo.Player2ID !== '');
       console.log('['+GameObj.length+']');
     }
 
@@ -120,8 +127,11 @@ import {
       {
         if(GameObj.find((elem)=> elem.PlayersInfo.Player1ID === Player1ID) === undefined
         && GameObj.find((elem)=> elem.PlayersInfo.Player2ID === Player2ID) === undefined)
+        {
+          console.log("here");
           this.new_connect()
-        for(let a = 0 ; a<GameObj.length; a++ )
+        }
+          for(let a = 0 ; a<GameObj.length; a++ )
         {
           if(GameObj[a].RoomInfo.Sleep <= 0 && GameObj[a].RoomInfo.GameStatus === 1)
           {
@@ -137,10 +147,7 @@ import {
               GameObj[a].RoomInfo.Sleep = GameObj[a].RoomInfo.Sleep - 16;
           //call funbnsction that end_simulation
           else
-          {
-            this.end_simulation(a);
-            a -= 1;
-          }
+            this.end_simulation(a--);
           }
       }
       else if(Player1ID !== '' && Player2ID !== '')

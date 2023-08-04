@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:18 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/04 10:46:03 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/04 15:01:12 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,8 @@ function change_pausegame_value(param: number)
     pause_game = param;
     if(param)
         RoomMood = true;
+    else
+        RoomMood = false;
 }
 
 function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<string>>)
@@ -142,8 +144,8 @@ function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<string>>
     else if(Online === 1)
     {
         setWarning('');
-        socket.emit('CreateRoom',{Speed,Points,myusername,RoomMood,});
         console.log("room:",RoomMood);
+        socket.emit('CreateRoom',{Speed,Points,myusername,RoomMood,});
         if(RoomMood === false && settings)
         {
             settings.innerHTML = "";
@@ -165,7 +167,7 @@ function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<string>>
             Player2name.innerHTML = 'unknown';
             Player1Pic.innerHTML = `<img src=${sessionStorage.getItem('avatar')!}></img>`;
             VS.innerHTML = '<p> VS </p>';
-            Player2Pic.innerHTML = `<img src=${sessionStorage.getItem('avatar')!}></img>`;
+            Player2Pic.innerHTML = `<img src="/avatar.png"></img>`;
             start.innerHTML = `<button> Start </button>`;
             Room.appendChild(Player1name);
             Room.appendChild(Player2name);

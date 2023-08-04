@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:06 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/03 22:21:03 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/04 16:02:02 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ import {
   } from '@nestjs/websockets';
   import { Socket, Server } from 'socket.io';
   import { GameObj } from './play.ball.gateway';
-  export let Player2ID: string = '',speed2: number = 0,points2: number = 0,myusername2:string = '';;
+  export let Player2ID: string = '',speed2: number = 0,points2: number = 0,enemyusername:string = '';;
   let none: Socket;
   @WebSocketGateway(1341, {
     cors: { origin: '*', credentials: true },
@@ -31,7 +31,7 @@ import {
       Player2ID = client.id;
       speed2 = data.Speed1;
       points2 = data.Points1;
-      myusername2 = data.myusername1;
+      enemyusername = data.myusername1;
       console.log(data);
       console.log('Player2Arr_content: ', Player2ID);
     }
@@ -56,7 +56,9 @@ import {
         if(GameObj[a].PlayersInfo.Player2ID === client.id)
         {
           GameObj[a].RoomInfo.GameStatus = 0;
+          GameObj[a].PlayersInfo.Player1ID = '';
           GameObj[a].PlayersInfo.Player2ID = '';
+          Player2ID = '';
         }
       }
   }
@@ -66,7 +68,9 @@ import {
         if(GameObj[a].PlayersInfo.Player2ID === client.id)
         {
           GameObj[a].RoomInfo.GameStatus = 0;
+          GameObj[a].PlayersInfo.Player1ID = '';
           GameObj[a].PlayersInfo.Player2ID = '';
+          Player2ID = '';
         }
       }
     }

@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:14 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/04 10:43:47 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/04 14:15:51 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -408,7 +408,7 @@
 #Player1Pic img
 {
     position: absolute;
-    border-radius: 25px;
+    border-radius: 50%;
     top:25%;
     left:7.5%;
     width:100px;
@@ -426,7 +426,7 @@
 #Player2Pic img
 {
     position: absolute;
-    border-radius: 25px;
+    border-radius: 50%;
     top:25%;
     right:7.5%;
     width:100px;

@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:26:31 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/03 22:15:58 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/04 15:10:13 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ import {
       let check:RoomClass = Rooms.find(elem => elem.Points === data.Points && elem.Speed === data.Speed);
       if(check !== undefined && check.RoomMood !== false)
       {
+        console.log("=>>>>>>>>>.: "+ data.RoomMood);
         if(check.players.find(elem => elem.PlayerId === client.id) !== undefined)
           return ;
         else
@@ -51,7 +52,7 @@ import {
         check.players[0].PlayerSocket.emit('SendData',check.players[1].Player,true);
         check.players[1].PlayerSocket.emit('SendData',check.players[0].Player,false);
         console.log(Rooms);
-        console.log("Launch New Room");
+        console.log("Launch Private Room");
         return;
       }
       else
@@ -106,7 +107,7 @@ import {
       {
         Rooms[data.RoomNumber].players[0].PlayerSocket.emit('SendData',Rooms[data.RoomNumber].players[1].Player,true);
         // Rooms[data.RoomNumber].players[1].PlayerSocket.emit('SendData',Rooms[data.RoomNumber].players[0].Player,false);
-        console.log("Launch New Room");
+        console.log("Launch Public Room");
       }
       console.log(Rooms);
     }

@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:48 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/03 22:20:21 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/04 16:05:42 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,16 +167,28 @@ function Racket2Animation(p5: p5): undefined
     Racket2Ypos =  ConvertServerData(data,0);
   });
 }
-function first_conection()
+function first_conection(p5:p5)
 {
-  if(first_conection_val === false)
-		{
-			first_conection_val = true;
-        if(host1)
-				  player1.emit('first_conection',{Speed1,Points1,myusername1,});
-        else
-				  player2.emit('first_conection',{Speed1,Points1,myusername1,});
-		}
+  console.log(host1);
+  if(!Access1)
+  {
+    p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').center();
+    p5.textSize(GameWidth/26);
+    p5.background(0);
+    p5.fill(255,255,255);
+    p5.text("please sign-in before playing", GameWidth/2 - GameWidth/4, GameHeight/2 + GameHeight/24);
+    p5.noLoop();
+    return false;
+  }
+  else if(first_conection_val === false)
+	{
+		first_conection_val = true;
+      if(host1)
+			  player1.emit('first_conection',{Speed1,Points1,myusername1,});
+      else
+			  player2.emit('first_conection',{Speed1,Points1,myusername1,});
+	}
+  return true;
 }
 
 function NewValue()
@@ -249,25 +261,17 @@ const Game = () => {
       
       p5.draw = () => {
         NewValue();
-        if(!Access1)
-        {
-          p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').center();
-          p5.textSize(GameWidth/26);
-          p5.background(0);
-          p5.fill(255,255,255);
-          p5.text("please sign-in before playing", GameWidth/2 - GameWidth/4, GameHeight/2 + GameHeight/24);
+        if(!first_conection(p5))
           return ;
-        }
-        first_conection();
         if(GameStatusChecker(p5))
         {
           p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').center();
           p5.background(25);
           BallAnimation();
           if (host1)
-          Racket1Animation(p5);
+            Racket1Animation(p5);
           else
-          Racket2Animation(p5);
+            Racket2Animation(p5);
           LineCenter(p5);
           Result1(p5, p5.str(Result1Val),Result1Xpos,Result1Ypos);
           Result2(p5, p5.str(Result2Val),Result2Xpos,Result2Ypos);
@@ -275,6 +279,8 @@ const Game = () => {
           Racket1(p5,Racket1Xpos,Racket1Ypos,Racket1Width,Racket1Height);
           Racket2(p5,Racket2Xpos,Racket2Ypos,Racket2Width,Racket2Height);
         }
+        else
+          p5.noLoop();
       };
       p5.keyReleased = () =>{
         p5.key = '';

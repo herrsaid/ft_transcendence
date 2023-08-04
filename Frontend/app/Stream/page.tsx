@@ -23,7 +23,9 @@ function  GetNumberOfRooms(router: AppRouterInstance)
   {
     console.log(Room);
     let Rooms = document.getElementById('Rooms');
-    if(Rooms)
+    if( Room === 0 && Rooms)
+      Rooms.innerHTML = '<p> No Streams available for now </p>';
+    else if(Rooms)
     {
       Rooms.innerHTML = '';
       console.log("inside Rooms");
@@ -53,7 +55,12 @@ export default function Stream() {
     setInterval(()=>{GetNumberOfRooms(router);},1000);
   });
     return (
+      <>
         <div id="Rooms">
         </div>
+        <div onClick={()=>{router.replace('/Game/Lobbie/CreateRoom');}} id="CreateRoom">
+          <button> Create Room </button>
+        </div>
+      </>
     )
   }
