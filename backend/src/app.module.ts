@@ -18,7 +18,6 @@ import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './auth/guard/constants';
 import { GameModule } from './game/PingPong.module';
 import { Achievevement } from './entities/achievevements/achievevements.entity';
-import { MulterModule } from '@nestjs/platform-express';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { FriendRequest } from './entities/friend/friend-request.entity';
@@ -33,6 +32,8 @@ import { MessageService } from './message/message.service';
 import { Messages } from 'Database/entity/Message.entity';
 import { MessagesController } from './messages/messages.controller';
 import { History } from './game/PingPong.Entity';
+import { HistoryManager } from './game/data_manager/HistoryManager';
+import { BallGateway } from './game/start_game/play.ball.gateway';
 
 @Module({
   imports: [GameModule, AuthModule, TypeOrmModule.forRoot(config),
@@ -64,6 +65,9 @@ import { History } from './game/PingPong.Entity';
     GoogleAuthService,
     MessagesService,
     MessageService,
+    BallGateway,
+    HistoryManager,
+
   ],
 })
 export class AppModule {}

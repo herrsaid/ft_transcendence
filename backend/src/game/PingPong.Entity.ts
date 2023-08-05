@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:14 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/05 10:52:15 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/05 13:21:12 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ export class PingPongGamePlayEntity {
 }
 
 @Entity({name: 'history'})
-export class History extends BaseEntity
+export class History 
 {
   @PrimaryGeneratedColumn()
     key: number;
