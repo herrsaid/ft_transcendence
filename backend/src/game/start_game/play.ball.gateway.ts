@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:00 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/04 16:35:48 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/05 13:02:56 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,17 @@ import {
   import { Player2ID,speed2,points2,enemyusername} from './play.player2.gateway'
   import {data } from '../game_brain/logic/game_server_class';
 import e from 'express';
+import { HistoryManager } from '../data_manager/HistoryManager';
 
   export let GameObj: data[] = [];
   @WebSocketGateway(1340, {
     cors: { origin: '*', credentials: true },
   })
   export class BallGateway{
+    constructor(private HistoryManager:HistoryManager)
+    {
+      
+    };
     first_connect()
     {
       GameObj.push(new data());
@@ -68,6 +73,8 @@ import e from 'express';
     }
     end_simulation(Room:number)
     {
+      // HistoryDataBaseManager
+      this.HistoryManager.NewHistory(GameObj[Room]);
       // playerI colect target
       if(GameObj[Room].RoomInfo.GamePoints <=  GameObj[Room].PlayersInfo.Result1Val
         && GameObj[Room].PlayersInfo.Player1Client !== undefined
