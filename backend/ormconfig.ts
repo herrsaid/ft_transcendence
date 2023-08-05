@@ -12,7 +12,7 @@ const config : PostgresConnectionOptions = {
     port: 5432,
     username: "postgres",
     password: "postgres",
-    entities:[User,Achievevement,FriendRequest, Messages],
+    entities:[User,Achievevement,FriendRequest, Messages,History],
     synchronize: true,
 };
 
