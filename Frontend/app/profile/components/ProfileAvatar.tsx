@@ -1,10 +1,6 @@
 "use client"
-import ProfileInfoNav from "./ProfileInfoNav";
 import "../profile.css"
-
-import {FaUpload} from 'react-icons/fa'
 import Cookies from 'js-cookie';
-import { Image } from "@chakra-ui/react";
 import { useState } from "react";
 import { useToast } from '@chakra-ui/react'
 
@@ -58,11 +54,10 @@ const ProfileAvatar = (props:props) => {
             {
                 setrealimg(URL.createObjectURL(avatar?.files[0]));
                 setfirsttime(true);
-                // sessionStorage.setItem('avatar', realimg);
+                
                 new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + props.img;
-                // setrealimg(new_src_img);
-            
-                // console.log(realimg)
+                
+                sessionStorage.setItem('avatar', new_src_img);
             }
                 
             };
@@ -83,41 +78,18 @@ const ProfileAvatar = (props:props) => {
 
 
     return (
-        <div>
 
-            <div className="profile_avatar">
                 <div className="avatar_edit_real">
-                    
-                    <Image
-  borderRadius='full'
-  boxSize='120px'
-  src={props.avatar_updated || first_time ? realimg ? realimg  : !props.avatar_updated ? props.img : new_src_img : props.img}
-  alt='Dan Abramov'
-/>
+
                     <label>
-                    <FaUpload/>
-                    <form >
-                        
-                        <input type="file" id="avatar" name="file" onChange={upload}/>
-                        
-                    </form>
-                    
-                    </label>
-                    
+                        <img src={props.avatar_updated || first_time ? realimg ? realimg  : !props.avatar_updated ? props.img : new_src_img : props.img} alt="User Avatar" className="w-16 h-16 rounded-full border-4 border-blue-500 cursor-pointer animate-pulse" />
+                            <form >
+                                <input type="file" id="avatar" name="file" onChange={upload}/>
+                            </form>
+                    </label>  
                 </div>
 
 
-                        <div>
-
-                            
-                        <p className="username">{props.username}</p>
-                        </div>
-                        <div>
-                        <ProfileInfoNav/> 
-                        </div>
-                               
-                </div>
-        </div>
     );
 
 
