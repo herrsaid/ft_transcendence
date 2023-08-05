@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:16 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/02 10:27:17 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/05 13:03:20 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,12 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { BallGateway } from './start_game/play.ball.gateway';
 import { PlaySpactatorGateway } from './Stream_mood/Stream.Stpector.gatway';
 import { GameStreamAttribute } from './game_brain/methods/Game_stream_attribute';
+import { HistoryManager } from './data_manager/HistoryManager';
 @Module({
   imports: [
     ScheduleModule.forRoot()
   ],
   controllers: [],
-  providers: [PingPongGateway,PlayPlayer1Gateway,PlayPlayer2Gateway,BallGateway,GameLogic,GameStreamAttribute,PlaySpactatorGateway],
+  providers: [PingPongGateway,PlayPlayer1Gateway,PlayPlayer2Gateway,BallGateway,GameLogic,GameStreamAttribute,PlaySpactatorGateway,HistoryManager],
 })
 export class GameModule {}

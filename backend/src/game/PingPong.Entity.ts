@@ -6,12 +6,12 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:14 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/05 10:01:54 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/05 10:52:15 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 import {IsBoolean, IsNotEmpty, IsNumber, IsObject, IsString } from 'class-validator';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 export class RoomSettingsEntity {
   @IsNumber()
@@ -59,7 +59,7 @@ export class PingPongGamePlayEntity {
 }
 
 @Entity({name: 'history'})
-export class History
+export class History extends BaseEntity
 {
   @PrimaryGeneratedColumn()
     key: number;
