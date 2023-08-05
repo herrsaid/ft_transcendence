@@ -56,7 +56,7 @@ export default  function Header()
     return(
 
   
-  <nav className="navbar fixed w-full p-4 flex justify-between items-center">
+  <nav className="navbar w-full p-4 flex justify-between items-center">
     <div className="flex items-center space-x-4">
         <Link href='/'>
         <h1 className="navbar-heading text-white">42 <span className="text-blue-500">PONG</span></h1>

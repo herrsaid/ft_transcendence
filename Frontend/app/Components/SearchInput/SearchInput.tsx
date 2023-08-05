@@ -38,15 +38,6 @@ export default function SearchInput()
 
   />
 
-
-
-            {/* <input  
-            value={searchQuery}
-    
-            onChange={(event) => setsearchQuery(event.target.value)}
-            className="ml-20 justify-self-auto sm:px-5 sm:py-3 flex-1 text-zinc-200 bg-zinc-800
-            focus:bg-black rounded-full focus:outline-none " placeholder="Search for user"/> */}
-
         </form>
     );
 }

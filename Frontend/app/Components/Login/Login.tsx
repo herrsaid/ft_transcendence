@@ -38,12 +38,9 @@ export default function Login()
             
       }
   
-      
       changeBackgroundColor();
       setInterval(changeBackgroundColor, 2000);
   
-
-
     return(
         <>
          

@@ -1,6 +1,5 @@
 'use client'
 import OneFriend from "./OneFriend";
-import { useState, useEffect } from 'react'
 import Cookies from 'js-cookie';
 import { useRouter } from "next/navigation";
 import useSWR from "swr"

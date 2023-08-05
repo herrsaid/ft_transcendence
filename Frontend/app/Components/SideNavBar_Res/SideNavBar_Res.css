@@ -15,7 +15,6 @@
 
 .Setting
 {
-    /* margin-top: 20px; */
     flex: 1;
     align-self: center;
 }
@@ -54,7 +53,3 @@
     padding-top: 250px;
 }
 
-/* .profile-btn:hover
-{
-    background-color: #19659b;
-} */

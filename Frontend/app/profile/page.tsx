@@ -47,7 +47,7 @@ export default  function Profile()
     
     return(
         
-        <div className="container mx-auto px-4 py-20">
+        <div className="container mx-auto px-2 py-10">
                 <ProfileHeader avatar={data.profile_img} username={data.username} email={data.email} rank={data.rank}
                 avatar_updated={data.is_profile_img_updated} 
                 />
