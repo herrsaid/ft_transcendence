@@ -15,8 +15,10 @@ export const metadata = {
 //className={inter.className}  this give me a error !!!!!
 
 export default function RootLayout({
+  showSidebar = false,
   children,
 }: {
+  showSidebar:boolean,
   children: React.ReactNode
 }) {
   return (
@@ -29,7 +31,8 @@ export default function RootLayout({
             <Header/>
           </div>
           <div className='NavChild'>
-            <SideNavBar_Res/>
+          {showSidebar && <SideNavBar_Res/>}
+            
             <div className='child'>
               {children}
             </div>
@@ -40,3 +43,4 @@ export default function RootLayout({
     </html>
   )
 }
+

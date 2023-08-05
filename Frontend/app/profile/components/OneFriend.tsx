@@ -18,6 +18,53 @@ const OneFriend = (props:props) => {
     return (
 
 
+//         <div className="stats-bgf rounded-lg shadow-lg p-4">
+//     <h2 className="text-xl font-semibold mb-4 text-white">Friends</h2>
+//     <ul>
+      
+      
+      
+
+//       <li className="flex items-center justify-between mb-2">
+//         <div className="flex items-center">
+//           <img src="avatar.png" alt="Friend Avatar" className="friend-avatar rounded-full mr-3"/>
+//           <div>
+//             <p className="font-semibold text-blue-500">selhanda</p>
+//             <p className="text-sm text-gray-500">Playing Ping Pong</p>
+//           </div>
+//         </div>
+//         <div className="text-xs text-green-500 font-semibold">Online</div>
+//       </li>
+
+
+
+//       <li className="flex items-center justify-between mb-2">
+//         <div className="flex items-center">
+//           <img src="avatar.png" alt="Friend Avatar" className="friend-avatar rounded-full mr-3"/>
+//           <div>
+//             <p className="font-semibold text-blue-500">selhanda</p>
+//             <p className="text-sm text-gray-500">Playing Ping Pong</p>
+//           </div>
+//         </div>
+//         <div className="text-xs text-green-500 font-semibold">Online</div>
+//       </li>
+
+
+//     </ul>
+//   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
             <Link href={`/user?username=${props.username}`}>
         <div className="friend">
         <div className="inside_friend">
