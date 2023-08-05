@@ -1,89 +1,25 @@
-.w{
-    color:var(--color-light);
-  }
-
-
-.container_login{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-align-items: center;
-justify-items: center;
+.hero {
+  height: 100vh;
+  transition: background-color 2s ease;
 }
 
-  .main_home{
-    flex: 1 40%;
-    color: var(--color-btn);
-    padding: 20px;
-   
-  }
-
-
-  .bg_gif_login{
-    flex: 1  5%;
-    height: 80dvh;
-    /* background-image: url("../../public/help.gif");
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat; */
-
-    
-  }
-
-
-  .main_home button{
-    width: 160px;
-    height: 45px;
-    outline: 0px;
-    border-radius: 12px;
-    background-color: var(--second-color);
-    /* border: 2px solid var(--color-light); */
-    color: var(--color-light);
-    font-size: 15px;
-    transition: 0.4s;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    margin: 10px 20px;
-    padding: 10px;
-    
-    
-  }
-
-  .main_home button:hover{
-    
-    background-color: var(--color-light);
-    color: var(--second-color);
-    border: 3px solid var(--color-light);
-    scale: 1.4;
-    
-  }
-
-
-  .main_home h2{
-    font-size: 30px;
-    margin-bottom: 10px;
-    margin-left: 10px;
-  }
-
-
-  .main_home p{
-    font-size: 20px;
-    margin-bottom: 40px;
-    margin-left: 10px;
-  }
-  
-  
-
-  @keyframes pingPong {
-    0% {
-      left: 50%;
-    }
-    50% {
-      left: 90%;
-    }
-    100% {
-      left: 50%;
-    }
-  }
-  
-  
+.hero-button {
+  background-color: #18184a;
+  color: #fff;
+  padding: 14px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+.hero-button .button-icon {
+  margin-right: 10px;
+}
+.hero-button:hover {
+  background-color: #39396f;
+}

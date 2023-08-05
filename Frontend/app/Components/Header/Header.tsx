@@ -1,17 +1,16 @@
 'use client';
 import './Header.css'
-import { useState, useEffect } from 'react'
 import Link from 'next/link';
-import SearchInput from '../SearchInput/SearchInput';
-import { Box, Button, ButtonGroup, Flex, Heading, Spacer } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 
 
-function Login()
+
+export default  function Header()
 {
-    const [open, setOpen] = useState(false);
+
     const router = useRouter();
+
     const logout = async ()  => {
    
         
@@ -33,57 +32,48 @@ function Login()
     if (!res.ok)
         throw new Error("failed to fetch users");
         };
-    return(
-        <div>
-            <img onClick={()=>{setOpen(!open)}} src={sessionStorage.getItem('avatar')} alt="test" />
-            {open && <div className='modal'>
-                <ul>
-                    <li>
-                        <Link href='/profile'><h1>Profile</h1></Link>
-                    </li>
-                    <li>
-                        <h1>Setting</h1>
-                    </li>
-                    <li>
-                        <button onClick={logout}><h1>Logout</h1></button>
-                        
-                    </li>
-                </ul>
-            </div>}
-        </div>
-    )
-}
 
-export default  function Header()
-{
-    const [login, setLogin] = useState(<button className='login'>Login</button>);
-    useEffect(()=>{setLogin(<Login></Login>)},[])
+
+
+
+    function toggleDropdown() {
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        dropdownMenu?.classList.toggle('active');
+      }
+  
+     
+      document.addEventListener('click', function(event) {
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        const profileImg = document.querySelector('.profile-img');
+        const isClickInside = profileImg?.contains(event.target);
+  
+        if (!isClickInside) {
+          dropdownMenu?.classList.remove('active');
+        }
+        
+      });
+    
     return(
 
-<Flex minWidth='max-content' alignItems='center' gap='2'>
-
-<Box p='2'>
-<Link href="/">
- <h1 className="logo-search">42<span>PONG</span></h1>
-</Link>
-
-</Box>
-
-<Spacer />
-
-<ButtonGroup gap='2'>
-
-<SearchInput/>
-
-<div className='profile'>
-           <div className='profile-img'>
-                   {login}
-                </div>
-             </div>
-
-</ButtonGroup>
-
-</Flex>
+  
+  <nav className="navbar fixed w-full p-4 flex justify-between items-center">
+    <div className="flex items-center space-x-4">
+        <h1 className="navbar-heading text-white">42 <span className="text-green-500">PONG</span></h1>
+    
+    </div>
+    <div className="relative">
+      <img  onClick={toggleDropdown}  src={sessionStorage.getItem('avatar') || "/avatar.png"} alt="avatar" className="w-10 h-10 rounded-full cursor-pointer profile-img"/>
+      <div className="dropdown-menu" id="dropdownMenu">
+      <Link href='/profile' className="link">Profile</Link>
+      <hr className="my-2"/>
+      <Link href='/Game/Lobbie' className="link">Play</Link>
+      <hr className="my-2"/>
+      <Link href='/community' className="link">chat</Link>
+        <hr className="my-2"/>
+        <button onClick={logout}><h1>Logout</h1></button>
+      </div>
+    </div>
+  </nav>
 
     )
 }
