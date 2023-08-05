@@ -1,3 +1,4 @@
+'use client'
 import '../Home.css'
 import Cookies from 'js-cookie';
 import useSWR from "swr"
@@ -7,7 +8,7 @@ import { useRouter } from 'next/navigation';
 export default function HomeStats() {
 
 
-
+  let new_src_img;
   const router = useRouter();
 
   const fetchProfileData = async (url:string) => {
@@ -32,12 +33,16 @@ export default function HomeStats() {
 
   if (!data)
     return null;
+
+
+    if (data.is_profile_img_updated)
+      new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + data.profile_img;
   return (
 
     <div className="py-8">
   <div className="bg-gradient-to-br from-yellow-400 to-red-500 rounded-lg shadow-md p-6 flex items-center space-x-4 transform transition-transform hover:scale-105 cursor-pointer">
     <div className="w-16 h-16 rounded-full overflow-hidden">
-      <img src="/avatar.png" alt="Your Avatar" className="w-full h-full object-cover"/>
+      <img src={data.is_profile_img_updated ? new_src_img : data.profile_img} alt="Your Avatar" className="w-full h-full object-cover"/>
     </div>
     <div className="flex flex-col flex-1 space-y-2">
       <div className="text-white text-lg font-semibold">{data.username}</div>

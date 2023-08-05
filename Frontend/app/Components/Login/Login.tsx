@@ -28,13 +28,14 @@ export default function Login()
 
       
     function changeBackgroundColor() {
-        const colors = ["#1b1a4f", "#28274d", "#363570", "#18184a", "#8a2be2"];
+        const colors = ["#1b1a4f", "#28274d", "#363570", "#18184a"];
         const randomIndex = Math.floor(Math.random() * colors.length);
         const newColor = colors[randomIndex];
         const heroElement = document.getElementById('hero');
             if (heroElement) {
                 heroElement.style.backgroundColor = newColor;
             }
+            
       }
   
       
