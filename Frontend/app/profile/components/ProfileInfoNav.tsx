@@ -63,7 +63,7 @@ const ProfileInfoNav = () => {
           duration: 9000,
           isClosable: true,
         })
-        // throw new Error("failed to fetch users");
+        
       }
       else
       {
@@ -71,7 +71,7 @@ const ProfileInfoNav = () => {
         toast({
           title: 'Username Updated.',
           description: "We've updated your account username.",
-          status: 'success',
+          status: 'info',
           duration: 9000,
           isClosable: true,
         })
