@@ -1,3 +1,4 @@
+import Link from "next/link";
 import ProfileAvatar from "./ProfileAvatar";
 
   interface props{
@@ -47,8 +48,10 @@ const ProfileInfo = (props:props) => {
 
 
     <div className="text-right">
-      
+      <Link href="/profile/Setting">
       <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg" >Edit Profile</button>
+      </Link>
+      
     </div>
 
   </div>

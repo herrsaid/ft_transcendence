@@ -8,7 +8,7 @@ export default function Home() {
     <>
     
    
-  <div className="container mx-auto mt-16 ">
+  <div className="container mx-auto mt-16 py-20">
     
 
     <BannerHome/>

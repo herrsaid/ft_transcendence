@@ -53,7 +53,6 @@ const ProfileAvatar = (props:props) => {
 
     const send_request = () =>
     {
-        // setclicked(!is_clicked)
         fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/send/${props.id}`, {
             method: 'POST',
             headers:{
@@ -127,7 +126,6 @@ const ProfileAvatar = (props:props) => {
             button_placeholder = 'request';
             send_request();
             console.log("requested")
-            // func_do = send_request();
         }
         
         setstatus(button_placeholder)
