@@ -22,7 +22,7 @@ export default function HomeStats() {
       router.replace("/login")
            
   if (!res.ok)
-      throw new Error("failed to fetch users");
+      throw new Error("failed to fetch data of the user");
   return res.json();
 }
 

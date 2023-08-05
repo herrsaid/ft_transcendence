@@ -1,7 +1,7 @@
 
 .NavBar{
     min-height: fit-content;
-    height: 500px;
+    
     width: 60px;
     background: linear-gradient(-45deg, #C56CDD,#18184a);
     background-size: 400% 400%;
@@ -30,7 +30,6 @@
 
 .Content button 
 {
-    /* background-color: red; */
     padding: 30px 8px;
     transition: 0.5s;
     border-radius: 14px;
