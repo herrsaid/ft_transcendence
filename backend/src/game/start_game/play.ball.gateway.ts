@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:00 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/05 13:28:23 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/05 14:19:39 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ import {
   import { Player1ID,speed1,points1,myusername} from './play.player1.gateway'
   import { Player2ID,speed2,points2,enemyusername} from './play.player2.gateway'
   import {data } from '../game_brain/logic/game_server_class';
-import e from 'express';
+  import e from 'express';
 import { HistoryManager } from '../data_manager/HistoryManager';
 
   export let GameObj: data[] = [];
@@ -133,7 +133,7 @@ import { HistoryManager } from '../data_manager/HistoryManager';
         if(GameObj.find((elem)=> elem.PlayersInfo.Player1ID === Player1ID) === undefined
         && GameObj.find((elem)=> elem.PlayersInfo.Player2ID === Player2ID) === undefined)
           this.new_connect()
-          for(let a = 0 ; a<GameObj.length; a++ )
+        for(let a = 0 ; a<GameObj.length; a++ )
         {
           if(GameObj[a].RoomInfo.Sleep <= 0 && GameObj[a].RoomInfo.GameStatus === 1)
           {
@@ -150,10 +150,10 @@ import { HistoryManager } from '../data_manager/HistoryManager';
           //call funbnsction that end_simulation
           else
             this.end_simulation(a--);
-          }
+        }
       }
       else if(Player1ID !== '' && Player2ID !== '')
         this.first_connect();
-    }
+      }
   }
   

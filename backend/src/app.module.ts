@@ -32,8 +32,6 @@ import { MessageService } from './message/message.service';
 import { Messages } from 'Database/entity/Message.entity';
 import { MessagesController } from './messages/messages.controller';
 import { History } from './game/PingPong.Entity';
-import { HistoryManager } from './game/data_manager/HistoryManager';
-import { BallGateway } from './game/start_game/play.ball.gateway';
 
 @Module({
   imports: [GameModule, AuthModule, TypeOrmModule.forRoot(config),
@@ -65,9 +63,6 @@ import { BallGateway } from './game/start_game/play.ball.gateway';
     GoogleAuthService,
     MessagesService,
     MessageService,
-    BallGateway,
-    HistoryManager,
-
   ],
 })
 export class AppModule {}
