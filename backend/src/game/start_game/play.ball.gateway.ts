@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:00 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/05 14:19:39 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/05 17:16:42 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,11 @@ import { HistoryManager } from '../data_manager/HistoryManager';
         GameObj[Room].PlayersInfo.Player2Client.emit('GameEnd',"YOU WIN");
         
       }
+
+      //disconnect player from room
+      let obj = GameObj.find((elem)=>{elem.RoomInfo.GameStatus === 0});
+      obj.PlayersInfo.Player1Client.disconnect();
+      obj.PlayersInfo.Player2Client.disconnect();
       // remove Object of this room
       console.log('['+GameObj.length+']');
       if(GameObj.length === 1 && GameObj[0].PlayersInfo.Player1ID === '' && GameObj[0].PlayersInfo.Player2ID === '')
@@ -131,7 +136,7 @@ import { HistoryManager } from '../data_manager/HistoryManager';
       if(GameObj.length)
       {
         if(GameObj.find((elem)=> elem.PlayersInfo.Player1ID === Player1ID) === undefined
-        && GameObj.find((elem)=> elem.PlayersInfo.Player2ID === Player2ID) === undefined)
+          && GameObj.find((elem)=> elem.PlayersInfo.Player2ID === Player2ID) === undefined)
           this.new_connect()
         for(let a = 0 ; a<GameObj.length; a++ )
         {
@@ -154,6 +159,6 @@ import { HistoryManager } from '../data_manager/HistoryManager';
       }
       else if(Player1ID !== '' && Player2ID !== '')
         this.first_connect();
-      }
+    }
   }
   
