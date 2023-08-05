@@ -47,7 +47,7 @@ export default  function Profile()
     
     return(
         
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-4 py-20">
                 <ProfileHeader avatar={data.profile_img} username={data.username} email={data.email} rank={data.rank}
                 avatar_updated={data.is_profile_img_updated} 
                 />
@@ -81,92 +81,6 @@ export default  function Profile()
                  </Tabs>
 
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//             <div className="profile_container">
-
-// <div className="all_profile">
-// <div className="side_two">
-                
-//                 <div className="side_two_info">
-
-//                     <ProfileAvatar  img={data.profile_img}   username={data.username} avatar_updated={data.is_profile_img_updated}/>
-//                     <ProfileInfo location={data.location} totalgame={data.totalgame}
-//                     loss={data.loss} wins={data.wins} rank={data.rank}
-                    
-//                     />
-
-//                 </div>
-                
-//             </div>
-
-    
-
-
-//             <Tabs position="relative" variant='soft-rounded' colorScheme='blue' isFitted>
-//                         <TabList mb='1em'>
-//                             <Tab>History </Tab>
-//                             <Tab>Friends </Tab>
-//                             <Tab>Community </Tab>
-//                             <Tab>Achievevements</Tab>
-//                         </TabList>
-
-                 
-//                         <TabPanels>
-//                             <TabPanel>
-//                             <History/>
-//                             </TabPanel>
-//                             <TabPanel>
-//                             <Friends/>
-                            
-//                             </TabPanel>
-//                             <TabPanel>
-//                             <Groups/>
-//                             </TabPanel>
-//                             <TabPanel>
-//                             <Achievevements/>
-//                             </TabPanel>
-//                         </TabPanels>
-//                 </Tabs>
-    
-
-// </div>
-//             </div>
     
         
     );

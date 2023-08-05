@@ -1,10 +1,48 @@
-.home_page{
-    width: 100dvw;
-    height: 95dvh;
-    background-image: url("../../../public/hero.jpg");
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    filter: brightness(40%);
+
+.live-games {
+    padding: 20px;
+  }
+  .live-games-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.5s ease;
+  }
+
+
+  .live-game-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
+
+.live-game-card:active {
+  transform: scale(0.95);
+}
+
+
+
+
+  .online-friends {
+    padding: 20px;
+  }
+  .online-friends-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .card-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }

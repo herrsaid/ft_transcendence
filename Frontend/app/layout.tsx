@@ -2,9 +2,7 @@ import Header from './Components/Header/Header'
 import SideNavBar_Res from './Components/SideNavBar_Res/SideNavBar_Res'
 import './globals.css'
 import { Providers } from "./providers";
-// import { Inter } from 'next/font/google'
 
-// const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
   title: 'PingPong',
@@ -12,10 +10,9 @@ export const metadata = {
   viewport: 'width=device-width, initial-scale=1.0',
 }
 
-//className={inter.className}  this give me a error !!!!!
 
 export default function RootLayout({
-  showSidebar = false,
+  showSidebar = true,
   children,
 }: {
   showSidebar:boolean,
