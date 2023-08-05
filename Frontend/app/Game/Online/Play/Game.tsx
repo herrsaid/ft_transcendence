@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:48 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/05 17:17:38 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/05 17:32:35 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,7 +226,6 @@ function GameStatusChecker(p5: p5): boolean
 		player1.on('GameEnd',(data: string)=>
     {
       message = data;
-      player1.disconnect();
     });
     if(message !== '')
     {
@@ -241,7 +240,6 @@ function GameStatusChecker(p5: p5): boolean
 		player2.on('GameEnd',(data: string)=>
     {
       message = data;
-      player2.disconnect();
     });
     if(message !== '')
     {
