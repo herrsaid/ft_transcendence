@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:16 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/05 18:20:50 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/05 21:48:27 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ import { jwtConstants } from 'src/auth/guard/constants';
 import { GameUserInfo, History } from './PingPong.Entity';
 import { BallGateway } from './start_game/play.ball.gateway';
 import { ScheduleModule } from '@nestjs/schedule';
+import { GameInfoManager } from './data_manager/GameInfoManager';
 @Module({
   imports: [ TypeOrmModule.forRoot(config),
 
@@ -47,6 +48,6 @@ import { ScheduleModule } from '@nestjs/schedule';
    
   }),],
   controllers: [],
-  providers: [PingPongGateway,PlayPlayer1Gateway,PlayPlayer2Gateway,GameLogic,BallGateway,GameStreamAttribute,PlaySpactatorGateway,HistoryManager],
+  providers: [PingPongGateway,PlayPlayer1Gateway,PlayPlayer2Gateway,GameLogic,BallGateway,GameStreamAttribute,PlaySpactatorGateway,HistoryManager,GameInfoManager],
 })
 export class GameModule {}

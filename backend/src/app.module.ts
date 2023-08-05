@@ -43,7 +43,7 @@ import { History } from './game/PingPong.Entity';
     }),
     UserModule,
   
-    TypeOrmModule.forFeature([User,Achievevement,FriendRequest,Messages,History]), JwtModule.register({
+    TypeOrmModule.forFeature([User,Achievevement,FriendRequest,Messages]), JwtModule.register({
     global: true,
     secret: jwtConstants.secret,
     signOptions: { expiresIn: '30d' },

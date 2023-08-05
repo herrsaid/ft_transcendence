@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:00 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/05 17:59:21 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/05 22:01:26 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,14 @@ import {
   import {data } from '../game_brain/logic/game_server_class';
   import e from 'express';
 import { HistoryManager } from '../data_manager/HistoryManager';
+import { GameInfoManager } from '../data_manager/GameInfoManager';
 
   export let GameObj: data[] = [];
   @WebSocketGateway(1340, {
     cors: { origin: '*', credentials: true },
   })
   export class BallGateway{
-    constructor(private HistoryManager:HistoryManager)
+    constructor(private HistoryManager:HistoryManager,private GameInfo:GameInfoManager)
     {
       
     };
@@ -73,8 +74,10 @@ import { HistoryManager } from '../data_manager/HistoryManager';
     }
     end_simulation(Room:number)
     {
-      // HistoryDataBaseManager
+      // HistoryDataBaseManager for pushing game history
       this.HistoryManager.NewHistory(GameObj[Room]);
+      //GameInfoManager for push gameuser information
+      this.GameInfo.CreateOrUpdateGameInfo(GameObj[Room]);
       // playerI colect target
       if(GameObj[Room].RoomInfo.GamePoints <=  GameObj[Room].PlayersInfo.Result1Val
         && GameObj[Room].PlayersInfo.Player1Client !== undefined
