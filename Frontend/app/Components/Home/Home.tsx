@@ -1,11 +1,24 @@
+import BannerHome from './Components/BannerHome'
 import './Home.css'
+import HomeStats from './Components/HomeStats'
+import LiveGames from './Components/LiveGames'
 
 export default function Home() {
   return (
     <>
-    <div className="home_page">
+    
+   
+  <div className="container mx-auto mt-16 ">
+    
 
-    </div>
+    <BannerHome/>
+    <LiveGames/>
+    <HomeStats/>
+
+
+  </div>
+
+
     </>
   )
 }
