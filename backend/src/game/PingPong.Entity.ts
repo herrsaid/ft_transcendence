@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:14 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/05 13:21:12 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/05 18:20:19 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,26 @@ export class History
     score: number
   @Column()
     rank: number
+  
+}
+
+@Entity({name: 'game_user_info'})
+export class GameUserInfo 
+{
+  @PrimaryGeneratedColumn()
+    key: number;
+  
+  @Column({
+    length: 50,
+  })
+    username: string
+  @Column()
+    totalgames: number
+  @Column()
+    totalwins: number
+  @Column()
+    totalosses: number
+  @Column()
+    totalarchievements: number
   
 }

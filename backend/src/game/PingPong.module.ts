@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:16 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/05 14:17:25 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/05 18:20:50 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ import { join } from 'path';
 import { UserModule } from 'src/user/modules/user.module';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from 'src/auth/guard/constants';
-import { History } from './PingPong.Entity';
+import { GameUserInfo, History } from './PingPong.Entity';
 import { BallGateway } from './start_game/play.ball.gateway';
 import { ScheduleModule } from '@nestjs/schedule';
 @Module({
@@ -40,7 +40,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     }),
     UserModule,
   
-    TypeOrmModule.forFeature([History]), JwtModule.register({
+    TypeOrmModule.forFeature([History,GameUserInfo]), JwtModule.register({
     global: true,
     secret: jwtConstants.secret,
     signOptions: { expiresIn: '30d' },
