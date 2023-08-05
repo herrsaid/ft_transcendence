@@ -14,13 +14,11 @@ const ProfileInfo = (props:props) => {
     let new_src_img;
     if (props.avatar_updated)
             {
-                console.log("updated...")
                 new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + props.avatar;
                 sessionStorage.setItem('avatar', new_src_img);
             }
             else
             {
-                console.log("not updated")
                 sessionStorage.setItem('avatar', props.avatar );
             }
     return (

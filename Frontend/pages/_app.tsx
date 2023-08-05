@@ -1,6 +1,6 @@
 // pages/_app.js
 import { ChakraProvider } from '@chakra-ui/react'
-
+import Layout from '../app/layout'
 import { extendTheme } from '@chakra-ui/react'
 
 // 2. Extend the theme to include custom colors, fonts, etc
@@ -14,12 +14,24 @@ const colors = {
 
 export const theme = extendTheme({ colors })
 
-function MyApp({ Component, pageProps }) {
+
+
+function MyApp({ Component, pageProps, router }) {
+ 
+  const pathsWithoutSidebar = ['/login'];
+
+  const shouldExcludeSidebar = pathsWithoutSidebar.includes(router.pathname);
+
+  
   return (
-    <ChakraProvider>
+    <Layout showSidebar={!shouldExcludeSidebar}>
+      <ChakraProvider>
       <Component {...pageProps} />
-    </ChakraProvider>
-  )
+
+      </ChakraProvider>
+    </Layout>
+  );
 }
+
 
 export default MyApp;

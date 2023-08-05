@@ -37,6 +37,19 @@ const ProfileAvatar = (props:props) => {
                 body: data
             })
             
+
+            if (res.status == 200)
+            {
+                toast({
+                    title: 'Profile Avatar Updated',
+                    description: "Your Profile Avatar changed!",
+                    status: 'info',
+                    duration: 9000,
+                    isClosable: true,
+                  })
+            }
+            
+
             if (res.status == 400)
             {
                 toast({
@@ -65,13 +78,12 @@ const ProfileAvatar = (props:props) => {
 
             if (props.avatar_updated)
             {
-                console.log("updated...")
+               
                 new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + props.img;
                 sessionStorage.setItem('avatar', new_src_img);
             }
             else
             {
-                console.log("not updated")
                 sessionStorage.setItem('avatar', props.img );
             }
                 

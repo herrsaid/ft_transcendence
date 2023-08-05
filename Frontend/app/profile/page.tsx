@@ -57,7 +57,7 @@ export default  function Profile()
 
 
 
-             <Tabs position="relative" variant='soft-rounded' colorScheme='blue' isFitted>
+             <Tabs position="relative" variant='soft-rounded' colorScheme='blue' isFitted className="text-gray-500">
                          <TabList mb='1em'>
                              <Tab>History </Tab>
                              <Tab>Friends </Tab>
