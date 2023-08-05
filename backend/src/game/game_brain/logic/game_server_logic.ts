@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:26:38 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/05 13:50:47 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/05 15:02:55 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ export class GameLogic
     }
     Head(data:data)
     {
-        this.debug(data);
+        // this.debug(data);
         // allways let ball move on horizontal if BallXdirection is positive ball move right else ball move left
         data.BallInfo.BallXpos += (data.BallInfo.BallXdirection * data.RoomInfo.GameSpeed);
         //if ballYpos not in the same Rakect2Yposenter enter this condition
