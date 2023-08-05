@@ -12,9 +12,8 @@ export class GameInfoManager
     
     async CreateOrUpdateGameInfo(GameObj:data)
     {
-        if((await this.GetHistoryByUsername(GameObj.PlayersInfo.Player1UserName)).username != undefined)
+        if((this.GetHistoryByUsername(GameObj.PlayersInfo.Player1UserName)) !== null)
         {
-            console.log( "big here =>>>>>>>>>>>>>>: "+(await this.GetHistoryByUsername(GameObj.PlayersInfo.Player1UserName)).username);
             const GameInfo:GameUserInfo =  new GameUserInfo;
             GameInfo.username = GameObj.PlayersInfo.Player1UserName;
             GameInfo.totalgames = 1;
@@ -34,12 +33,11 @@ export class GameInfoManager
             else
                 GameInfo.totalosses += 1;
             GameInfo.totalarchievements = 0;
-                this.GameUserInfo.update(GameInfo,{key:1});
+                this.GameUserInfo.update(GameInfo,{key:GameInfo.key});
         }
 
-        if((await this.GetHistoryByUsername(GameObj.PlayersInfo.Player2UserName)).username != undefined)
+        if((this.GetHistoryByUsername(GameObj.PlayersInfo.Player2UserName)) !== null)
         {
-            console.log( "big here =>>>>>>>>>>>>>>: "+(await this.GetHistoryByUsername(GameObj.PlayersInfo.Player1UserName)).username);
             const GameInfo:GameUserInfo =  new GameUserInfo;
             GameInfo.username = GameObj.PlayersInfo.Player2UserName;
             GameInfo.totalgames = 1;
@@ -59,7 +57,7 @@ export class GameInfoManager
             else
                 GameInfo.totalosses += 1;
             GameInfo.totalarchievements = 0;
-                this.GameUserInfo.update(GameInfo,{key:1});
+                this.GameUserInfo.update(GameInfo,{key:GameInfo.key});
         }
     }
 

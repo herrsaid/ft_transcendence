@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:14 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/05 18:20:19 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/05 22:11:56 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,5 +101,4 @@ export class GameUserInfo
     totalosses: number
   @Column()
     totalarchievements: number
-  
 }

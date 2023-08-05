@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:26:44 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/05 17:59:58 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/05 22:05:01 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ export class GameRommAttribute{
         this.GameStatus = 0;
         this.GamePoints = 0;
         this.Alpha = 1;
-        this.Sleep = 3000;
+        this.Sleep = 100;
     }
 }
 export let RoomInfo:GameRommAttribute = new GameRommAttribute();

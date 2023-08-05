@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:26:38 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/05 17:59:42 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/05 22:05:11 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ export class GameLogic
                 if(++data.PlayersInfo.Result1Val >= data.RoomInfo.GamePoints)
                     data.RoomInfo.GameStatus = 0;
                 data.BallInfo.BallXpos = data.RoomInfo.GameWidth/2;
-                data.RoomInfo.Sleep = 3000;
+                data.RoomInfo.Sleep = 100;
             }
         }
         //if ballYpos in the same Rakect2Ypos enter enter this condition
@@ -115,7 +115,7 @@ export class GameLogic
                 if(++data.PlayersInfo.Result2Val >= data.RoomInfo.GamePoints)
                     data.RoomInfo.GameStatus = 0;
                 data.BallInfo.BallXpos = data.RoomInfo.GameWidth/2;
-                data.RoomInfo.Sleep = 3000;
+                data.RoomInfo.Sleep = 100;
             }
         }
          //if ballYpos in the same Rakect1Ypos enter enter this condition
