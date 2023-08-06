@@ -10,7 +10,7 @@ export class HistoryManager
 
     constructor(@InjectRepository(History) private History: Repository<History>,){}
     
-    NewHistory(GameObj:data)
+    async NewHistory(GameObj:data)
     {
         const hstry:History = new History();
         hstry.myusername = GameObj.PlayersInfo.Player1UserName;
@@ -19,7 +19,7 @@ export class HistoryManager
         hstry.enemmyresult = GameObj.PlayersInfo.Result2Val;
         hstry.score = (GameObj.PlayersInfo.Result1Val-GameObj.PlayersInfo.Result2Val) *  100;
         hstry.rank =  (GameObj.PlayersInfo.Result1Val-GameObj.PlayersInfo.Result2Val) *  10;
-        this.History.save(hstry);
+        await this.History.save(hstry);
 
         const hstry2:History = new History();
         hstry2.myusername = GameObj.PlayersInfo.Player2UserName;
@@ -28,11 +28,11 @@ export class HistoryManager
         hstry2.enemmyresult = GameObj.PlayersInfo.Result1Val;
         hstry2.score = (GameObj.PlayersInfo.Result2Val-GameObj.PlayersInfo.Result1Val) *  100;
         hstry2.rank =  (GameObj.PlayersInfo.Result2Val-GameObj.PlayersInfo.Result1Val) *  10;
-        this.History.save(hstry2);
+        await this.History.save(hstry2);
     }
 
-    GetHistoryByUsername(username:string):Promise<History[]>
+    async GetHistoryByUsername(username:string):Promise<History[]>
     {
-        return this.History.findBy({myusername:username});
+        return await this.History.findBy({myusername:username});
     }
 }
