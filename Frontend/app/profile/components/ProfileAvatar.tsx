@@ -2,7 +2,7 @@
 import "../profile.css"
 import Cookies from 'js-cookie';
 import { useState } from "react";
-import { useToast } from '@chakra-ui/react'
+import { Avatar, useToast } from '@chakra-ui/react'
 
 
 interface props{
@@ -93,8 +93,10 @@ const ProfileAvatar = (props:props) => {
 
                 <div className="avatar_edit_real border-2 border-blue-500/100 rounded-full">
 
-                    <label>
-                        <img src={props.avatar_updated || first_time ? realimg ? realimg  : !props.avatar_updated ? props.img : new_src_img : props.img} alt="User Avatar" className="w-16 h-16 rounded-full border-4 border-blue-500 cursor-pointer animate-pulse" />
+                    <label className="cursor-pointer animate-pulse">
+                    <Avatar size='xl' name={props.username} src={props.avatar_updated || first_time ? realimg ? realimg  : !props.avatar_updated ? props.img : new_src_img : props.img}>
+                        </Avatar>
+                        
                             <form >
                                 <input type="file" id="avatar" name="file" onChange={upload}/>
                             </form>

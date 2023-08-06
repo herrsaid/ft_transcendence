@@ -23,7 +23,7 @@ const ProfileInfo = (props:props) => {
             }
     return (
         
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-6 flex-wrap">
     <div className="flex items-center">
      
       <div className="relative">
@@ -45,7 +45,7 @@ const ProfileInfo = (props:props) => {
 
 
 
-    <div className="text-right">
+    <div className="text-right mt-10">
       <Link href="/profile/Setting">
       <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg" >Edit Profile</button>
       </Link>
