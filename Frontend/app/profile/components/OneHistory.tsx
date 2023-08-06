@@ -15,19 +15,22 @@ const OneHistory = (props:history) => {
 
    
     return (
-        <div>
-             <div className="victory_div">
-            <div className="info_victory">
+
+
+
+        <div className={`stats-bgf p-4 shadow-md rounded-lg text-white transform transition-transform duration-300 hover:scale-105 flex items-center justify-between`}>
+            <div className="">
                 <p>Score:    2036</p>
                 <p>Rank:     +56</p>
             </div>
-        
-            <div className="result_victory">
+
+            <div className="">
                 <p>Victory</p>
                 <p>8 vs 6</p>
             </div>
-        
-            <div className="game_victory"><div className="game_victory" >
+
+
+            <div className="">
                 <Link href={`/user?username=${props.username}`}>
                 <Avatar  size='md' name={props.username} src={props.image} >
             <AvatarBadge boxSize='1em' bg={props.status ? 'green.500' : 'tomato'} borderColor='#18184a'/>
@@ -35,10 +38,8 @@ const OneHistory = (props:history) => {
                 </Link>
                 
              </div>
-             </div>
-</div>
-        </div>
-        
+      
+      </div>        
     
     );
 };
