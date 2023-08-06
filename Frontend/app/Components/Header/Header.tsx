@@ -67,13 +67,10 @@ export default  function Header()
     <div className="relative">
       <img  onClick={toggleDropdown}  src={sessionStorage.getItem('avatar') || "/avatar.png"} alt="avatar" className="w-10 h-10 rounded-full cursor-pointer profile-img"/>
       <div className="dropdown-menu" id="dropdownMenu">
-      <Link href='/profile' className="link">Profile</Link>
-      <hr className="my-2"/>
-      <Link href='/Game/Lobbie' className="link">Play</Link>
-      <hr className="my-2"/>
-      <Link href='/community' className="link">chat</Link>
-        <hr className="my-2"/>
-        <button onClick={logout}><h1>Logout</h1></button>
+        <p className="link_drop"><Link href='/profile' >Profile</Link></p>
+        <p className="link_drop"><Link href='/Game/Lobbie'>Play</Link></p>
+        <p className="link_drop"><Link href='/community' >chat</Link></p>
+        <button onClick={logout}><h1 className="link_drop">Logout</h1></button>
       </div>
     </div>
   </nav>
