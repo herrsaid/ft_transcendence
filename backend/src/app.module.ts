@@ -17,7 +17,6 @@ import { User } from './entities/user/user.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './auth/guard/constants';
 import { GameModule } from './game/PingPong.module';
-import { Achievevement } from './entities/achievevements/achievevements.entity';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { FriendRequest } from './entities/friend/friend-request.entity';
@@ -42,7 +41,7 @@ import { MessagesController } from './messages/messages.controller';
     }),
     UserModule,
   
-    TypeOrmModule.forFeature([User,Achievevement,FriendRequest,Messages]), JwtModule.register({
+    TypeOrmModule.forFeature([User,FriendRequest,Messages]), JwtModule.register({
     global: true,
     secret: jwtConstants.secret,
     signOptions: { expiresIn: '30d' },

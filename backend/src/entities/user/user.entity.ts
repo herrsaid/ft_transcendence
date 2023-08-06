@@ -1,5 +1,4 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Achievevement } from "../achievevements/achievevements.entity";
 import { FriendRequest } from "../friend/friend-request.entity";
 
 @Entity()
