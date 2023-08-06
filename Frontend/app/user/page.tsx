@@ -7,6 +7,7 @@ import useSWR from "swr"
 import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import { Achievevements, Friends, Groups, History } from '../profile';
 import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
+import ProfileHeader from './Components/ProfileHeader';
 export default  function User()
 {
     const router = useRouter();
@@ -36,10 +37,7 @@ export default  function User()
 
     if (isLoading)
     {
-        return <div className="profile_container">
-            <div className="all_profile">
-            <div className="side_two">
-            <div className="side_two_info">
+        return <div className="container mx-auto px-2 py-10">
             <Box padding='6' boxShadow='md' bg='#39396f' borderRadius={25}>
                 
                     <SkeletonCircle size='10' />
@@ -49,9 +47,6 @@ export default  function User()
                 
                 </Box>
                 </div>
-                </div>
-                </div>   
-        </div>
     }
 
     if (!data)
@@ -60,21 +55,12 @@ export default  function User()
 
     return(
        
-<div className="profile_container">
 
-<div className="all_profile">
-<div className="side_two">
-                
-                <div className="side_two_info">
+                <div className="container mx-auto px-2 py-10">
 
-                    <ProfileAvatar  img={data.profile_img}   username={data.username} id={data.id} avatar_updated={data.is_profile_img_updated} status={data.status}/>                     
-                    
-                    <ProfileInfo location={data.location} totalgame={data.totalgame}
-                    loss={data.loss} wins={data.wins} rank={data.rank}      />
-
-                 </div>
-                
-</div>
+                    <ProfileHeader  avatar={data.profile_img} username={data.username} email={data.email} rank={data.rank}
+                avatar_updated={data.is_profile_img_updated} id={data.id} status={data.status}/>
+      
 
     
 
@@ -82,8 +68,6 @@ export default  function User()
             <Tabs position="relative" variant='soft-rounded' colorScheme='blue' isFitted>
                         <TabList mb='1em'>
                             <Tab>History </Tab>
-                            <Tab>Friends </Tab>
-                            <Tab>Community </Tab>
                             <Tab>Achievevements</Tab>
                         </TabList>
 
@@ -93,21 +77,14 @@ export default  function User()
                             <History/>
                             </TabPanel>
                             <TabPanel>
-                            <Friends/>
-                            
-                            </TabPanel>
-                            <TabPanel>
-                            <Groups/>
-                            </TabPanel>
-                            <TabPanel>
                             <Achievevements/>
                             </TabPanel>
                         </TabPanels>
                 </Tabs>
     
 
-</div>
- </div>
+
+            </div>
 
     );
 }
