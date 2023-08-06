@@ -8,6 +8,7 @@ import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import { Achievevements, Friends, Groups, History } from '../profile';
 import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
 import ProfileHeader from './Components/ProfileHeader';
+import ProfileUserState from './Components/ProfileUserState';
 export default  function User()
 {
     const router = useRouter();
@@ -61,7 +62,7 @@ export default  function User()
                     <ProfileHeader  avatar={data.profile_img} username={data.username} email={data.email} rank={data.rank}
                 avatar_updated={data.is_profile_img_updated} id={data.id} status={data.status}/>
       
-
+                <ProfileUserState/>
     
 
 
