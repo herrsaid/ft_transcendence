@@ -1,27 +1,15 @@
 "use client"
 import '../profile.css'
 import Cookies from 'js-cookie';
-import useSWR from "swr"
 import React, { useState } from 'react';
-
 import { useToast } from '@chakra-ui/react'
-
 import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  Button,
-  useDisclosure,
   Switch,
   Input,
 
 } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation';
-import { update } from 'react-spring';
+
 
 
 
@@ -33,30 +21,28 @@ export default  function Profile()
 {
     const router = useRouter();
     const toast = useToast()
-    const { isOpen, onOpen, onClose } = useDisclosure()
     const [username_updated, setusername_updated] = useState("");
     const [isToFactorEnabled, setisToFactorEnabled] = useState(true);
-    const [userNameErrors, setuserNameErrors] = useState(false);
+
     
-   
-
-
-
-    if (username_updated === sessionStorage.getItem('username'))
-    {
-      toast({
-        title: 'you are not updated your username with new value',
-        description: "Please enter valid username",
-        status: 'warning',
-        duration: 9000,
-        isClosable: true,
-      })
-      // setuserNameErrors(true);
-      // setusername_updated("") ;
-    }
+  
     const onUpdate_Username = async (event:React.FormEvent) =>
     {
+
         event.preventDefault();
+
+        if (username_updated === sessionStorage.getItem('username'))
+        {
+          toast({
+            title: 'you are not updated your username with new value',
+            description: "Please enter new username",
+            status: 'warning',
+            duration: 2000,
+            isClosable: true,
+          })
+          return
+      
+    }
        
         if (username_updated.trim() == "" || username_updated.trim().length < 2 || username_updated.includes(' '))
         {
@@ -64,7 +50,7 @@ export default  function Profile()
             title: 'Username invalid.',
             description: "Please enter valid username",
             status: 'error',
-            duration: 9000,
+            duration: 3000,
             isClosable: true,
           })
           return ;
@@ -83,7 +69,7 @@ export default  function Profile()
           title: 'Username already use.',
           description: "this username already use.",
           status: 'error',
-          duration: 9000,
+          duration: 3000,
           isClosable: true,
         })
         
@@ -95,7 +81,7 @@ export default  function Profile()
           title: 'Username Updated.',
           description: "We've updated your account username.",
           status: 'info',
-          duration: 9000,
+          duration: 6000,
           isClosable: true,
         })
         router.replace("/profile");
@@ -112,10 +98,6 @@ export default  function Profile()
       setisToFactorEnabled(!isToFactorEnabled)
       router.replace("/2fa")
     }
-
-
-
-
 
 
     
@@ -155,7 +137,7 @@ export default  function Profile()
     />
     <div className="text-right mt-10">
       
-      <button disabled={userNameErrors ? true : false} className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg" onClick={onUpdate_Username}>Save</button>
+      <button  className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg" onClick={onUpdate_Username}>Save</button>
       
     </div>
             </div>
