@@ -12,7 +12,8 @@ export class GameInfoManager
     
     async CreateOrUpdateGameInfo(GameObj:data)
     {
-        if((this.GetHistoryByUsername(GameObj.PlayersInfo.Player1UserName)) !== null)
+        const GameInfo:GameUserInfo =  await this.GetHistoryByUsername(GameObj.PlayersInfo.Player1UserName);
+        if(GameInfo === null)
         {
             const GameInfo:GameUserInfo =  new GameUserInfo;
             GameInfo.username = GameObj.PlayersInfo.Player1UserName;
@@ -22,47 +23,46 @@ export class GameInfoManager
             else
                 GameInfo.totalosses += 1;
             GameInfo.totalarchievements = 0;
-                this.GameUserInfo.save(GameInfo);
+            await this.GameUserInfo.save(GameInfo);
         }
         else
         {
-            const GameInfo:GameUserInfo =  await this.GetHistoryByUsername(GameObj.PlayersInfo.Player1UserName);
             GameInfo.totalgames += 1;
             if(GameObj.PlayersInfo.Result1Val >= GameObj.PlayersInfo.Result2Val)
                 GameInfo.totalwins += 1;
             else
                 GameInfo.totalosses += 1;
             GameInfo.totalarchievements = 0;
-                this.GameUserInfo.update(GameInfo,{key:GameInfo.key});
+        await this.GameUserInfo.update(GameInfo,{key:GameInfo.key});
         }
 
-        if((this.GetHistoryByUsername(GameObj.PlayersInfo.Player2UserName)) !== null)
+        const GameInfo2:GameUserInfo =  await this.GetHistoryByUsername(GameObj.PlayersInfo.Player2UserName);
+        if(GameInfo2 === null)
         {
-            const GameInfo:GameUserInfo =  new GameUserInfo;
-            GameInfo.username = GameObj.PlayersInfo.Player2UserName;
-            GameInfo.totalgames = 1;
+            const GameInfo2:GameUserInfo =  new GameUserInfo;
+            GameInfo2.username = GameObj.PlayersInfo.Player2UserName;
+            GameInfo2.totalgames = 1;
             if(GameObj.PlayersInfo.Result2Val >= GameObj.PlayersInfo.Result1Val)
-                GameInfo.totalwins += 1;
+                GameInfo2.totalwins += 1;
             else
-                GameInfo.totalosses += 1;
-            GameInfo.totalarchievements = 0;
-                this.GameUserInfo.save(GameInfo);
+                GameInfo2.totalosses += 1;
+                GameInfo2.totalarchievements = 0;
+            await this.GameUserInfo.save(GameInfo2);
         }
         else
         {
-            const GameInfo:GameUserInfo =  await this.GetHistoryByUsername(GameObj.PlayersInfo.Player1UserName);
-            GameInfo.totalgames += 1;
+            GameInfo2.totalgames += 1;
             if(GameObj.PlayersInfo.Result2Val >= GameObj.PlayersInfo.Result1Val)
-                GameInfo.totalwins += 1;
+                GameInfo2.totalwins += 1;
             else
-                GameInfo.totalosses += 1;
-            GameInfo.totalarchievements = 0;
-                this.GameUserInfo.update(GameInfo,{key:GameInfo.key});
+                GameInfo2.totalosses += 1;
+                GameInfo2.totalarchievements = 0;
+            await this.GameUserInfo.update(GameInfo2,{key:GameInfo2.key});
         }
     }
 
-    GetHistoryByUsername(username:string):Promise<GameUserInfo>
+    async GetHistoryByUsername(username:string):Promise<GameUserInfo>
     {
-        return this.GameUserInfo.findOneBy({username:username});
+        return await this.GameUserInfo.findOneBy({username:username});
     }
 }
