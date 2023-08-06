@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:16 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/06 11:22:44 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/06 17:01:04 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from 'src/auth/guard/constants';
-import { GameUserInfo, History } from './PingPong.Entity';
+import { GameArchievement, GameUserInfo, History } from './PingPong.Entity';
 import { BallGateway } from './start_game/play.ball.gateway';
 import { ScheduleModule } from '@nestjs/schedule';
 import { GameInfoManager } from './data_manager/GameInfoManager';
+import { ArchievementManager } from './data_manager/ArchievementManager';
 @Module({
   imports: [
     ScheduleModule.forRoot(),
@@ -34,12 +35,23 @@ import { GameInfoManager } from './data_manager/GameInfoManager';
       rootPath: join(__dirname, '..', 'client')
     }),
   
-    TypeOrmModule.forFeature([History,GameUserInfo]), JwtModule.register({
+    TypeOrmModule.forFeature([History,GameUserInfo,GameArchievement]), JwtModule.register({
     secret: jwtConstants.secret,
     signOptions: { expiresIn: '30d' },
    
   }),],
   controllers: [],
-  providers: [PingPongGateway,PlayPlayer1Gateway,PlayPlayer2Gateway,GameLogic,BallGateway,GameStreamAttribute,PlaySpactatorGateway,HistoryManager,GameInfoManager],
+  providers: [
+    PingPongGateway,
+    PlayPlayer1Gateway,
+    PlayPlayer2Gateway,
+    GameLogic,
+    BallGateway,
+    GameStreamAttribute,
+    PlaySpactatorGateway,
+    HistoryManager,
+    GameInfoManager,
+    ArchievementManager
+  ],
 })
 export class GameModule {}

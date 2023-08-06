@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:14 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/05 22:11:56 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/06 17:00:14 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,4 +101,20 @@ export class GameUserInfo
     totalosses: number
   @Column()
     totalarchievements: number
+}
+
+@Entity({name: 'game_archievement'})
+export class GameArchievement 
+{
+  @PrimaryGeneratedColumn()
+    key: number;
+  
+  @Column({
+    length: 50,
+  })
+    username: string
+  @Column({
+    length: 100,
+  })
+    ArchievementName: string
 }
