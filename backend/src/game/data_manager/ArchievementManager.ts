@@ -9,11 +9,11 @@ export class ArchievementManager
 
     constructor(@InjectRepository(GameArchievement) private Archievement: Repository<GameArchievement>,){}
     
-    async NewArchievement(username:string,archievement_name:string)
+    async NewArchievement(Username:string,ArchievementLength:string)
     {
         const archieve:GameArchievement = new GameArchievement;
-        archieve.username = username;
-        archieve.archievement_name = archievement_name;
+        archieve.username = Username;
+        archieve.archievement_name = ArchievementLength;
         this.Archievement.save(archieve);
     }
 
@@ -21,14 +21,14 @@ export class ArchievementManager
     {
         return await this.Archievement.findBy({username:username});
     }
-    async GetUserArchievementBy(username:string,archievement_name:string):Promise<GameArchievement| null>
+    async GetUserArchievementBy(Username:string,ArchievementLength:string):Promise<GameArchievement | null>
     {
         return await this.Archievement.findOne(
             {
                 where: 
                 {
-                    username:username,
-                    archievement_name:archievement_name
+                    username:Username,
+                    archievement_name:ArchievementLength
                 }
             });
     }
