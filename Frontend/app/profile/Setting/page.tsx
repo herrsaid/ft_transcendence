@@ -21,6 +21,9 @@ import {
 
 } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation';
+import { update } from 'react-spring';
+
+
 
 
 
@@ -33,9 +36,24 @@ export default  function Profile()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [username_updated, setusername_updated] = useState("");
     const [isToFactorEnabled, setisToFactorEnabled] = useState(true);
+    const [userNameErrors, setuserNameErrors] = useState(false);
     
    
 
+
+
+    if (username_updated === sessionStorage.getItem('username'))
+    {
+      toast({
+        title: 'you are not updated your username with new value',
+        description: "Please enter valid username",
+        status: 'warning',
+        duration: 9000,
+        isClosable: true,
+      })
+      // setuserNameErrors(true);
+      // setusername_updated("") ;
+    }
     const onUpdate_Username = async (event:React.FormEvent) =>
     {
         event.preventDefault();
@@ -114,7 +132,7 @@ export default  function Profile()
 
 
 
-                <form onSubmit={onUpdate_Username} className="items-center">
+                <form  className="items-center">
           
    
           <div className=""> 
@@ -131,12 +149,13 @@ export default  function Profile()
     variant='flushed'
     id="username"
     onChange={(event) => setusername_updated(event.target.value)}
+    
     value={username_updated}
     
     />
     <div className="text-right mt-10">
       
-      <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg" onClick={onUpdate_Username}>Save</button>
+      <button disabled={userNameErrors ? true : false} className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg" onClick={onUpdate_Username}>Save</button>
       
     </div>
             </div>
