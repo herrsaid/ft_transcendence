@@ -13,10 +13,8 @@ export default function SideNavBar_Res()
             {/* <div className="Mobile">
 
             </div> */}
-            <div className="NavBar">
-                <div className="Setting">
-                        
-                </div>
+            <div className="NavBar hidden sm:hidden md:flex lg:flex">
+                
                 <div className="Content">
                     <Link href='/'><button className="profile-btn"><IoHome size={30} /></button></Link>
                     <Link href='/profile'><button className="profile-btn"><CgProfile size={30}/></button></Link>

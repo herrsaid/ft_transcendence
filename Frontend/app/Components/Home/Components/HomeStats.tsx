@@ -40,7 +40,7 @@ export default function HomeStats() {
   return (
 
     <div className="py-8">
-  <div className="bg-gradient-to-br from-yellow-400 to-red-500 rounded-lg shadow-md p-6 flex items-center space-x-4 transform transition-transform hover:scale-105 cursor-pointer">
+  <div className="bg-gradient-to-br from-purple-600 to-indigo-800 rounded-lg shadow-md p-6 flex items-center space-x-4 transform transition-transform hover:scale-105 cursor-pointer">
     <div className="w-16 h-16 rounded-full overflow-hidden">
       <img src={data.is_profile_img_updated ? new_src_img : data.profile_img} alt="Your Avatar" className="w-full h-full object-cover"/>
     </div>
@@ -54,7 +54,7 @@ export default function HomeStats() {
       <div className="text-white text-sm">Win Rate: 72%</div>
     </div>
     <div>
-      <a href="#" className="bg-white text-pink-500 font-semibold py-2 px-4 rounded-lg inline-block">View Details</a>     </div>
+      <a href="#" className="bg-white text-blue-400 font-semibold py-2 px-4 rounded-lg inline-block">View Details</a>     </div>
   </div>
 </div>
 

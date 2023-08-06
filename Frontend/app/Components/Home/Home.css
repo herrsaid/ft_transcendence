@@ -46,3 +46,10 @@
     border-radius: 50%;
     object-fit: cover;
   }
+
+
+  .stats-bgf {
+    background: linear-gradient(-45deg, #C56CDD,#18184a);
+    background-size: 400% 400%;
+    
+  }

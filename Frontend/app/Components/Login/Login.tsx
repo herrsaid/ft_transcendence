@@ -28,7 +28,8 @@ export default function Login()
 
       
     function changeBackgroundColor() {
-        const colors = ["#1b1a4f", "#28274d", "#363570", "#18184a"];
+      
+        const colors = ["#1b1a4f", "#28274d", "#18184a"];
         const randomIndex = Math.floor(Math.random() * colors.length);
         const newColor = colors[randomIndex];
         const heroElement = document.getElementById('hero');
