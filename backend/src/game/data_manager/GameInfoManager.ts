@@ -31,13 +31,13 @@ export class GameInfoManager
             this.Archievement.NewArchievement('Play50Times',GameInfo.username);
         else if(GameInfo.totalgames === 100 && !this.Archievement.GetUserArchievementBy(GameInfo.username,'Play100Times'))
             this.Archievement.NewArchievement('Play100Times',GameInfo.username);
-            //maybe should be a problem becouse return null ,so 'null.length' should'nt work?
+        //maybe should be a problem becouse return null ,so 'null.length' should'nt work?
         ArchievementLength = (await (this.Archievement.GetAllUserArchievementByUsername(GameInfo.username))).length;
         if(ArchievementLength === 4 && !this.Archievement.GetUserArchievementBy(GameInfo.username,'Gain4Archievement'))
             this.Archievement.NewArchievement('Gain4Archievement',GameInfo.username);
-        else if(ArchievementLength === 8 && !this.Archievement.GetUserArchievementBy(GameInfo.username,'Gain9Archievement'))
+        else if(ArchievementLength === 9 && !this.Archievement.GetUserArchievementBy(GameInfo.username,'Gain9Archievement'))
             this.Archievement.NewArchievement('Gain9Archievement',GameInfo.username);
-        else if(ArchievementLength === 12 && !this.Archievement.GetUserArchievementBy(GameInfo.username,'Gain15Archievement'))
+        else if(ArchievementLength === 15 && !this.Archievement.GetUserArchievementBy(GameInfo.username,'Gain15Archievement'))
             this.Archievement.NewArchievement('Gain15Archievement',GameInfo.username);
         return (ArchievementLength);
     }

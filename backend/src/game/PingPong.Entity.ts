@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:14 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/06 17:00:14 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/06 18:34:02 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,5 @@ export class GameArchievement
   @Column({
     length: 100,
   })
-    ArchievementName: string
+    archievement_name: string
 }

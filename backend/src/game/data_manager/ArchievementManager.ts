@@ -2,7 +2,6 @@ import { Injectable } from "@nestjs/common";
 import { GameArchievement, History } from '../PingPong.Entity'
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
-import { data } from "../game_brain/logic/game_server_class";
 
 @Injectable()
 export class ArchievementManager
@@ -10,11 +9,11 @@ export class ArchievementManager
 
     constructor(@InjectRepository(GameArchievement) private Archievement: Repository<GameArchievement>,){}
     
-    async NewArchievement(username:string,ArchievementName:string)
+    async NewArchievement(username:string,archievement_name:string)
     {
         const archieve:GameArchievement = new GameArchievement;
         archieve.username = username;
-        archieve.ArchievementName = ArchievementName;
+        archieve.archievement_name = archievement_name;
         this.Archievement.save(archieve);
     }
 
@@ -22,14 +21,14 @@ export class ArchievementManager
     {
         return await this.Archievement.findBy({username:username});
     }
-    async GetUserArchievementBy(username:string,ArchievementName:string):Promise<GameArchievement| null>
+    async GetUserArchievementBy(username:string,archievement_name:string):Promise<GameArchievement| null>
     {
         return await this.Archievement.findOne(
             {
                 where: 
                 {
                     username:username,
-                    ArchievementName:ArchievementName
+                    archievement_name:archievement_name
                 }
             });
     }
