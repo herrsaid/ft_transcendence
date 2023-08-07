@@ -10,20 +10,24 @@ export default function SideNavBar_Res()
 {
     return(
         <>
-            {/* <div className="Mobile">
-
-            </div> */}
-            <div className="NavBar hidden sm:hidden md:flex lg:flex">
-                
-                <div className="Content">
-                    <Link href='/'><button className="profile-btn"><IoHome size={30} /></button></Link>
-                    <Link href='/profile'><button className="profile-btn"><CgProfile size={30}/></button></Link>
-                    <Link href='/Game/Lobbie'><button className="profile-btn"><GiPingPongBat size={30}/></button></Link>
-                    <Link href='/community'><button className="profile-btn"> <BsFillChatFill size={30}/> </button></Link>
-                    <Link href='/profile/Setting'><button className="profile-btn"><IoSettingsSharp size={30} /></button></Link>
+        <nav className="fixed bottom-2 lg:bottom-8 w-full overflow-hidden z-50">
+            <div className="container mx-auto">
+                <div className="w-full bg-black/20 h-[96px] backdrop-blur-2xl rounded-full max-w-[460px] mx-auto 
+                px-5 flex justify-between text-2xl text-white/50 items-center
+                ">
+                    <Link href='/' className="rounded-full cursor-pointer w-[60px] h-[60px] flex items-center justify-center hover:bg-gradient-to-br from-purple-600 to-indigo-800"><IoHome size={30} /></Link>
+                    <Link href='/profile' className="rounded-full cursor-pointer w-[60px] h-[60px] flex items-center justify-center hover:bg-gradient-to-br from-purple-600 to-indigo-800"><CgProfile size={30}/></Link>
+                    <Link href='/Game/Lobbie' className="rounded-full cursor-pointer w-[60px] h-[60px] flex items-center justify-center hover:bg-gradient-to-br from-purple-600 to-indigo-800"><GiPingPongBat size={30}/></Link>
+                    <Link href='/community' className="rounded-full cursor-pointer w-[60px] h-[60px] flex items-center justify-center hover:bg-gradient-to-br from-purple-600 to-indigo-800"> <BsFillChatFill size={30}/> </Link>
+                    <Link href='/profile/Setting' className="rounded-full cursor-pointer w-[60px] h-[60px] flex items-center justify-center hover:bg-gradient-to-br from-purple-600 to-indigo-800"><IoSettingsSharp size={30} /></Link>
                 </div>
-                
+                    
             </div>
+        </nav>
+       
+            
+                    
+                
         </>
     )
 }
