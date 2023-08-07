@@ -23,13 +23,10 @@ export class ArchievementManager
     }
     async GetUserArchievementBy(Username:string,ArchievementLength:string):Promise<GameArchievement | null>
     {
-        return await this.Archievement.findOne(
+        return await this.Archievement.findOneBy(
             {
-                where: 
-                {
                     username:Username,
                     archievement_name:ArchievementLength
-                }
             });
     }
 }
