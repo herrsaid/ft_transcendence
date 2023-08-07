@@ -14,31 +14,36 @@ export class GameInfoManager
     {
         let ArchievementLength:number;
         if(GameInfo.totalwins === 1)
-            this.Archievement.NewArchievement(GameInfo.username,'Win10Times');
-        else if(GameInfo.totalwins === 2)
-            this.Archievement.NewArchievement(GameInfo.username,'Win50Times');
-        else if(GameInfo.totalwins === 3)
-            this.Archievement.NewArchievement(GameInfo.username,'Win100Times');
-        if(GameInfo.totalosses === 1)
-            this.Archievement.NewArchievement(GameInfo.username,'Lose10Times');
-        else if(GameInfo.totalosses === 2)
-            this.Archievement.NewArchievement(GameInfo.username,'Lose50Times');
-        else if(GameInfo.totalosses === 3)
-            this.Archievement.NewArchievement(GameInfo.username,'Lose100Times');
-        if(GameInfo.totalgames === 2)
+            this.Archievement.NewArchievement(GameInfo.username,'FirstTimeWin');
+        else if(GameInfo.totalosses === 1)
+            this.Archievement.NewArchievement(GameInfo.username,'FirstTimeLose');
+        if(GameInfo.totalgames === 5)
+            this.Archievement.NewArchievement(GameInfo.username,'Play5Times');
+        else if(GameInfo.totalgames === 10)
             this.Archievement.NewArchievement(GameInfo.username,'Play10Times');
-        else if(GameInfo.totalgames === 4)
-            this.Archievement.NewArchievement(GameInfo.username,'Play50Times');
-        else if(GameInfo.totalgames === 6)
-            this.Archievement.NewArchievement(GameInfo.username,'Play100Times');
-        //maybe should be a problem becouse return null ,so 'null.length' should'nt work?
+        else if(GameInfo.totalgames === 15)
+            this.Archievement.NewArchievement(GameInfo.username,'Play15Times');
+        if(GameInfo.totalwins === 3)
+            this.Archievement.NewArchievement(GameInfo.username,'Win3Times');
+        else if(GameInfo.totalwins === 6)
+            this.Archievement.NewArchievement(GameInfo.username,'Win6Times');
+        else if(GameInfo.totalwins === 9)
+            this.Archievement.NewArchievement(GameInfo.username,'Win9Times');
+        if(GameInfo.totalosses === 3)
+            this.Archievement.NewArchievement(GameInfo.username,'Lose3Times');
+        else if(GameInfo.totalosses === 6)
+            this.Archievement.NewArchievement(GameInfo.username,'Lose6Times');
+        else if(GameInfo.totalosses === 9)
+            this.Archievement.NewArchievement(GameInfo.username,'Lose9Times');
         ArchievementLength = (await (this.Archievement.GetAllUserArchievementByUsername(GameInfo.username))).length;
         if(ArchievementLength >= 4)
             this.Archievement.NewArchievement(GameInfo.username,'Gain4Archievement');
         else if(ArchievementLength >= 9)
             this.Archievement.NewArchievement(GameInfo.username,'Gain9Archievement');
-        else if(ArchievementLength >= 15)
-            this.Archievement.NewArchievement(GameInfo.username,'Gain15Archievement');
+        else if(ArchievementLength >= 14)
+            this.Archievement.NewArchievement(GameInfo.username,'Gain14Archievement');
+        else if(ArchievementLength === 15)
+            this.Archievement.NewArchievement(GameInfo.username,'ArchievementColector');
         return (ArchievementLength);
     }
     
