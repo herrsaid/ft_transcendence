@@ -12,9 +12,14 @@ export class ArchievementManager
     async NewArchievement(Username:string,ArchievementLength:string)
     {
         const archieve:GameArchievement = new GameArchievement;
+        const findold: GameArchievement | null = (await this.GetUserArchievementBy(Username,ArchievementLength));
         archieve.username = Username;
         archieve.archievement_name = ArchievementLength;
-        this.Archievement.save(archieve);
+
+        if(!findold)
+            await this.Archievement.save(archieve);
+        else
+            console.log('data match');
     }
 
     async GetAllUserArchievementByUsername(username:string):Promise<GameArchievement[]>
@@ -23,11 +28,11 @@ export class ArchievementManager
     }
     async GetUserArchievementBy(Username:string,ArchievementLength:string):Promise<GameArchievement | null>
     {
-        return await this.Archievement.findOneBy(
+        return (await this.Archievement.findOneBy(
             {
                     username:Username,
                     archievement_name:ArchievementLength
-            });
+            }));
     }
 }
 

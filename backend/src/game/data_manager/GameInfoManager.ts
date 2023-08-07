@@ -13,44 +13,32 @@ export class GameInfoManager
     async CheckArchievementLogic(GameInfo:GameUserInfo): Promise<number>
     {
         let ArchievementLength:number;
-        const Win10Times: GameArchievement | null =  await this.Archievement.GetUserArchievementBy(GameInfo.username,'Win10Times');
-        const Win50Times: GameArchievement | null =  await this.Archievement.GetUserArchievementBy(GameInfo.username,'Win50Times');
-        const Win100Times: GameArchievement | null = await this.Archievement.GetUserArchievementBy(GameInfo.username,'Win100Times');
-        const Lose10Times: GameArchievement | null = await this.Archievement.GetUserArchievementBy(GameInfo.username,'Lose10Times');
-        const Lose50Times: GameArchievement | null = await this.Archievement.GetUserArchievementBy(GameInfo.username,'Lose50Times');
-        const Lose100Times: GameArchievement | null = await this.Archievement.GetUserArchievementBy(GameInfo.username,'Lose100Times');
-        const Play10Times: GameArchievement | null = await this.Archievement.GetUserArchievementBy(GameInfo.username,'Play10Times');
-        const Play50Times: GameArchievement | null = await this.Archievement.GetUserArchievementBy(GameInfo.username,'Play50Times');
-        const Play100Times: GameArchievement | null = await this.Archievement.GetUserArchievementBy(GameInfo.username,'Play100Times');
-        const Gain4Archievement: GameArchievement | null = await this.Archievement.GetUserArchievementBy(GameInfo.username,'Gain4Archievement');
-        const Gain9Archievement: GameArchievement | null = await this.Archievement.GetUserArchievementBy(GameInfo.username,'Gain9Archievement');
-        const Gain15Archievement: GameArchievement | null =  await this.Archievement.GetUserArchievementBy(GameInfo.username,'Gain15Archievement');
-        if(GameInfo.totalwins === 1 && !Win10Times)
-            this.Archievement.NewArchievement('Win10Times',GameInfo.username);
-        else if(GameInfo.totalwins === 2 && !Win50Times)
-            this.Archievement.NewArchievement('Win50Times',GameInfo.username);
-        else if(GameInfo.totalwins === 3 && !Win100Times)
-            this.Archievement.NewArchievement('Win100Times',GameInfo.username);
-        if(GameInfo.totalosses === 1 && !Lose10Times)
-            this.Archievement.NewArchievement('Lose10Times',GameInfo.username);
-        else if(GameInfo.totalosses === 2 && !Lose50Times)
-            this.Archievement.NewArchievement('Lose50Times',GameInfo.username);
-        else if(GameInfo.totalosses === 3 && !Lose100Times)
-            this.Archievement.NewArchievement('Lose100Times',GameInfo.username);
-        if(GameInfo.totalgames === 2 && !Play10Times)
-            this.Archievement.NewArchievement('Play10Times',GameInfo.username);
-        else if(GameInfo.totalgames === 4 && !Play50Times)
-            this.Archievement.NewArchievement('Play50Times',GameInfo.username);
-        else if(GameInfo.totalgames === 6 && !Play100Times)
-            this.Archievement.NewArchievement('Play100Times',GameInfo.username);
+        if(GameInfo.totalwins === 1)
+            this.Archievement.NewArchievement(GameInfo.username,'Win10Times');
+        else if(GameInfo.totalwins === 2)
+            this.Archievement.NewArchievement(GameInfo.username,'Win50Times');
+        else if(GameInfo.totalwins === 3)
+            this.Archievement.NewArchievement(GameInfo.username,'Win100Times');
+        if(GameInfo.totalosses === 1)
+            this.Archievement.NewArchievement(GameInfo.username,'Lose10Times');
+        else if(GameInfo.totalosses === 2)
+            this.Archievement.NewArchievement(GameInfo.username,'Lose50Times');
+        else if(GameInfo.totalosses === 3)
+            this.Archievement.NewArchievement(GameInfo.username,'Lose100Times');
+        if(GameInfo.totalgames === 2)
+            this.Archievement.NewArchievement(GameInfo.username,'Play10Times');
+        else if(GameInfo.totalgames === 4)
+            this.Archievement.NewArchievement(GameInfo.username,'Play50Times');
+        else if(GameInfo.totalgames === 6)
+            this.Archievement.NewArchievement(GameInfo.username,'Play100Times');
         //maybe should be a problem becouse return null ,so 'null.length' should'nt work?
         ArchievementLength = (await (this.Archievement.GetAllUserArchievementByUsername(GameInfo.username))).length;
-        if(ArchievementLength === 4 && !Gain4Archievement)
-            this.Archievement.NewArchievement('Gain4Archievement',GameInfo.username);
-        else if(ArchievementLength === 9 && !Gain9Archievement)
-            this.Archievement.NewArchievement('Gain9Archievement',GameInfo.username);
-        else if(ArchievementLength === 15 && !Gain15Archievement)
-            this.Archievement.NewArchievement('Gain15Archievement',GameInfo.username);
+        if(ArchievementLength >= 4)
+            this.Archievement.NewArchievement(GameInfo.username,'Gain4Archievement');
+        else if(ArchievementLength >= 9)
+            this.Archievement.NewArchievement(GameInfo.username,'Gain9Archievement');
+        else if(ArchievementLength >= 15)
+            this.Archievement.NewArchievement(GameInfo.username,'Gain15Archievement');
         return (ArchievementLength);
     }
     
