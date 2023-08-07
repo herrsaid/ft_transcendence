@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:10 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/04 13:14:58 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/07 23:34:38 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,29 +46,15 @@ import {
 	@SubscribeMessage('spectator_leave')
 	handleconection_closed(client: Socket): void {
     if(GameObj)
-    {
-      for(let a = 0 ; a<GameObj.length; a++ )
-      { 
-        if(GameObj[a].PlayersInfo.Player1ID === client.id)
-        { 
-          GameObj[a].RoomInfo.GameStatus = 0;
-          GameObj[a].PlayersInfo.Player1ID = '';
-        }
-      }
-    }
+        for(let a = 0 ; a<GameObj.length; a++ )
+          for(let b = 0 ; b<GameObj.length; b++ )
+            GameObj[a].StreamsInfo = GameObj[a].StreamsInfo.filter((elem)=>{elem.SpectatorID !== client.id});
   }
     handleDisconnect(client: Socket): void {
       if(GameObj)
-      {
         for(let a = 0 ; a<GameObj.length; a++ )
-        { 
-          if(GameObj[a].PlayersInfo.Player1ID === client.id)
-          { 
-            GameObj[a].RoomInfo.GameStatus = 0;
-            GameObj[a].PlayersInfo.Player1ID = '';
-          }
-        }
-      }
+          for(let b = 0 ; b<GameObj.length; b++ )
+            GameObj[a].StreamsInfo = GameObj[a].StreamsInfo.filter((elem)=>{elem.SpectatorID !== client.id});
     }
   }
   

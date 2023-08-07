@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:26:38 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/05 22:05:11 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/07 23:43:22 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ export class GameLogic
         // allways let ball move on horizontal if BallXdirection is positive ball move right else ball move left
         data.BallInfo.BallXpos += (data.BallInfo.BallXdirection * data.RoomInfo.GameSpeed);
         //if ballYpos not in the same Rakect2Yposenter enter this condition
-        if(data.BallInfo.BallYpos < data.RacketsInfo.Racket2Ypos || data.BallInfo.BallYpos > (data.RacketsInfo.Racket2Ypos + data.RacketsInfo.Racket2Height))
+        if((data.BallInfo.BallYpos - (data.BallInfo.BallHeight/2)) < data.RacketsInfo.Racket2Ypos
+            || (data.BallInfo.BallYpos - (data.BallInfo.BallHeight/2)) > (data.RacketsInfo.Racket2Ypos + data.RacketsInfo.Racket2Height))
         {
             // check if ball spiped racket of player2 if true then player1 get point, the ball sets to center of the game, and  the game sleep 3000 ms
             if(data.BallInfo.BallXpos > data.RoomInfo.GameWidth)
@@ -105,7 +106,8 @@ export class GameLogic
             }
         }
         //if ballYpos not in the same Rakect1Yposenter enter this condition
-        if(data.BallInfo.BallYpos < data.RacketsInfo.Racket1Ypos || data.BallInfo.BallYpos > (data.RacketsInfo.Racket1Ypos + data.RacketsInfo.Racket1Height))
+        if((data.BallInfo.BallYpos - (data.BallInfo.BallHeight/2)) < data.RacketsInfo.Racket1Ypos
+            || (data.BallInfo.BallYpos - (data.BallInfo.BallHeight/2)) > (data.RacketsInfo.Racket1Ypos + data.RacketsInfo.Racket1Height))
         {
             // check if ball spiped racket of player1 if true then player2 get point, the ball sets to center of the game, and  the game sleep 3000 ms
             if(data.BallInfo.BallXpos < 0)

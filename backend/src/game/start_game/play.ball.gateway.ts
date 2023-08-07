@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:00 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/07 09:55:12 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/07 11:45:02 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ import { GameInfoManager } from '../data_manager/GameInfoManager';
         
       }
 
-      //disconnect player from room
+      //disconnect players from room
       if(GameObj[Room].PlayersInfo.Player1Client !== undefined)
         GameObj[Room].PlayersInfo.Player1Client.disconnect();
       if(GameObj[Room].PlayersInfo.Player2Client !== undefined)

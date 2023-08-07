@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:06 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/05 13:53:12 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/07 11:43:06 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ import {
           GameObj[a].RoomInfo.GameStatus = 0;
           GameObj[a].PlayersInfo.Player1ID = '';
           GameObj[a].PlayersInfo.Player2ID = '';
-          Player2ID = '';
         }
       }
+      Player2ID = '';
   }
   handleDisconnect(client: Socket): void {
       for(let a = 0 ; a<GameObj.length; a++ )
@@ -70,8 +70,8 @@ import {
           GameObj[a].RoomInfo.GameStatus = 0;
           GameObj[a].PlayersInfo.Player1ID = '';
           GameObj[a].PlayersInfo.Player2ID = '';
-          Player2ID = '';
         }
       }
+      Player2ID = '';
     }
 }
