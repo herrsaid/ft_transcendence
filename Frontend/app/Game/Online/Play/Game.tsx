@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:48 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/07 11:23:35 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/08 09:19:41 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,14 @@ function ConvertClientData(ClientData:number,Mood:number)
     return(Math.floor(((ClientData* 100)/GameWidth)* (800/100)));
   return(Math.floor(((ClientData* 100)/GameHeight)* (400/100)));
 }
+
+function ConvertMyData(MyData:number,Mood:number)
+{
+  if(Mood)
+    return(Math.floor(((MyData* 100)/GameWidth)* (Math.floor(window.innerWidth/2)/100)));
+  return(Math.floor(((MyData* 100)/GameHeight)* (Math.floor(window.innerHeight/4)/100)));
+}
+
 function Ball(p5: p5, x: number, y: number, w: number, h: number)
 {
   p5.fill(255,255,255);
@@ -195,20 +203,20 @@ function NewValue()
 {
   if(window.innerWidth/2 !== GameWidth || window.innerWidth/4 !== GameHeight)
   {
+    Racket1Ypos = ConvertMyData(Racket1Ypos,0);
+    Racket2Ypos = ConvertMyData(Racket2Ypos,0);
     GameWidth = Math.floor(window.innerWidth/2);
     GameHeight =  Math.floor(window.innerWidth/4);
     BallWidth = Math.floor(GameWidth/52);
     BallHeight = Math.floor(GameHeight/26);
-    // BallXpos = Math.floor(GameWidth/2);
-    // BallYpos = Math.floor(GameHeight/2);
+    BallXpos = Math.floor(GameWidth/2);
+    BallYpos = Math.floor(GameHeight/2);
     Racket1Width = Math.floor(GameWidth/80);
     Racket1Height = Math.floor(GameHeight/6);
     Racket1Xpos = Math.floor(GameWidth/160);
-    // Racket1Ypos = Math.floor((GameHeight/2) - (Racket1Height/2));
     Racket2Width = Math.floor(GameWidth/80);
     Racket2Height = Math.floor(GameHeight/6);
     Racket2Xpos = Math.floor(GameWidth-((GameWidth/80)+(GameWidth/160)));
-    // Racket2Ypos = Math.floor((GameHeight/2) - (Racket2Height/2));
     Result1Xpos  = Math.floor(GameWidth/2 - GameWidth/12);
     Result1Ypos = Math.floor(GameHeight/10);
     // Result1Val  = 0;

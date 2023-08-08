@@ -49,7 +49,7 @@ export class GameInfoManager
     
     async CreateOrUpdateGameInfo(GameObj:data)
     {
-        const GameInfo:GameUserInfo| null =  await this.GetHistoryByUsername(GameObj.PlayersInfo.Player2UserName);
+        const GameInfo:GameUserInfo| null =  await this.GetGameInfoByUsername(GameObj.PlayersInfo.Player2UserName);
         if(!GameInfo)
         {
             const newGameInfo:GameUserInfo =  new GameUserInfo;
@@ -81,7 +81,7 @@ export class GameInfoManager
             await this.GameUserInfo.save(GameInfo);
         }
 
-        const GameInfo2:GameUserInfo | null =  await this.GetHistoryByUsername(GameObj.PlayersInfo.Player1UserName);
+        const GameInfo2:GameUserInfo | null =  await this.GetGameInfoByUsername(GameObj.PlayersInfo.Player1UserName);
         if(!GameInfo2)
         {
             const newGameInfo2:GameUserInfo =  new GameUserInfo;
@@ -114,7 +114,7 @@ export class GameInfoManager
         }
     }
 
-    async GetHistoryByUsername(username:string):Promise<GameUserInfo | null>
+    async GetGameInfoByUsername(username:string):Promise<GameUserInfo | null>
     {
         return await this.GameUserInfo.findOne({ where: { username:username } });
     }

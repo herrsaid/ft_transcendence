@@ -58,11 +58,11 @@ export default function Login()
           </button>
         </Link>
 
-        {/* <Link href={`${process.env.NEXT_PUBLIC_BACK_IP_G}/auth/google`}>
+        <Link href={`${process.env.NEXT_PUBLIC_BACK_IP_G}/auth/google`}>
             <button className="hero-button">
             Sign in with Google
           </button>
-        </Link> */}
+        </Link>
       </div>
     </div>
   </section>
