@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:16 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/06 17:01:04 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/08 14:19:52 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@ import { BallGateway } from './start_game/play.ball.gateway';
 import { ScheduleModule } from '@nestjs/schedule';
 import { GameInfoManager } from './data_manager/GameInfoManager';
 import { ArchievementManager } from './data_manager/ArchievementManager';
+import { UserModule } from 'src/user/modules/user.module';
 @Module({
   imports: [
+    UserModule,
     ScheduleModule.forRoot(),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'client')
@@ -53,5 +55,10 @@ import { ArchievementManager } from './data_manager/ArchievementManager';
     GameInfoManager,
     ArchievementManager
   ],
+  exports:[
+    HistoryManager,
+    GameInfoManager,
+    ArchievementManager
+  ]
 })
 export class GameModule {}

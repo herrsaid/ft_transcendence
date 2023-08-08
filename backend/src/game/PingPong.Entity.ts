@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:14 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/06 18:34:02 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/08 14:25:48 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,10 @@ export class History
   @PrimaryGeneratedColumn()
     key: number;
   
-  @Column({
-    length: 50,
-  })
-    myusername: string
-  @Column({
-    length: 50,
-  })
-    enemmyusername: string
+  @Column()
+    myuserid: number
+  @Column()
+  enemmyuserid: number
   @Column()
     myresult: number
   @Column()

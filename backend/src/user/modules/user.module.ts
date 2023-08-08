@@ -12,6 +12,7 @@ import { ArchievementManager } from 'src/game/data_manager/ArchievementManager';
 @Module({
     imports:[TypeOrmModule.forFeature([User,FriendRequest,History,GameUserInfo,GameArchievement])],
   controllers: [UserController],
-  providers: [UserService, HistoryManager, GameInfoManager,ArchievementManager]
+  providers: [UserService, HistoryManager, GameInfoManager,ArchievementManager],
+  exports: [UserService]
 })
 export class UserModule {}
