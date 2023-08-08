@@ -226,14 +226,14 @@ export class UserController {
     @Get('history/me')
     getMyHistoryMatch(@Request() req)
     {
-        return this.HistoryManager.GetAllHistorysByUsername(req.user.username);
+        return this.HistoryManager.GetAllHistorysByUsername(req.user.id);
     }
 
     @UseGuards(AuthGuard)
-    @Get('history/match/:username')
-    getHistoryUserMatch(@Param('username') username)
+    @Get('history/match/:id')
+    getHistoryUserMatch(@Param('id') id:number)
     {
-        return this.HistoryManager.GetAllHistorysByUsername(username);
+        return this.HistoryManager.GetAllHistorysByUsername(id);
     }
 
 

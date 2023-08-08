@@ -1,53 +1,79 @@
 "use client"
 import Cookies from 'js-cookie';
 import { useRouter } from "next/navigation";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useSWR from "swr"
 import fs from 'fs'
+import { Input } from '@chakra-ui/react';
 
 
 
 export default  function TwoFactor()
 {
     const router = useRouter();
-    const [dataURLQr, setdataURLQr] = useState("");
-        const GenerateQrCode = async (url:string) => {
-            const res = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    Authorization: `Bearer ${Cookies.get('access_token')}`
-                 }});
-    
+    const [qrCodeDataUrl, setQRCodeDataUrl] = useState("");
 
-        const readableStream = res.body
-        const textDecoder = new TextDecoder();
-        const text = await readableStream?.pipeThrough(new TextDecoderStream()).getReader().read();
-       
-        if (res.status == 401)
-            router.replace("/login")
-                 
-        if (!res.ok)
-            throw new Error("failed to fetch users");
-        console.log(text?.value)
-        fs.writeFileSync('/qr.png', text?.value);
-        setdataURLQr(text?.value);
-    }
-    
-    
-        const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/2fa/generate`,
-        GenerateQrCode
-        );
+    useEffect(() => {
+        
+        fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/2fa/generate`,{
+            method: 'POST',
+            headers: {
+               Authorization: `Bearer ${Cookies.get('access_token')}`
+             }
+        }
+        
+        )
+          .then((response) => response.blob())
+          .then((blob) => {
+           
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              setQRCodeDataUrl(reader.result);
+            };
+            reader.readAsDataURL(blob);
+          })
+          .catch((error) => {
+            console.error('Error fetching QR code:', error);
+          });
+      }, []);
 
-        console.log(data)
     
    return(
     <>
-    <div>
-        <h1>
-            2FA CHECK
-            {/* {data} */}
-            <img src={dataURLQr} />
-        </h1>
+    <div className="container mx-auto items-center flex">
+        
+        <div className="items-center mx-auto">
+        <h1 className="text-2xl font-semibold text-blue-500">2FA Check Code</h1>
+        <form  className="items-center mt-[50px]">
+                
+                <img src={qrCodeDataUrl} />
+
+        <div className="mt-[50px]">
+            <Input
+    placeholder='type code ...'
+    _placeholder={{ opacity: 1, color: 'gray.500' }}
+    
+    className="focus:outline-none"
+    variant='flushed'
+    id="username"
+    // onChange={(event) => setusername_updated(event.target.value)}
+    
+    // value={username_updated}
+    
+    />
+
+<div className="text-center mt-2">
+      
+      <button  className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg" >Send</button>
+      
+    </div>
+    </div>
+                
+        </form>
+        </div>
+            
+            
+        
     </div>
     </>
    );
