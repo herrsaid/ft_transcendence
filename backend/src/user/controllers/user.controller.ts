@@ -9,13 +9,17 @@ import { Observable } from 'rxjs';
 import { FriendRequestStatus, FriendRequest_Interface } from 'src/entities/friend/interfaces/friend-request.interface';
 import { join } from 'path';
 import { v4 as uuidv4 } from 'uuid';
+import { HistoryManager } from 'src/game/data_manager/HistoryManager';
+import { GameInfoManager } from 'src/game/data_manager/GameInfoManager';
+import { ArchievementManager } from 'src/game/data_manager/ArchievementManager';
 
 const v4id = uuidv4()
 
 @Controller('user')
 export class UserController {
     
-    constructor(private readonly userService:UserService, private jwtService: JwtService)
+    constructor(private readonly userService:UserService, private jwtService: JwtService, private readonly HistoryManager:HistoryManager,
+        private readonly GameInfoManager:GameInfoManager, private readonly ArchievementManager:ArchievementManager)
     {}
     
     
@@ -206,6 +210,58 @@ export class UserController {
     {
         return this.userService.create(CreateUserDto);
     }
+
+
+
+
+    @UseGuards(AuthGuard)
+    @Get('history/me')
+    getMyHistoryMatch(@Request() req)
+    {
+        return this.HistoryManager.GetHistoryByUsername(req.user.username);
+    }
+
+    @UseGuards(AuthGuard)
+    @Get('history/match/:username')
+    getHistoryUserMatch(@Param('username') username)
+    {
+        return this.HistoryManager.GetHistoryByUsername(username);
+    }
+
+
+
+    @UseGuards(AuthGuard)
+    @Get('stats/me')
+    getMyStats(@Request() req)
+    {
+        return this.GameInfoManager.GetHistoryByUsername(req.user.username);
+    }
+
+
+    @UseGuards(AuthGuard)
+    @Get('stats/match/:username')
+    getStatsUser(@Param('username') username)
+    {
+        return this.GameInfoManager.GetHistoryByUsername(username);
+    }
+
+
+
+    @UseGuards(AuthGuard)
+    @Get('archievements/me')
+    getMyArchievements(@Request() req)
+    {
+        return this.ArchievementManager.GetAllUserArchievementByUsername(req.user.username);
+    }
+
+
+    @UseGuards(AuthGuard)
+    @Get('archievements/player/:username')
+    getArchievementsUser(@Param('username') username)
+    {
+        return this.ArchievementManager.GetAllUserArchievementByUsername(username);
+    }
+    
 
 
     @UseGuards(AuthGuard)

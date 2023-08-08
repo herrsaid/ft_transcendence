@@ -30,6 +30,10 @@ import { MessagesService } from 'Database/services/messages/messages.service';
 import { MessageService } from './message/message.service';
 import { Messages } from 'Database/entity/Message.entity';
 import { MessagesController } from './messages/messages.controller';
+import { HistoryManager } from './game/data_manager/HistoryManager';
+import { GameArchievement, GameUserInfo, History } from './game/PingPong.Entity';
+import { GameInfoManager } from './game/data_manager/GameInfoManager';
+import { ArchievementManager } from './game/data_manager/ArchievementManager';
 
 @Module({
   imports: [GameModule, AuthModule, TypeOrmModule.forRoot(config),
@@ -41,7 +45,7 @@ import { MessagesController } from './messages/messages.controller';
     }),
     UserModule,
   
-    TypeOrmModule.forFeature([User,FriendRequest,Messages]), JwtModule.register({
+    TypeOrmModule.forFeature([User,FriendRequest,Messages,History,GameUserInfo,GameArchievement]), JwtModule.register({
     global: true,
     secret: jwtConstants.secret,
     signOptions: { expiresIn: '30d' },
@@ -61,6 +65,9 @@ import { MessagesController } from './messages/messages.controller';
     GoogleAuthService,
     MessagesService,
     MessageService,
+    HistoryManager,
+    GameInfoManager,
+    ArchievementManager
   ],
 })
 export class AppModule {}
