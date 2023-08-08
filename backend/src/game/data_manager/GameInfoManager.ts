@@ -15,9 +15,9 @@ export class GameInfoManager
     async CheckArchievementLogic(GameInfo:GameUserInfo): Promise<number>
     {
         let ArchievementLength:number;
-        if(GameInfo.totalwins === 1)
+        if(GameInfo.totalwins === 1 && GameInfo.totalgames === 1)
             this.Archievement.NewArchievement(GameInfo.userid,'FirstTimeWin');
-        else if(GameInfo.totalosses === 1)
+        if(GameInfo.totalosses === 1 && GameInfo.totalgames === 1)
             this.Archievement.NewArchievement(GameInfo.userid,'FirstTimeLose');
         if(GameInfo.totalgames === 5)
             this.Archievement.NewArchievement(GameInfo.userid,'Play5Times');
@@ -75,7 +75,7 @@ export class GameInfoManager
                 newGameInfo.totalosses = 1;
                 newGameInfo.totalwins = 0;
             }
-                newGameInfo.totalarchievements = 0;
+            newGameInfo.totalarchievements = await this.CheckArchievementLogic(newGameInfo);
             await this.GameUserInfo.save(newGameInfo);
         }
         else
@@ -86,7 +86,6 @@ export class GameInfoManager
             else
                 GameInfo.totalosses += 1;
             GameInfo.totalarchievements = await this.CheckArchievementLogic(GameInfo);
-            // await this.GameUserInfo.update(GameInfo,{key:GameInfo.key});
             Object.assign(GameUserInfo, GameInfo);
             await this.GameUserInfo.save(GameInfo);
         }
@@ -107,7 +106,7 @@ export class GameInfoManager
                 newGameInfo2.totalosses = 1;
                 newGameInfo2.totalwins = 0;
             }
-            newGameInfo2.totalarchievements = 0;
+            newGameInfo2.totalarchievements = await this.CheckArchievementLogic(newGameInfo2);
             await this.GameUserInfo.save(newGameInfo2);
         }
         else
@@ -118,7 +117,6 @@ export class GameInfoManager
             else
                 GameInfo2.totalosses += 1;
             GameInfo2.totalarchievements = await this.CheckArchievementLogic(GameInfo2);
-            // await this.GameUserInfo.update(GameInfo2,{key:GameInfo2.key});
             Object.assign(GameUserInfo, GameInfo2);
             await this.GameUserInfo.save(GameInfo2);
         }
