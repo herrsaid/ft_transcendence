@@ -31,7 +31,7 @@ export class HistoryManager
         await this.History.save(hstry2);
     }
 
-    async GetHistoryByUsername(username:string):Promise<History[]>
+    async GetAllHistorysByUsername(username:string):Promise<History[]>
     {
         return await this.History.findBy({myusername:username});
     }
