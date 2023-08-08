@@ -1,5 +1,5 @@
-import Header from './Components/Header/Header'
-import SideNavBar_Res from './Components/SideNavBar_Res/SideNavBar_Res'
+import Header from './(root)/Components/Header/Header'
+import SideNavBar_Res from './(root)/Components/SideNavBar_Res/SideNavBar_Res'
 import './globals.css'
 import { Providers } from "./providers";
 

@@ -1,5 +1,5 @@
 "use client"
-import '../profile/profile.css'
+import '../(root)/profile/profile.css'
 import {ProfileAvatar, ProfileInfo} from './index'
 import { useRouter, useSearchParams } from 'next/navigation';
 import Cookies from 'js-cookie';
