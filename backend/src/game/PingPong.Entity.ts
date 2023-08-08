@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:14 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/08 14:25:48 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/08 15:20:08 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,8 @@ export class GameUserInfo
   @PrimaryGeneratedColumn()
     key: number;
   
-  @Column({
-    length: 50,
-  })
-    username: string
+  @Column()
+    userid: number
   @Column()
     totalgames: number
   @Column()
@@ -105,10 +103,8 @@ export class GameArchievement
   @PrimaryGeneratedColumn()
     key: number;
   
-  @Column({
-    length: 50,
-  })
-    username: string
+  @Column()
+    userid: number
   @Column({
     length: 100,
   })

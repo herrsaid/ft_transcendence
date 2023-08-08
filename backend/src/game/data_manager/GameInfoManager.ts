@@ -4,56 +4,66 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { data } from "../game_brain/logic/game_server_class";
 import { ArchievementManager } from "./ArchievementManager";
+import { UserService } from "src/user/services/user.service";
 
 @Injectable()
 export class GameInfoManager
 {
-    constructor(@InjectRepository(GameUserInfo) private GameUserInfo: Repository<GameUserInfo>,private Archievement:ArchievementManager){}
+    constructor(@InjectRepository(GameUserInfo) private GameUserInfo: Repository<GameUserInfo>,private Archievement:ArchievementManager,
+    private UserManager:UserService){}
     
     async CheckArchievementLogic(GameInfo:GameUserInfo): Promise<number>
     {
         let ArchievementLength:number;
         if(GameInfo.totalwins === 1)
-            this.Archievement.NewArchievement(GameInfo.username,'FirstTimeWin');
+            this.Archievement.NewArchievement(GameInfo.userid,'FirstTimeWin');
         else if(GameInfo.totalosses === 1)
-            this.Archievement.NewArchievement(GameInfo.username,'FirstTimeLose');
+            this.Archievement.NewArchievement(GameInfo.userid,'FirstTimeLose');
         if(GameInfo.totalgames === 5)
-            this.Archievement.NewArchievement(GameInfo.username,'Play5Times');
+            this.Archievement.NewArchievement(GameInfo.userid,'Play5Times');
         else if(GameInfo.totalgames === 10)
-            this.Archievement.NewArchievement(GameInfo.username,'Play10Times');
+            this.Archievement.NewArchievement(GameInfo.userid,'Play10Times');
         else if(GameInfo.totalgames === 15)
-            this.Archievement.NewArchievement(GameInfo.username,'Play15Times');
+            this.Archievement.NewArchievement(GameInfo.userid,'Play15Times');
         if(GameInfo.totalwins === 3)
-            this.Archievement.NewArchievement(GameInfo.username,'Win3Times');
+            this.Archievement.NewArchievement(GameInfo.userid,'Win3Times');
         else if(GameInfo.totalwins === 6)
-            this.Archievement.NewArchievement(GameInfo.username,'Win6Times');
+            this.Archievement.NewArchievement(GameInfo.userid,'Win6Times');
         else if(GameInfo.totalwins === 9)
-            this.Archievement.NewArchievement(GameInfo.username,'Win9Times');
+            this.Archievement.NewArchievement(GameInfo.userid,'Win9Times');
         if(GameInfo.totalosses === 3)
-            this.Archievement.NewArchievement(GameInfo.username,'Lose3Times');
+            this.Archievement.NewArchievement(GameInfo.userid,'Lose3Times');
         else if(GameInfo.totalosses === 6)
-            this.Archievement.NewArchievement(GameInfo.username,'Lose6Times');
+            this.Archievement.NewArchievement(GameInfo.userid,'Lose6Times');
         else if(GameInfo.totalosses === 9)
-            this.Archievement.NewArchievement(GameInfo.username,'Lose9Times');
-        ArchievementLength = (await (this.Archievement.GetAllUserArchievementByUsername(GameInfo.username))).length;
+            this.Archievement.NewArchievement(GameInfo.userid,'Lose9Times');
+        ArchievementLength = (await (this.Archievement.GetAllUserArchievementByUsername(GameInfo.userid))).length;
         if(ArchievementLength >= 4)
-            this.Archievement.NewArchievement(GameInfo.username,'Gain4Archievement');
+            this.Archievement.NewArchievement(GameInfo.userid,'Gain4Archievement');
         else if(ArchievementLength >= 9)
-            this.Archievement.NewArchievement(GameInfo.username,'Gain9Archievement');
+            this.Archievement.NewArchievement(GameInfo.userid,'Gain9Archievement');
         else if(ArchievementLength >= 14)
-            this.Archievement.NewArchievement(GameInfo.username,'Gain14Archievement');
+            this.Archievement.NewArchievement(GameInfo.userid,'Gain14Archievement');
         else if(ArchievementLength === 15)
-            this.Archievement.NewArchievement(GameInfo.username,'ArchievementColector');
+            this.Archievement.NewArchievement(GameInfo.userid,'ArchievementColector');
         return (ArchievementLength);
     }
     
     async CreateOrUpdateGameInfo(GameObj:data)
     {
-        const GameInfo:GameUserInfo| null =  await this.GetGameInfoByUsername(GameObj.PlayersInfo.Player2UserName);
+        const User1 =  await this.UserManager.findOneByUsername(GameObj.PlayersInfo.Player2UserName);
+        const User2 =  await this.UserManager.findOneByUsername(GameObj.PlayersInfo.Player1UserName);
+        let GameInfo:GameUserInfo| null;
+        let GameInfo2:GameUserInfo| null;
+        if(User1)
+            GameInfo =  await this.GetGameInfoByUsername(User1.id);
+        if(User2)
+            GameInfo2 =  await this.GetGameInfoByUsername(User2.id);
         if(!GameInfo)
         {
             const newGameInfo:GameUserInfo =  new GameUserInfo;
-            newGameInfo.username = GameObj.PlayersInfo.Player2UserName;
+            if(User1)
+                newGameInfo.userid = User1.id;
             newGameInfo.totalgames = 1;
             if(GameObj.PlayersInfo.Result1Val >= GameObj.PlayersInfo.Result2Val)
             {
@@ -81,11 +91,11 @@ export class GameInfoManager
             await this.GameUserInfo.save(GameInfo);
         }
 
-        const GameInfo2:GameUserInfo | null =  await this.GetGameInfoByUsername(GameObj.PlayersInfo.Player1UserName);
         if(!GameInfo2)
         {
             const newGameInfo2:GameUserInfo =  new GameUserInfo;
-            newGameInfo2.username = GameObj.PlayersInfo.Player1UserName;
+            if(User2)
+                newGameInfo2.userid =  User2.id;
             newGameInfo2.totalgames = 1;
             if(GameObj.PlayersInfo.Result2Val >= GameObj.PlayersInfo.Result1Val)
             {
@@ -114,8 +124,8 @@ export class GameInfoManager
         }
     }
 
-    async GetGameInfoByUsername(username:string):Promise<GameUserInfo | null>
+    async GetGameInfoByUsername(UserId:number):Promise<GameUserInfo | null>
     {
-        return await this.GameUserInfo.findOne({ where: { username:username } });
+        return await this.GameUserInfo.findOne({ where: { userid:UserId } });
     }
 }

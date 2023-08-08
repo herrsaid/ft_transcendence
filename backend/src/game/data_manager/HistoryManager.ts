@@ -29,9 +29,9 @@ export class HistoryManager
 
         const hstry2:History = new History();
         if(User1)
-            hstry.myuserid = User1.id;
+            hstry2.myuserid = User1.id;
         if(User2)
-            hstry.enemmyuserid =  User2.id;
+            hstry2.enemmyuserid =  User2.id;
         hstry2.myresult = GameObj.PlayersInfo.Result2Val;
         hstry2.enemmyresult = GameObj.PlayersInfo.Result1Val;
         hstry2.score = (GameObj.PlayersInfo.Result2Val-GameObj.PlayersInfo.Result1Val) *  100;
