@@ -9,11 +9,11 @@ export class ArchievementManager
 
     constructor(@InjectRepository(GameArchievement) private Archievement: Repository<GameArchievement>,){}
     
-    async NewArchievement(Username:string,ArchievementName:string)
+    async NewArchievement(UserId:number,ArchievementName:string)
     {
         const archieve:GameArchievement = new GameArchievement;
-        const findold: GameArchievement | null = (await this.GetUserArchievementBy(Username,ArchievementName));
-        archieve.username = Username;
+        const findold: GameArchievement | null = (await this.GetUserArchievementBy(UserId,ArchievementName));
+        archieve.userid = UserId;
         archieve.archievement_name = ArchievementName;
 
         if(!findold)
@@ -22,15 +22,15 @@ export class ArchievementManager
             console.log('data match');
     }
 
-    async GetAllUserArchievementByUsername(username:string):Promise<GameArchievement[]>
+    async GetAllUserArchievementByUsername(UserId:number):Promise<GameArchievement[]>
     {
-        return await this.Archievement.findBy({username:username});
+        return await this.Archievement.findBy({userid:UserId});
     }
-    async GetUserArchievementBy(Username:string,ArchievementName:string):Promise<GameArchievement | null>
+    async GetUserArchievementBy(UserId:number,ArchievementName:string):Promise<GameArchievement | null>
     {
         return (await this.Archievement.findOneBy(
             {
-                    username:Username,
+                    userid:UserId,
                     archievement_name:ArchievementName
             }));
     }
