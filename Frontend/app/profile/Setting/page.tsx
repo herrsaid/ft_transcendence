@@ -11,19 +11,13 @@ import {
 import { useRouter } from 'next/navigation';
 
 
-
-
-
-
-
-
 export default  function Profile()
 {
     const router = useRouter();
     const toast = useToast()
     const [username_updated, setusername_updated] = useState("");
-    const [isToFactorEnabled, setisToFactorEnabled] = useState(true);
-
+    const [isToFactorEnabled, setisToFactorEnabled] = useState(sessionStorage.getItem('isTwoFactorAuthenticationEnabled') 
+    == 'true' ? true : false)
     
   
     const onUpdate_Username = async (event:React.FormEvent) =>
@@ -96,7 +90,10 @@ export default  function Profile()
 
     const SwitchHandle = () =>{
       setisToFactorEnabled(!isToFactorEnabled)
-      router.replace("/2fa")
+      if (sessionStorage.getItem('isTwoFactorAuthenticationEnabled') == 'false')
+      {
+        router.replace("/2fa/Enable")
+      }
     }
 
 
