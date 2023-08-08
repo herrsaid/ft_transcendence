@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:48 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/08 10:57:52 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/08 14:15:33 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,12 +194,13 @@ function first_conection(p5:p5)
 
 function NewValue()
 {
-  if(window.innerWidth/2 !== GameWidth || window.innerWidth/4 !== GameHeight)
+  if((window.innerWidth !== GameWidth || (window.innerWidth/2) !== GameHeight) && window.innerWidth < 1080)
   {
+    console.log(window.innerWidth);
     // Racket1Ypos = Math.floor(((Racket1Ypos* 100)/Math.floor(window.innerHeight/4))* (GameHeight/4)/100);
     // Racket2Ypos = Math.floor(((Racket2Ypos* 100)/Math.floor(window.innerHeight/4))* (GameHeight/4)/100);
-    GameWidth = Math.floor(window.innerWidth/2);
-    GameHeight =  Math.floor(window.innerWidth/4);
+    GameWidth = Math.floor(window.innerWidth);
+    GameHeight =  Math.floor(window.innerWidth/2);
     BallWidth = Math.floor(GameWidth/52);
     BallHeight = Math.floor(GameHeight/26);
     Racket1Width = Math.floor(GameWidth/80);
