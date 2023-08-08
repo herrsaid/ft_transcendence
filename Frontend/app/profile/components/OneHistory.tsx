@@ -10,50 +10,30 @@ interface history{
     status:boolean
     id:number,
     avatar_updated:boolean
+    score:number,
+    rank:number,
+    myresult:number,
+    enemmyresult:number
+
 }
 
 
 const OneHistory = (props:history) => {
      
 
-    const router = useRouter();
-    let myHistory;
 
-    const fetchHistory = async (url:string) => {
-        const res = await fetch(url, {
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${Cookies.get('access_token')}`
-             }});
+    return (
 
-    if (res.status == 401)
-        router.replace("/login")
-             
-    if (!res.ok)
-        throw new Error("failed to fetch users");
-    return res.json();
-}
-
-
-    const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/history/me`,
-    fetchHistory
-    );
-
-
-
-    if (data)
-    {
-        myHistory = data.map(history => {
-            
-            return  <div key={history.id} className={`stats-bgf p-4 shadow-md rounded-lg text-white transform transition-transform duration-300 hover:scale-105 flex items-center justify-between`}>
+     
+        <div className={`stats-bgf p-4 shadow-md rounded-lg text-white transform transition-transform duration-300 hover:scale-105 flex items-center justify-between`}>
             <div className="">
-                <p>Score:    {history.score}</p>
-                <p>Rank:     {history.rank}</p>
+                <p>Score:    {props.score}</p>
+                <p>Rank:      {props.rank}</p>
             </div>
 
-            <div>
-                <p className={`${history.myresult > history.enemmyresult ? 'text-blue-500' : 'text-yellow-500'}`}>{history.myresult > history.enemmyresult ? 'Victory' : 'Loss'} </p>
-                <p className={`${history.myresult > history.enemmyresult ? 'text-blue-500' : 'text-yellow-500'}`}>{history.myresult} vs {history.enemmyresult}</p>
+           <div>
+                <p className={`${props.myresult > props.enemmyresult ? 'text-blue-500' : 'text-yellow-500'}`}>{props.myresult > props.enemmyresult ? 'Victory' : 'Loss'} </p>
+                <p className={`${props.myresult > props.enemmyresult ? 'text-blue-500' : 'text-yellow-500'}`}>{props.myresult} vs {props.enemmyresult}</p>
             </div>
 
 
@@ -66,39 +46,7 @@ const OneHistory = (props:history) => {
                 
              </div>
       
-      </div> 
-        });
-    }
-
-    return (
-
-        <>
-        {myHistory ? myHistory : "You Dont have any Match History"}
-        </>
-
-
-    //     <div className={`stats-bgf p-4 shadow-md rounded-lg text-white transform transition-transform duration-300 hover:scale-105 flex items-center justify-between`}>
-    //         <div className="">
-    //             <p>Score:    2036</p>
-    //             <p>Rank:     +56</p>
-    //         </div>
-
-    //         <div className="">
-    //             <p>Victory</p>
-    //             <p>8 vs 6</p>
-    //         </div>
-
-
-    //         <div className="">
-    //             <Link href={`/user?username=${props.username}`}>
-    //             <Avatar  size='md' name={props.username} src={props.image} >
-    //         <AvatarBadge boxSize='1em' bg={props.status ? 'green.500' : 'tomato'} borderColor='#18184a'/>
-    //         </Avatar>
-    //             </Link>
-                
-    //          </div>
-      
-    //   </div>        
+      </div>        
     
     );
 };

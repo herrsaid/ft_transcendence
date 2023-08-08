@@ -107,10 +107,6 @@ export default  function Profile()
                 
             <h1 className="text-2xl font-semibold text-blue-500">Account Setting</h1>
 
-
-
-
-
                 <form  className="items-center">
           
    

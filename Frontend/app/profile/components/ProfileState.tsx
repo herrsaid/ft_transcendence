@@ -1,14 +1,36 @@
-
-// interface props{
-//     avatar:string,
-//     email:string,
-//     username:string,
-//     rank:string,
-//     avatar_updated:boolean
-//   }
+import { useRouter } from "next/navigation";
+import Cookies from 'js-cookie';
+import useSWR from "swr"
 
 
 const ProfileState = () => {
+
+  const router = useRouter();
+    
+    
+    const fetchFriends = async (url:string) => {
+        const res = await fetch(url, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${Cookies.get('access_token')}`
+             }});
+
+    if (res.status == 401)
+        router.replace("/login")
+             
+    if (!res.ok)
+        throw new Error("failed to fetch users");
+    return res.json();
+}
+
+
+    const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/stats/me`,
+    fetchFriends
+    );
+
+    if (!data)
+      return null;
+
     
     return (
         <>
@@ -21,7 +43,7 @@ const ProfileState = () => {
 
       <div className="text-center">
         <h3 className="text-xl font-semibold text-gray-600">Total Games</h3>
-        <p className="text-3xl font-bold text-blue-500">153</p>
+        <p className="text-3xl font-bold text-blue-500">{data.totalgames}</p>
       </div>
 
 
@@ -29,7 +51,7 @@ const ProfileState = () => {
 
       <div className="text-center">
         <h3 className="text-xl font-semibold text-gray-600">Total Wins</h3>
-        <p className="text-3xl font-bold text-green-500">89</p>
+        <p className="text-3xl font-bold text-green-500">{data.totalwins}</p>
       </div>
 
 
@@ -37,14 +59,14 @@ const ProfileState = () => {
 
       <div className="text-center">
         <h3 className="text-xl font-semibold text-gray-600">Total Achievements</h3>
-        <p className="text-3xl font-bold text-purple-500">22</p>
+        <p className="text-3xl font-bold text-purple-500">{data.totalarchievements}</p>
       </div>
 
 
 
       <div className="text-center">
         <h3 className="text-xl font-semibold text-gray-600">Total Losses</h3>
-        <p className="text-3xl font-bold text-yellow-500">5</p>
+        <p className="text-3xl font-bold text-yellow-500">{data.totalosses}</p>
       </div>
     </div>
   </div>

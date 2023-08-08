@@ -1,10 +1,9 @@
 import OneHistory from "./OneHistory";
-import { Avatar, AvatarBadge, Box, Flex } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import Cookies from 'js-cookie';
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import useSWR from "swr"
-import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
+import { SkeletonCircle, SkeletonText } from '@chakra-ui/react'
         
 const History = () => {
 
@@ -29,7 +28,7 @@ const History = () => {
 }
 
 
-    const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friends`,
+    const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/history/me`,
     fetchFriends
     );
 
@@ -57,6 +56,10 @@ const History = () => {
             return <OneHistory key={history.id} image={history.is_profile_img_updated ? new_src_img : history.profile_img}
             username={history.username} id={history.id} avatar_updated={history.is_profile_img_updated} 
             status={history.status}
+            rank={history.rank}
+            score={history.score}
+            myresult={history.myresult}
+            enemmyresult={history.enemmyresult}
             />
         });
     }

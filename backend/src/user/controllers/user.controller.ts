@@ -242,15 +242,15 @@ export class UserController {
     @Get('stats/me')
     getMyStats(@Request() req)
     {
-        return this.GameInfoManager.GetGameInfoByUsername(req.user.username);
+        return this.GameInfoManager.GetGameInfoByUsername(req.user.id);
     }
 
 
     @UseGuards(AuthGuard)
-    @Get('stats/match/:username')
-    getStatsUser(@Param('username') username)
+    @Get('stats/match/:id')
+    getStatsUser(@Param('id') id:number)
     {
-        return this.GameInfoManager.GetGameInfoByUsername(username);
+        return this.GameInfoManager.GetGameInfoByUsername(id);
     }
 
 
