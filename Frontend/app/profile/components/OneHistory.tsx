@@ -51,9 +51,9 @@ const OneHistory = (props:history) => {
                 <p>Rank:     {history.rank}</p>
             </div>
 
-            <div className="">
-                <p>{history.myresult > history.enemmyresult ? 'Victory' : 'Loss'} </p>
-                <p>{history.myresult} vs {history.enemmyresult}</p>
+            <div>
+                <p className={`${history.myresult > history.enemmyresult ? 'text-blue-500' : 'text-yellow-500'}`}>{history.myresult > history.enemmyresult ? 'Victory' : 'Loss'} </p>
+                <p className={`${history.myresult > history.enemmyresult ? 'text-blue-500' : 'text-yellow-500'}`}>{history.myresult} vs {history.enemmyresult}</p>
             </div>
 
 
