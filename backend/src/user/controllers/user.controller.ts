@@ -1,4 +1,4 @@
-import { Body, Controller, FileTypeValidator, Get, MaxFileSizeValidator, NotFoundException, Param, ParseFilePipe, Post, Put, Query, Req, Request, Res, UnauthorizedException, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { BadRequestException, Body, Controller, FileTypeValidator, Get, MaxFileSizeValidator, NotFoundException, Param, ParseFilePipe, Post, Put, Query, Req, Request, Res, UnauthorizedException, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
 import { CreateUserDto, filterUsersdto, updateUsername } from '../dto/createUserDto';
 import { UserService } from '../services/user.service';
 import { AuthGuard } from 'src/auth/guard/auth.guard';
@@ -196,7 +196,15 @@ export class UserController {
     @Put('edit/me/username')
     updateUsername(@Body() updateUsername: updateUsername, @Request() req)
     {
-        return this.userService.updateUsername(req.user.id, updateUsername);
+        try
+        {
+            console.log("enter")
+            return this.userService.updateUsername(req.user.id, updateUsername);
+        }
+        catch{
+            throw new BadRequestException();
+        }
+        
     }
 
     @Get(':id')

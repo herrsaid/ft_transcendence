@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto, filterUsersdto, updateAvatar, updateAvatar_bol, updateStatus, updateUsername } from '../dto/createUserDto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user/user.entity';
@@ -20,79 +20,167 @@ export class UserService {
 
     async getUsersSearch(alias:string)
     {
-        return this.userRepo.createQueryBuilder(alias);
+        try
+        {
+            return this.userRepo.createQueryBuilder(alias);
+        }
+        catch{
+            throw new NotFoundException(); 
+        }
+        
     }
 
     async setTwoFactorAuthenticationSecret(secret: string, userId: number) {
-        return this.userRepo.update(userId, {
-          twoFactorAuthenticationSecret: secret
-        });
+        try
+        {
+            return this.userRepo.update(userId, {
+                twoFactorAuthenticationSecret: secret
+              });
+        }
+        catch
+        {
+            throw new BadRequestException(); 
+        }
+        
     }
 
 
     async turnOnTwoFactorAuthentication(userId: number) {
-        return this.userRepo.update(userId, {
-          isTwoFactorAuthenticationEnabled: true
-        });
+        try
+        {
+            return this.userRepo.update(userId, {
+                isTwoFactorAuthenticationEnabled: true
+              });
+        }
+        catch{
+            throw new BadRequestException(); 
+        }
+        
     }
 
     async findOne(id:number)
     {
-        return await this.userRepo.findOne({where:{id:id}})
+        try
+        {
+            return await this.userRepo.findOne({where:{id:id}})
+        }
+        catch
+        {
+            throw new NotFoundException(); 
+        }
+        
     }
 
 
     findOneById(id:number): Observable<User>
     {
-        return  from(this.userRepo.findOne({where:{id:id}}))
+        try
+        {
+            return  from(this.userRepo.findOne({where:{id:id}}))
+        }
+        catch
+        {
+            throw new NotFoundException(); 
+        }
+        
     }
 
 
     async findOneByUsername(username:string)
     {
-        return await this.userRepo.findOne({where:{username:username}})
+        try
+        {
+            return await this.userRepo.findOne({where:{username:username}})
+        }
+        catch
+        {
+            throw new NotFoundException(); 
+        }
+        
     }
 
 
     async findAllUserNotMe(id:number)
     {
-        return await this.userRepo.find( { where: {id: Not(id)}})
+        try
+        {
+            return await this.userRepo.find( { where: {id: Not(id)}})
+        }
+        catch
+        {
+            throw new NotFoundException();
+        }
+        
     }
 
 
     async findUserByEmail(email:string)
     {
-        return await this.userRepo.findOne({where:{email:email}})
+        try
+        {
+            return await this.userRepo.findOne({where:{email:email}})
+        }
+        catch{
+            throw new NotFoundException();
+        }
     }
 
     async create(createUserDto:CreateUserDto)
     {
-        const user = await this.userRepo.create(createUserDto);
-        return await this.userRepo.save(user);
+        try
+        {
+            const user = await this.userRepo.create(createUserDto);
+            return await this.userRepo.save(user);
+        }
+        catch{
+            throw new BadRequestException();
+        }
+        
     }
 
 
     async updateUsername(id:number, updateUsername: updateUsername)
     {
-        const user = await this.userRepo.findOne({where:{id:id}});
-        Object.assign(user, updateUsername);
-        return await this.userRepo.save(user);
+        try
+        {
+            const user = await this.userRepo.findOne({where:{id:id}});
+            Object.assign(user, updateUsername);
+            return await this.userRepo.save(user);
+        }
+        catch{
+            throw new BadRequestException();
+        }
+        
     }
 
     async updateStatus(id:number, updateStatus: updateStatus)
     {
-        const user = await this.userRepo.findOne({where:{id:id}});
-        Object.assign(user, updateStatus);
-        return await this.userRepo.save(user);
+        try
+        {
+            const user = await this.userRepo.findOne({where:{id:id}});
+            Object.assign(user, updateStatus);
+            return await this.userRepo.save(user);
+        }
+        catch{
+            throw new BadRequestException();
+        }
+        
     }
 
 
     async updateAvatar(id:number, updateAvatar: updateAvatar)
     {
-        const user = await this.userRepo.findOne({where:{id:id}});
-        Object.assign(user, updateAvatar);
-        this.update_is_profile_img_updated(id, {"is_profile_img_updated" : true})
-        return await this.userRepo.save(user);
+        try
+        {
+            const user = await this.userRepo.findOne({where:{id:id}});
+            Object.assign(user, updateAvatar);
+            this.update_is_profile_img_updated(id, {"is_profile_img_updated" : true})
+            return await this.userRepo.save(user);
+        }
+        catch
+        {
+            throw new BadRequestException();
+        }        
     }
 
 
@@ -204,9 +292,17 @@ export class UserService {
 
     async update_is_profile_img_updated(id:number, updateAvatar_bol: updateAvatar_bol)
     {
-        const user = await this.userRepo.findOne({where:{id:id}});
-        Object.assign(user, updateAvatar_bol);
-        return await this.userRepo.save(user);
+        try
+        {
+            const user = await this.userRepo.findOne({where:{id:id}});
+            Object.assign(user, updateAvatar_bol);
+            return await this.userRepo.save(user);
+        }
+        catch
+        {
+            throw new BadRequestException();
+        }
+        
     }
 
 
