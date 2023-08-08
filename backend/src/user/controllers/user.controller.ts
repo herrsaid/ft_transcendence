@@ -218,14 +218,14 @@ export class UserController {
     @Get('history/me')
     getMyHistoryMatch(@Request() req)
     {
-        return this.HistoryManager.GetHistoryByUsername(req.user.username);
+        return this.HistoryManager.GetAllHistorysByUsername(req.user.username);
     }
 
     @UseGuards(AuthGuard)
     @Get('history/match/:username')
     getHistoryUserMatch(@Param('username') username)
     {
-        return this.HistoryManager.GetHistoryByUsername(username);
+        return this.HistoryManager.GetAllHistorysByUsername(username);
     }
 
 
@@ -234,7 +234,7 @@ export class UserController {
     @Get('stats/me')
     getMyStats(@Request() req)
     {
-        return this.GameInfoManager.GetHistoryByUsername(req.user.username);
+        return this.GameInfoManager.GetGameInfoByUsername(req.user.username);
     }
 
 
@@ -242,7 +242,7 @@ export class UserController {
     @Get('stats/match/:username')
     getStatsUser(@Param('username') username)
     {
-        return this.GameInfoManager.GetHistoryByUsername(username);
+        return this.GameInfoManager.GetGameInfoByUsername(username);
     }
 
 
