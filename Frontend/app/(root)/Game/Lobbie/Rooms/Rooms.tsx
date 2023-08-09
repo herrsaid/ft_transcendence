@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:18 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/04 15:57:44 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/09 10:45:43 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,17 @@ export default function Rooms() {
   });
     return (
       <>
-        <div id="Rooms">
+      <div className="container mx-auto px-2 py-10">
+      <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
+        
+        <div id="Rooms" className="bg-gradient-to-br from-indigo-600 to-indigo-800 rounded-lg shadow-md p-6 flex flex-col justify-between h-[450px]" >
+        
+        
+      </div>
+      <div onClick={()=>{router.replace('/Game/Lobbie/CreateRoom');}} id="CreateRoom">
+            <button className="bg-white text-blue-400 font-semibold py-2 px-4 rounded-lg inline-block"> Create Room </button>
         </div>
-        <div onClick={()=>{router.replace('/Game/Lobbie/CreateRoom');}} id="CreateRoom">
-            <button> Create Room </button>
+        </div>
         </div>
       </>
     )
