@@ -8,6 +8,6 @@ export default class Groups{
     id: number;
     @Column()
     name:string;
-    @OneToMany(()=> Messages, messages => messages.Group, { cascade: true })
-    messages:Messages[];
+//     @OneToMany(()=> Messages, messages => messages.Group, { cascade: true })
+//     messages:Messages[];
 }

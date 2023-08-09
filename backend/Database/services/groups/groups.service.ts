@@ -19,8 +19,8 @@ export class GroupsService {
         msg.dst = 2;
         msg.src = 4;
         msg.content = 'test Message';
-        group.then(data => {msg.Group = data});
-        group.then(data => console.log("kin wla makinch", data.messages));
+        // group.then(data => {msg.Group = data});
+        // group.then(data => console.log("kin wla makinch", data.messages));
         console.log(group);
         // group.then(data => data.Messages = message);
     }
