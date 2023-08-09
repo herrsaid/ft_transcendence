@@ -23,18 +23,14 @@ export default function RootLayout({
     <html lang="en">
       <body >
       <Providers>
-        {/* <div className='Site'>
-          <div className='Header'> */}
+        
             <Header/>
-          {/* </div> */}
-          {/* <div className='NavChild'> */}
+          
           {showSidebar && <SideNavBar_Res/>}
             
-            {/* <div className='child'> */}
+            <div className='child'>
               {children}
-            {/* </div> */}
-          {/* </div>
-        </div> */}
+            </div>
         </Providers>
       </body>
     </html>
