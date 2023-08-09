@@ -2,7 +2,7 @@ import Link from "next/link";
 import ProfileAvatar from "./ProfileAvatar";
 import Cookies from 'js-cookie';
 import useSWR from "swr"
-import { Avatar, AvatarBadge} from "@chakra-ui/react";
+
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
