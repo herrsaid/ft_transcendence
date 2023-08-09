@@ -1,6 +1,6 @@
 // pages/_app.js
 import { ChakraProvider } from '@chakra-ui/react'
-import Layout from '../app/layout'
+import Layout from '../app/(root)/layout'
 import { extendTheme } from '@chakra-ui/react'
 
 // 2. Extend the theme to include custom colors, fonts, etc

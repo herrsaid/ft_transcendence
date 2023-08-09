@@ -27,20 +27,7 @@ export default function Login()
 {
 
       
-    function changeBackgroundColor() {
-      
-        const colors = ["#1b1a4f", "#28274d", "#18184a"];
-        const randomIndex = Math.floor(Math.random() * colors.length);
-        const newColor = colors[randomIndex];
-        const heroElement = document.getElementById('hero');
-            if (heroElement) {
-                heroElement.style.backgroundColor = newColor;
-            }
-            
-      }
-  
-      changeBackgroundColor();
-      setInterval(changeBackgroundColor, 2000);
+    
   
     return(
         <>
@@ -48,22 +35,24 @@ export default function Login()
   <section className="hero text-white" id='hero'>
     <div className="container mx-auto flex items-center justify-center h-full text-center">
       <div>
+        <div>
         <h1 className="text-4xl font-bold mb-4"><span className="example-selector"><Type/></span></h1>
-
-
-        
-        <Link href={`${process.env.NEXT_PUBLIC_BACK_IP}/auth/42`}>
+        </div>
+        <div className=''>
+      <Link className="bg-transparent text-blue-400 font-semibold py-2 px-4 rounded-lg inline-block" href={`${process.env.NEXT_PUBLIC_BACK_IP}/auth/42`}>
             <button className="hero-button">
             Get Started
           </button>
         </Link>
 
-        <Link href={`${process.env.NEXT_PUBLIC_BACK_IP_G}/auth/google`}>
+        <Link className="bg-transparent text-blue-400 font-semibold py-2 px-4 rounded-lg inline-block" href={`${process.env.NEXT_PUBLIC_BACK_IP_G}/auth/google`}>
             <button className="hero-button">
-            Sign in with Google
+            Google
           </button>
         </Link>
       </div>
+      </div>
+     
     </div>
   </section>
   <script src="dist/autotyping.min.js"></script>
