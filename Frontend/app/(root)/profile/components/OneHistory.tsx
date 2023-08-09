@@ -5,15 +5,11 @@ import { useRouter } from "next/navigation";
 import useSWR from "swr"
 
 interface history{
-    image:string,
-    username:string,
-    status:boolean
-    id:number,
-    avatar_updated:boolean
     score:number,
     rank:number,
     myresult:number,
-    enemmyresult:number
+    enemmyresult:number,
+    enemmyuserid:number
 
 }
 
@@ -22,6 +18,36 @@ const OneHistory = (props:history) => {
      
 
 
+
+    const router = useRouter();
+    let new_src_img:string = '';
+    
+    const fetchFriends = async (url:string) => {
+        const res = await fetch(url, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${Cookies.get('access_token')}`
+             }});
+
+    if (res.status == 401)
+        router.replace("/login")
+             
+    if (!res.ok)
+        throw new Error("failed to fetch users");
+    return res.json();
+}
+
+
+    const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/id/${props.enemmyuserid}`,
+    fetchFriends
+    );
+
+
+    if (!data)
+        return null;
+
+    if (data.is_profile_img_updated)
+        new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + data.profile_img;
     return (
 
      
@@ -38,9 +64,9 @@ const OneHistory = (props:history) => {
 
 
             <div className="">
-                <Link href={`/user?username=${props.username}`}>
-                <Avatar  size='md' name={props.username} src={props.image} >
-            <AvatarBadge boxSize='1em' bg={props.status ? 'green.500' : 'tomato'} borderColor='#18184a'/>
+                <Link href={`/user?username=${data.username}`}>
+                <Avatar  size='md' name={data.username} src={data.is_profile_img_updated ? new_src_img : data.profile_img} >
+            <AvatarBadge boxSize='1em' bg={data.status ? 'green.500' : 'tomato'} borderColor='#18184a'/>
             </Avatar>
                 </Link>
                 

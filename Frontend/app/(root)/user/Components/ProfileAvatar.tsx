@@ -1,5 +1,4 @@
 "use client"
-import "../../(root)/profile/profile.css"
 import { Avatar, AvatarBadge} from "@chakra-ui/react";
 
 interface props{

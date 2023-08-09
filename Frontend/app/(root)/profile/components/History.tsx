@@ -4,6 +4,7 @@ import Cookies from 'js-cookie';
 import { useRouter } from "next/navigation";
 import useSWR from "swr"
 import { SkeletonCircle, SkeletonText } from '@chakra-ui/react'
+import Link from "next/link";
         
 const History = () => {
 
@@ -48,22 +49,43 @@ const History = () => {
                 </div>
     }
 
+
     if (data)
     {
         myHistory = data.map(history => {
-            if (history.is_profile_img_updated)
-                new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + history.profile_img;
-            return <OneHistory key={history.id} image={history.is_profile_img_updated ? new_src_img : history.profile_img}
-            username={history.username} id={history.id} avatar_updated={history.is_profile_img_updated} 
-            status={history.status}
+            return <OneHistory key={history.key} 
             rank={history.rank}
             score={history.score}
             myresult={history.myresult}
             enemmyresult={history.enemmyresult}
+            enemmyuserid={history.enemmyuserid}
             />
         });
     }
+   
 
+    
+    if (!data.length)
+    {
+        return (
+            <main className="container mx-auto py-8 px-4">
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4">
+        
+                
+        <div className="live-game-card bg-gradient-to-br from-indigo-600 to-indigo-800 rounded-lg shadow-md p-6 flex flex-col justify-between">
+        <div className="text-white text-lg font-semibold mb-4">Play Games Now</div>
+        <p className="text-white">You Dont have Any History Play Match Now!</p>
+        <Link href="/Game/Lobbie" className="text-blue-400 font-semibold mt-4">
+        Play Now
+        </Link>
+
+      </div>
+        
+        </div>
+      </main>
+        )
+        
+    }
 
 
     return (
@@ -71,6 +93,7 @@ const History = () => {
         <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4">
         
                 {myHistory ? myHistory : "No History!"}
+                
         
         </div>
       </main>

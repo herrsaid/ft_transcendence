@@ -1,11 +1,10 @@
 "use client"
-import '../(root)/profile/profile.css'
-import {ProfileAvatar, ProfileInfo} from './index'
+
 import { useRouter, useSearchParams } from 'next/navigation';
 import Cookies from 'js-cookie';
 import useSWR from "swr"
 import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
-import { Achievevements, Friends, Groups, History } from '../profile';
+import { Achievevements, History } from '../profile';
 import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
 import ProfileHeader from './Components/ProfileHeader';
 import ProfileUserState from './Components/ProfileUserState';
