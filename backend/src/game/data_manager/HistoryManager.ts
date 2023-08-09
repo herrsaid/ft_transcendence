@@ -41,6 +41,11 @@ export class HistoryManager
 
     async GetAllHistorysByUsername(MyUserId:number):Promise<History[]>
     {
-        return await this.History.findBy({myuserid:MyUserId});
+        
+        return await this.History
+        .createQueryBuilder('history')
+      .where('history.myuserid = :MyUserId', { MyUserId })
+      .orderBy('history.key', 'DESC') 
+      .getMany();
     }
 }

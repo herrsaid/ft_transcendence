@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:18 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/06 15:27:38 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/09 09:50:51 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ export let Online: number = 1;
 export let Access: number = 0;
 export let myusername: string | null = sessionStorage.getItem('username');
 export let enemmyusername: string | null = null;
-
+let Warning: string = '';
 function change_map_value(param: number)
 {
     for(let a=1;a<4;a++)
@@ -132,7 +132,7 @@ function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<string>>
     const settings = document.getElementById("Settings")
     if (myusername === null && Online === 1)
     {
-        setWarning("please make sure that you are [log-in]");
+        setWarning(Warning);
         const Warn = document.getElementById("warning");
         if(Warn)
         {
@@ -185,6 +185,11 @@ function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<string>>
             Access = 1;
             socket.disconnect();
             router.replace('/Game//Online/Play');
+        });
+        socket.on('CreateRefused', (message: string) => {
+            // socket.disconnect();
+            // router.replace('/Game//Online/Play');
+            Warning = message;
         });
     }
     else

@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:26:31 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/06 15:24:26 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/09 09:46:59 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,16 @@ import {
     @SubscribeMessage('CreateRoom')
     handleCreateRoom(client: Socket, data: RoomSettingsEntity): void {
       if(data.myusername === null)
+      {
+        client.emit('CreateRefused','please (log-in/sign-in) to accept your join');
         return ;
-      let player_data:PlayerClass = new PlayerClass;
+      }
+      if(Rooms.find((elem)=> elem.players[0].Player === data.myusername) !== undefined)
+      {
+        client.emit("CreateRefused','You can't Create two Rooms");
+        return ;
+      }
+        let player_data:PlayerClass = new PlayerClass;
       player_data.Player = data.myusername;
       player_data.PlayerId = client.id;
       player_data.PlayerSocket = client;
@@ -85,6 +93,11 @@ import {
         if(data.Username === null)
         {
           client.emit('JoinRefused','please (log-in/sign-in) to accept your join');
+          return ;
+        }
+        else if (data.Username === Rooms[data.RoomNumber].players[0].Player)
+        {
+          client.emit("JoinRefused','You can't Join to yourself");
           return ;
         }
         player_data.Player = data.Username;
