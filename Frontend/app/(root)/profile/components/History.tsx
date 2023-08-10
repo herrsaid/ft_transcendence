@@ -11,7 +11,6 @@ const History = () => {
 
     const router = useRouter();
     let myHistory;
-    let new_src_img:string;
     
     const fetchFriends = async (url:string) => {
         const res = await fetch(url, {
@@ -41,9 +40,6 @@ const History = () => {
                 
                     <SkeletonCircle size='10' />
                     <SkeletonText mt='4' noOfLines={4} spacing='4' skeletonHeight='2' />
-                    
-                    
-                
                 </Box>
                 
                 </div>

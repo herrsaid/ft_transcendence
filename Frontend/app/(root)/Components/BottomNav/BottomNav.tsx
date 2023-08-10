@@ -1,12 +1,10 @@
-"use client"
-import "./SideNavBar_Res.css"
 import { BsFillChatFill } from "react-icons/bs";
 import { CgProfile} from "react-icons/cg";
 import { GiPingPongBat } from "react-icons/gi";
 import { IoHome, IoSettingsSharp } from 'react-icons/io5'
 import Link  from "next/link";
 
-export default function SideNavBar_Res()
+export default function BottomNav()
 {
     return(
         <>
