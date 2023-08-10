@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { CreateUserDto, filterUsersdto, updateAvatar, updateAvatar_bol, updateStatus, updateUsername } from '../dto/createUserDto';
+import { CreateUserDto, filterUsersdto, updateAvatar, updateAvatar_bol, updateGameStatus, updateStatus, updateUsername } from '../dto/createUserDto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user/user.entity';
 import { Not, Repository } from 'typeorm';
@@ -159,6 +159,21 @@ export class UserService {
         {
             const user = await this.userRepo.findOne({where:{id:id}});
             Object.assign(user, updateStatus);
+            return await this.userRepo.save(user);
+        }
+        catch{
+            throw new BadRequestException();
+        }
+        
+    }
+
+
+    async updateGameStatus(id:number, updateGameStatus: updateGameStatus)
+    {
+        try
+        {
+            const user = await this.userRepo.findOne({where:{id:id}});
+            Object.assign(user, updateGameStatus);
             return await this.userRepo.save(user);
         }
         catch{

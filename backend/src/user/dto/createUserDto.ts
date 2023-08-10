@@ -45,3 +45,10 @@ export class updateStatus{
     @IsBoolean()
     status:boolean;
 }
+
+
+export class updateGameStatus{
+
+    @IsBoolean()
+    isInGame:boolean;
+}

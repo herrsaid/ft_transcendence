@@ -35,6 +35,10 @@ export class User{
     @Column({default:false})
     status:boolean;
 
+
+    @Column({default:false})
+    isInGame:boolean;
+
     @Column({default:"morroco"})
     location:string;
 
