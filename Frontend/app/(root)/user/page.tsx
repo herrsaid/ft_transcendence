@@ -1,5 +1,4 @@
 "use client"
-
 import { useRouter, useSearchParams } from 'next/navigation';
 import Cookies from 'js-cookie';
 import useSWR from "swr"
@@ -9,13 +8,18 @@ import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
 import ProfileHeader from './Components/ProfileHeader';
 import ProfileUserState from './Components/ProfileUserState';
 import HistoryUser from './Components/HistoryUser';
+import { useContext } from "react";
+import UserContext from '../UserContext';
 export default  function User()
 {
     const router = useRouter();
     const searchParams = useSearchParams()
     const username = searchParams?.get('username')
+    const usercontext = useContext(UserContext);
 
 
+    if (usercontext.user.username == username)
+        router.back()
     const fetchUserData = async (url:string) => {
         const res = await fetch(url, {
             method: 'GET',
