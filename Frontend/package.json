@@ -21,6 +21,7 @@
     "@types/react": "18.2.7",
     "@types/react-dom": "18.2.4",
     "bootstrap": "^5.2.3",
+    "bufferutil": "^4.0.7",
     "framer-motion": "^10.15.0",
     "fs": "^0.0.1-security",
     "js-cookie": "^3.0.5",
@@ -36,7 +37,8 @@
     "swr": "^2.2.0",
     "typescript": "5.0.4",
     "typewriter-effect": "^2.20.1",
-    "universal-cookie": "^4.0.4"
+    "universal-cookie": "^4.0.4",
+    "utf-8-validate": "^5.0.10"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.14",
