@@ -13,14 +13,7 @@ import ProfileAvatar from "./ProfileAvatar";
 const ProfileInfo = (props:props) => {
     let new_src_img;
     if (props.avatar_updated)
-            {
-                new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + props.avatar;
-                // sessionStorage.setItem('avatar', new_src_img);
-            }
-            // else
-            // {
-            //     sessionStorage.setItem('avatar', props.avatar );
-            // }
+        new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + props.avatar;
     return (
         
         <div className="flex items-center justify-between mb-6 flex-wrap">

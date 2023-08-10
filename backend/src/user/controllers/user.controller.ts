@@ -198,7 +198,6 @@ export class UserController {
     {
         try
         {
-            console.log("enter")
             return this.userService.updateUsername(req.user.id, updateUsername);
         }
         catch{

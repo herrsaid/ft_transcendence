@@ -73,9 +73,6 @@ const ProfileAvatar = (props:props) => {
                     };
                     fetchData();
             
-        
-
-
 
             }
             
@@ -105,15 +102,7 @@ const ProfileAvatar = (props:props) => {
 
 
             if (props.avatar_updated)
-            {
-               
                 new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + props.img;
-                // sessionStorage.setItem('avatar', new_src_img);
-            }
-            // else
-            // {
-            //     sessionStorage.setItem('avatar', props.img );
-            // }
                 
 
 

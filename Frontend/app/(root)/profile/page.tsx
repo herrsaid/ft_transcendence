@@ -34,12 +34,7 @@ export default  function Profile()
     const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/me`,
     fetchProfileData
     );
-    // let stored_data = ['true', data?.profile_img, data?.username, data?.id, data?.isTwoFactorAuthenticationEnabled]
-    // sessionStorage.setItem('isLoget', stored_data[0]);
     
-    // sessionStorage.setItem('username', stored_data[2]);
-    // sessionStorage.setItem('userId', stored_data[3]);
-    // sessionStorage.setItem('isTwoFactorAuthenticationEnabled', stored_data[4]);
 
 
     if (!data)

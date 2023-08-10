@@ -232,7 +232,7 @@ export class UserService {
                             receiver,
                             status: 'pending'
                         }
-                        console.log(friendRequest)
+                        // console.log(friendRequest)
 
                         return from(this.FriendRequestRepo.save(friendRequest));
                     })
