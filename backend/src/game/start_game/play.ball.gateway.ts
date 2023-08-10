@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:00 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/07 11:45:02 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/10 13:59:02 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,15 @@ import {
   import e from 'express';
 import { HistoryManager } from '../data_manager/HistoryManager';
 import { GameInfoManager } from '../data_manager/GameInfoManager';
+import { UserService } from 'src/user/services/user.service';
 
   export let GameObj: data[] = [];
   @WebSocketGateway(1340, {
     cors: { origin: '*', credentials: true },
   })
   export class BallGateway{
-    constructor(private HistoryManager:HistoryManager,private GameInfo:GameInfoManager)
+    constructor(private HistoryManager:HistoryManager,private GameInfo:GameInfoManager,
+      private UserManager:UserService)
     {
       
     };
@@ -41,6 +43,8 @@ import { GameInfoManager } from '../data_manager/GameInfoManager';
       GameObj[0].RoomInfo.GameStatus = 1;
       GameObj[0].PlayersInfo.Player1ID = Player1ID;
       GameObj[0].PlayersInfo.Player2ID = Player2ID;
+      this.UserManager.updateGameStatus(myusername,{"isInGame" : true});
+      this.UserManager.updateGameStatus(enemyusername,{"isInGame" : true});
     }
     new_connect()
     {
@@ -52,6 +56,8 @@ import { GameInfoManager } from '../data_manager/GameInfoManager';
       GameObj[GameObj.length - 1].RoomInfo.GameStatus = 1;
       GameObj[GameObj.length - 1].PlayersInfo.Player1ID = Player1ID;
       GameObj[GameObj.length - 1].PlayersInfo.Player2ID = Player2ID;
+      this.UserManager.updateGameStatus(myusername,{"isInGame" : true});
+      this.UserManager.updateGameStatus(enemyusername,{"isInGame" : true});
     }
     send_data_to_spectator(Room:number)
     {
@@ -74,6 +80,9 @@ import { GameInfoManager } from '../data_manager/GameInfoManager';
     }
     end_simulation(Room:number)
     {
+      //Update...
+        this.UserManager.updateGameStatus(GameObj[Room].PlayersInfo.Player1UserName,{"isInGame" : false})
+        this.UserManager.updateGameStatus(GameObj[Room].PlayersInfo.Player2UserName,{"isInGame" : false})
       // HistoryDataBaseManager for pushing game history
       this.HistoryManager.NewHistory(GameObj[Room]);
       //GameInfoManager for push gameuser information

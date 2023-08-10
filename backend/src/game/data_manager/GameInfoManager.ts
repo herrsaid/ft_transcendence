@@ -46,7 +46,9 @@ export class GameInfoManager
             this.Archievement.NewArchievement(GameInfo.userid,'Gain14Archievement');
         else if(ArchievementLength === 15)
             this.Archievement.NewArchievement(GameInfo.userid,'ArchievementColector');
+        ArchievementLength = (await (this.Archievement.GetAllUserArchievementByUsername(GameInfo.userid))).length;
         return (ArchievementLength);
+
     }
     
     async CreateOrUpdateGameInfo(GameObj:data)

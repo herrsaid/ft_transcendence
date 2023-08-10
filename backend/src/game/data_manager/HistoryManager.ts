@@ -44,8 +44,8 @@ export class HistoryManager
         
         return await this.History
         .createQueryBuilder('history')
-      .where('history.myuserid = :MyUserId', { MyUserId })
-      .orderBy('history.key', 'DESC') 
-      .getMany();
+        .where('history.myuserid = :MyUserId', { MyUserId })
+        .orderBy('history.key', 'DESC') 
+        .getMany();
     }
 }

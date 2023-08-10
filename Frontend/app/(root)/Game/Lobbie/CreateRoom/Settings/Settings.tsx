@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:18 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/09 09:50:51 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/10 13:41:11 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 import "./Settings.css"
 import { socket } from '../../../Online/Socket/auto_match_socket'
 import { Dispatch, SetStateAction, useState } from "react";
+import { useContext } from 'react';
+import UserContext from "@/app/(root)/UserContext";
+import {  useToast } from '@chakra-ui/react'
 
 export let Points: number = 30;
 export let Speed: number = 1;
@@ -23,9 +26,8 @@ export let other_tools: number = 0;
 export let host: boolean = false;
 export let Online: number = 1;
 export let Access: number = 0;
-export let myusername: string | null = sessionStorage.getItem('username');
+export let myusername: string | null = null;
 export let enemmyusername: string | null = null;
-let Warning: string = '';
 function change_map_value(param: number)
 {
     for(let a=1;a<4;a++)
@@ -127,25 +129,37 @@ function change_pausegame_value(param: number)
         RoomMood = false;
 }
 
-function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<string>>)
+async function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<string>>,toast:any)
 {
+    
     const settings = document.getElementById("Settings")
-    if (myusername === null && Online === 1)
-    {
-        setWarning(Warning);
-        const Warn = document.getElementById("warning");
-        if(Warn)
-        {
-            Warn.style.animation = "none";
-            void Warn.offsetHeight;
-            Warn.style.animation = "Animation2 0.2s 3";
-        }
-    }
-    else if(Online === 1)
+    if(Online === 1)
     {
         setWarning('');
         console.log("room:",RoomMood);
         socket.emit('CreateRoom',{Speed,Points,myusername,RoomMood,});
+        socket.on('CreateRefused', (message: string) => {
+                setWarning(message);
+                const Warn = document.getElementById("warning");
+                if(settings)
+                    settings.style.filter = "blur(0px)";
+                if(Warn)
+                {
+                    Warn.style.animation = "none";
+                    void Warn.offsetHeight;
+                    Warn.style.animation = "Animation2 0.2s 3";
+                }
+                toast({
+                    title: 'Error',
+                    description: message,
+                    position: 'top-right',
+                    status: 'error',
+                    duration: 5000,
+                    isClosable: true,
+                  });
+                
+        });
+        console.log('here');
         if(RoomMood === false && settings)
         {
             settings.innerHTML = "";
@@ -179,17 +193,12 @@ function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<string>>
         }
         else if(settings)
             settings.style.filter = "blur(15px)";
-        socket.on('SendData', (username,data) => {
+            socket.on('SendData', (username,data) => {
             enemmyusername = username;
             host = data;
             Access = 1;
             socket.disconnect();
             router.replace('/Game//Online/Play');
-        });
-        socket.on('CreateRefused', (message: string) => {
-            // socket.disconnect();
-            // router.replace('/Game//Online/Play');
-            Warning = message;
         });
     }
     else
@@ -218,7 +227,10 @@ function change_pos(param :number)
 
 const PingPongSettings = ({ router }: any) => 
 {
+    const contexUser = useContext(UserContext);
     const [Warning, setWarning] = useState("");
+    const toast = useToast();
+    myusername = contexUser.user.username;
     return(
         <div id="Settings">
             <p id="Game_title">
@@ -301,7 +313,7 @@ const PingPongSettings = ({ router }: any) =>
                 </button>
             </div>
                 <div id="warning">{Warning}</div>
-                <button onClick={() => {is_Online_mod(router,setWarning)}} id="play">
+                <button onClick={() => {is_Online_mod(router,setWarning,toast)}} id="play">
                     <p>
                         Play
                     </p>
