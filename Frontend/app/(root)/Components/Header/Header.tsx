@@ -3,7 +3,7 @@ import './Header.css'
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
-import { use, useContext } from 'react';
+import { useContext } from 'react';
 import UserContext from '../../UserContext';
 
 
