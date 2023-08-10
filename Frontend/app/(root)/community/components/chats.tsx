@@ -6,8 +6,8 @@ export default function Chats()
         <div className="flex flex-col">
             <div className="text-center text-2xl pb-3">Chats</div>
             <div className="flex justify-around border-b-2 border-gray-500 m-2">
-                <div className="hover:bg-sky-900 w-1/2 text-center border-r-2 border-gray-500">friends</div>
-                <div className="hover:bg-sky-900 w-1/2 text-center" >groups</div>
+                <div className="hover:bg-sky-900 w-1/2 text-center border-r-2 border-gray-500 cursor-pointer">friends</div>
+                <div className="hover:bg-sky-900 w-1/2 text-center cursor-pointer" >groups</div>
             </div>
             <div className="self-center mt-2 mb-2 w-[90%] relative drop-shadow-md">
                 <form action="">
@@ -15,7 +15,7 @@ export default function Chats()
                     <button className="absolute right-2 top-1" type="submit"><BiSearchAlt size={21}/></button>
                 </form>
             </div>
-            <div>
+            <div className="pl-3">
                 <Friend />
                 <Friend />
                 <Friend />
