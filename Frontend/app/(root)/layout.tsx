@@ -56,7 +56,7 @@ export default function RootLayout({
     <html lang="en">
       <body >
       <Providers>
-      <UserContext.Provider value={user}>
+      <UserContext.Provider value={{user, setUser}}>
             <Header/>
           
           {showSidebar && <SideNavBar_Res/>}

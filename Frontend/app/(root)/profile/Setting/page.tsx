@@ -16,8 +16,8 @@ export default  function Profile()
     const router = useRouter();
     const toast = useToast()
     const [username_updated, setusername_updated] = useState("");
-    const [isToFactorEnabled, setisToFactorEnabled] = useState(sessionStorage.getItem('isTwoFactorAuthenticationEnabled') 
-    == 'true' ? true : false)
+    // const [isToFactorEnabled, setisToFactorEnabled] = useState(sessionStorage.getItem('isTwoFactorAuthenticationEnabled') 
+    // == 'true' ? true : false)
     
   
     const onUpdate_Username = async (event:React.FormEvent) =>
@@ -25,18 +25,18 @@ export default  function Profile()
 
         event.preventDefault();
 
-        if (username_updated === sessionStorage.getItem('username'))
-        {
-          toast({
-            title: 'you are not updated your username with new value',
-            description: "Please enter new username",
-            status: 'warning',
-            duration: 2000,
-            isClosable: true,
-          })
-          return
+    //     if (username_updated === sessionStorage.getItem('username'))
+    //     {
+    //       toast({
+    //         title: 'you are not updated your username with new value',
+    //         description: "Please enter new username",
+    //         status: 'warning',
+    //         duration: 2000,
+    //         isClosable: true,
+    //       })
+    //       return
       
-    }
+    // }
        
         if (username_updated.trim() == "" || username_updated.trim().length < 2 || username_updated.includes(' '))
         {
@@ -89,11 +89,11 @@ export default  function Profile()
     
 
     const SwitchHandle = () =>{
-      setisToFactorEnabled(!isToFactorEnabled)
-      if (sessionStorage.getItem('isTwoFactorAuthenticationEnabled') == 'false')
-      {
-        router.replace("/2fa/Enable")
-      }
+      // setisToFactorEnabled(!isToFactorEnabled)
+      // if (sessionStorage.getItem('isTwoFactorAuthenticationEnabled') == 'false')
+      // {
+      //   router.replace("/2fa/Enable")
+      // }
     }
 
 
@@ -111,7 +111,7 @@ export default  function Profile()
           
    
           <div className=""> 
-                <h3 ><span className="text-2xl font-semibold text-gray-500 mr-14">2FA</span><Switch size='lg'  m={8}  isChecked={isToFactorEnabled} onChange={SwitchHandle} />  </h3>
+                {/* <h3 ><span className="text-2xl font-semibold text-gray-500 mr-14">2FA</span><Switch size='lg'  m={8}  isChecked={isToFactorEnabled} onChange={SwitchHandle} />  </h3> */}
             </div>
 
             <div className="">

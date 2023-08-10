@@ -57,11 +57,11 @@ export default  function Header()
 
 
 
-    const user = useContext(UserContext);
+    const contexUser = useContext(UserContext);
     let new_src_img;
     
-    if (user.is_profile_img_updated)
-        new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + user.profile_img;
+    if (contexUser.user.is_profile_img_updated)
+        new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + contexUser.user.profile_img;
     
     return(
 
@@ -75,7 +75,7 @@ export default  function Header()
     
     </div>
     <div className="relative">
-      <img  onClick={toggleDropdown}  src={user.is_profile_img_updated ? new_src_img : user.profile_img} alt="avatar" className="w-10 h-10 rounded-full cursor-pointer profile-img"/>
+      <img  onClick={toggleDropdown}  src={contexUser.user.is_profile_img_updated ? new_src_img : contexUser.user.profile_img} alt="avatar" className="w-10 h-10 rounded-full cursor-pointer profile-img"/>
       <div className="dropdown-menu" id="dropdownMenu" onClick={openMenu}>
         <p className="link_drop"><Link href='/profile' >Profile</Link></p>
         <p className="link_drop"><Link href='/Game/Lobbie'>Play</Link></p>

@@ -1,9 +1,11 @@
 "use client"
 import "../profile.css"
 import Cookies from 'js-cookie';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Avatar, useToast } from '@chakra-ui/react'
-
+import UserContext from "../../UserContext";
+import { useContext } from "react";
+import { useRouter } from "next/navigation";
 
 interface props{
     img:string,
@@ -14,11 +16,12 @@ interface props{
 
 
 const ProfileAvatar = (props:props) => {
-
+    const user = useContext(UserContext);
     let new_src_img;
     const [realimg, setrealimg] = useState("");
     const [first_time, setfirsttime] = useState(false)
     const toast = useToast()
+    const router = useRouter();
 
         const upload = async () => {
    
@@ -47,6 +50,33 @@ const ProfileAvatar = (props:props) => {
                     duration: 9000,
                     isClosable: true,
                   })
+                
+
+
+                    const fetchData = async () => {
+                      try {
+                        const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/me`,{
+                          method: 'GET',
+                      headers: {
+                          Authorization: `Bearer ${Cookies.get('access_token')}`
+                       }
+                        });
+                        if (response.status == 401)
+                            router.replace("/login")
+                        const jsonData = await response.json();
+                        user.setUser(jsonData);
+            
+                        
+                      } catch (error) {
+                        console.error('Error fetching data:', error);
+                      }
+                    };
+                    fetchData();
+            
+        
+
+
+
             }
             
 
@@ -69,8 +99,6 @@ const ProfileAvatar = (props:props) => {
                 setfirsttime(true);
                 
                 new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + props.img;
-                
-                sessionStorage.setItem('avatar', new_src_img);
             }
                 
             };
@@ -80,12 +108,12 @@ const ProfileAvatar = (props:props) => {
             {
                
                 new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + props.img;
-                sessionStorage.setItem('avatar', new_src_img);
+                // sessionStorage.setItem('avatar', new_src_img);
             }
-            else
-            {
-                sessionStorage.setItem('avatar', props.img );
-            }
+            // else
+            // {
+            //     sessionStorage.setItem('avatar', props.img );
+            // }
                 
 
 
