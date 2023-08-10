@@ -3,6 +3,8 @@ import './Header.css'
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
+import { use, useContext } from 'react';
+import UserContext from '../../UserContext';
 
 
 
@@ -42,16 +44,24 @@ export default  function Header()
       }
   
      
-      document.addEventListener('click', function(event) {
+
+      function openMenu(event){
         const dropdownMenu = document.getElementById('dropdownMenu');
         const profileImg = document.querySelector('.profile-img');
         const isClickInside = profileImg?.contains(event.target);
-  
         if (!isClickInside) {
           dropdownMenu?.classList.remove('active');
         }
-        
-      });
+      }
+      
+
+
+
+    const user = useContext(UserContext);
+    let new_src_img;
+    
+    if (user.is_profile_img_updated)
+        new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + user.profile_img;
     
     return(
 
@@ -65,8 +75,8 @@ export default  function Header()
     
     </div>
     <div className="relative">
-      <img  onClick={toggleDropdown}  src={sessionStorage.getItem('avatar') || "/avatar.png"} alt="avatar" className="w-10 h-10 rounded-full cursor-pointer profile-img"/>
-      <div className="dropdown-menu" id="dropdownMenu">
+      <img  onClick={toggleDropdown}  src={user.is_profile_img_updated ? new_src_img : user.profile_img} alt="avatar" className="w-10 h-10 rounded-full cursor-pointer profile-img"/>
+      <div className="dropdown-menu" id="dropdownMenu" onClick={openMenu}>
         <p className="link_drop"><Link href='/profile' >Profile</Link></p>
         <p className="link_drop"><Link href='/Game/Lobbie'>Play</Link></p>
         <p className="link_drop"><Link href='/community' >chat</Link></p>
