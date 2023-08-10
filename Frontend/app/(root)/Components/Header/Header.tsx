@@ -12,6 +12,8 @@ export default  function Header()
 {
 
     const router = useRouter();
+    const contexUser = useContext(UserContext);
+    let new_src_img;
 
     const logout = async ()  => {
    
@@ -57,8 +59,7 @@ export default  function Header()
 
 
 
-    const contexUser = useContext(UserContext);
-    let new_src_img;
+    
     
     if (contexUser.user.is_profile_img_updated)
         new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + contexUser.user.profile_img;

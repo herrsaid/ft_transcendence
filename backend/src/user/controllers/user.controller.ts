@@ -187,7 +187,13 @@ export class UserController {
     @Get('profile-img/:path')
     getProfileImage(@Param('path') path, @Res() res)
     {
-        return res.sendFile(join(process.cwd(), 'uploadedFiles/avatars/' + path));
+        try
+        {
+            return res.sendFile(join(process.cwd(), 'uploadedFiles/avatars/' + path));
+        }
+        catch{
+            throw new NotFoundException();
+        }
     }
 
 

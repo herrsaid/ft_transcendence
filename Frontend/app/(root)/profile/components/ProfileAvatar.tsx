@@ -47,7 +47,8 @@ const ProfileAvatar = (props:props) => {
                     title: 'Profile Avatar Updated',
                     description: "Your Profile Avatar changed!",
                     status: 'info',
-                    duration: 9000,
+                    position:'top-right',
+                    duration: 5000,
                     isClosable: true,
                   })
                 
@@ -83,7 +84,8 @@ const ProfileAvatar = (props:props) => {
                     title: 'Invalid File',
                     description: "Please upload Valid Image type PNG OR JPG OR JPEG, or reduce the file size",
                     status: 'error',
-                    duration: 9000,
+                    position:'top-right',
+                    duration: 5000,
                     isClosable: true,
                   })
                   return ;

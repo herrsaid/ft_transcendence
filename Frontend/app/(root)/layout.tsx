@@ -1,11 +1,10 @@
 "use client";
-import { createContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Header from './Components/Header/Header'
-import SideNavBar_Res from './Components/SideNavBar_Res/SideNavBar_Res'
+import BottomNav from './Components/BottomNav/BottomNav'
 import './globals.css'
 import { Providers } from "./providers";
 import Cookies from 'js-cookie';
-import useSWR from "swr"
 import { useRouter } from 'next/navigation';
 import UserContext from './UserContext';
 
@@ -17,10 +16,8 @@ const metadata = {
 
 
 export default function RootLayout({
-  showSidebar = true,
   children,
 }: {
-  showSidebar:boolean,
   children: React.ReactNode
 }) {
   const [user, setUser] = useState({});
@@ -59,7 +56,7 @@ export default function RootLayout({
       <UserContext.Provider value={{user, setUser}}>
             <Header/>
           
-          {showSidebar && <SideNavBar_Res/>}
+          <BottomNav/>
             
             <div className='child'>
               {children}

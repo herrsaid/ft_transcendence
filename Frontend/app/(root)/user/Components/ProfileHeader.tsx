@@ -13,7 +13,8 @@ import { useState } from "react";
     rank:string,
     avatar_updated:boolean,
     id:number,
-    status:boolean
+    status:boolean,
+    isIngame:boolean
   }
 
 
@@ -154,12 +155,16 @@ const ProfileHeader = (props:props) => {
         
       </div>
       <div className="ml-4">
+      
         <h1 className="text-3xl font-semibold text-blue-500">{props.username}</h1>
         <p className="text-gray-600">{props.email}</p>
+        <p className={`${`${props.isIngame ? 'block' : 'hidden'} text-blue-600 font-semibold my-[4px]`}`}>Player In Game...</p>
+       
          
       <div className="rounded-lg bg-blue-500 text-white py-1 px-2 text-sm font-semibold mr-4">
         Rank: {props.rank}
       </div>
+      
       </div>
     </div>
 

@@ -33,7 +33,8 @@ export default  function Profile()
             title: 'you are not updated your username with new value',
             description: "Please enter new username",
             status: 'warning',
-            duration: 2000,
+            duration: 3000,
+            position:'top-right',
             isClosable: true,
           })
           return
@@ -47,6 +48,7 @@ export default  function Profile()
             description: "Please enter valid username",
             status: 'error',
             duration: 3000,
+            position:'top-right',
             isClosable: true,
           })
           return ;
@@ -66,18 +68,39 @@ export default  function Profile()
           description: "this username already use.",
           status: 'error',
           duration: 3000,
+          position:'top-right',
           isClosable: true,
         })
         
       }
       else
       {
-        setusername_updated("")
+        const fetchData = async () => {
+          try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/me`,{
+              method: 'GET',
+          headers: {
+              Authorization: `Bearer ${Cookies.get('access_token')}`
+           }
+            });
+            if (response.status == 401)
+                router.replace("/login")
+            const jsonData = await response.json();
+            contexUser.setUser(jsonData);
+
+            
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
+        };
+        fetchData();
+        setusername_updated("");
         toast({
           title: 'Username Updated.',
           description: "We've updated your account username.",
           status: 'info',
-          duration: 6000,
+          duration: 5000,
+          position:'top-right',
           isClosable: true,
         })
         router.replace("/profile");

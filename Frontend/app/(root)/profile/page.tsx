@@ -1,50 +1,23 @@
 "use client"
 import './profile.css'
-import {Friends, Groups, ProfileAvatar, ProfileInfo, History, Achievevements} from './index'
-
-import Cookies from 'js-cookie';
-import useSWR from "swr"
-import { useRouter } from 'next/navigation';
+import {Friends,History, Achievevements} from './index'
 import { Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import ProfileHeader from './components/ProfileHeader';
 import ProfileState from './components/ProfileState';
-
+import { useContext } from "react";
+import UserContext from '@/app/(root)/UserContext';
 
 
 export default  function Profile()
 {
-    const router = useRouter();
 
-    const fetchProfileData = async (url:string) => {
-        const res = await fetch(url, {
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${Cookies.get('access_token')}`
-             }});
+    const usercontext = useContext(UserContext);
 
-    if (res.status == 401)
-        router.replace("/login")
-             
-    if (!res.ok)
-        throw new Error("failed to fetch users");
-    return res.json();
-}
-
-
-    const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/me`,
-    fetchProfileData
-    );
-    
-
-
-    if (!data)
-        return null;
-    
     return(
         
         <div className="container mx-auto px-2 py-10">
-                <ProfileHeader avatar={data.profile_img} username={data.username} email={data.email} rank={data.rank}
-                avatar_updated={data.is_profile_img_updated} 
+                <ProfileHeader avatar={usercontext.user.profile_img} username={usercontext.user.username} email={usercontext.user.email} rank={usercontext.user.rank}
+                avatar_updated={usercontext.user.is_profile_img_updated} 
                 />
   
                 <ProfileState/>
