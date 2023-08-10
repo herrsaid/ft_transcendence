@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:48 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/08 14:15:33 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/10 13:28:09 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@ import './Game.css';
 import { player1, player2 } from '../Socket/start_game_socket';
 import { host, Access, Speed, Points, myusername, enemmyusername} from '../../Lobbie/CreateRoom/Settings/Settings';
 import { host2, Access2, Speed2, Points2, myusername2, enemmyusername2} from '../../Lobbie/Rooms/Rooms';
+
+import { useContext } from 'react';
+import UserContext from "@/app/(root)/UserContext";
+
 
 let GameWidth: number = 800, GameHeight: number = 400, GameSpeed: number = 4;
 let BallWidth: number = GameWidth/52, BallHeight = GameHeight/26, BallXpos: number = GameWidth/2, BallYpos: number = GameHeight/2;
@@ -30,7 +34,7 @@ let host1: boolean = false;
 let Points1: number = 0;
 let Speed1: number = 0;
 let Access1: number = 0;
-let myusername1 = sessionStorage.getItem('username');
+let myusername1: string | null = null;
 let enemmyusername1: string | null = null;
 
 if(Access === 1)
@@ -252,6 +256,8 @@ function GameStatusChecker(p5: p5): boolean
 }
 
 const Game = () => {
+  const contexUser = useContext(UserContext);
+  myusername1 = contexUser.user.username;
   useEffect(() => {
     const sketch = (p5: p5) => {
       p5.setup = () => {

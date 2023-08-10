@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:26:31 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/09 09:46:59 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/09 12:57:59 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ import {
       }
       if(Rooms.find((elem)=> elem.players[0].Player === data.myusername) !== undefined)
       {
-        client.emit("CreateRefused','You can't Create two Rooms");
+        client.emit('CreateRefused',"you can't Create two Rooms");
         return ;
       }
         let player_data:PlayerClass = new PlayerClass;
@@ -92,12 +92,14 @@ import {
         let player_data:PlayerClass = new PlayerClass;
         if(data.Username === null)
         {
+          console.log("here1");
           client.emit('JoinRefused','please (log-in/sign-in) to accept your join');
           return ;
         }
         else if (data.Username === Rooms[data.RoomNumber].players[0].Player)
         {
-          client.emit("JoinRefused','You can't Join to yourself");
+          console.log("here2");
+          client.emit('JoinRefused',"You can't Join to yourself");
           return ;
         }
         player_data.Player = data.Username;
