@@ -41,7 +41,8 @@ const ProfileInfoNav = () => {
             title: 'Username invalid.',
             description: "Please enter valid username",
             status: 'error',
-            duration: 9000,
+            duration: 5000,
+            position:'top-right',
             isClosable: true,
           })
           return ;
@@ -60,7 +61,8 @@ const ProfileInfoNav = () => {
           title: 'Username already use.',
           description: "this username already use.",
           status: 'error',
-          duration: 9000,
+          duration: 5000,
+          position:'top-right',
           isClosable: true,
         })
         
@@ -72,7 +74,8 @@ const ProfileInfoNav = () => {
           title: 'Username Updated.',
           description: "We've updated your account username.",
           status: 'info',
-          duration: 9000,
+          duration: 5000,
+          position:'top-right',
           isClosable: true,
         })
         router.replace("/profile");
