@@ -8,7 +8,7 @@ export default function Messages()
             <div>
                 <Profile/>
             </div>
-            <div className="self-center relative w-[90%]">
+            <div className="self-center relative w-[90%] pb-[120px]">
                 <form action="">
                     <input className="focus:outline-none rounded-full bg-sky-900 p-1 pl-2 w-full" type="text" placeholder="Message..." />
                     <button className="absolute top-2 right-2" type="submit"><VscSend></VscSend></button>

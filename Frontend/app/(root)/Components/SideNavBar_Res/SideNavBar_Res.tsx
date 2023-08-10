@@ -10,7 +10,7 @@ export default function SideNavBar_Res()
 {
     return(
         <>
-        <nav className="fixed top-0 lg:bottom-8 w-full overflow-hidden z-50">
+        <nav className="fixed bottom-0 lg:bottom-0 w-full overflow-hidden z-50">
             <div className="container mx-auto">
                 <div className="w-full h-[96px] backdrop-blur-2xl rounded-full max-w-[460px] mx-auto 
                 px-5 flex justify-between text-2xl text-white/50 items-center
