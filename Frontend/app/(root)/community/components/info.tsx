@@ -1,14 +1,21 @@
 
 import {ImBlocked} from 'react-icons/im'
 import { GoReport } from "react-icons/go";
+import { useContext } from 'react';
+import reciverContext from '../reciverContext';
+
 export default function Info()
 {
+    const reciver = useContext(reciverContext);
     return (
         <div className="flex flex-col h-full w-full justify-between self-center">
             <div className="self-center text-2xl pb-3">Info</div>
-            <div className="self-center">
-                <div className='w-60 pb-16'>
-                    <img className='rounded-full self-center' src="https://xsgames.co/randomusers/assets/avatars/male/42.jpg" alt="img" />
+            <div className="text-center flex flex-col">
+                <div className='w-60 self-center pb-10'>
+                    <img className='rounded-full self-center w-60' src={reciver.reciver.avatar} alt="img" />
+                </div>
+                <div className='text-center text-2xl mb-1'>
+                    <h1 className='text-center '>{reciver.reciver.username}</h1>
                 </div>
                 <hr className="pb-5 border-gray-500"></hr>
                 <div>

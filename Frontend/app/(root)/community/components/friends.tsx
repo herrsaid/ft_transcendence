@@ -1,13 +1,18 @@
 
-export default function Friend()
+import reciverContext from "../reciverContext";
+import { useContext } from "react";
+
+export default function Friend(props:any)
 {
+    const reciver = useContext(reciverContext);
+    const click = ()=>{reciver.setReciver({username:props.username,avatar:props.avatar,id:props.id})};
     return(
-        <div className="flex hover:bg-sky-900 cursor-pointer">
+        <div onClick={click} className="flex hover:bg-sky-900 cursor-pointer">
             <div className="w-10 m-2">
-                <img className="rounded-full" src="https://xsgames.co/randomusers/assets/avatars/male/42.jpg" alt="friend" />
+                <img className="rounded-full" src={props.avatar} alt="friend" />
             </div>
             <div className="ml-3 mt-4">
-                <p>doukali</p>
+                <p>{props.username}</p>
             </div>
         </div>
     );

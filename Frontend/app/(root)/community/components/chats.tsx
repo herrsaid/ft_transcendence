@@ -1,7 +1,32 @@
 import Friend from "./friends";
 import { BiSearchAlt } from 'react-icons/bi'
+import { useEffect, useState } from "react";
+import Cookies from 'js-cookie';
+
 export default function Chats()
 {
+    const [friends, setFriends] = useState([])
+    useEffect(()=>{
+        
+        fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friends`, {
+            method: 'GET',
+            headers:{
+                Authorization: `Bearer ${Cookies.get('access_token')}`
+            }
+            
+        }).then((response) => response.json())
+        .then(data => setFriends(data))  
+    },[]);
+
+    let new_src_img:string;
+    const newArray = friends.map((frnd:any)=>
+    {
+        if (frnd.is_profile_img_updated)
+        {
+            new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + frnd.profile_img;
+        }
+        return (<Friend id={frnd.id} avatar={frnd.is_profile_img_updated ? new_src_img : frnd.profile_img} username={frnd.username} />)
+    })
     return (
         <div className="flex flex-col">
             <div className="text-center text-2xl pb-3">Chats</div>
@@ -16,10 +41,7 @@ export default function Chats()
                 </form>
             </div>
             <div className="pl-3">
-                <Friend />
-                <Friend />
-                <Friend />
-                <Friend />
+                {newArray}
             </div>
         </div>
     )
