@@ -32,7 +32,7 @@ export class AuthController {
     });
 
     const front_url = this.configService.get<string>('FRONT_IP');
-    res.redirect(`${front_url}/profile`);
+    res.redirect(`${front_url}/`);
 
       return this.authservice.loginIntra42(req);
   }
