@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
 import { useContext } from 'react';
 import UserContext from '../../UserContext';
+import { Avatar } from '@chakra-ui/react';
 
 
 
@@ -76,7 +77,8 @@ export default  function Header()
     
     </div>
     <div className="relative">
-      <img  onClick={toggleDropdown}  src={contexUser.user.is_profile_img_updated ? new_src_img : contexUser.user.profile_img} alt="avatar" className="w-10 h-10 rounded-full cursor-pointer profile-img"/>
+    <Avatar size='sm' name={contexUser.user.username} src={contexUser.user.is_profile_img_updated ? new_src_img : contexUser.user.profile_img} className="w-10 h-10 rounded-full cursor-pointer profile-img" onClick={toggleDropdown}>
+                        </Avatar>
       <div className="dropdown-menu" id="dropdownMenu" onClick={openMenu}>
         <p className="link_drop"><Link href='/profile' >Profile</Link></p>
         <p className="link_drop"><Link href='/Game/Lobbie'>Play</Link></p>
