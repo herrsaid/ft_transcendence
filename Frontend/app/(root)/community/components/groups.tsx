@@ -20,23 +20,22 @@ import {
             
             <div className="self-center">
                 <button className="bg-green-600 rounded-lg p-1" onClick={openclose}>New Group</button>
-            </div>
+            </div >
             <Modal isOpen={isOpen} onClose={openclose}>
             <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Create New Group</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            
-          </ModalBody>
+            <ModalContent>
+            <ModalHeader bg='#18184a'>Create New Group</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody bg='#18184a'>
+                hello world
+            </ModalBody>
 
-          <ModalFooter>
+            <ModalFooter bg='#18184a'>
             <button  onClick={openclose}>
-              Close
+              Create
             </button>
-            <button >Secondary Action</button>
-          </ModalFooter>
-        </ModalContent>
+            </ModalFooter>
+            </ModalContent>
             </Modal>
         </div>
     )

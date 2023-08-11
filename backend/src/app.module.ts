@@ -34,6 +34,7 @@ import { HistoryManager } from './game/data_manager/HistoryManager';
 import { GameArchievement, GameUserInfo, History } from './game/PingPong.Entity';
 import { GameInfoManager } from './game/data_manager/GameInfoManager';
 import { ArchievementManager } from './game/data_manager/ArchievementManager';
+import { GroupsController } from './groups/groups.controller';
 
 @Module({
   imports: [GameModule, AuthModule, TypeOrmModule.forRoot(config),
@@ -51,7 +52,7 @@ import { ArchievementManager } from './game/data_manager/ArchievementManager';
     signOptions: { expiresIn: '30d' },
    
   }),],
-  controllers: [AppController, TestController, AuthController, UserController, TwoFactorAuthenticationController, GoogleAuthController, MessagesController,],
+  controllers: [AppController, TestController, AuthController, UserController, TwoFactorAuthenticationController, GoogleAuthController, MessagesController, GroupsController,],
 
   providers: [
     AppService,

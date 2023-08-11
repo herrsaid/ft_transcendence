@@ -14,7 +14,7 @@ export default function Community()
         <div className="flex h-full">
             <reciverContext.Provider value={{reciver, setReciver}}>
             <div className="w-1/3 "> <Chats /> </div>
-            <div className="w-2/3 ">{<Messages />}</div>
+            <div className="w-2/3 "><Messages /></div>
             <div className="w-1/3 "><Info /></div>
             </reciverContext.Provider>
         </div>
