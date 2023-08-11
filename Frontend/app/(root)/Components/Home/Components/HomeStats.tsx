@@ -20,7 +20,7 @@ export default function HomeStats() {
   <div className="bg-gradient-to-br from-purple-600 to-indigo-800 rounded-lg shadow-md p-6 flex items-center space-x-4 transform transition-transform hover:scale-105 cursor-pointer">
     <div className="w-16 h-16 rounded-full overflow-hidden">
     <Avatar size='md' name={usercontext.user.username} src={usercontext.user.is_profile_img_updated ? new_src_img : usercontext.user.profile_img} className="w-full h-full object-cover profile-img">
-                        </Avatar>
+                        </Avatar>``
     </div>
     <div className="flex flex-col flex-1 space-y-2">
       <div className="text-white text-lg font-semibold">{usercontext.user.username}</div>
