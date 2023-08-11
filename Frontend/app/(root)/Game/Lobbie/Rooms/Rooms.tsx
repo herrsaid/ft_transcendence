@@ -56,7 +56,9 @@ async function  GetNumberOfRooms(router: AppRouterInstance)
   {
     let Rooms = document.getElementById('Rooms');
     if( Room === 0 && Rooms)
-      Rooms.innerHTML = '<p> No Rooms available for now </p>';
+    {
+      Rooms.innerHTML = '<p > No Rooms available for now </p>';
+    }
     else if(Rooms)
     {
       Rooms.innerHTML = '';
@@ -85,12 +87,12 @@ export default function Rooms() {
     setInterval(()=>{GetNumberOfRooms(router);},1000);
   });
     return (
-      <div className="container mx-auto px-2 py-10">
-        <div className="grid grid-cols-1 md:grid-cols-1 gap-4">
-          <div id="Rooms" className="bg-gradient-to-br from-indigo-600 to-indigo-800 rounded-lg shadow-md p-6 flex flex-col justify-between h-[450px]" >
+      <div className="container mx-auto px-2 py-[250px] text-center items-center">
+        <div className="mx-auto">
+          <div id="Rooms" className="overflow-y-auto rounded-md shadow-md p-6 h-[300px] mb-[40px]" >
           </div>
           <div onClick={()=>{router.replace('/Game/Lobbie/CreateRoom');}} id="CreateRoom">
-              <button className="bg-white text-blue-400 font-semibold py-2 px-4 rounded-lg inline-block"> Create Room </button>
+          <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md inline-block font-semibold w-[200px]" >Create Room</button>
           </div>
         </div>
       </div>

@@ -232,7 +232,11 @@ const PingPongSettings = ({ router }: any) =>
     const toast = useToast();
     myusername = contexUser.user.username;
     return(
-        <div id="Settings">
+
+
+        <div className="container mx-auto px-2 py-[250px] text-center items-center">
+            <div className="bgtet">
+            <div id="Settings" >
             <p id="Game_title">
                 PingPong
             </p>
@@ -319,6 +323,10 @@ const PingPongSettings = ({ router }: any) =>
                     </p>
                 </button>
             </div>
+            </div>
+
+        
+        </div>
     );
 }
 export default PingPongSettings;
