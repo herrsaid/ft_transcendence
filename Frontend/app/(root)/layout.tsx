@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from 'react';
+import {useState } from 'react';
 import Header from './Components/Header/Header'
 import BottomNav from './Components/BottomNav/BottomNav'
 import './globals.css'
@@ -7,6 +7,7 @@ import { Providers } from "./providers";
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import UserContext from './UserContext';
+import useSWR from "swr"
 
 const metadata = {
   title: 'PingPong',
@@ -24,43 +25,47 @@ export default function RootLayout({
   const router = useRouter();
 
   
-      useEffect( () =>{
+  if (Cookies.get('access_token') == undefined)
+      router.replace('/login')
 
 
-        const fetchData = async () => {
-          try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/me`,{
-              method: 'GET',
-          headers: {
-              Authorization: `Bearer ${Cookies.get('access_token')}`
-           }
-            });
-            if (response.status == 401)
-                router.replace("/login")
-            const jsonData = await response.json();
+  const fetchData = async (url:string) => {
+    const res = await fetch(url, {
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${Cookies.get('access_token')}`
+         }});
 
-            setUser(jsonData);
-            
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        };
-        fetchData();
+        if (res.status == 401)
+            router.replace("/login")
+        const jsonData = await res.json();
+        setUser(jsonData);
+         
+        if (!res.ok)
+            throw new Error("failed to fetch users");
+        return res.json();
+      }
 
-      },[]);
+
+const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/me`,
+fetchData
+);
+
+
   return (
     
     <html lang="en">
       <body >
       <Providers>
       <UserContext.Provider value={{user, setUser}}>
-            <Header/>
+        {Cookies.get('access_token') != undefined && <Header/>}
+        {Cookies.get('access_token') != undefined && <BottomNav/>}
+        <div className='child'>
+              {Cookies.get('access_token') != undefined && children}
+        </div>
           
-          <BottomNav/>
             
-            <div className='child'>
-              {children}
-            </div>
+            
         </UserContext.Provider>
       </Providers>
       </body>

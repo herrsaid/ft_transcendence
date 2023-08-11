@@ -31,7 +31,23 @@ const Friends = () => {
     fetchFriends
     );
 
-    if (isLoading) return <div>loading...</div>
+    // if (!data.length)
+    // {
+    //     return (
+    //         <main className="container mx-auto py-8 px-4">
+    //     <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4">
+        
+                
+    //     <div className="live-game-card bg-gradient-to-br from-indigo-600 to-indigo-800 rounded-lg shadow-md p-6 flex flex-col justify-between">
+        
+    //     <p className="text-white">You Dont have Any Friends!</p>
+    //   </div>
+        
+    //     </div>
+    //   </main>
+    //     )
+        
+    // }
 
     if (data)
     {
