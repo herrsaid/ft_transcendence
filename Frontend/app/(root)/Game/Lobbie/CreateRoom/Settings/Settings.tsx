@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:18 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/12 17:02:44 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/12 18:16:44 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ import { useContext } from 'react';
 import UserContext from "@/app/(root)/UserContext";
 import {  useToast } from '@chakra-ui/react'
 
-export let Points: number = 30;
-export let Speed: number = 2;
-export let pause_game: number = 1,RoomMood: boolean = false;
+export let Points: number = 10;
+export let Speed: number = 4;
+export let pause_game: number = 0,RoomMood: boolean = true;
 export let other_tools: number = 0;
 export let host: boolean = false;
 export let Online: number = 1;
@@ -249,7 +249,7 @@ const PingPongSettings = ({ router }: any) =>
                 <button  onClick={()=>  change_pos(1)} id="p_1" className="relative flex left-[0%] md:left-[0%] lg:left-[0%] bottom-[25px] text-white-500">x1</button>
                 <button  onClick={()=>  change_pos(2)} id="p_2" className="relative flex left-[38.5%] md:left-[38.5%] lg:left-[38.5%] bottom-[25px] text-white-500">x2</button>
                 <button  onClick={()=>  change_pos(4)} id="p_4" className="relative flex left-[75%] md:left-[80%] lg:left-[82.5%] bottom-[25px] text-white-500 ">x4</button>
-                    <div id="scroll" className="relative flex mx-auto w-[25px] h-[10px] bg-indigo-500 bottom-[4px] rounded-lg shadow-2xl"></div>
+                    <div id="scroll" className="relative flex mx-auto w-[25px] h-[10px] bg-indigo-500 bottom-[4px] rounded-lg shadow-2xl left-[32%] md:left-[35%] lg:left-[38%]"></div>
                 </div>
             </div>
             <div className="relative flex h-[30px] top-[100px]">
@@ -257,7 +257,7 @@ const PingPongSettings = ({ router }: any) =>
                     Points :
                 </p>
                 <div className="relative flex my-auto bottom-[5px]  mx-auto h-[2px] w-[200px] md:w-[250px] lg:w-[300px]">
-                    <button  onClick={()=> change_map_value(1)} id="points1" className="relative flex w-[40px] h-[30px] left-[0%] md:left-[0%] lg:left-[0%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
+                    <button  onClick={()=> change_map_value(1)} id="points1" className="relative flex w-[40px] h-[30px] left-[0%] md:left-[0%] lg:left-[0%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-500">
                         <p className="mx-auto my-auto">
                             10
                         </p>
@@ -267,7 +267,7 @@ const PingPongSettings = ({ router }: any) =>
                             20
                         </p>
                     </button>
-                    <button onClick={()=> change_map_value(3)} id="points3" className="relative flex w-[40px] h-[30px] left-[40%] md:left-[52.5%] lg:left-[60%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-500">
+                    <button onClick={()=> change_map_value(3)} id="points3" className="relative flex w-[40px] h-[30px] left-[40%] md:left-[52.5%] lg:left-[60%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
                         <p className="mx-auto my-auto">
                             30
                         </p>
@@ -278,12 +278,12 @@ const PingPongSettings = ({ router }: any) =>
                 <p className="relative flex left-[10%] bottom-[5px] text-xl md:text-2xl lg:text-3xl font-semibold text-white-500">
                     Match Mood :
                 </p>
-                <button onClick={()=> change_online_value(0)} id="match_mood_0" className="relative flex w-[60px] h-[30px] left-[15%] top-[0px] md:left-[20%] lg:left-[20%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-500">
+                <button onClick={()=> change_online_value(0)} id="match_mood_0" className="relative flex w-[60px] h-[30px] left-[15%] top-[0px] md:left-[20%] lg:left-[20%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
                     <p  className="mx-auto my-auto">
                         Ofline
                     </p>
                 </button>
-                <button onClick={()=> change_online_value(1)} id="match_mood_1" className="relative flex w-[60px] h-[30px] left-[22.5%] top-[0px] md:left-[30%] lg:left-[33%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
+                <button onClick={()=> change_online_value(1)} id="match_mood_1" className="relative flex w-[60px] h-[30px] left-[22.5%] top-[0px] md:left-[30%] lg:left-[33%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-500">
                     <p  className="mx-auto my-auto">
                         Online
                     </p>
@@ -304,7 +304,7 @@ const PingPongSettings = ({ router }: any) =>
                     </p>
                 </button>
             </div>
-            <div id="other_tools"  className="relative flex h-[30px] top-[250px]">
+            <div id="other_tools"  className="relative flex h-[30px] top-[250px] opacity-0">
                 <p id="other_tools_p" className="relative flex left-[10%] bottom-[5px] text-xl md:text-2xl lg:text-3xl font-semibold text-white-500">
                         Other &nbsp;Tools  &nbsp;:
                 </p>
