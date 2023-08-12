@@ -27,6 +27,8 @@ export class WebsockGateway {
     try{
       const token = socket.handshake.headers.authorization;
       const payload = jwt.verify(token, 'complexkey3884-asgfgsd,s33003400mmdma-434-4das111!!!!!+++')
+      if (this.online_users.findIndex(obj => obj.user_id == payload.id))
+        console.log("al youser maoujoud");
       this.online_users.push({socket_id:socket.id,user_id:payload.id})
       console.log(this.online_users, this.online_users.length)
       this.UserService.updateStatus(payload.id, {status:true})
