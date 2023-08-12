@@ -21,13 +21,13 @@ export default function Chats()
     },[]);
 
     let new_src_img:string;
-    const newArray = friends.map((frnd:any)=>
+    const newArray = friends.map((frnd:any, index)=>
     {
         if (frnd.is_profile_img_updated)
         {
             new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + frnd.profile_img;
         }
-        return (<Friend id={frnd.id} avatar={frnd.is_profile_img_updated ? new_src_img : frnd.profile_img} username={frnd.username} />)
+        return (<Friend key={index} id={frnd.id} avatar={frnd.is_profile_img_updated ? new_src_img : frnd.profile_img} username={frnd.username} />)
     })
     const friend_click = () =>{setForg(true)}
     const group_click = () =>{setForg(false)}

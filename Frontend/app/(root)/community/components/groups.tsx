@@ -27,7 +27,8 @@ import {
             <ModalHeader bg='#18184a'>Create New Group</ModalHeader>
             <ModalCloseButton />
             <ModalBody bg='#18184a'>
-                hello world
+                <input className="bg-sky-900 rounded-lg p-1 m-1" type="text" placeholder="name" />
+                <input className="bg-sky-900 rounded-lg p-1 m-1" type="password" placeholder="Password" />
             </ModalBody>
 
             <ModalFooter bg='#18184a'>
