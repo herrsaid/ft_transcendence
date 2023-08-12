@@ -1,11 +1,11 @@
 
 
-/* .bgtet{
+.bgtet{
     background: linear-gradient(-45deg, #C56CDD,#18184a);
     background-size: 400% 400%;
-} */
+}
 
-#Settings
+/* #Settings
 {
     position: relative;
     left: 10%;
@@ -14,8 +14,8 @@
     background-color: rgba(0, 0, 0, 0.3);
     border-radius: 10px;
     z-index: 0;
-}
-#Game_title
+} */
+/* #Game_title
 {
     position: relative;
     top: 4%;
@@ -23,7 +23,7 @@
     font-size: 3vh;
     color: white;
     z-index: 1;
-}
+} */
 
 #speed
 {
