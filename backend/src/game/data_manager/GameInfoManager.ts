@@ -90,19 +90,16 @@ export class GameInfoManager
             }
             else
             {
-            console.log("id1: ",GameInfo.userid);
             GameInfo.totalgames += 1;
             if(GameObj.PlayersInfo.Result1Val >= GameObj.PlayersInfo.Result2Val)
             {
                 GameInfo.totalwins += 1;
                 GameInfo.rank += (GameObj.PlayersInfo.Result1Val-GameObj.PlayersInfo.Result2Val) *  10;
-                console.log("rank1+",GameInfo.rank);
             }
             else
             {
                 GameInfo.totalosses += 1;
                 rank = -(GameObj.PlayersInfo.Result1Val-GameObj.PlayersInfo.Result2Val) *  10;
-                console.log("rank1-",rank);
                 if(GameInfo.rank - rank < 0)
                     GameInfo.rank = 0;
                 else
@@ -141,19 +138,16 @@ export class GameInfoManager
         }
         else
         {
-            console.log("id2: ",GameInfo2.userid);
             GameInfo2.totalgames += 1;
             if(GameObj.PlayersInfo.Result2Val >= GameObj.PlayersInfo.Result1Val)
             {
                 GameInfo2.totalwins += 1;
                 GameInfo2.rank += (GameObj.PlayersInfo.Result2Val-GameObj.PlayersInfo.Result1Val) *  10;
-                console.log("rank2+",GameInfo2.rank);
             }
             else
             {
                 GameInfo2.totalosses += 1;
                 rank = -(GameObj.PlayersInfo.Result2Val-GameObj.PlayersInfo.Result1Val) *  10;
-                console.log("rank2+",rank);
                 if(GameInfo2.rank - rank < 0)
                     GameInfo2.rank = 0;
                 else
