@@ -164,7 +164,7 @@ export class GameInfoManager
         return await this.GameUserInfo.findOne({ where: { userid:UserId } });
     }
 
-    async GetRankByUserId(userid:number):Promise<string>
+    async GetRankByUserId(userid:number)
     {
         let rank:string = 'beginner';
         let obj: GameUserInfo| null =  await this.GameUserInfo.findOne({ where: { userid:userid } });
@@ -185,6 +185,7 @@ export class GameInfoManager
             if(obj.rank >= 700)
                 rank = 'legendary';
         }
-        return rank;
+        let rankObj = {"rank" : rank}
+        return await rankObj;
     }
 }

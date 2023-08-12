@@ -262,9 +262,9 @@ export class UserController {
 
     @UseGuards(AuthGuard)
     @Get('rank/me')
-    getMyRank(@Request() req)
+    async getMyRank(@Request() req)
     {
-        return this.GameInfoManager.GetRankByUserId(req.user.id);
+        return await this.GameInfoManager.GetRankByUserId(req.user.id);
     }
 
 

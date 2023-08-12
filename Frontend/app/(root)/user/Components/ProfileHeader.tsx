@@ -5,6 +5,7 @@ import useSWR from "swr"
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import UserRank from "./UserRank";
 
   interface props{
     avatar:string,
@@ -161,9 +162,7 @@ const ProfileHeader = (props:props) => {
         <p className={`${`${props.isIngame ? 'block' : 'hidden'} text-blue-600 font-semibold my-[4px]`}`}>Player In Game...</p>
        
          
-      <div className="rounded-lg bg-blue-500 text-white py-1 px-2 text-sm font-semibold mr-4">
-        Rank: {props.rank}
-      </div>
+        <UserRank id={props.id}/>
       
       </div>
     </div>
