@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:18 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/11 21:48:48 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/12 17:02:44 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ import UserContext from "@/app/(root)/UserContext";
 import {  useToast } from '@chakra-ui/react'
 
 export let Points: number = 30;
-export let Speed: number = 1;
-export let pause_game: number = 0,RoomMood: boolean = false;
+export let Speed: number = 2;
+export let pause_game: number = 1,RoomMood: boolean = false;
 export let other_tools: number = 0;
 export let host: boolean = false;
 export let Online: number = 1;
@@ -34,11 +34,11 @@ function change_map_value(param: number)
     {
         const mapv = document.getElementById(`points${a}`);
         if(mapv !== null)
-            mapv.style.backgroundColor = " rgb(57, 57, 111,0.4)";
+            mapv.style.backgroundColor = " rgb(67,56,202)";
     }
     const changemap= document.getElementById(`points${param}`);
     if(changemap !== null)
-        changemap.style.backgroundColor = " rgb(57, 57, 111,1)";
+        changemap.style.backgroundColor = " rgb(99 102 241)";
     Points = param*10;
 }
 
@@ -55,10 +55,10 @@ function change_online_value(param: number)
     {
         const match_mood_ = document.getElementById(`match_mood_${a}`);
         if(match_mood_ !== null)
-            match_mood_.style.backgroundColor = " rgb(57, 57, 111,0.4)";
+            match_mood_.style.backgroundColor = " rgb(67,56,202)";
     }
     if(changemap !== null)
-        changemap.style.backgroundColor = " rgb(57, 57, 111,1)";
+        changemap.style.backgroundColor = " rgb(99 102 241)";
     if(param === 1)
     {
         
@@ -103,11 +103,11 @@ function change_other_tools_value(param: number)
     {
         const other_tools_ = document.getElementById(`other_tools_${a}`)
         if(other_tools_ !== null)
-            other_tools_.style.backgroundColor = " rgb(57, 57, 111,0.4)";
+            other_tools_.style.backgroundColor = " rgb(67,56,202)";
     }
     const changemap= document.getElementById(`other_tools_${param}`);
     if(changemap !== null)
-        changemap.style.backgroundColor = " rgb(57, 57, 111,1)";
+        changemap.style.backgroundColor = " rgb(99 102 241)";
     other_tools = param;
 }
 
@@ -117,11 +117,11 @@ function change_pausegame_value(param: number)
     {
         const pause_game_ = document.getElementById(`pause_game_${a}`);
         if(pause_game_ !== null)
-            pause_game_.style.backgroundColor = " rgb(57, 57, 111,0.4)";
+            pause_game_.style.backgroundColor = " rgb(67,56,202)";
     }
     const changemap = document.getElementById(`pause_game_${param}`);
     if(changemap !== null)
-        changemap.style.backgroundColor = " rgb(57, 57, 111,1)";
+        changemap.style.backgroundColor = " rgb(99 102 241)";
     pause_game = param;
     if(param)
         RoomMood = true;
@@ -216,11 +216,11 @@ function change_pos(param :number)
     if(element != null)
     {
         if(param === 1)
-        element.style.left = "35%";
+        element.style.left = "-60%";
         else if(param === 2)
-        element.style.left = "58.5%";
+        element.style.left = "-12.5%";
         else
-        element.style.left = "83%";
+        element.style.left = "35%";
         Speed = param;
     }
 }
@@ -241,78 +241,80 @@ const PingPongSettings = ({ router }: any) =>
             <p className="text-xl md:text-2xl lg:text-3xl font-semibold text-white-500">
                 PingPong
             </p>
-            <div id="speed">
-                <p id="speed_p">
+            <div id="speed" className="relative flex h-[30px] top-[50px]">
+                <p className="relative flex left-[10%] bottom-[5px] text-xl md:text-2xl lg:text-3xl font-semibold text-white-500">
                     Speed :
                 </p>
-                <div id="scroll" style = {{left: '35%'}}></div>
-                <button  onClick={()=>  change_pos(1)} id="p_1">x1</button>
-                <button  onClick={()=>  change_pos(2)} id="p_2">x2</button>
-                <button  onClick={()=>  change_pos(4)} id="p_4">x4</button>
-                <div id="speed_scrool">
+                <div className="relative flex my-auto  mx-auto h-[2px] w-[200px] md:w-[250px] lg:w-[300px] bg-indigo-500">
+                <button  onClick={()=>  change_pos(1)} id="p_1" className="relative flex left-[0%] md:left-[0%] lg:left-[0%] bottom-[25px] text-white-500">x1</button>
+                <button  onClick={()=>  change_pos(2)} id="p_2" className="relative flex left-[38.5%] md:left-[38.5%] lg:left-[38.5%] bottom-[25px] text-white-500">x2</button>
+                <button  onClick={()=>  change_pos(4)} id="p_4" className="relative flex left-[75%] md:left-[80%] lg:left-[82.5%] bottom-[25px] text-white-500 ">x4</button>
+                    <div id="scroll" className="relative flex mx-auto w-[25px] h-[10px] bg-indigo-500 bottom-[4px] rounded-lg shadow-2xl"></div>
                 </div>
             </div>
-            <div id="points">
-                <p id="points_p">
+            <div className="relative flex h-[30px] top-[100px]">
+                <p className="relative flex left-[10%] bottom-[5px] text-xl md:text-2xl lg:text-3xl font-semibold text-white-500">
                     Points :
                 </p>
-                <button  onClick={()=> change_map_value(1)} id="points1">
-                    <p>
-                        10
-                    </p>
-                </button>
-                <button onClick={()=> change_map_value(2)} id="points2">
-                    <p>
-                        20
-                    </p>
-                </button>
-                <button onClick={()=> change_map_value(3)} id="points3">
-                    <p>
-                        30
-                    </p>
-                </button>
+                <div className="relative flex my-auto bottom-[5px]  mx-auto h-[2px] w-[200px] md:w-[250px] lg:w-[300px]">
+                    <button  onClick={()=> change_map_value(1)} id="points1" className="relative flex w-[40px] h-[30px] left-[0%] md:left-[0%] lg:left-[0%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
+                        <p className="mx-auto my-auto">
+                            10
+                        </p>
+                    </button>
+                    <button onClick={()=> change_map_value(2)} id="points2" className="relative flex w-[40px] h-[30px] left-[20%] md:left-[25%] lg:left-[27.5%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
+                        <p className="mx-auto my-auto">
+                            20
+                        </p>
+                    </button>
+                    <button onClick={()=> change_map_value(3)} id="points3" className="relative flex w-[40px] h-[30px] left-[40%] md:left-[52.5%] lg:left-[60%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-500">
+                        <p className="mx-auto my-auto">
+                            30
+                        </p>
+                    </button>
+                </div>
             </div>
-            <div id="match_mood">
-                <p id="match_mood_p">
+            <div className="relative flex h-[30px] top-[150px]">
+                <p className="relative flex left-[10%] bottom-[5px] text-xl md:text-2xl lg:text-3xl font-semibold text-white-500">
                     Match Mood :
                 </p>
-                <button onClick={()=> change_online_value(1)} id="match_mood_1">
-                    <p>
-                        Online
-                    </p>
-                </button>
-                <button onClick={()=> change_online_value(0)} id="match_mood_0">
-                    <p>
+                <button onClick={()=> change_online_value(0)} id="match_mood_0" className="relative flex w-[60px] h-[30px] left-[15%] top-[0px] md:left-[20%] lg:left-[20%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-500">
+                    <p  className="mx-auto my-auto">
                         Ofline
                     </p>
                 </button>
-            </div>
-            <div id="pause_game">
-                <p id="pause_game_p">
-                    Room Mood:
-                </p>
-                <button onClick={()=> change_pausegame_value(1)} id="pause_game_1">
-                    <p id="pause_game_1_p">
-                        Public
+                <button onClick={()=> change_online_value(1)} id="match_mood_1" className="relative flex w-[60px] h-[30px] left-[22.5%] top-[0px] md:left-[30%] lg:left-[33%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
+                    <p  className="mx-auto my-auto">
+                        Online
                     </p>
                 </button>
-                <button onClick={()=> change_pausegame_value(0)} id="pause_game_0">
-                    <p id="pause_game_0_p">
+            </div>
+            <div id="pause_game" className="relative flex h-[30px] top-[200px]">
+                <p id="pause_game_p" className="relative flex left-[10%] bottom-[5px] text-xl md:text-2xl lg:text-3xl font-semibold text-white-500">
+                    Room  &nbsp;Mood :
+                </p>
+                <button onClick={()=> change_pausegame_value(0)} id="pause_game_0" className="relative flex w-[60px] h-[30px] left-[15%] top-[0px] md:left-[20%] lg:left-[20%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-500">
+                    <p id="pause_game_0_p" className="mx-auto my-auto">
                         private
                     </p>
                 </button>
+                <button onClick={()=> change_pausegame_value(1)} id="pause_game_1" className="relative flex w-[60px] h-[30px] left-[22.5%] top-[0px] md:left-[30%] lg:left-[33%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
+                    <p id="pause_game_1_p" className="mx-auto my-auto">
+                        Public
+                    </p>
+                </button>
             </div>
-            <div id="other_tools">
-                <p id="other_tools_p">
-                    Other Tools:
+            <div id="other_tools"  className="relative flex h-[30px] top-[250px]">
+                <p id="other_tools_p" className="relative flex left-[10%] bottom-[5px] text-xl md:text-2xl lg:text-3xl font-semibold text-white-500">
+                        Other &nbsp;Tools  &nbsp;:
                 </p>
-                <button onClick={()=> change_other_tools_value(0)} id="other_tools_0">
-                    <p>
+                <button onClick={()=> change_other_tools_value(0)} id="other_tools_0" className="relative flex w-[60px] h-[30px] left-[15%] top-[0px] md:left-[20%] lg:left-[20%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-500">
+                    <p className="mx-auto my-auto">
                         Bot
                     </p>
                 </button>
-                <button onClick={()=> change_other_tools_value(1)} id="other_tools_1">
-                    <p>
+                <button onClick={()=> change_other_tools_value(1)} id="other_tools_1" className="relative flex w-[60px] h-[30px] left-[22.5%] top-[0px] md:left-[30%] lg:left-[33%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
+                    <p className="mx-auto my-auto">
                        2P
                     </p>
                 </button>
