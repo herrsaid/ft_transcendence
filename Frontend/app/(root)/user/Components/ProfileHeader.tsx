@@ -25,8 +25,10 @@ const ProfileHeader = (props:props) => {
   const router = useRouter();
     
   let button_placeholder = 'request';
+  let block_button = false;
   const [status, setstatus] = useState("")
   const [statusbg, setstatusbg] = useState("")
+  const [blockstatus, setBlockStatus] = useState(false)
  
 
 
@@ -95,6 +97,19 @@ const ProfileHeader = (props:props) => {
           });
     }
 
+    const blockFriend = (friendRequestId:string) =>
+    {
+        fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/response/${friendRequestId}`, {
+            method: 'PUT',
+            headers:{
+                Authorization: `Bearer ${Cookies.get('access_token')}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ status: 'blocked' })
+            
+          }).then((response) => response.json())
+    }
+
     console.log(data)
 
 
@@ -110,9 +125,30 @@ const ProfileHeader = (props:props) => {
         button_placeholder = 'unfriend';
     else if (data.status === 'declined')
         button_placeholder = 'Add Friend';
+    else if (data.status == 'blocked')
+        block_button = true;
 
 
 
+
+
+
+
+        const handel_block = () =>
+        {
+            if (!block_button)
+            {
+                console.log("-----------")
+                console.log(data.id)
+                blockFriend(data.id);
+                setBlockStatus(true);
+            }
+            else if (block_button)
+            {
+                deleteFriendRequest(data.id);
+                setBlockStatus(false);
+            }
+        }
 
 
 
@@ -191,7 +227,7 @@ const ProfileHeader = (props:props) => {
     <div className="py-4">
     
     <button className={data.status == 'pending' ? 'bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded-lg' : 'bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg'} onClick={handel_all_request}>{status ? status : button_placeholder}</button>
-          <button className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 ml-4 rounded-lg">block</button>
+        {data.status != 'not-sent' && <button className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 ml-4 rounded-lg" onClick={handel_block}>{blockstatus  || block_button ? 'unblock' : 'block'}</button>}  
     </div>
       
       
