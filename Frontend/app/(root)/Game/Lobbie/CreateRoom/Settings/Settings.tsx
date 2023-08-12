@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:18 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/10 13:41:11 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/11 21:48:48 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,8 +232,13 @@ const PingPongSettings = ({ router }: any) =>
     const toast = useToast();
     myusername = contexUser.user.username;
     return(
-        <div id="Settings">
-            <p id="Game_title">
+
+       // #C56CDD,#18184a
+
+        <div className="container mx-auto px-2 py-[250px] text-center items-center">
+            <div className="">
+            <div className=" bgtet h-[450px] md:h-[550px] lg:h-[650px] w-[400px] md:w-[500px] lg:w-[600px] mx-auto rounded-lg shadow-2xl py-[20px] ">
+            <p className="text-xl md:text-2xl lg:text-3xl font-semibold text-white-500">
                 PingPong
             </p>
             <div id="speed">
@@ -319,6 +324,10 @@ const PingPongSettings = ({ router }: any) =>
                     </p>
                 </button>
             </div>
+            </div>
+
+        
+        </div>
     );
 }
 export default PingPongSettings;

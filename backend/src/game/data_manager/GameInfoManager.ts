@@ -57,6 +57,7 @@ export class GameInfoManager
         const User2 =  await this.UserManager.findOneByUsername(GameObj.PlayersInfo.Player1UserName);
         let GameInfo:GameUserInfo| null;
         let GameInfo2:GameUserInfo| null;
+        let rank:number = 0;
         if(User1)
             GameInfo =  await this.GetGameInfoByUsername(User1.id);
         if(User2)
@@ -66,27 +67,44 @@ export class GameInfoManager
             const newGameInfo:GameUserInfo =  new GameUserInfo;
             if(User1)
                 newGameInfo.userid = User1.id;
-            newGameInfo.totalgames = 1;
-            if(GameObj.PlayersInfo.Result1Val >= GameObj.PlayersInfo.Result2Val)
-            {
-                newGameInfo.totalwins = 1;
-                newGameInfo.totalosses = 0;
+                newGameInfo.totalgames = 1;
+                if(GameObj.PlayersInfo.Result1Val >= GameObj.PlayersInfo.Result2Val)
+                {
+                    newGameInfo.totalwins = 1;
+                    newGameInfo.totalosses = 0;
+                    newGameInfo.rank = (GameObj.PlayersInfo.Result1Val-GameObj.PlayersInfo.Result2Val) *  10;
+                }
+                else
+                {
+                    newGameInfo.totalosses = 1;
+                    newGameInfo.totalwins = 0;
+                    newGameInfo.rank =0;
+                    rank = -(GameObj.PlayersInfo.Result1Val-GameObj.PlayersInfo.Result2Val) *  10;
+                    if(newGameInfo.rank - rank < 0)
+                    newGameInfo.rank = 0;
+                    else
+                    newGameInfo.rank = -rank;
+                }
+                newGameInfo.totalarchievements = await this.CheckArchievementLogic(newGameInfo);
+                await this.GameUserInfo.save(newGameInfo);
             }
             else
             {
-                newGameInfo.totalosses = 1;
-                newGameInfo.totalwins = 0;
-            }
-            newGameInfo.totalarchievements = await this.CheckArchievementLogic(newGameInfo);
-            await this.GameUserInfo.save(newGameInfo);
-        }
-        else
-        {
             GameInfo.totalgames += 1;
             if(GameObj.PlayersInfo.Result1Val >= GameObj.PlayersInfo.Result2Val)
+            {
                 GameInfo.totalwins += 1;
+                GameInfo.rank += (GameObj.PlayersInfo.Result1Val-GameObj.PlayersInfo.Result2Val) *  10;
+            }
             else
+            {
                 GameInfo.totalosses += 1;
+                rank = -(GameObj.PlayersInfo.Result1Val-GameObj.PlayersInfo.Result2Val) *  10;
+                if(GameInfo.rank - rank < 0)
+                    GameInfo.rank = 0;
+                else
+                    GameInfo.rank -= rank;
+            }
             GameInfo.totalarchievements = await this.CheckArchievementLogic(GameInfo);
             Object.assign(GameUserInfo, GameInfo);
             await this.GameUserInfo.save(GameInfo);
@@ -102,11 +120,18 @@ export class GameInfoManager
             {
                 newGameInfo2.totalwins = 1;
                 newGameInfo2.totalosses = 0;
+                newGameInfo2.rank = (GameObj.PlayersInfo.Result2Val-GameObj.PlayersInfo.Result1Val) *  10;
             }
             else
             {
                 newGameInfo2.totalosses = 1;
                 newGameInfo2.totalwins = 0;
+                newGameInfo2.rank =0;
+                rank = -(GameObj.PlayersInfo.Result2Val-GameObj.PlayersInfo.Result1Val) *  10;
+                if(newGameInfo2.rank - rank < 0)
+                    newGameInfo2.rank = 0;
+                else
+                    newGameInfo2.rank = -rank;
             }
             newGameInfo2.totalarchievements = await this.CheckArchievementLogic(newGameInfo2);
             await this.GameUserInfo.save(newGameInfo2);
@@ -115,10 +140,20 @@ export class GameInfoManager
         {
             GameInfo2.totalgames += 1;
             if(GameObj.PlayersInfo.Result2Val >= GameObj.PlayersInfo.Result1Val)
+            {
                 GameInfo2.totalwins += 1;
+                GameInfo2.rank += (GameObj.PlayersInfo.Result2Val-GameObj.PlayersInfo.Result1Val) *  10;
+            }
             else
+            {
                 GameInfo2.totalosses += 1;
-            GameInfo2.totalarchievements = await this.CheckArchievementLogic(GameInfo2);
+                rank = -(GameObj.PlayersInfo.Result2Val-GameObj.PlayersInfo.Result1Val) *  10;
+                if(GameInfo2.rank - rank < 0)
+                    GameInfo2.rank = 0;
+                else
+                    GameInfo2.rank -= rank;
+            }
+                GameInfo2.totalarchievements = await this.CheckArchievementLogic(GameInfo2);
             Object.assign(GameUserInfo, GameInfo2);
             await this.GameUserInfo.save(GameInfo2);
         }
@@ -127,5 +162,30 @@ export class GameInfoManager
     async GetGameInfoByUsername(UserId:number):Promise<GameUserInfo | null>
     {
         return await this.GameUserInfo.findOne({ where: { userid:UserId } });
+    }
+
+    async GetRankByUserId(userid:number)
+    {
+        let rank:string = 'beginner';
+        let obj: GameUserInfo| null =  await this.GameUserInfo.findOne({ where: { userid:userid } });
+        if(obj)
+        {
+            if(obj.rank < 50)
+                rank = 'beginner';
+            if(obj.rank >= 100)
+                rank = 'bronze';
+            if(obj.rank >= 200)
+                rank = 'silver';
+            if(obj.rank >= 400)
+                rank = 'gold';
+            if(obj.rank >= 500)
+                rank = 'diamond';
+            if(obj.rank >= 600)
+                rank = 'platiniom';
+            if(obj.rank >= 700)
+                rank = 'legendary';
+        }
+        let rankObj = {"rank" : rank}
+        return await rankObj;
     }
 }

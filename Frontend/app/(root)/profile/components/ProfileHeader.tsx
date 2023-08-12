@@ -1,5 +1,7 @@
 import Link from "next/link";
 import ProfileAvatar from "./ProfileAvatar";
+import Cookies from 'js-cookie';
+import useSWR from "swr"
 
   interface props{
     avatar:string,
@@ -11,7 +13,47 @@ import ProfileAvatar from "./ProfileAvatar";
 
 
 const ProfileInfo = (props:props) => {
-    let new_src_img;
+
+
+  const fetchData = async (url:string) => {
+    const res = await fetch(url, {
+        method: 'GET',
+        headers: {
+            Authorization: `Bearer ${Cookies.get('access_token')}`
+         }});
+
+        
+        if (!res.ok)
+            throw new Error("failed to fetch users");
+        return res.json();
+      }
+
+
+const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/rank/me`,
+fetchData
+);
+
+let new_src_img;
+let rankbg;
+     
+      if (!data)
+        return null;
+
+    if (data.rank == 'beginner')
+        rankbg = 'bg-blue-500';
+    else if (data.rank == 'bronze')
+        rankbg = 'bg-gray-500';
+    else if (data.rank == 'silver')
+        rankbg = 'bg-red-500';
+    else if(data.rank == 'gold')
+        rankbg = 'bg-yellow-500';
+    else if(data.rank == 'diamond')
+        rankbg = 'bg-sky-500';
+    else if(data.rank == 'platiniom')
+        rankbg = 'bg-violet-500';
+    else if(data.rank == 'legendary')
+        rankbg = 'bg-emerald-500';
+    
     if (props.avatar_updated)
         new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + props.avatar;
     return (
@@ -28,8 +70,8 @@ const ProfileInfo = (props:props) => {
         <h1 className="text-2xl md:text-3xl lg:text-3xl font-semibold text-blue-500">{props.username}</h1>
         <p className="text-gray-600">{props.email}</p>
          
-      <div className="rounded-md md:rounded-lg lg:rounded-lg bg-blue-500 text-white py-1 px-2 text-sm font-semibold mr-4">
-        Rank: {props.rank}
+      <div className={`rounded-md md:rounded-lg lg:rounded-lg ${rankbg} text-white py-1 px-2 text-sm font-semibold mr-4`}>
+        Rank: {data.rank}
       </div>
       </div>
     </div>

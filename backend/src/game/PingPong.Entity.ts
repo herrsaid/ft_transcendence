@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:14 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/08 15:20:08 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/12 10:05:41 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ export class GameUserInfo
 {
   @PrimaryGeneratedColumn()
     key: number;
-  
+  @Column()
+    rank: number
   @Column()
     userid: number
   @Column()

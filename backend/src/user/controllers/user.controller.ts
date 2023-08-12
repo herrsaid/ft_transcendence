@@ -261,6 +261,23 @@ export class UserController {
 
 
     @UseGuards(AuthGuard)
+    @Get('rank/me')
+    async getMyRank(@Request() req)
+    {
+        return await this.GameInfoManager.GetRankByUserId(req.user.id);
+    }
+
+
+    @UseGuards(AuthGuard)
+    @Get('rank/player/:id')
+    getRankUser(@Param('id') id:number)
+    {
+        return this.GameInfoManager.GetRankByUserId(id);
+    }
+
+
+
+    @UseGuards(AuthGuard)
     @Get('archievements/me')
     getMyArchievements(@Request() req)
     {
