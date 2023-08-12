@@ -134,7 +134,15 @@ export class UserController {
         return this.userService.respondToFriendRequest(friendRequestId, statusResponse.status);
     }
 
+    @UseGuards(AuthGuard)
+    @Get('friend-request/remove/:friendRequestId')
+    removeFriendRequest(@Param('friendRequestId') friendRequestStringId:string)
+    {
+        const friendRequestId = parseInt(friendRequestStringId);
+        return this.userService.deleteFriendRequest(friendRequestId);
+    }
 
+    
 
     @UseGuards(AuthGuard)
     @Get('friend-request/me/received-requests')

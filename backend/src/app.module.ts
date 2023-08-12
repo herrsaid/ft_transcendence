@@ -41,9 +41,6 @@ import { GroupsController } from './groups/groups.controller';
 
     ConfigModule.forRoot({isGlobal: true }),
    
-    // ServeStaticModule.forRoot({
-    //   rootPath: join(__dirname, '..', 'client')
-    // }),
     UserModule,
   
     TypeOrmModule.forFeature([User,FriendRequest,Messages,History,GameUserInfo,GameArchievement]), JwtModule.register({

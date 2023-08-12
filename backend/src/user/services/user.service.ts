@@ -338,6 +338,17 @@ export class UserService {
       }
 
 
+
+      async deleteFriendRequest(id: number){
+        const FriendRequest = await this.FriendRequestRepo.findOne({where:{id:id}});
+        if (!FriendRequest) {
+          throw new NotFoundException(`FriendRequest with id ${id} not found`);
+        }
+    
+        await this.FriendRequestRepo.remove(FriendRequest);
+      }
+
+
       getCookieForLogOut()
       {
         return `access_token=; HttpOnly; Path=/; Max-Age=0`;

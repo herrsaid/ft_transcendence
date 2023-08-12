@@ -26,6 +26,7 @@ const ProfileHeader = (props:props) => {
     
   let button_placeholder = 'request';
   const [status, setstatus] = useState("")
+  const [statusbg, setstatusbg] = useState("")
  
 
 
@@ -82,6 +83,18 @@ const ProfileHeader = (props:props) => {
           .then(data => setstatus(data.status))
     }
 
+    const deleteFriendRequest = (friendRequestId:string) =>
+    {
+        fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/remove/${friendRequestId}`, {
+            method: 'GET',
+            headers:{
+                Authorization: `Bearer ${Cookies.get('access_token')}`,
+                'Content-Type': 'application/json'
+                },
+            
+          });
+    }
+
     console.log(data)
 
 
@@ -90,13 +103,13 @@ const ProfileHeader = (props:props) => {
     if (data.status === 'pending')
         button_placeholder = 'cancel';
     else if (data.status === 'not-sent')
-        button_placeholder = 'request';
+        button_placeholder = 'Add Friend';
     else if (data.status === 'waiting-for-current-user-response')
         button_placeholder = 'accept';
     else if (data.status === 'accepted')
         button_placeholder = 'unfriend';
     else if (data.status === 'declined')
-        button_placeholder = 'request';
+        button_placeholder = 'Add Friend';
 
 
 
@@ -107,26 +120,29 @@ const ProfileHeader = (props:props) => {
         {
     
             if (data.status === 'pending'){
-                button_placeholder = 'cancel';
-                handel_response_user(data.id, 'not-sent');
-        
+                deleteFriendRequest(data.id);
+                button_placeholder = 'Add Friend';
+                setstatusbg('bg-blue-500');
             }
             else if (data.status === 'not-sent')
             {
-                button_placeholder = 'request';
+                
                 send_request();
+                button_placeholder = 'cancel';
+                setstatusbg('bg-orange-500');
                 console.log("requested")
             }
             else if (data.status === 'waiting-for-current-user-response')
             {
-                button_placeholder = 'accept';
                 handel_response_user(data.id, 'accepted');
+                button_placeholder = 'Unfriend';
                 console.log("accepted")
             }
             else if (data.status === 'accepted')
             {
-                button_placeholder = 'unfriend';
-                handel_response_user(data.id, 'not-sent');
+                deleteFriendRequest(data.id);
+                button_placeholder = 'Add Friend';
+                setstatusbg('bg-blue-500');
                 console.log("unfriend")
             }
             else if (data.status === 'declined')
@@ -173,8 +189,8 @@ const ProfileHeader = (props:props) => {
 
     <div className="py-4">
     
-    <button className={data.status == 'pending' ? 'bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg' : 'bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg'} onClick={handel_all_request}>{status ? status : button_placeholder}</button>
-          <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 ml-4 rounded-lg">message</button>
+    <button className={data.status == 'pending' ? 'bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded-lg' : 'bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg'} onClick={handel_all_request}>{status ? status : button_placeholder}</button>
+          <button className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 ml-4 rounded-lg">block</button>
     </div>
       
       
