@@ -166,24 +166,25 @@ export class GameInfoManager
 
     async GetRankByUserId(userid:number):Promise<string>
     {
+        let rank:string = 'beginner';
         let obj: GameUserInfo| null =  await this.GameUserInfo.findOne({ where: { userid:userid } });
         if(obj)
         {
-            if(obj.rank < 200)
-                return 'beginner';
-            else if(obj.rank >= 200)
-                return 'bronze';
-            else if(obj.rank >= 300)
-                return 'silver';
-            else if(obj.rank >= 400)
-                return 'gold';
-            else if(obj.rank >= 500)
-                return 'diamond';
-            else if(obj.rank >= 600)
-                return 'platiniom';
-            else if(obj.rank >= 700)
-                return 'legendary';
+            if(obj.rank < 50)
+                rank = 'beginner';
+            if(obj.rank >= 100)
+                rank = 'bronze';
+            if(obj.rank >= 200)
+                rank = 'silver';
+            if(obj.rank >= 400)
+                rank = 'gold';
+            if(obj.rank >= 500)
+                rank = 'diamond';
+            if(obj.rank >= 600)
+                rank = 'platiniom';
+            if(obj.rank >= 700)
+                rank = 'legendary';
         }
-        return '';
+        return rank;
     }
 }
