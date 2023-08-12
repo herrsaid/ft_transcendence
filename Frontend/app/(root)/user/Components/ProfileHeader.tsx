@@ -80,7 +80,7 @@ const ProfileHeader = (props:props) => {
             body: JSON.stringify({ status: user_response })
             
           }).then((response) => response.json())
-          .then(data => setstatus(data.status))
+          .then(data => user_response == 'accepted' ? setstatus('unfriend') : setstatus(data.status))
     }
 
     const deleteFriendRequest = (friendRequestId:string) =>
@@ -134,6 +134,7 @@ const ProfileHeader = (props:props) => {
             }
             else if (data.status === 'waiting-for-current-user-response')
             {
+                console.log("enter")
                 handel_response_user(data.id, 'accepted');
                 button_placeholder = 'Unfriend';
                 console.log("accepted")
