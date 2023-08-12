@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:18 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/12 20:56:06 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/12 21:56:55 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,7 +192,10 @@ async function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<st
             settings.appendChild(Room);
         }
         else if(settings)
+        {
             settings.style.filter = "blur(15px)";
+            settings.style.animation = "Animation 3s infinite";
+        }
             socket.on('SendData', (username,data) => {
             enemmyusername = username;
             host = data;
@@ -235,7 +238,7 @@ const PingPongSettings = ({ router }: any) =>
 
        // #C56CDD,#18184a
 
-        <div className="container mx-auto px-2 py-[250px] text-center items-center">
+        <div id= "Settings" className="container mx-auto px-2 py-[250px] text-center items-center">
             <div className="">
                 <div className=" bgtet h-[500px] md:h-[600px] lg:h-[700px] w-[400px] md:w-[500px] lg:w-[600px] mx-auto rounded-lg shadow-2xl py-[20px] ">
                 <p className="text-xl md:text-2xl lg:text-3xl font-semibold text-white-500">
