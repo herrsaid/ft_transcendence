@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:18 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/10 13:26:44 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/12 20:47:24 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,12 @@ export default function Rooms() {
     setInterval(()=>{GetNumberOfRooms(router);},1000);
   });
     return (
-      <div className="container mx-auto px-2 py-[250px] text-center items-center">
+      <div className="container mx-auto px-2 py-[250px] text-center items-center ">
         <div className="mx-auto">
-          <div id="Rooms" className="overflow-y-auto rounded-md shadow-md p-6 h-[300px] mb-[40px]" >
+          <div id="Rooms" className="overflow-y-auto rounded-md p-6 h-[300px] mb-[40px] shadow-2xl" >
           </div>
           <div onClick={()=>{router.replace('/Game/Lobbie/CreateRoom');}} id="CreateRoom">
-          <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md inline-block font-semibold w-[200px]" >Create Room</button>
+          <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md inline-block font-semibold w-[200px] shadow-2xl shadow-blue-500 hover:shadow-blue-600 " >Create Room</button>
           </div>
         </div>
       </div>

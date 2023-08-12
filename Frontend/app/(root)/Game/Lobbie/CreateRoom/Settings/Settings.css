@@ -5,131 +5,7 @@
     background-size: 400% 400%;
 }
 
-/* #pause_game
-{
-    position: relative;
-    display: flex;
-    width: 100%;
-    height:5%;
-    top: 37.5%;
-    font-size: 1.7vh;
-    color: white;
-    opacity: 1;
-}
-
-#pause_game_p
-{
-    position: relative;
-    left: 15%;
-}
-
-#pause_game_1
-{
-    position: absolute;
-    width: 10%;
-    height: 100%;
-    left: 46%;
-    background-color: rgb(57, 57, 111,0.4);
-    border-radius: 10px;
-    text-align: center;
-} */
-
-/* #pause_game_0
-{
-    position: absolute;
-    width: 10%;
-    height: 100%;
-    left: 66%;
-    background-color: rgb(57, 57, 111,1);
-    border-radius: 10px;
-    text-align: center;
-} */
-
-#room_mood
-{
-    position: relative;
-    display: flex;
-    width: 100%;
-    height:5%;
-    top: 37.5%;
-    font-size: 1.7vh;
-    color: white;
-    opacity: 1;
-}
-
-#room_mood_p
-{
-    position: relative;
-    left: 15%;
-}
-
-#room_mood_1
-{
-    position: absolute;
-    width: 10%;
-    height: 100%;
-    left: 46%;
-    background-color: rgb(57, 57, 111,0.4);
-    border-radius: 10px;
-    text-align: center;
-    z-index: 1;
-}
-
-#room_mood_0
-{
-    position: absolute;
-    width: 10%;
-    height: 100%;
-    left: 66%;
-    background-color: rgb(57, 57, 111,1);
-    border-radius: 10px;
-    text-align: center;
-    z-index: 1;
-}
-
-/* #other_tools
-{
-    position: relative;
-    display: flex;
-    width: 100%;
-    height:5%;
-    top: 45%;
-    font-size: 1.7vh;
-    color: white;
-    opacity: 0;
-} */
-
-/* #other_tools_p
-{
-    position: relative;
-    left: 15%;
-} */
-
-/* #other_tools_1
-{
-    position: absolute;
-    width: 10%;
-    height: 100%;
-    left: 66%;
-    background-color: rgb(57, 57, 111,0.4);
-    border-radius: 10px;
-    text-align: center;
-    z-index: -1;
-}
-
-#other_tools_0
-{
-    position: absolute;
-    width: 10%;
-    height: 100%;
-    left: 46%;
-    background-color: rgb(57, 57, 111,1);
-    border-radius: 10px;
-    text-align: center;
-    z-index: -1;
-} */
-
-#play
+/* #play
 {
     position: absolute;
     width: 20%;
@@ -146,7 +22,7 @@
     position: relative;
     text-align: center;
     font-size:3vmin;
-}
+} */
 
 @keyframes Animation {
     0% {

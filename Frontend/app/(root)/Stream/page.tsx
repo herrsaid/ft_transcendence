@@ -55,12 +55,14 @@ export default function Stream() {
     setInterval(()=>{GetNumberOfRooms(router);},1000);
   });
     return (
-      <>
-        <div id="Rooms">
+      <div className="container mx-auto px-2 py-[250px] text-center items-center ">
+        <div className="mx-auto">
+          <div id="Rooms" className="overflow-y-auto rounded-md p-6 h-[300px] mb-[40px] shadow-2xl" >
+          </div>
+          <div onClick={()=>{router.replace('/Game/Lobbie/CreateRoom');}} id="CreateRoom">
+            <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md inline-block font-semibold w-[200px] shadow-2xl shadow-blue-500 hover:shadow-blue-600 "> Create Room </button>
+          </div>
         </div>
-        <div onClick={()=>{router.replace('/Game/Lobbie/CreateRoom');}} id="CreateRoom">
-          <button> Create Room </button>
-        </div>
-      </>
+      </div>
     )
   }
