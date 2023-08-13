@@ -171,7 +171,6 @@ function first_conection(p5:p5)
     p5.background(0);
     p5.fill(255,255,255);
     p5.text("please sign-in before playing", GameWidth/2 - GameWidth/4, GameHeight/2 + GameHeight/24);
-    p5.noLoop();
     return false;
   }
   else if(first_conection_val === false)
@@ -185,8 +184,9 @@ function first_conection(p5:p5)
   return true;
 }
 
-function NewValue()
+function NewValue(p5:p5)
 {
+  let canvas:p5.Element = p5.createCanvas(GameWidth, GameHeight).parent('sketch-container');
   if((Math.floor(window.innerWidth) !== GameWidth || Math.floor(window.innerWidth/2) !== GameHeight) && window.innerWidth < 1080)
   {
     GameWidth = Math.floor(window.innerWidth);
@@ -203,7 +203,10 @@ function NewValue()
     Result1Ypos = Math.floor(GameHeight/10)
     Result2Xpos  = Math.floor(GameWidth/2 + GameWidth/16);
     Result2Ypos = Math.floor(GameHeight/10);
+    p5.createCanvas(GameWidth, GameHeight).parent('sketch-container');
+    p5.background(25);
   }
+  canvas.center();
 }
 
 function GameStatusChecker(p5: p5): boolean
@@ -250,7 +253,7 @@ const Game = () => {
       };
       
       p5.draw = () => {
-        NewValue();
+        NewValue(p5);
         if(!first_conection(p5))
           return ;
         if(GameStatusChecker(p5))
@@ -270,7 +273,7 @@ const Game = () => {
           Racket2(p5,Racket2Xpos,Racket2Ypos,Racket2Width,Racket2Height);
         }
         else
-          p5.noLoop();
+          return;
       };
       p5.keyReleased = () =>{
         p5.key = '';

@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:29 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/13 13:05:42 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/13 13:38:27 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 import { useEffect } from "react";
 import p5 from "p5";
 import './Game.css'
-import {Speed, Points} from '../../Lobbie/CreateRoom/Settings/Settings';
+import {Speed, Points,myusername} from '../../Lobbie/CreateRoom/Settings/Settings';
 
-let GameWidth: number = 800,GameHeight: number = 400,GameSpeed: number = 1,GameTarget:number = Points;
+let GameWidth: number = 800,GameHeight: number = 400,GameSpeed: number = Speed,GameTarget:number = Points;
 let BallWidth: number = 15, BallHeight = 15, BallXpos: number = GameWidth/2, BallYpos: number = GameHeight/2;
 let Racket1Width: number = 10, Racket1Height = 60, Racket1Xpos: number = 5, Racket1Ypos: number = 170;
 let Racket2Width: number = 10, Racket2Height = 60, Racket2Xpos: number = 785, Racket2Ypos: number = 170;
@@ -52,15 +52,18 @@ function Result1(p5: p5,res1: string, x: number, y: number)
 {
   p5.textSize(GameWidth/26);
   p5.fill('blue');
-  p5.text('mabdelou', x - GameWidth/5, y);
-  p5.text(res1, x, y);
+  if(myusername)
+    p5.text(myusername, x - GameWidth/5, y);
+  else
+    p5.text('UserI', x - GameWidth/5, y);
+    p5.text(res1, x, y);
 }
 
 function Result2(p5: p5,res2: string, x: number, y: number)
 {
   p5.textSize(GameWidth/26);
   p5.fill('red');
-  p5.text('aabdelou', x + GameWidth/16, y);
+  p5.text('UserII', x + GameWidth/16, y);
   p5.text(res2, x, y);
   p5.fill(255, 204, 0);
 }
@@ -149,7 +152,7 @@ function Racket2Animation(p5: p5): undefined
 
 function NewValue(p5:p5)
 {
-  let canvas = p5.createCanvas(GameWidth, GameHeight).parent('sketch-container');
+  let canvas:p5.Element = p5.createCanvas(GameWidth, GameHeight).parent('sketch-container');
   if((Math.floor(window.innerWidth) !== GameWidth || Math.floor(window.innerWidth/2) !== GameHeight) && window.innerWidth < 1080)
   {
     GameWidth = Math.floor(window.innerWidth);
@@ -194,7 +197,7 @@ function GameStatusChecker(p5: p5): boolean
   {
     p5.background(0);
     p5.fill(255,255,255);
-    p5.text('UserI WIN', GameWidth/2 - GameWidth/12, GameHeight/2 + GameHeight/12);
+    p5.text(`${myusername} WIN`, GameWidth/2 - GameWidth/12, GameHeight/2 + GameHeight/12);
     return false;
   }
   else if(GameTarget <= Result2Val)
