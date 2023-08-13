@@ -189,9 +189,6 @@ function NewValue()
 {
   if((window.innerWidth !== GameWidth || (window.innerWidth/2) !== GameHeight) && window.innerWidth < 1080)
   {
-    console.log(window.innerWidth);
-    // Racket1Ypos = Math.floor(((Racket1Ypos* 100)/Math.floor(window.innerHeight/4))* (GameHeight/4)/100);
-    // Racket2Ypos = Math.floor(((Racket2Ypos* 100)/Math.floor(window.innerHeight/4))* (GameHeight/4)/100);
     GameWidth = Math.floor(window.innerWidth);
     GameHeight =  Math.floor(window.innerWidth/2);
     BallWidth = Math.floor(GameWidth/52);
