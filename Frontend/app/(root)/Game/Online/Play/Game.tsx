@@ -1,13 +1,12 @@
 'use client'
 
-import { useEffect } from "react";
+import { useEffect,useContext,useState } from "react";
 import p5 from "p5";
 import './Game.css';
 import { player1, player2 } from '../Socket/start_game_socket';
-import { host, Access, Speed, Points, myusername, enemmyusername} from '../../Lobbie/CreateRoom/Settings/Settings';
-import { host2, Access2, Speed2, Points2, myusername2, enemmyusername2} from '../../Lobbie/Rooms/Rooms';
+import { host, Access, Speed, Points, myusername, enemmyusername,enemmyimage,myimage} from '../../Lobbie/CreateRoom/Settings/Settings';
+import { host2, Access2, Speed2, Points2, myusername2, enemmyusername2,enemmyimage2,myimage2} from '../../Lobbie/Rooms/Rooms';
 
-import { useContext } from 'react';
 import UserContext from "@/app/(root)/UserContext";
 
 
@@ -25,7 +24,8 @@ let Speed1: number = 0;
 let Access1: number = 0;
 let myusername1: string | null = null;
 let enemmyusername1: string | null = null;
-
+let myimage1: string | null = null;
+let enemmyimage1: string | null = null;
 if(Access === 1)
 {
     host1 = host; 
@@ -34,6 +34,8 @@ if(Access === 1)
     Points1 = Points; 
     myusername1 = myusername; 
     enemmyusername1 = enemmyusername; 
+    myimage1 = myimage;
+    enemmyimage1 = enemmyimage;
 }
 else
 {
@@ -43,6 +45,8 @@ else
     Points1 = Points2;
     myusername1 = myusername2;
     enemmyusername1 = enemmyusername2;
+    myimage1 = myimage2;
+    enemmyimage1 = enemmyimage2;
 }
 function ConvertServerData(ServerData:number,Mood:number)
 {
@@ -163,7 +167,6 @@ function Racket2Animation(p5: p5): undefined
 }
 function first_conection(p5:p5)
 {
-  console.log(host1);
   if(!Access1)
   {
     p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').center();
@@ -177,9 +180,9 @@ function first_conection(p5:p5)
 	{
 		first_conection_val = true;
       if(host1)
-			  player1.emit('first_conection',{Speed1,Points1,myusername1,});
+			  player1.emit('first_conection',{Speed1,Points1,myusername1,myimage1});
       else
-			  player2.emit('first_conection',{Speed1,Points1,myusername1,});
+			  player2.emit('first_conection',{Speed1,Points1,myusername1,myimage1});
 	}
   return true;
 }
@@ -203,7 +206,7 @@ function NewValue(p5:p5)
     Result1Ypos = Math.floor(GameHeight/10)
     Result2Xpos  = Math.floor(GameWidth/2 + GameWidth/16);
     Result2Ypos = Math.floor(GameHeight/10);
-    p5.createCanvas(GameWidth, GameHeight).parent('sketch-container');
+    p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').center();
     p5.background(25);
   }
   canvas.center();
@@ -246,6 +249,8 @@ function GameStatusChecker(p5: p5): boolean
 
 const Game = () => {
   const contexUser = useContext(UserContext);
+  const [reslt1, setReslt1] = useState(0);
+  const [reslt2, setReslt2] = useState(0);
   myusername1 = contexUser.user.username;
   useEffect(() => {
     const sketch = (p5: p5) => {
@@ -267,7 +272,9 @@ const Game = () => {
             Racket2Animation(p5);
           LineCenter(p5);
           Result1(p5, p5.str(Result1Val),Result1Xpos,Result1Ypos);
+          setReslt1(Result1Val);
           Result2(p5, p5.str(Result2Val),Result2Xpos,Result2Ypos);
+          setReslt2(Result2Val);
           Ball(p5,BallXpos,BallYpos,BallWidth,BallHeight);
           Racket1(p5,Racket1Xpos,Racket1Ypos,Racket1Width,Racket1Height);
           Racket2(p5,Racket2Xpos,Racket2Ypos,Racket2Width,Racket2Height);
@@ -283,7 +290,25 @@ const Game = () => {
     new p5(sketch);
   }, []);
 
-  return <div id="sketch-container" ></div>;
-};
+  return (
+    <>
+      <div className=" relative flex h-[25vw] w-[100%] mx-auto my-auto">
+        <img className=" relative flex w-[50%] h-[25vw] bg-center" src={myimage1!}/>
+        <div className="absolute flex w-[50%] h-[25vw] left-[25%] trapezoid z-10">
+          {/* <div id="HeaderInfo" className=" relative flex mx-auto my-auto w-[100%] h-[20px] md:h-[30px] lg:h-[40px] z-20 bg-slate-600"> */}
+          {/* </div> */}
+        </div>
+            <div className="absolute flex lg:left-[35%] md:left-[35%] sm:left-[30%] mn:left-[36%] mn2:left-[31%] top-[45%] mn:text-xs mn2:text-xs text-xl md:text-2xl lg:text-3xl font-semibold text-white z-20 ">{myusername1}</div>
+            <div className="absolute flex lg:left-[45%] md:left-[45%] sm:left-[43%] mn:left-[45%] mn2:left-[45%] top-[45%] mn:text-xs mn2:text-xs text-xl md:text-2xl lg:text-3xl font-semibold text-white z-20 ">{reslt1}</div>
+            <div className="absolute flex lg:left-[50%] md:left-[50%] sm:left-[49%] mn:left-[48%] mn2:left-[49%] top-[45%] mn:text-xs mn2:text-xs text-xl md:text-2xl lg:text-3xl font-semibold text-white z-20 ">-</div>
+            <div className="absolute flex lg:left-[55%] md:left-[55%] sm:left-[55%] mn:left-[50%] mn2:left-[52%] top-[45%] mn:text-xs mn2:text-xs text-xl md:text-2xl lg:text-3xl font-semibold text-white z-20 ">{reslt2}</div>
+            <div className="absolute flex lg:left-[60%] md:left-[60%] sm:left-[60%] mn:left-[54%] mn2:left-[56%] top-[45%] mn:text-xs mn2:text-xs text-xl md:text-2xl lg:text-3xl font-semibold text-white z-20 ">{enemmyusername1}</div>
+        <img className="relative flex w-[50%] h-[25vw] bg-center" src={enemmyimage1!}/>
+        <div id="button"></div>
+      </div>
+      <div id="sketch-container"></div>
+    </>
+  );
+}
 
 export default Game;

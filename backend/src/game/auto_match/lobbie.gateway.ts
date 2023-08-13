@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:26:31 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/12 20:21:01 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/13 18:43:29 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ import {
         client.emit('CreateRefused',"you can't Create two Rooms");
         return ;
       }
-        let player_data:PlayerClass = new PlayerClass;
+      // console.log(data);
+      let player_data:PlayerClass = new PlayerClass;
       player_data.Player = data.myusername;
+      player_data.PlayerImg = data.myimage;
       player_data.PlayerId = client.id;
       player_data.PlayerSocket = client;
       let check:RoomClass = Rooms.find(elem => elem.Points === data.Points && elem.Speed === data.Speed);
@@ -56,8 +58,8 @@ import {
         else
           console.log("Push New User");
         check.players.push(player_data);
-        check.players[0].PlayerSocket.emit('SendData',check.players[1].Player,true);
-        check.players[1].PlayerSocket.emit('SendData',check.players[0].Player,false);
+        check.players[0].PlayerSocket.emit('SendData',check.players[1].Player,check.players[1].PlayerImg,true);
+        check.players[1].PlayerSocket.emit('SendData',check.players[0].Player,check.players[0].PlayerImg,false);
         console.log(Rooms);
         console.log("Launch Private Room");
         return;
@@ -103,12 +105,15 @@ import {
           return ;
         }
         player_data.Player = data.Username;
+        player_data.PlayerImg = data.myimage;
         player_data.PlayerId = client.id;
         player_data.PlayerSocket = client;
         if(Rooms[data.RoomNumber].players.length < 2)
         {
           Rooms[data.RoomNumber].players.push(player_data);
-          Rooms[data.RoomNumber].players[1].PlayerSocket.emit('SendData',Rooms[data.RoomNumber].players[0].Player,false);
+          Rooms[data.RoomNumber].players[1].PlayerSocket.emit(
+            'SendData',Rooms[data.RoomNumber].players[0].Player,Rooms[data.RoomNumber].players[0].PlayerImg,false
+          );
           client.emit('JoinAccepted',Rooms[data.RoomNumber].Speed,Rooms[data.RoomNumber].Points);
         }
         else

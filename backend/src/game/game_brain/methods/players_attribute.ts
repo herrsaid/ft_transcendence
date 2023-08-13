@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:26:50 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/02 10:26:51 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/13 18:08:54 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ export class PlayersAttribute
     public Player2ID: string;
     public Player1UserName: string;
     public Player2UserName: string;
+    public Player1Image: string;
+    public Player2Image: string;
     public Player1Client: Socket | undefined;
     public Player2Client: Socket | undefined;
 

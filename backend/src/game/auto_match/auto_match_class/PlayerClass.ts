@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 09:06:23 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/03 12:56:34 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/13 17:54:14 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ import { Socket } from 'socket.io';
 export class PlayerClass{
     //attributes
     public Player: string  | null;
+    public PlayerImg: string  | null;
     public PlayerId: string;
     public PlayerSocket: Socket | undefined;
     constructor()

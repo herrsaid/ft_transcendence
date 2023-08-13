@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:14 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/12 10:05:41 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/13 17:56:28 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ export class RoomSettingsEntity {
   RoomMood: boolean;
   @IsString()
   myusername: string | null;
+  @IsString()
+  myimage: string | null;
 }
 
 export class UserInfo {
@@ -32,6 +34,8 @@ export class UserInfo {
   RoomNumber: number;
   @IsString()
   Username: string | null;
+  @IsString()
+  myimage: string | null;
 }
 
 export class PingPongGamePlayEntity {

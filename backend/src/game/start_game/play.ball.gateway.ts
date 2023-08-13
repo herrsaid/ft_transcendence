@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:00 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/10 13:59:02 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/13 18:14:23 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@ import {
     WebSocketServer,
   } from '@nestjs/websockets';
   import { Interval } from "@nestjs/schedule";
-  import { Player1ID,speed1,points1,myusername} from './play.player1.gateway'
-  import { Player2ID,speed2,points2,enemyusername} from './play.player2.gateway'
+  import { Player1ID,speed1,points1,myusername,myimage} from './play.player1.gateway'
+  import { Player2ID,speed2,points2,enemyusername,enemyimage} from './play.player2.gateway'
   import {data } from '../game_brain/logic/game_server_class';
   import e from 'express';
 import { HistoryManager } from '../data_manager/HistoryManager';
@@ -40,6 +40,8 @@ import { UserService } from 'src/user/services/user.service';
       GameObj[0].RoomInfo.GamePoints= points1 | points2;
       GameObj[0].PlayersInfo.Player1UserName = myusername;
       GameObj[0].PlayersInfo.Player2UserName = enemyusername;
+      GameObj[0].PlayersInfo.Player1Image = myimage;
+      GameObj[0].PlayersInfo.Player2Image = enemyimage;
       GameObj[0].RoomInfo.GameStatus = 1;
       GameObj[0].PlayersInfo.Player1ID = Player1ID;
       GameObj[0].PlayersInfo.Player2ID = Player2ID;
@@ -53,6 +55,8 @@ import { UserService } from 'src/user/services/user.service';
       GameObj[GameObj.length - 1].RoomInfo.GamePoints= points1 | points2;
       GameObj[GameObj.length - 1].PlayersInfo.Player1UserName = myusername;
       GameObj[GameObj.length - 1].PlayersInfo.Player2UserName = enemyusername;
+      GameObj[GameObj.length - 1].PlayersInfo.Player1Image = myimage;
+      GameObj[GameObj.length - 1].PlayersInfo.Player2Image = enemyimage;
       GameObj[GameObj.length - 1].RoomInfo.GameStatus = 1;
       GameObj[GameObj.length - 1].PlayersInfo.Player1ID = Player1ID;
       GameObj[GameObj.length - 1].PlayersInfo.Player2ID = Player2ID;
