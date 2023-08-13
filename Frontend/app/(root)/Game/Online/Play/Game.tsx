@@ -187,7 +187,7 @@ function first_conection(p5:p5)
 
 function NewValue()
 {
-  if((window.innerWidth !== GameWidth || (window.innerWidth/2) !== GameHeight) && window.innerWidth < 1080)
+  if((Math.floor(window.innerWidth) !== GameWidth || Math.floor(window.innerWidth/2) !== GameHeight) && window.innerWidth < 1080)
   {
     GameWidth = Math.floor(window.innerWidth);
     GameHeight =  Math.floor(window.innerWidth/2);
