@@ -62,6 +62,27 @@ import { AuthenticationService } from '../services/authentication.service';
 
 
   @UseGuards(AuthGuard)
+  @Post('turn-off')
+  @HttpCode(200)
+  async turnOffTwoFactorAuthentication(
+    @Req() request: RequestWithUser,
+    @Body() { twoFactorAuthenticationCode } : TwoFactorAuthenticationCodeDto
+  ) {
+
+    const isCodeValid = this.twoFactorAuthenticationService.isTwoFactorAuthenticationCodeValid(
+      twoFactorAuthenticationCode, request.user
+    );
+
+    if (!isCodeValid) {
+      throw new UnauthorizedException('Wrong authentication code');
+    }
+    await this.userService.turnOffTwoFactorAuthentication(request.user.id);
+     
+  }
+
+
+
+  @UseGuards(AuthGuard)
   @Post('authenticate')
   @HttpCode(200)
   async authenticate(

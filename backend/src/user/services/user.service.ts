@@ -58,6 +58,20 @@ export class UserService {
         
     }
 
+
+    async turnOffTwoFactorAuthentication(userId: number) {
+        try
+        {
+            return this.userRepo.update(userId, {
+                isTwoFactorAuthenticationEnabled: false
+              });
+        }
+        catch{
+            throw new BadRequestException(); 
+        }
+        
+    }
+
     async findOne(id:number)
     {
         try
