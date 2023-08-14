@@ -8,6 +8,7 @@ import { host, Access, Speed, Points, myusername, enemmyusername,enemmyimage,myi
 import { host2, Access2, Speed2, Points2, myusername2, enemmyusername2,enemmyimage2,myimage2} from '../../Lobbie/Rooms/Rooms';
 
 import UserContext from "@/app/(root)/UserContext";
+import { PlayerClass } from '../../../../../../backend/src/game/auto_match/auto_match_class/PlayerClass';
 
 
 let GameWidth: number = 800, GameHeight: number = 400, GameSpeed: number = 4;
@@ -292,19 +293,20 @@ const Game = () => {
 
   return (
     <>
-      <div className=" relative flex h-[25vw] w-[100%] mx-auto my-auto">
-        <img className=" relative flex w-[50%] h-[25vw] bg-center" src={myimage1!}/>
-        <div className="absolute flex w-[50%] h-[25vw] left-[25%] trapezoid z-10">
-          {/* <div id="HeaderInfo" className=" relative flex mx-auto my-auto w-[100%] h-[20px] md:h-[30px] lg:h-[40px] z-20 bg-slate-600"> */}
-          {/* </div> */}
+      <div className=" relative flex h-[12.5vw] w-[50%] mx-auto my-auto rounded-lg">
+        <img className=" relative flex w-[25%] h-[100%] bg-center rounded-l-lg" src="/2.jpg"/>
+        {/* <img className=" relative flex w-[50%] h-[50%%] bg-center" src={myimage1!}/> */}
+        <div className="absolute flex w-[60%] h-[100%] left-[20%] trapezoid z-10">
         </div>
-            <div className="absolute flex lg:left-[35%] md:left-[35%] sm:left-[30%] mn:left-[36%] mn2:left-[31%] top-[45%] mn:text-xs mn2:text-xs text-xl md:text-2xl lg:text-3xl font-semibold text-white z-20 ">{myusername1}</div>
-            <div className="absolute flex lg:left-[45%] md:left-[45%] sm:left-[43%] mn:left-[45%] mn2:left-[45%] top-[45%] mn:text-xs mn2:text-xs text-xl md:text-2xl lg:text-3xl font-semibold text-white z-20 ">{reslt1}</div>
-            <div className="absolute flex lg:left-[50%] md:left-[50%] sm:left-[49%] mn:left-[48%] mn2:left-[49%] top-[45%] mn:text-xs mn2:text-xs text-xl md:text-2xl lg:text-3xl font-semibold text-white z-20 ">-</div>
-            <div className="absolute flex lg:left-[55%] md:left-[55%] sm:left-[55%] mn:left-[50%] mn2:left-[52%] top-[45%] mn:text-xs mn2:text-xs text-xl md:text-2xl lg:text-3xl font-semibold text-white z-20 ">{reslt2}</div>
-            <div className="absolute flex lg:left-[60%] md:left-[60%] sm:left-[60%] mn:left-[54%] mn2:left-[56%] top-[45%] mn:text-xs mn2:text-xs text-xl md:text-2xl lg:text-3xl font-semibold text-white z-20 ">{enemmyusername1}</div>
-        <img className="relative flex w-[50%] h-[25vw] bg-center" src={enemmyimage1!}/>
-        <div id="button"></div>
+        {/* <img className="relative flex w-[50%] h-[25vw] bg-center" src={enemmyimage1!}/> */}
+        <img className="relative flex left-[50%] w-[25%] h-[100%] bg-center rounded-r-lg" src="/3.jpg"/>
+      </div>
+      <div  className=" absolute flex h-[12.5vw] w-[25%] left-[37.5%] bottom-[0] rounded-xl z-20">
+        <div className="relative my-auto px-1 flex z-20 text-white text-[2.1vw]">player1</div>
+        <div className="relative my-auto  flex z-20 text-white text-[2.1vw]">0</div>
+        <div className="relative my-auto mx-auto flex z-20 text-white text-[2.1vw]">-</div>
+        <div className="relative my-auto flex z-20 text-white text-[2.1vw]">0</div>
+        <div className="relative my-auto px-1 flex z-20 text-white text-[2.1vw]">player2</div>
       </div>
       <div id="sketch-container"></div>
     </>

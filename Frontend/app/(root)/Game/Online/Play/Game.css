@@ -12,8 +12,7 @@
 
 .trapezoid {
     border-bottom: 30px solid transparent;
-      border-Top: 25vw solid #000;
-      border-left: 6vw solid transparent;
-      border-right: 6vw solid transparent;
-      height: 70px;
+      border-Top: 12.5vw solid #000;
+      border-left: 2vw solid transparent;
+      border-right: 2vw solid transparent;
   }
