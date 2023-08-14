@@ -200,8 +200,8 @@ async function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<st
         }
             socket.on('SendData', (username,playerimg,data) => {
             enemmyusername = username;
-            host = data;
             enemmyimage = playerimg;
+            host = data;
             Access = 1;
             socket.disconnect();
             router.replace('/Game//Online/Play');

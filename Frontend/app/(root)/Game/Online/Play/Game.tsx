@@ -28,6 +28,7 @@ let myusername1: string | null = null;
 let enemmyusername1: string | null = null;
 let myimage1: string | null = null;
 let enemmyimage1: string | null = null;
+
 if(Access === 1)
 {
     host1 = host; 
@@ -74,6 +75,8 @@ else
     else
       enemmyimage1 = "/3.jpg";
 }
+
+console.log(enemmyimage1,myimage1);
 function ConvertServerData(ServerData:number,Mood:number)
 {
   if(Mood)
@@ -195,7 +198,8 @@ function first_conection(p5:p5)
 {
   if(!Access1)
   {
-    p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
+    if(document.getElementById('sketch-container'))
+      p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
     p5.background(0);
     p5.fill(255,255,255);
     p5.text("please sign-in before playing", GameWidth/2 - GameWidth/4, GameHeight/2 + GameHeight/24);
@@ -214,7 +218,9 @@ function first_conection(p5:p5)
 
 function NewValue(p5:p5)
 {
-  let canvas:p5.Element = p5.createCanvas(GameWidth, GameHeight).parent('sketch-container');
+  let canvas:p5.Element| null = null;
+  if(document.getElementById('sketch-container'))
+    canvas = p5.createCanvas(GameWidth, GameHeight).parent('sketch-container');
   if((Math.floor(window.innerWidth) !== GameWidth || Math.floor(window.innerWidth/2) !== GameHeight) && window.innerWidth < 1080)
   {
     GameWidth = Math.floor(window.innerWidth);
@@ -231,7 +237,8 @@ function NewValue(p5:p5)
     Result1Ypos = Math.floor(GameHeight/10)
     Result2Xpos  = Math.floor(GameWidth/2 + GameWidth/16);
     Result2Ypos = Math.floor(GameHeight/10);
-    p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
+    if(document.getElementById('sketch-container'))
+      p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
     p5.background(25);
   }
   else if (window.innerWidth >= 1080)
@@ -250,10 +257,12 @@ function NewValue(p5:p5)
     Result1Ypos = Math.floor(GameHeight/10)
     Result2Xpos  = Math.floor(GameWidth/2 + GameWidth/16);
     Result2Ypos = Math.floor(GameHeight/10);
-    p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
+    if(document.getElementById('sketch-container'))
+      p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
     p5.background(25);
   }
-  canvas.position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
+  if(canvas)
+    canvas.position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
 }
 
 function GameStatusChecker(p5: p5): boolean
@@ -307,7 +316,8 @@ const Game = () => {
           return ;
         if(GameStatusChecker(p5))
         {
-          p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
+          if(document.getElementById('sketch-container'))
+            p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
           p5.background(25);
           BallAnimation();
           if (host1)
@@ -337,7 +347,7 @@ const Game = () => {
   return (
     <div className="relative flex mx-auto my-auto w-[100%] h-[100vh]">
       <div className=" relative flex h-[12.5vw] w-[50%] lg:h-[125px] lg:w-[500px] mx-auto">
-        <img className=" relative flex w-[25%] h-[100%] bg-center rounded-tl-lg" src={myimage1!}/>
+        <img className=" relative flex w-[25%] h-[100%] bg-center rounded-tl-lg" src={myimage1!.toString()}/>
         {/* <img className=" relative flex w-[50%] h-[50%%] bg-center" src={myimage1!}/> */}
         <div className="absolute flex w-[60%] h-[100%] left-[20%] trapezoid z-10">
         </div>
@@ -349,7 +359,7 @@ const Game = () => {
         <div className="relative my-auto  flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">{reslt1}</div>
         <div className="relative my-auto mx-auto flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">-</div>
         <div className="relative my-auto   flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">{reslt2}</div>
-        <div className="relative my-auto px-[5%]  flex z-20 text-white text-[1.5vw] lg:text-[1vw]">{enemmyusername1!}</div>
+        <div className="relative my-auto px-[5%]  flex z-20 text-white text-[1.5vw] lg:text-[1vw]">{enemmyusername1!.toString()}</div>
       </div>
       {/* <div className="relative flex h-[40vw] w-[60%] mx-auto"> */}
         <div id="sketch-container" className="absolute flex mx-auto my-auto w-[100%] h-[50vw]"></div>
