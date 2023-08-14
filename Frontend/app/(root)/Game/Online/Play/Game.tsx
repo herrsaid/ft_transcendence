@@ -9,6 +9,7 @@ import { host2, Access2, Speed2, Points2, myusername2, enemmyusername2,enemmyima
 
 import UserContext from "@/app/(root)/UserContext";
 import { PlayerClass } from '../../../../../../backend/src/game/auto_match/auto_match_class/PlayerClass';
+import { relative } from "path";
 
 
 let GameWidth: number = 800, GameHeight: number = 400, GameSpeed: number = 4;
@@ -170,8 +171,7 @@ function first_conection(p5:p5)
 {
   if(!Access1)
   {
-    p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').center();
-    p5.textSize(GameWidth/26);
+    p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
     p5.background(0);
     p5.fill(255,255,255);
     p5.text("please sign-in before playing", GameWidth/2 - GameWidth/4, GameHeight/2 + GameHeight/24);
@@ -207,10 +207,29 @@ function NewValue(p5:p5)
     Result1Ypos = Math.floor(GameHeight/10)
     Result2Xpos  = Math.floor(GameWidth/2 + GameWidth/16);
     Result2Ypos = Math.floor(GameHeight/10);
-    p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').center();
+    p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
     p5.background(25);
   }
-  canvas.center();
+  else if (window.innerWidth >= 1080)
+  {
+    GameWidth = Math.floor(1080);
+    GameHeight =  Math.floor(540);
+    BallWidth = Math.floor(GameWidth/52);
+    BallHeight = Math.floor(GameHeight/26);
+    Racket1Width = Math.floor(GameWidth/80);
+    Racket1Height = Math.floor(GameHeight/6);
+    Racket1Xpos = Math.floor(GameWidth/160);
+    Racket2Width = Math.floor(GameWidth/80);
+    Racket2Height = Math.floor(GameHeight/6);
+    Racket2Xpos = Math.floor(GameWidth-((GameWidth/80)+(GameWidth/160)));
+    Result1Xpos  = Math.floor(GameWidth/2 - GameWidth/12);
+    Result1Ypos = Math.floor(GameHeight/10)
+    Result2Xpos  = Math.floor(GameWidth/2 + GameWidth/16);
+    Result2Ypos = Math.floor(GameHeight/10);
+    p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
+    p5.background(25);
+  }
+  canvas.position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
 }
 
 function GameStatusChecker(p5: p5): boolean
@@ -264,7 +283,7 @@ const Game = () => {
           return ;
         if(GameStatusChecker(p5))
         {
-          p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').center();
+          p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
           p5.background(25);
           BallAnimation();
           if (host1)
@@ -292,24 +311,26 @@ const Game = () => {
   }, []);
 
   return (
-    <>
-      <div className=" relative flex h-[12.5vw] w-[50%] mx-auto my-auto rounded-lg">
-        <img className=" relative flex w-[25%] h-[100%] bg-center rounded-l-lg" src="/2.jpg"/>
+    <div className="relative flex mx-auto my-auto w-[100%] h-[100vh]">
+      <div className=" relative flex h-[12.5vw] w-[50%] lg:h-[125px] lg:w-[500px] mx-auto">
+        <img className=" relative flex w-[25%] h-[100%] bg-center rounded-tl-lg" src="/2.jpg"/>
         {/* <img className=" relative flex w-[50%] h-[50%%] bg-center" src={myimage1!}/> */}
         <div className="absolute flex w-[60%] h-[100%] left-[20%] trapezoid z-10">
         </div>
         {/* <img className="relative flex w-[50%] h-[25vw] bg-center" src={enemmyimage1!}/> */}
-        <img className="relative flex left-[50%] w-[25%] h-[100%] bg-center rounded-r-lg" src="/3.jpg"/>
+        <img className="relative flex left-[50%] w-[25%] h-[100%] bg-center rounded-tr-lg" src="/3.jpg"/>
       </div>
-      <div  className=" absolute flex h-[12.5vw] w-[25%] left-[37.5%] bottom-[0] rounded-xl z-20">
-        <div className="relative my-auto px-1 flex z-20 text-white text-[2.1vw]">player1</div>
-        <div className="relative my-auto  flex z-20 text-white text-[2.1vw]">0</div>
+      <div  className=" absolute flex h-[12.5vw] w-[25%] left-[37.5%] rounded-xl z-20">
+        <div className="relative my-auto px-5 flex z-20 text-white text-[1.5vw]">player1</div>
+        <div className="relative my-auto px-2 flex z-20 text-white text-[2.1vw]">0</div>
         <div className="relative my-auto mx-auto flex z-20 text-white text-[2.1vw]">-</div>
-        <div className="relative my-auto flex z-20 text-white text-[2.1vw]">0</div>
-        <div className="relative my-auto px-1 flex z-20 text-white text-[2.1vw]">player2</div>
+        <div className="relative my-auto px-2 flex z-20 text-white text-[2.1vw]">0</div>
+        <div className="relative my-auto px-5 flex z-20 text-white text-[1.5vw]">player2</div>
       </div>
-      <div id="sketch-container"></div>
-    </>
+      {/* <div className="relative flex h-[40vw] w-[60%] mx-auto"> */}
+        <div id="sketch-container" className="absolute flex mx-auto my-auto w-[100%] h-[50vw]"></div>
+      {/* </div> */}
+    </div>
   );
 }
 
