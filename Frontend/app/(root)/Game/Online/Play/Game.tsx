@@ -33,11 +33,23 @@ if(Access === 1)
     host1 = host; 
     Access1 = Access; 
     Speed1 = Speed; 
-    Points1 = Points; 
-    myusername1 = myusername; 
-    enemmyusername1 = enemmyusername; 
-    myimage1 = myimage;
-    enemmyimage1 = enemmyimage;
+    Points1 = Points;
+    if(myusername)
+      myusername1 = myusername; 
+    else
+      myusername1 = "playerI"; 
+    if(enemmyusername)
+      enemmyusername1 = enemmyusername; 
+    else
+      enemmyusername1 = 'playerII';
+    if(myimage)
+      myimage1 = myimage;
+    else
+      myimage1 = "/2.jpg";
+    if(enemmyimage)
+      enemmyimage1 = enemmyimage;
+    else
+      enemmyimage1 = "/3.jpg";
 }
 else
 {
@@ -45,10 +57,22 @@ else
     Access1 = Access2;
     Speed1 = Speed2;
     Points1 = Points2;
-    myusername1 = myusername2;
-    enemmyusername1 = enemmyusername2;
-    myimage1 = myimage2;
-    enemmyimage1 = enemmyimage2;
+    if(myusername2)
+      myusername1 = myusername2;
+    else
+      myusername1 = "playerI"; 
+    if(enemmyusername2)
+      enemmyusername1 = enemmyusername2;
+    else
+      enemmyusername1 = 'playerII';
+    if(myimage2)
+      myimage1 = myimage2;
+    else
+      myimage1 = "/2.jpg";
+    if(enemmyimage2)
+      enemmyimage1 = enemmyimage2;
+    else
+      enemmyimage1 = "/3.jpg";
 }
 function ConvertServerData(ServerData:number,Mood:number)
 {
@@ -313,19 +337,19 @@ const Game = () => {
   return (
     <div className="relative flex mx-auto my-auto w-[100%] h-[100vh]">
       <div className=" relative flex h-[12.5vw] w-[50%] lg:h-[125px] lg:w-[500px] mx-auto">
-        <img className=" relative flex w-[25%] h-[100%] bg-center rounded-tl-lg" src="/2.jpg"/>
+        <img className=" relative flex w-[25%] h-[100%] bg-center rounded-tl-lg" src={myimage1!}/>
         {/* <img className=" relative flex w-[50%] h-[50%%] bg-center" src={myimage1!}/> */}
         <div className="absolute flex w-[60%] h-[100%] left-[20%] trapezoid z-10">
         </div>
         {/* <img className="relative flex w-[50%] h-[25vw] bg-center" src={enemmyimage1!}/> */}
-        <img className="relative flex left-[50%] w-[25%] h-[100%] bg-center rounded-tr-lg" src="/3.jpg"/>
+        <img className="relative flex left-[50%] w-[25%] h-[100%] bg-center rounded-tr-lg" src={enemmyimage1!}/>
       </div>
       <div  className=" absolute flex h-[12.5vw] w-[25%] lg:h-[125px] lg:w-[250px] left-[37.5%] lg:left-[43.3%] rounded-xl z-20">
-        <div className="relative my-auto px-[5%]  flex z-20 text-white text-[1.5vw] lg:text-[1vw]">player1</div>
-        <div className="relative my-auto  flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">0</div>
+        <div className="relative my-auto px-[5%]  flex z-20 text-white text-[1.5vw] lg:text-[1vw]">{myusername1!}</div>
+        <div className="relative my-auto  flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">{reslt1}</div>
         <div className="relative my-auto mx-auto flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">-</div>
-        <div className="relative my-auto   flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">0</div>
-        <div className="relative my-auto px-[5%]  flex z-20 text-white text-[1.5vw] lg:text-[1vw]">player2</div>
+        <div className="relative my-auto   flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">{reslt2}</div>
+        <div className="relative my-auto px-[5%]  flex z-20 text-white text-[1.5vw] lg:text-[1vw]">{enemmyusername1!}</div>
       </div>
       {/* <div className="relative flex h-[40vw] w-[60%] mx-auto"> */}
         <div id="sketch-container" className="absolute flex mx-auto my-auto w-[100%] h-[50vw]"></div>
