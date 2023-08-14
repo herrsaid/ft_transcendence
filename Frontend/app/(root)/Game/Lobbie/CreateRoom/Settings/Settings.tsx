@@ -26,9 +26,9 @@ export let other_tools: number = 0;
 export let host: boolean = false;
 export let Online: number = 1;
 export let Access: number = 0;
-export let myusername: string | null = null;
+export let myusername: string | null = "PLAYER I";
 export let enemmyusername: string | null = null;
-export let myimage: string | null = null;
+export let myimage: string | null = "/2.jpg";
 export let enemmyimage: string | null = null;
 function change_map_value(param: number)
 {

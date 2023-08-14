@@ -11,10 +11,11 @@
 /* ************************************************************************** */
 
 'use client'
-import { useEffect } from "react";
+import { useEffect,useContext,useState } from "react";
+import UserContext from "@/app/(root)/UserContext";
 import p5 from "p5";
 import './Game.css'
-import {Speed, Points,myusername} from '../../Lobbie/CreateRoom/Settings/Settings';
+import {Speed, Points,myusername,myimage} from '../../Lobbie/CreateRoom/Settings/Settings';
 
 let GameWidth: number = 800,GameHeight: number = 400,GameSpeed: number = Speed,GameTarget:number = Points;
 let BallWidth: number = 15, BallHeight = 15, BallXpos: number = GameWidth/2, BallYpos: number = GameHeight/2;
@@ -24,7 +25,6 @@ let Result1Val: number = 0, Result1Xpos: number = 350, Result1Ypos: number = 25;
 let Result2Val: number = 0, Result2Xpos: number = 450, Result2Ypos: number = 25;
 let BallXDirection: number = 1, BallYDirection: number = 1, alpha: number = -1;
 let gamediv: p5.Renderer;
-
 function Ball(p5: p5, x: number, y: number, w: number, h: number)
 {
   p5.fill(255,255,255);
@@ -161,7 +161,9 @@ function Racket2Animation(p5: p5)
 
 function NewValue(p5:p5)
 {
-  let canvas:p5.Element  = p5.createCanvas(GameWidth, GameHeight).parent('sketch-container');
+  let canvas:p5.Element| null = null;
+  if(document.getElementById('sketch-container'))
+    canvas = p5.createCanvas(GameWidth, GameHeight).parent('sketch-container');
   if((Math.floor(window.innerWidth) !== GameWidth || Math.floor(window.innerWidth/2) !== GameHeight) && window.innerWidth < 1080)
   {
     GameWidth = Math.floor(window.innerWidth);
@@ -178,7 +180,7 @@ function NewValue(p5:p5)
     Result1Ypos = Math.floor(GameHeight/10)
     Result2Xpos  = Math.floor(GameWidth/2 + GameWidth/16);
     Result2Ypos = Math.floor(GameHeight/10);
-    p5.createCanvas(GameWidth, GameHeight).parent('sketch-container');
+    p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
     p5.background(25);
     console.log("------------------------------");
     console.log("GameWidth: ",GameWidth);
@@ -197,7 +199,8 @@ function NewValue(p5:p5)
     console.log("Result2Ypos: ",Result2Ypos);
     console.log("------------------------------");
   }
-  canvas.center();
+  if(canvas)
+    canvas.position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
 }
 
 function GameStatusChecker(p5: p5): boolean
@@ -220,6 +223,9 @@ function GameStatusChecker(p5: p5): boolean
 }
 
 const Game = () => {
+  const contexUser = useContext(UserContext);
+  const [reslt1, setReslt1] = useState(0);
+  const [reslt2, setReslt2] = useState(0);
   useEffect(() => {
     let x = 25;
 
@@ -237,7 +243,9 @@ const Game = () => {
         Racket2Animation(p5);
         LineCenter(p5);
         Result1(p5, p5.str(Result1Val),Result1Xpos,Result1Ypos);
+        setReslt1(Result1Val);
         Result2(p5, p5.str(Result2Val),Result2Xpos,Result2Ypos);
+        setReslt2(Result2Val);
         Ball(p5,BallXpos,BallYpos,BallWidth,BallHeight);
         Racket1(p5,Racket1Xpos,Racket1Ypos,Racket1Width,Racket1Height);
         Racket2(p5,Racket2Xpos,Racket2Ypos,Racket2Width,Racket2Height);
@@ -250,7 +258,28 @@ const Game = () => {
     new p5(sketch);
   }, []);
 
-  return <div id="sketch-container" ></div>;
+  return (
+    <div className="relative flex mx-auto my-auto w-[100%] h-[100vh]">
+      <div className=" relative flex h-[12.5vw] w-[50%] lg:h-[125px] lg:w-[500px] mx-auto">
+        <img className=" relative flex w-[25%] h-[100%] bg-center rounded-tl-lg" src={myimage!.toString()}/>
+        {/* <img className=" relative flex w-[50%] h-[50%%] bg-center" src={myimage1!}/> */}
+        <div className="absolute flex w-[60%] h-[100%] left-[20%] trapezoid z-10">
+        </div>
+        {/* <img className="relative flex w-[50%] h-[25vw] bg-center" src={enemmyimage1!}/> */}
+        <img className="relative flex left-[50%] w-[25%] h-[100%] bg-center rounded-tr-lg" src={"/3.jpg"}/>
+      </div>
+      <div  className=" absolute flex h-[12.5vw] w-[25%] lg:h-[125px] lg:w-[250px] left-[37.5%] lg:left-[43.3%] rounded-xl z-20">
+        <div className="relative my-auto px-[5%]  flex z-20 text-white text-[1.5vw] lg:text-[1vw]">{myusername!.toString()}</div>
+        <div className="relative my-auto  flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">{reslt1}</div>
+        <div className="relative my-auto mx-auto flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">-</div>
+        <div className="relative my-auto   flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">{reslt2}</div>
+        <div className="relative my-auto px-[5%]  flex z-20 text-white text-[1.5vw] lg:text-[1vw]">{"BOT"}</div>
+      </div>
+      {/* <div className="relative flex h-[40vw] w-[60%] mx-auto"> */}
+        <div id="sketch-container" className="absolute flex mx-auto my-auto w-[100%] h-[50vw]"></div>
+      {/* </div> */}
+    </div>
+  );
 };
 
 export default Game;
