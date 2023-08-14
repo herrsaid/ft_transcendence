@@ -320,12 +320,12 @@ const Game = () => {
         {/* <img className="relative flex w-[50%] h-[25vw] bg-center" src={enemmyimage1!}/> */}
         <img className="relative flex left-[50%] w-[25%] h-[100%] bg-center rounded-tr-lg" src="/3.jpg"/>
       </div>
-      <div  className=" absolute flex h-[12.5vw] w-[25%] left-[37.5%] rounded-xl z-20">
-        <div className="relative my-auto px-5 flex z-20 text-white text-[1.5vw]">player1</div>
-        <div className="relative my-auto px-2 flex z-20 text-white text-[2.1vw]">0</div>
-        <div className="relative my-auto mx-auto flex z-20 text-white text-[2.1vw]">-</div>
-        <div className="relative my-auto px-2 flex z-20 text-white text-[2.1vw]">0</div>
-        <div className="relative my-auto px-5 flex z-20 text-white text-[1.5vw]">player2</div>
+      <div  className=" absolute flex h-[12.5vw] w-[25%] lg:h-[125px] lg:w-[250px] left-[37.5%] lg:left-[43.3%] rounded-xl z-20">
+        <div className="relative my-auto px-[5%]  flex z-20 text-white text-[1.5vw] lg:text-[1vw]">player1</div>
+        <div className="relative my-auto  flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">0</div>
+        <div className="relative my-auto mx-auto flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">-</div>
+        <div className="relative my-auto   flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">0</div>
+        <div className="relative my-auto px-[5%]  flex z-20 text-white text-[1.5vw] lg:text-[1vw]">player2</div>
       </div>
       {/* <div className="relative flex h-[40vw] w-[60%] mx-auto"> */}
         <div id="sketch-container" className="absolute flex mx-auto my-auto w-[100%] h-[50vw]"></div>
