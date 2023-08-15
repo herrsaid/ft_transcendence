@@ -1,7 +1,15 @@
 'use client'
 
-import { createContext } from "react";
+import {Dispatch, SetStateAction, createContext } from "react";
 
-const UserContext = createContext({});
+export interface UserContextType {
+    user: any;
+    setUser: Dispatch<SetStateAction<{}>>;
+   }
+   const user: UserContextType = {
+    user:{},
+    setUser: () => {}
+   }
+const UserContext = createContext<UserContextType>(user);
 
 export default UserContext;

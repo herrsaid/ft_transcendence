@@ -246,11 +246,11 @@ const PingPongSettings = ({ router }: any) =>
             enemmyimage: "/3.jpg",
         });
     const toast = useToast();
-    myusername = contexUser.user.username;
+    SetGameInfo({...GameInfo, myusername:contexUser.user.username,});
     if (contexUser.user.is_profile_img_updated)
-        myimage = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + contexUser.user.profile_img;
+        SetGameInfo({...GameInfo, myimage:process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + contexUser.user.profile_img,});
     else
-        myimage = contexUser.user.profile_img;
+        SetGameInfo({...GameInfo, myimage:contexUser.user.profile_img,});
     return(
 
        // #C56CDD,#18184a

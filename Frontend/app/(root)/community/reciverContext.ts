@@ -1,7 +1,15 @@
 'use client'
 
-import { createContext } from "react";
+import {Dispatch, SetStateAction, createContext } from "react";
 
-const reciverContext = createContext({});
+export interface reciverContextType {
+    reciver: any;
+    setReciver: Dispatch<SetStateAction<{}>>;
+   }
+   const reciver: reciverContextType = {
+    reciver:{},
+    setReciver: () => {}
+   }
 
+const reciverContext = createContext<reciverContextType>(reciver);
 export default reciverContext;
