@@ -19,18 +19,10 @@ import { useRouter } from 'next/navigation';
 import './Rooms.css';
 import { useContext } from 'react';
 import UserContext from "@/app/(root)/UserContext";
-
-export let host2: boolean = false;
-export let Points2: number = 0;
-export let Speed2: number = 0;
-export let Access2: number = 0,RoomNumber:number = 0;
-export let myusername2: string | null = null;
-export let enemmyusername2: string | null = null;
-export let myimage2: string | null = null;
-export let enemmyimage2: string | null = null;
+import { GetGameInfoContext } from '../../GameContext/GameCoentext';
 async function JoinToRoom(Room: number, router: AppRouterInstance)
 {
-  RoomNumber = Room+1;
+  let RoomNumber = Room+1;
   let Username = myusername2;
   let myimage = myimage2;
   socket.emit('JoinUser',{RoomNumber,Username,myimage});
@@ -84,6 +76,10 @@ async function  GetNumberOfRooms(router: AppRouterInstance)
 export default function Rooms() {
   const router: AppRouterInstance = useRouter();
   const contexUser = useContext(UserContext);
+  const GameInfo = GetGameInfoContext();
+
+  // GameInfo
+  // SetGameInfo({...GameInfo, other_tools:param,});
   myusername2 = contexUser.user.username;
     if (contexUser.user.is_profile_img_updated)
         myimage2 = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + contexUser.user.profile_img;

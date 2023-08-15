@@ -18,7 +18,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { useContext } from 'react';
 import UserContext from "@/app/(root)/UserContext";
 import {  useToast } from '@chakra-ui/react'
-import GameInfoContext,{GameInfoType,GameInfoStateType} from '../../../GameContext/GameCoentext';
+import GameInfoContext,{GameInfoType,GameInfoStateType,GetGameInfoContext} from '../../../GameContext/GameCoentext';
 
 function change_map_value(param: number,GameInfo:GameInfoType,SetGameInfo:GameInfoStateType)
 {
@@ -254,7 +254,7 @@ const PingPongSettings = ({ router }: any) =>
     return(
 
        // #C56CDD,#18184a
-       <GameInfoContext.Provider value={{ GameInfo }}>
+       <GameInfoContext.Provider value={{ GameInfo,SetGameInfo }}>
             <div id= "Settings" className="container mx-auto px-2 py-[250px] text-center items-center">
                 <div className="">
                     <div className=" bgtet h-[500px] md:h-[600px] lg:h-[700px] w-[400px] md:w-[500px] lg:w-[600px] mx-auto rounded-lg shadow-2xl py-[20px] ">
