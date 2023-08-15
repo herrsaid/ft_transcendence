@@ -94,13 +94,11 @@ import {
         let player_data:PlayerClass = new PlayerClass;
         if(data.Username === null)
         {
-          console.log("here1");
           client.emit('JoinRefused','please (log-in/sign-in) to accept your join');
           return ;
         }
         else if (data.Username === Rooms[data.RoomNumber].players[0].Player)
         {
-          console.log("here2");
           client.emit('JoinRefused',"You can't Join to yourself");
           return ;
         }

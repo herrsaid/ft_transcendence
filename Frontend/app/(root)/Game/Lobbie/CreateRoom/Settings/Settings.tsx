@@ -161,7 +161,6 @@ async function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<st
                   });
                 
         });
-        console.log('here');
         if(RoomMood === false && settings)
         {
             settings.innerHTML = "";

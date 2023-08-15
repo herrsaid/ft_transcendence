@@ -38,7 +38,6 @@ async function JoinToRoom(Room: number, router: AppRouterInstance)
     enemmyusername2 = username;
     enemmyimage2 = playerimg
     host2 = data;
-    console.log("data: "+enemmyusername2+" "+data);
   });
   await socket.on('JoinAccepted',(speed:number,points: number)=>
   {
@@ -50,7 +49,7 @@ async function JoinToRoom(Room: number, router: AppRouterInstance)
   });
   await socket.on('JoinRefused',(data: string)=>
   {
-    console.log('herehere: '+data);
+    console.log(data);
   });
 }
 async function  GetNumberOfRooms(router: AppRouterInstance)

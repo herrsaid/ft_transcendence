@@ -73,8 +73,11 @@ function GetAlpha(p5: p5,BallYpos: number, RacketYpos: number, RacketHeight: num
       if(BallYpos > RacketYpos || BallYpos < (RacketYpos + RacketHeight))
        ballYpos_racket = BallYpos - RacketYpos;
       else
+      {
         ballYpos_racket = 0;
-      let ballYpos_racket_par_100: number = p5.int(ballYpos_racket/(p5.int(RacketHeight/10)));
+        console.log("yaparie !");
+      }
+        let ballYpos_racket_par_100: number = p5.int(ballYpos_racket/(p5.int(RacketHeight/10)));
       alpha = ballYpos_racket_par_100 - (10 - ballYpos_racket_par_100);
       if(alpha === -10|| alpha === 10)
         alpha = 9;
@@ -162,12 +165,22 @@ function Racket2Animation(p5: p5)
 function NewValue(p5:p5)
 {
   let canvas:p5.Element| null = null;
+  let w:number = Math.floor(window.innerWidth) ;
+  let h:number = Math.floor(window.innerWidth/2);
   if(document.getElementById('sketch-container'))
     canvas = p5.createCanvas(GameWidth, GameHeight).parent('sketch-container');
-  if((Math.floor(window.innerWidth) !== GameWidth || Math.floor(window.innerWidth/2) !== GameHeight) && window.innerWidth < 1080)
+  if((w !== GameWidth || h !== GameHeight) && window.innerWidth < 1080)
   {
-    GameWidth = Math.floor(window.innerWidth);
-    GameHeight =  Math.floor(window.innerWidth/2);
+    // if(w > GameWidth)
+    //   BallXpos = Math.floor(((BallXpos*100)/w)* (GameWidth/100));
+    // else
+    BallXpos = Math.floor(((BallXpos*100)/GameWidth)*(w/100));
+    // if(h > GameHeight)
+    //   BallYpos = Math.floor(((BallYpos*100)/h)* (GameHeight/100));
+    // else
+    BallYpos = Math.floor(((BallYpos*100)/GameHeight)*(h/100));
+    GameWidth = w;
+    GameHeight =  h;
     BallWidth = Math.floor(GameWidth/52);
     BallHeight = Math.floor(GameHeight/26);
     Racket1Width = Math.floor(GameWidth/80);
@@ -259,20 +272,20 @@ const Game = () => {
   }, []);
 
   return (
-    <div className="relative flex mx-auto my-auto w-[100%] h-[100vh]">
+    <div className="relative flex mx-auto my-auto w-[100%] h-[calc(50vw+12.5vw)] lg:h-[calc(540px+12.5vw)]">
       <div className=" relative flex h-[12.5vw] w-[50%] lg:h-[125px] lg:w-[500px] mx-auto">
-        <img className=" relative flex w-[25%] h-[100%] bg-center rounded-tl-lg" src={myimage!.toString()}/>
+        <img className=" relative flex w-[25%] h-[100%] bg-center rounded-tl-xl" src={myimage!.toString()}/>
         {/* <img className=" relative flex w-[50%] h-[50%%] bg-center" src={myimage1!}/> */}
         <div className="absolute flex w-[60%] h-[100%] left-[20%] trapezoid z-10">
         </div>
         {/* <img className="relative flex w-[50%] h-[25vw] bg-center" src={enemmyimage1!}/> */}
-        <img className="relative flex left-[50%] w-[25%] h-[100%] bg-center rounded-tr-lg" src={"/3.jpg"}/>
+        <img className="relative flex left-[50%] w-[25%] h-[100%] bg-center rounded-tr-xl" src={"/3.jpg"}/>
       </div>
       <div  className=" absolute flex h-[12.5vw] w-[25%] lg:h-[125px] lg:w-[250px] left-[37.5%] lg:left-[43.3%] rounded-xl z-20">
         <div className="relative my-auto px-[5%]  flex z-20 text-white text-[1.5vw] lg:text-[1vw]">{myusername!.toString()}</div>
-        <div className="relative my-auto  flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">{reslt1}</div>
+        <div className="relative my-auto flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">{reslt1}</div>
         <div className="relative my-auto mx-auto flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">-</div>
-        <div className="relative my-auto   flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">{reslt2}</div>
+        <div className="relative my-auto flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">{reslt2}</div>
         <div className="relative my-auto px-[5%]  flex z-20 text-white text-[1.5vw] lg:text-[1vw]">{"BOT"}</div>
       </div>
       {/* <div className="relative flex h-[40vw] w-[60%] mx-auto"> */}
