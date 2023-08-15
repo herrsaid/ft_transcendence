@@ -68,17 +68,20 @@ function GetAlpha(p5: p5,BallYpos: number, RacketYpos: number, RacketHeight: num
         BallYDirection = 1;
       else
         BallYDirection = -1;
+     if(alpha < 0)
+      alpha *= -1;
+
 }
 function BallAnimation(p5: p5)
 {
-  BallXpos += (BallXDirection * GameSpeed);
+  BallXpos += Math.floor(BallXDirection);
   if(BallYpos < Racket2Ypos || BallYpos > (Racket2Ypos + Racket2Height))
   {
     if(BallXpos > GameWidth)
     {
       BallXDirection = -1;
       Result1Val++;
-      BallXpos = GameWidth/2;
+      BallXpos = Math.floor(GameWidth/2);
     }
   }
   else
@@ -95,7 +98,7 @@ function BallAnimation(p5: p5)
     {
       BallXDirection = +1;
       Result2Val++;
-      BallXpos = GameWidth/2;
+      BallXpos = Math.floor(GameWidth/2);
     }
   }
   else
@@ -187,7 +190,7 @@ function GameStatusChecker(p5: p5): boolean
   {
     p5.background(0);
     p5.fill(255,255,255);
-    p5.text('UserII WIN', GameWidth/2 - GameWidth/12, GameHeight/2 + GameHeight/12);
+    p5.text('PLAYER II WIN', GameWidth/2 - GameWidth/12, GameHeight/2 + GameHeight/12);
     return false;
   }
   return true;
@@ -209,7 +212,8 @@ const Game = () => {
         if(!GameStatusChecker(p5))
           return;
         p5.background(25);
-        BallAnimation(p5);
+        for(let a=0;a<GameSpeed;a++)
+          BallAnimation(p5);
         Racket1Animation(p5);
         Racket2Animation(p5);
         LineCenter(p5);

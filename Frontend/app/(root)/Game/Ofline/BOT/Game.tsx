@@ -51,14 +51,12 @@ function GetAlpha(p5: p5,BallYpos: number, RacketYpos: number, RacketHeight: num
 {
   let ballYpos_racket: number;
       if(BallYpos > RacketYpos || BallYpos < (RacketYpos + RacketHeight))
-       ballYpos_racket = BallYpos - RacketYpos;
+        ballYpos_racket = BallYpos - RacketYpos;
       else
-      {
         ballYpos_racket = 0;
-        console.log("yaparie !");
-      }
-        let ballYpos_racket_par_100: number = p5.int(ballYpos_racket/(p5.int(RacketHeight/10)));
+      let ballYpos_racket_par_100: number = p5.int(ballYpos_racket/(p5.int(RacketHeight/10)));
       alpha = ballYpos_racket_par_100 - (10 - ballYpos_racket_par_100);
+      alpha = Math.floor(alpha);
       if(alpha === -10|| alpha === 10)
         alpha = 9;
       if(alpha > 0)
@@ -69,17 +67,19 @@ function GetAlpha(p5: p5,BallYpos: number, RacketYpos: number, RacketHeight: num
         BallYDirection = 1;
       else
         BallYDirection = -1;
+      if(alpha < 0)
+        alpha *= -1;
 }
 function BallAnimation(p5: p5)
 {
-  BallXpos += (BallXDirection * GameSpeed);
+  BallXpos += Math.floor(BallXDirection);
   if(BallYpos < Racket2Ypos || BallYpos > (Racket2Ypos + Racket2Height))
   {
     if(BallXpos > GameWidth)
     {
       BallXDirection = -1;
       Result1Val++;
-      BallXpos = GameWidth/2;
+      BallXpos = Math.floor(GameWidth/2);
     }
   }
   else
@@ -96,7 +96,7 @@ function BallAnimation(p5: p5)
     {
       BallXDirection = +1;
       Result2Val++;
-      BallXpos = GameWidth/2;
+      BallXpos =  Math.floor(GameWidth/2);
     }
   }
   else
@@ -219,7 +219,8 @@ const Game = () => {
         if(!GameStatusChecker(p5))
           return;
         p5.background(25);
-        BallAnimation(p5);
+        for(let a=0;a<GameSpeed;a++)
+          BallAnimation(p5);
         Racket1Animation(p5);
         Racket2Animation(p5);
         LineCenter(p5);
