@@ -19,23 +19,22 @@ import { useRouter } from 'next/navigation';
 import './Rooms.css';
 import { useContext } from 'react';
 import UserContext from "@/app/(root)/UserContext";
-import { GetGameInfoContext } from '../../GameContext/GameCoentext';
-async function JoinToRoom(Room: number, router: AppRouterInstance)
+import { GetGameInfoContext, GameContextType } from '../../GameContext/GameCoentext';
+import { Access } from '@/app/(root)/Stream/page';
+async function JoinToRoom(Room: number, router: AppRouterInstance,GameContext:GameContextType)
 {
   let RoomNumber = Room+1;
-  let Username = myusername2;
-  let myimage = myimage2;
+  let Username = GameContext.GameInfo.myusername;
+  let myimage = GameContext.GameInfo.myimage;
   socket.emit('JoinUser',{RoomNumber,Username,myimage});
   await socket.on('SendData', (username,playerimg,data) => {
-    enemmyusername2 = username;
-    enemmyimage2 = playerimg
-    host2 = data;
+    GameContext.SetGameInfo({...GameContext.GameInfo,enemmyusername:username});
+    GameContext.SetGameInfo({...GameContext.GameInfo,enemmyimage:playerimg});
+    GameContext.SetGameInfo({...GameContext.GameInfo,host:data});
   });
   await socket.on('JoinAccepted',(speed:number,points: number)=>
   {
-    Access2 = 1;
-    Speed2 = speed;
-    Points2 = points;
+    GameContext.SetGameInfo({...GameContext.GameInfo,Access:1});
     socket.disconnect();
     router.replace(`/Game/Online/Play`);
   });
@@ -44,7 +43,7 @@ async function JoinToRoom(Room: number, router: AppRouterInstance)
     console.log(data);
   });
 }
-async function  GetNumberOfRooms(router: AppRouterInstance)
+async function  GetNumberOfRooms(router: AppRouterInstance,GameContext:GameContextType)
 {
   socket.emit('GetRooms');
   await socket.on('GetRooms',(Room: number)=>
@@ -65,7 +64,7 @@ async function  GetNumberOfRooms(router: AppRouterInstance)
         element_btn.innerHTML = '<p>Join</p>';
         element.setAttribute("class",`Room`);
         element_btn.setAttribute("id",`Join`);
-        element_btn.onclick= ()=>{JoinToRoom(a,router)};
+        element_btn.onclick= ()=>{JoinToRoom(a,router,GameContext)};
         element.appendChild(element_btn);
         Rooms.appendChild(element);
       }
@@ -76,18 +75,17 @@ async function  GetNumberOfRooms(router: AppRouterInstance)
 export default function Rooms() {
   const router: AppRouterInstance = useRouter();
   const contexUser = useContext(UserContext);
-  const GameInfo = GetGameInfoContext();
-
-  // GameInfo
+  const GameContext = GetGameInfoContext();
+  GameContext.SetGameInfo({...GameContext.GameInfo, myusername:contexUser.user.username,});
   // SetGameInfo({...GameInfo, other_tools:param,});
-  myusername2 = contexUser.user.username;
+  // myusername2 = contexUser.user.username;
     if (contexUser.user.is_profile_img_updated)
-        myimage2 = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + contexUser.user.profile_img;
+      GameContext.SetGameInfo({...GameContext.GameInfo, myimage:process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + contexUser.user.profile_img,});
     else
-        myimage2 = contexUser.user.profile_img;
+      GameContext.SetGameInfo({...GameContext.GameInfo, myimage:contexUser.user.profile_img,});
   useEffect(()=>
   {
-    setInterval(()=>{GetNumberOfRooms(router);},1000);
+    setInterval(()=>{GetNumberOfRooms(router,GameContext);},1000);
   });
     return (
       <div className="container mx-auto px-2 py-[250px] text-center items-center ">
