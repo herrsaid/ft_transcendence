@@ -8,8 +8,6 @@ import { host, Access, Speed, Points, myusername, enemmyusername,enemmyimage,myi
 import { host2, Access2, Speed2, Points2, myusername2, enemmyusername2,enemmyimage2,myimage2} from '../../Lobbie/Rooms/Rooms';
 
 import UserContext from "@/app/(root)/UserContext";
-import { PlayerClass } from '../../../../../../backend/src/game/auto_match/auto_match_class/PlayerClass';
-import { relative } from "path";
 
 
 let GameWidth: number = 800, GameHeight: number = 400, GameSpeed: number = 4;

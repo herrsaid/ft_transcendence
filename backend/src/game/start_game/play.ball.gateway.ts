@@ -77,6 +77,8 @@ import { UserService } from 'src/user/services/user.service';
           Result2Val: GameObj[Room].PlayersInfo.Result2Val,
           Player1UserName: GameObj[Room].PlayersInfo.Player1UserName,
           Player2UserName: GameObj[Room].PlayersInfo.Player2UserName,
+          Player1Image: GameObj[Room].PlayersInfo.Player1Image,
+          Player2Image: GameObj[Room].PlayersInfo.Player2Image,
         }
         if(GameObj[Room].StreamsInfo[Spectator].SpectatorSocket)
           GameObj[Room].StreamsInfo[Spectator].SpectatorSocket.emit('send_players_data',playersdata);

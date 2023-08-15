@@ -1,17 +1,22 @@
 'use client'
-import { useEffect } from "react";
+
+import { useEffect,useContext,useState } from "react";
 import p5 from "p5";
 import './Stream.css';
 import { player1 } from '../../Game/Online/Socket/start_game_socket';
 import { Access,RoomNumber } from '../page';
 
+import UserContext from "@/app/(root)/UserContext";
+
 let GameWidth: number = 800, GameHeight: number = 400, GameSpeed: number = 4;
 let BallWidth: number = GameWidth/52, BallHeight = GameHeight/26, BallXpos: number = GameWidth/2, BallYpos: number = GameHeight/2;
 let Racket1Width: number = GameWidth/80, Racket1Height =  Math.floor(GameHeight/6), Racket1Xpos: number = 5, Racket1Ypos: number = (GameHeight/2) - (Racket1Height/2);
 let Racket2Width: number = GameWidth/80, Racket2Height =  Math.floor(GameHeight/6), Racket2Xpos: number = GameWidth-15, Racket2Ypos: number = (GameHeight/2) - (Racket1Height/2);
-let Result1Val: number = 0, Result1Xpos: number = 350, Result1Ypos: number = 25;
-let Result2Val: number = 0, Result2Xpos: number = 450, Result2Ypos: number = 25;
-let first_conection_val:boolean=false, message: string = '',Player2UserName:string ="",Player1UserName:string ="";
+let Result1Val: number = 0;
+let Result2Val: number = 0;
+let first_conection_val:boolean=false, message: string = '';
+let Player1UserName:string ="player I",Player2UserName:string ="player II";
+let Player1Image:string ="/2.jpg",Player2Image:string ="/3.jpg";
 
 function ConvertServerData(ServerData:number,Mood:number)
 {
@@ -43,25 +48,6 @@ function Racket2(p5: p5, x: number, y: number, w: number, h: number)
   p5.rect(x, y, w, h,10);
 }
 
-function Result1(p5: p5,res1: string, x: number, y: number)
-{
-  p5.textSize(GameWidth/26);
-  p5.fill('blue');
-  if(Player1UserName)
-    p5.text(Player1UserName, x - GameWidth/5, y);
-  p5.text(res1, x, y);
-}
-
-function Result2(p5: p5,res2: string, x: number, y: number)
-{
-  p5.textSize(GameWidth/26);
-  p5.fill('red');
-  if(Player2UserName)
-    p5.text(Player2UserName, x + GameWidth/16, y);
-  p5.text(res2, x, y);
-  p5.fill(255, 204, 0);
-}
-
 function first_conection()
 {
   if(first_conection_val === false)
@@ -81,72 +67,133 @@ function GetPlayersData()
     BallYpos = ConvertServerData(data.BallYpos,0);
     Result1Val = data.Result1Val;
     Result2Val = data.Result2Val;
-    Player1UserName = data.Player2UserName;
-    Player2UserName = data.Player1UserName;
+    if(data.Player1UserName)
+      Player1UserName = data.Player1UserName;
+    else
+      Player1UserName = "player I";
+    if(data.Player2UserName)
+      Player2UserName = data.Player2UserName;
+    else
+      Player2UserName = "player II";
+    if(data.Player1Image)
+      Player1Image = data.Player1Image;
+    else
+      Player1Image = "/2.jpg";
+    if(data.Player2Image)
+      Player2Image = data.Player2Image;
+    else
+      Player2Image = "/3.jpg";
   });
 }
 
-function NewValue()
+function NewValue(p5:p5)
 {
-  if(window.innerWidth/2 !== GameWidth || window.innerWidth/4 !== GameHeight)
+  let canvas:p5.Element| null = null;
+  let w:number = Math.floor(window.innerWidth) ;
+  let h:number = Math.floor(window.innerWidth/2);
+  if(document.getElementById('sketch-container'))
+    canvas = p5.createCanvas(GameWidth, GameHeight).parent('sketch-container');
+  if((w !== GameWidth || h !== GameHeight) && window.innerWidth < 1080)
   {
-    GameWidth = Math.floor(window.innerWidth/2);
-    GameHeight =  Math.floor(window.innerWidth/4);
+    BallXpos = Math.floor(((BallXpos*100)/GameWidth)*(w/100));
+    BallYpos = Math.floor(((BallYpos*100)/GameHeight)*(h/100));
+    Racket1Ypos = Math.floor(((Racket1Ypos*100)/GameHeight)*(h/100));
+    Racket2Ypos = Math.floor(((Racket2Ypos*100)/GameHeight)*(h/100));
+    GameWidth = w;
+    GameHeight =  h;
     BallWidth = Math.floor(GameWidth/52);
     BallHeight = Math.floor(GameHeight/26);
-    // BallXpos = Math.floor(GameWidth/2);
-    // BallYpos = Math.floor(GameHeight/2);
     Racket1Width = Math.floor(GameWidth/80);
     Racket1Height = Math.floor(GameHeight/6);
     Racket1Xpos = Math.floor(GameWidth/160);
-    // Racket1Ypos = Math.floor((GameHeight/2) - (Racket1Height/2));
     Racket2Width = Math.floor(GameWidth/80);
     Racket2Height = Math.floor(GameHeight/6);
     Racket2Xpos = Math.floor(GameWidth-((GameWidth/80)+(GameWidth/160)));
-    // Racket2Ypos = Math.floor((GameHeight/2) - (Racket2Height/2));
-    Result1Xpos  = Math.floor(GameWidth/2 - GameWidth/12);
-    Result1Ypos = Math.floor(GameHeight/10);
-    // Result1Val  = 0;
-    Result2Xpos  = Math.floor(GameWidth/2 + GameWidth/16);
-    Result2Ypos = Math.floor(GameHeight/10);
-    // Result2Val  = 0;
+    if(document.getElementById('sketch-container'))
+      p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
+    p5.background(25);
   }
+  else if (window.innerWidth >= 1080)
+  {
+    GameWidth = Math.floor(1080);
+    GameHeight =  Math.floor(540);
+    BallWidth = Math.floor(GameWidth/52);
+    BallHeight = Math.floor(GameHeight/26);
+    Racket1Width = Math.floor(GameWidth/80);
+    Racket1Height = Math.floor(GameHeight/6);
+    Racket1Xpos = Math.floor(GameWidth/160);
+    Racket2Width = Math.floor(GameWidth/80);
+    Racket2Height = Math.floor(GameHeight/6);
+    Racket2Xpos = Math.floor(GameWidth-((GameWidth/80)+(GameWidth/160)));
+    if(document.getElementById('sketch-container'))
+      p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
+    p5.background(25);
+  }
+  if(canvas)
+    canvas.position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
 }
 
 const Game = () => {
+  const contexUser = useContext(UserContext);
+  const [reslt1, setReslt1] = useState(0);
+  const [reslt2, setReslt2] = useState(0);
   useEffect(() => {
     const sketch = (p5: p5) => {
       p5.setup = () => {
       };
       
-      p5.draw = () => {
+      p5.draw = () => 
+      {
         GetPlayersData();
-        NewValue();
+        NewValue(p5);
         if(!Access)
         {
-          p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').center();
+          if(document.getElementById('sketch-container'))
+            p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
           p5.textSize(GameWidth/26);
-          p5.background(0);
+          p5.background(25);
           p5.fill(255,255,255);
           p5.text("please sign-in before playing", GameWidth/2 - GameWidth/4, GameHeight/2 + GameHeight/24);
           return ;
         }
         first_conection();
-          p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').center();
-          p5.background(25);
-          LineCenter(p5);
-          Result1(p5, p5.str(Result1Val),Result1Xpos,Result1Ypos);
-          Result2(p5, p5.str(Result2Val),Result2Xpos,Result2Ypos);
-          Ball(p5,BallXpos,BallYpos,BallWidth,BallHeight);
-          Racket1(p5,Racket1Xpos,Racket1Ypos,Racket1Width,Racket1Height);
-          Racket2(p5,Racket2Xpos,Racket2Ypos,Racket2Width,Racket2Height);
-        }
-      };
+        if(document.getElementById('sketch-container'))
+          p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
+        p5.background(25);
+        LineCenter(p5);
+        setReslt1(Result1Val);
+        setReslt2(Result2Val);
+        Ball(p5,BallXpos,BallYpos,BallWidth,BallHeight);
+        Racket1(p5,Racket1Xpos,Racket1Ypos,Racket1Width,Racket1Height);
+        Racket2(p5,Racket2Xpos,Racket2Ypos,Racket2Width,Racket2Height);
+      }
+    };
 
     new p5(sketch);
   }, []);
 
-  return <div id="sketch-container" ></div>;
+  return (
+    <div className="relative flex mx-auto my-auto w-[100%] h-[100vh]">
+      <div className=" relative flex h-[12.5vw] w-[50%] lg:h-[125px] lg:w-[500px] mx-auto">
+        <img className=" relative flex w-[25%] h-[100%] bg-center rounded-tl-xl" src={Player1Image!.toString()}/>
+        {/* <img className=" relative flex w-[50%] h-[50%%] bg-center" src={myimage1!}/> */}
+        <div className="absolute flex w-[60%] h-[100%] left-[20%] trapezoid z-10">
+        </div>
+        {/* <img className="relative flex w-[50%] h-[25vw] bg-center" src={enemmyimage1!}/> */}
+        <img className="relative flex left-[50%] w-[25%] h-[100%] bg-center rounded-tr-xl" src={Player2Image!}/>
+      </div>
+      <div  className=" absolute flex h-[12.5vw] w-[25%] lg:h-[125px] lg:w-[250px] left-[37.5%] lg:left-[43.3%] rounded-xl z-20">
+        <div className="relative my-auto px-[5%]  flex z-20 text-white text-[1.5vw] lg:text-[1vw]">{Player1UserName!}</div>
+        <div className="relative my-auto  flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">{reslt1}</div>
+        <div className="relative my-auto mx-auto flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">-</div>
+        <div className="relative my-auto   flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">{reslt2}</div>
+        <div className="relative my-auto px-[5%]  flex z-20 text-white text-[1.5vw] lg:text-[1vw]">{Player2UserName!.toString()}</div>
+      </div>
+      {/* <div className="relative flex h-[40vw] w-[60%] mx-auto"> */}
+        <div id="sketch-container" className="absolute flex mx-auto my-auto w-[100%] h-[50vw]"></div>
+      {/* </div> */}
+    </div>
+  );
 };
 
 export default Game;
