@@ -79,7 +79,7 @@ export class GameLogic
     {
         // this.debug(data);
         // allways let ball move on horizontal if BallXdirection is positive ball move right else ball move left
-        data.BallInfo.BallXpos += Math.floor(data.BallInfo.BallXdirection * data.RoomInfo.GameSpeed);
+        data.BallInfo.BallXpos += Math.floor(data.BallInfo.BallXdirection);
         //if ballYpos not in the same Rakect2Yposenter enter this condition
         if(data.BallInfo.BallYpos < data.RacketsInfo.Racket2Ypos || data.BallInfo.BallYpos > (data.RacketsInfo.Racket2Ypos + data.RacketsInfo.Racket2Height))
         {
@@ -136,7 +136,7 @@ export class GameLogic
                 data.BallInfo.BallYdirection = -1;
             if(data.BallInfo.BallYpos < data.BallInfo.BallHeight/2)
                 data.BallInfo.BallYdirection = +1;
-            data.BallInfo.BallYpos += (data.BallInfo.BallYdirection * data.RoomInfo.GameSpeed);
+            data.BallInfo.BallYpos += (data.BallInfo.BallYdirection);
         }
     }
 }

@@ -160,7 +160,9 @@ import { UserService } from 'src/user/services/user.service';
           if(GameObj[a].RoomInfo.Sleep <= 0 && GameObj[a].RoomInfo.GameStatus === 1)
           {
             //call function that contains Game logic
-            GameObj[a].Logic.Head(GameObj[a]);
+            let gamespeed = GameObj[a].RoomInfo.GameSpeed;
+            for(let loop=0;loop<gamespeed;loop++)
+              GameObj[a].Logic.Head(GameObj[a]);
             //call function that send room data to all players on this room
             this.send_data_to_players(a)
             //call function that send room data to all spectators on this room
