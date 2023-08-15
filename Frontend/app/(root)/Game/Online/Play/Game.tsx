@@ -16,8 +16,8 @@ let GameWidth: number = 800, GameHeight: number = 400, GameSpeed: number = 4;
 let BallWidth: number = GameWidth/52, BallHeight = GameHeight/26, BallXpos: number = GameWidth/2, BallYpos: number = GameHeight/2;
 let Racket1Width: number = GameWidth/80, Racket1Height =  Math.floor(GameHeight/6), Racket1Xpos: number = 5, Racket1Ypos: number = (GameHeight/2) - (Racket1Height/2);
 let Racket2Width: number = GameWidth/80, Racket2Height =  Math.floor(GameHeight/6), Racket2Xpos: number = GameWidth-15, Racket2Ypos: number = (GameHeight/2) - (Racket1Height/2);
-let Result1Val: number = 0, Result1Xpos: number = 350, Result1Ypos: number = 25;
-let Result2Val: number = 0, Result2Xpos: number = 450, Result2Ypos: number = 25;
+let Result1Val: number = 0;
+let Result2Val: number = 0;
 let first_conection_val:boolean=false, message: string = '';
 //-----------------------------------------------------------\\
 let host1: boolean = false;
@@ -113,24 +113,6 @@ function Racket2(p5: p5, x: number, y: number, w: number, h: number)
   p5.rect(x, y, w, h,10);
 }
 
-function Result1(p5: p5,res1: string, x: number, y: number)
-{
-  p5.textSize(GameWidth/26);
-  p5.fill('blue');
-  if(myusername1)
-    p5.text(myusername1, x - GameWidth/5, y);
-  p5.text(res1, x, y);
-}
-
-function Result2(p5: p5,res2: string, x: number, y: number)
-{
-  p5.textSize(GameWidth/26);
-  p5.fill('red');
-  if(enemmyusername1)
-    p5.text(enemmyusername1, x + GameWidth/16, y);
-  p5.text(res2, x, y);
-  p5.fill(255, 204, 0);
-}
 function BallAnimation ()
 {
   if(host1)
@@ -218,12 +200,18 @@ function first_conection(p5:p5)
 function NewValue(p5:p5)
 {
   let canvas:p5.Element| null = null;
+  let w:number = Math.floor(window.innerWidth) ;
+  let h:number = Math.floor(window.innerWidth/2);
   if(document.getElementById('sketch-container'))
     canvas = p5.createCanvas(GameWidth, GameHeight).parent('sketch-container');
-  if((Math.floor(window.innerWidth) !== GameWidth || Math.floor(window.innerWidth/2) !== GameHeight) && window.innerWidth < 1080)
+  if((w !== GameWidth || h !== GameHeight) && window.innerWidth < 1080)
   {
-    GameWidth = Math.floor(window.innerWidth);
-    GameHeight =  Math.floor(window.innerWidth/2);
+    BallXpos = Math.floor(((BallXpos*100)/GameWidth)*(w/100));
+    BallYpos = Math.floor(((BallYpos*100)/GameHeight)*(h/100));
+    Racket1Ypos = Math.floor(((Racket1Ypos*100)/GameHeight)*(h/100));
+    Racket2Ypos = Math.floor(((Racket2Ypos*100)/GameHeight)*(h/100));
+    GameWidth = w;
+    GameHeight =  h;
     BallWidth = Math.floor(GameWidth/52);
     BallHeight = Math.floor(GameHeight/26);
     Racket1Width = Math.floor(GameWidth/80);
@@ -232,10 +220,6 @@ function NewValue(p5:p5)
     Racket2Width = Math.floor(GameWidth/80);
     Racket2Height = Math.floor(GameHeight/6);
     Racket2Xpos = Math.floor(GameWidth-((GameWidth/80)+(GameWidth/160)));
-    Result1Xpos  = Math.floor(GameWidth/2 - GameWidth/12);
-    Result1Ypos = Math.floor(GameHeight/10)
-    Result2Xpos  = Math.floor(GameWidth/2 + GameWidth/16);
-    Result2Ypos = Math.floor(GameHeight/10);
     if(document.getElementById('sketch-container'))
       p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
     p5.background(25);
@@ -252,10 +236,6 @@ function NewValue(p5:p5)
     Racket2Width = Math.floor(GameWidth/80);
     Racket2Height = Math.floor(GameHeight/6);
     Racket2Xpos = Math.floor(GameWidth-((GameWidth/80)+(GameWidth/160)));
-    Result1Xpos  = Math.floor(GameWidth/2 - GameWidth/12);
-    Result1Ypos = Math.floor(GameHeight/10)
-    Result2Xpos  = Math.floor(GameWidth/2 + GameWidth/16);
-    Result2Ypos = Math.floor(GameHeight/10);
     if(document.getElementById('sketch-container'))
       p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
     p5.background(25);
@@ -303,7 +283,6 @@ const Game = () => {
   const contexUser = useContext(UserContext);
   const [reslt1, setReslt1] = useState(0);
   const [reslt2, setReslt2] = useState(0);
-  myusername1 = contexUser.user.username;
   useEffect(() => {
     const sketch = (p5: p5) => {
       p5.setup = () => {
@@ -324,9 +303,7 @@ const Game = () => {
           else
             Racket2Animation(p5);
           LineCenter(p5);
-          Result1(p5, p5.str(Result1Val),Result1Xpos,Result1Ypos);
           setReslt1(Result1Val);
-          Result2(p5, p5.str(Result2Val),Result2Xpos,Result2Ypos);
           setReslt2(Result2Val);
           Ball(p5,BallXpos,BallYpos,BallWidth,BallHeight);
           Racket1(p5,Racket1Xpos,Racket1Ypos,Racket1Width,Racket1Height);

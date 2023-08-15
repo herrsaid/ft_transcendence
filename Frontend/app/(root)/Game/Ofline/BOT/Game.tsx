@@ -21,9 +21,9 @@ let GameWidth: number = 800,GameHeight: number = 400,GameSpeed: number = Speed,G
 let BallWidth: number = 15, BallHeight = 15, BallXpos: number = GameWidth/2, BallYpos: number = GameHeight/2;
 let Racket1Width: number = 10, Racket1Height = 60, Racket1Xpos: number = 5, Racket1Ypos: number = 170;
 let Racket2Width: number = 10, Racket2Height = 60, Racket2Xpos: number = 785, Racket2Ypos: number = 170;
-let Result1Val: number = 0, Result1Xpos: number = 350, Result1Ypos: number = 25;
-let Result2Val: number = 0, Result2Xpos: number = 450, Result2Ypos: number = 25;
 let BallXDirection: number = 1, BallYDirection: number = 1, alpha: number = -1;
+let Result1Val: number = 0;
+let Result2Val: number = 0;
 let gamediv: p5.Renderer;
 function Ball(p5: p5, x: number, y: number, w: number, h: number)
 {
@@ -46,26 +46,6 @@ function Racket2(p5: p5, x: number, y: number, w: number, h: number)
 {
   p5.fill('red');
   p5.rect(x, y, w, h,10);
-}
-
-function Result1(p5: p5,res1: string, x: number, y: number)
-{
-  p5.textSize(GameWidth/26);
-  p5.fill('blue');
-  if(myusername)
-    p5.text(myusername, x - GameWidth/5, y);
-  else
-    p5.text('UserI', x - GameWidth/5, y);
-  p5.text(res1, x, y);
-}
-
-function Result2(p5: p5,res2: string, x: number, y: number)
-{
-  p5.textSize(GameWidth/26);
-  p5.fill('red');
-  p5.text('BOT', x + GameWidth/16, y);
-  p5.text(res2, x, y);
-  p5.fill(255, 204, 0);
 }
 function GetAlpha(p5: p5,BallYpos: number, RacketYpos: number, RacketHeight: number): undefined
 {
@@ -171,14 +151,10 @@ function NewValue(p5:p5)
     canvas = p5.createCanvas(GameWidth, GameHeight).parent('sketch-container');
   if((w !== GameWidth || h !== GameHeight) && window.innerWidth < 1080)
   {
-    // if(w > GameWidth)
-    //   BallXpos = Math.floor(((BallXpos*100)/w)* (GameWidth/100));
-    // else
     BallXpos = Math.floor(((BallXpos*100)/GameWidth)*(w/100));
-    // if(h > GameHeight)
-    //   BallYpos = Math.floor(((BallYpos*100)/h)* (GameHeight/100));
-    // else
     BallYpos = Math.floor(((BallYpos*100)/GameHeight)*(h/100));
+    Racket1Ypos = Math.floor(((Racket1Ypos*100)/GameHeight)*(h/100));
+    Racket2Ypos = Math.floor(((Racket2Ypos*100)/GameHeight)*(h/100));
     GameWidth = w;
     GameHeight =  h;
     BallWidth = Math.floor(GameWidth/52);
@@ -189,10 +165,6 @@ function NewValue(p5:p5)
     Racket2Width = Math.floor(GameWidth/80);
     Racket2Height = Math.floor(GameHeight/6);
     Racket2Xpos = Math.floor(GameWidth-((GameWidth/80)+(GameWidth/160)));
-    Result1Xpos  = Math.floor(GameWidth/2 - GameWidth/12);
-    Result1Ypos = Math.floor(GameHeight/10)
-    Result2Xpos  = Math.floor(GameWidth/2 + GameWidth/16);
-    Result2Ypos = Math.floor(GameHeight/10);
     p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
     p5.background(25);
     console.log("------------------------------");
@@ -206,10 +178,6 @@ function NewValue(p5:p5)
     console.log("Racket2Width: ",Racket2Width);
     console.log("Racket2Height: ",Racket2Height);
     console.log("Racket2Xpos: ",Racket2Xpos);
-    console.log("Result1Xpos: ",Result1Xpos);
-    console.log("Result1Ypos: ",Result1Ypos);
-    console.log("Result2Xpos: ",Result2Xpos);
-    console.log("Result2Ypos: ",Result2Ypos);
     console.log("------------------------------");
   }
   if(canvas)
@@ -255,9 +223,7 @@ const Game = () => {
         Racket1Animation(p5);
         Racket2Animation(p5);
         LineCenter(p5);
-        Result1(p5, p5.str(Result1Val),Result1Xpos,Result1Ypos);
         setReslt1(Result1Val);
-        Result2(p5, p5.str(Result2Val),Result2Xpos,Result2Ypos);
         setReslt2(Result2Val);
         Ball(p5,BallXpos,BallYpos,BallWidth,BallHeight);
         Racket1(p5,Racket1Xpos,Racket1Ypos,Racket1Width,Racket1Height);
