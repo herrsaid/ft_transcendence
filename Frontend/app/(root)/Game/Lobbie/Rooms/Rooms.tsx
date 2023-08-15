@@ -18,7 +18,7 @@ import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 import { useRouter } from 'next/navigation';
 import './Rooms.css';
 import UserContext from "@/app/(root)/UserContext";
-import { GetGameInfoContext, GameContextType } from '../../GameContext/GameCoentext';
+import { GetGameInfoContext, GameContextType } from '../../GameContext/GameContext';
 async function JoinToRoom(Room: number, router: AppRouterInstance,GameContext:GameContextType)
 {
   let RoomNumber = Room+1;

@@ -18,7 +18,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { useContext } from 'react';
 import UserContext from "@/app/(root)/UserContext";
 import {  useToast } from '@chakra-ui/react'
-import GameInfoContext,{GameInfoType,GameInfoStateType,GetGameInfoContext} from '../../../GameContext/GameCoentext';
+import GameInfoContext,{GameInfoType,GameInfoStateType,GetGameInfoContext} from '../../../GameContext/GameContext';
 
 function change_map_value(param: number,GameInfo:GameInfoType,SetGameInfo:GameInfoStateType)
 {
@@ -222,7 +222,9 @@ function change_pos(param :number,GameInfo:GameInfoType,SetGameInfo:GameInfoStat
         element.style.left = "-12.5%";
         else
         element.style.left = "35%";
+        console.log("before "+GameInfo.Speed, param);
         SetGameInfo({...GameInfo, Speed:param,});
+        console.log("after "+GameInfo.Speed, param);
     }
 }
 
@@ -230,31 +232,16 @@ const PingPongSettings = ({ router }: any) =>
 {
     const contexUser = useContext(UserContext);
     const [Warning, setWarning] = useState("");
-    const [GameInfo,SetGameInfo] = useState<GameInfoType>(
-        {
-            Points: 10,
-            Speed: 4,
-            pause_game: 0,
-            RoomMood: true,
-            other_tools: 0,
-            host: false,
-            Online: 1,
-            Access:0,
-            myusername: "Player I",
-            enemmyusername: "Player II",
-            myimage: "/2.jpg",
-            enemmyimage: "/3.jpg",
-        });
+    const GameContext = GetGameInfoContext();
     const toast = useToast();
-    SetGameInfo({...GameInfo, myusername:contexUser.user.username,});
+    GameContext.SetGameInfo({...GameContext.GameInfo, myusername:contexUser.user.username,});
     if (contexUser.user.is_profile_img_updated)
-        SetGameInfo({...GameInfo, myimage:process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + contexUser.user.profile_img,});
+        GameContext.SetGameInfo({...GameContext.GameInfo, myimage:process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + contexUser.user.profile_img,});
     else
-        SetGameInfo({...GameInfo, myimage:contexUser.user.profile_img,});
+        GameContext.SetGameInfo({...GameContext.GameInfo, myimage:contexUser.user.profile_img,});
     return(
 
        // #C56CDD,#18184a
-       <GameInfoContext.Provider value={{ GameInfo,SetGameInfo }}>
             <div id= "Settings" className="container mx-auto px-2 py-[250px] text-center items-center">
                 <div className="">
                     <div className=" bgtet h-[500px] md:h-[600px] lg:h-[700px] w-[400px] md:w-[500px] lg:w-[600px] mx-auto rounded-lg shadow-2xl py-[20px] ">
@@ -266,9 +253,9 @@ const PingPongSettings = ({ router }: any) =>
                             Speed :
                         </p>
                         <div className="relative flex my-auto  mx-auto h-[2px] w-[200px] md:w-[250px] lg:w-[300px] bg-indigo-500">
-                        <button  onClick={()=>  change_pos(1,GameInfo,SetGameInfo)} id="p_1" className="relative flex left-[0%] md:left-[0%] lg:left-[0%] bottom-[25px] text-white-500">x1</button>
-                        <button  onClick={()=>  change_pos(2,GameInfo,SetGameInfo)} id="p_2" className="relative flex left-[38.5%] md:left-[38.5%] lg:left-[38.5%] bottom-[25px] text-white-500">x2</button>
-                        <button  onClick={()=>  change_pos(4,GameInfo,SetGameInfo)} id="p_4" className="relative flex left-[75%] md:left-[80%] lg:left-[82.5%] bottom-[25px] text-white-500 ">x4</button>
+                        <button  onClick={()=>  change_pos(1,GameContext.GameInfo,GameContext.SetGameInfo)} id="p_1" className="relative flex left-[0%] md:left-[0%] lg:left-[0%] bottom-[25px] text-white-500">x1</button>
+                        <button  onClick={()=>  change_pos(2,GameContext.GameInfo,GameContext.SetGameInfo)} id="p_2" className="relative flex left-[38.5%] md:left-[38.5%] lg:left-[38.5%] bottom-[25px] text-white-500">x2</button>
+                        <button  onClick={()=>  change_pos(4,GameContext.GameInfo,GameContext.SetGameInfo)} id="p_4" className="relative flex left-[75%] md:left-[80%] lg:left-[82.5%] bottom-[25px] text-white-500 ">x4</button>
                             <div id="scroll" className="relative flex mx-auto w-[25px] h-[10px] bg-indigo-500 bottom-[4px] rounded-lg shadow-2xl left-[32%] md:left-[35%] lg:left-[38%]"></div>
                         </div>
                     </div>
@@ -277,17 +264,17 @@ const PingPongSettings = ({ router }: any) =>
                             Points :
                         </p>
                         <div className="relative flex my-auto bottom-[5px]  mx-auto h-[2px] w-[200px] md:w-[250px] lg:w-[300px]">
-                            <button  onClick={()=> change_map_value(1,GameInfo,SetGameInfo)} id="points1" className="relative flex w-[40px] h-[30px] left-[0%] md:left-[0%] lg:left-[0%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-500">
+                            <button  onClick={()=> change_map_value(1,GameContext.GameInfo,GameContext.SetGameInfo)} id="points1" className="relative flex w-[40px] h-[30px] left-[0%] md:left-[0%] lg:left-[0%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-500">
                                 <p className="mx-auto my-auto">
                                     10
                                 </p>
                             </button>
-                            <button onClick={()=> change_map_value(2,GameInfo,SetGameInfo)} id="points2" className="relative flex w-[40px] h-[30px] left-[20%] md:left-[25%] lg:left-[27.5%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
+                            <button onClick={()=> change_map_value(2,GameContext.GameInfo,GameContext.SetGameInfo)} id="points2" className="relative flex w-[40px] h-[30px] left-[20%] md:left-[25%] lg:left-[27.5%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
                                 <p className="mx-auto my-auto">
                                     20
                                 </p>
                             </button>
-                            <button onClick={()=> change_map_value(3,GameInfo,SetGameInfo)} id="points3" className="relative flex w-[40px] h-[30px] left-[40%] md:left-[52.5%] lg:left-[60%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
+                            <button onClick={()=> change_map_value(3,GameContext.GameInfo,GameContext.SetGameInfo)} id="points3" className="relative flex w-[40px] h-[30px] left-[40%] md:left-[52.5%] lg:left-[60%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
                                 <p className="mx-auto my-auto">
                                     30
                                 </p>
@@ -298,12 +285,12 @@ const PingPongSettings = ({ router }: any) =>
                         <p className="relative flex left-[10%] bottom-[5px] text-xl md:text-2xl lg:text-3xl font-semibold text-white-500">
                             Match Mood :
                         </p>
-                        <button onClick={()=> change_online_value(0,GameInfo,SetGameInfo)} id="match_mood_0" className="relative flex w-[60px] h-[30px] left-[15%] top-[0px] md:left-[20%] lg:left-[20%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
+                        <button onClick={()=> change_online_value(0,GameContext.GameInfo,GameContext.SetGameInfo)} id="match_mood_0" className="relative flex w-[60px] h-[30px] left-[15%] top-[0px] md:left-[20%] lg:left-[20%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
                             <p  className="mx-auto my-auto">
                                 Ofline
                             </p>
                         </button>
-                        <button onClick={()=> change_online_value(1,GameInfo,SetGameInfo)} id="match_mood_1" className="relative flex w-[60px] h-[30px] left-[22.5%] top-[0px] md:left-[30%] lg:left-[33%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-500">
+                        <button onClick={()=> change_online_value(1,GameContext.GameInfo,GameContext.SetGameInfo)} id="match_mood_1" className="relative flex w-[60px] h-[30px] left-[22.5%] top-[0px] md:left-[30%] lg:left-[33%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-500">
                             <p  className="mx-auto my-auto">
                                 Online
                             </p>
@@ -313,12 +300,12 @@ const PingPongSettings = ({ router }: any) =>
                         <p id="pause_game_p" className="relative flex left-[10%] bottom-[5px] text-xl md:text-2xl lg:text-3xl font-semibold text-white-500">
                             Room  &nbsp;Mood :
                         </p>
-                        <button onClick={()=> change_pausegame_value(0,GameInfo,SetGameInfo)} id="pause_game_0" className="relative flex w-[60px] h-[30px] left-[15%] top-[0px] md:left-[20%] lg:left-[20%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
+                        <button onClick={()=> change_pausegame_value(0,GameContext.GameInfo,GameContext.SetGameInfo)} id="pause_game_0" className="relative flex w-[60px] h-[30px] left-[15%] top-[0px] md:left-[20%] lg:left-[20%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
                             <p id="pause_game_0_p" className="mx-auto my-auto">
                                 private
                             </p>
                         </button>
-                        <button onClick={()=> change_pausegame_value(1,GameInfo,SetGameInfo)} id="pause_game_1" className="relative flex w-[60px] h-[30px] left-[22.5%] top-[0px] md:left-[30%] lg:left-[33%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-500">
+                        <button onClick={()=> change_pausegame_value(1,GameContext.GameInfo,GameContext.SetGameInfo)} id="pause_game_1" className="relative flex w-[60px] h-[30px] left-[22.5%] top-[0px] md:left-[30%] lg:left-[33%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-500">
                             <p id="pause_game_1_p" className="mx-auto my-auto">
                                 Public
                             </p>
@@ -328,12 +315,12 @@ const PingPongSettings = ({ router }: any) =>
                             <p id="other_tools_p" className="relative flex left-[10%] bottom-[5px] text-xl md:text-2xl lg:text-3xl font-semibold text-white-500">
                                     Other &nbsp;Tools  &nbsp;:
                             </p>
-                            <button onClick={()=> change_other_tools_value(0,GameInfo,SetGameInfo)} id="other_tools_0" className="relative flex w-[60px] h-[30px] left-[15%] top-[0px] md:left-[20%] lg:left-[20%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-500">
+                            <button onClick={()=> change_other_tools_value(0,GameContext.GameInfo,GameContext.SetGameInfo)} id="other_tools_0" className="relative flex w-[60px] h-[30px] left-[15%] top-[0px] md:left-[20%] lg:left-[20%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-500">
                                 <p className="mx-auto my-auto">
                                     Bot
                                 </p>
                             </button>
-                            <button onClick={()=> change_other_tools_value(1,GameInfo,SetGameInfo)} id="other_tools_1" className="relative flex w-[60px] h-[30px] left-[22.5%] top-[0px] md:left-[30%] lg:left-[33%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
+                            <button onClick={()=> change_other_tools_value(1,GameContext.GameInfo,GameContext.SetGameInfo)} id="other_tools_1" className="relative flex w-[60px] h-[30px] left-[22.5%] top-[0px] md:left-[30%] lg:left-[33%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
                                 <p className="mx-auto my-auto">
                                 2P
                                 </p>
@@ -342,13 +329,12 @@ const PingPongSettings = ({ router }: any) =>
                         </div>
                     </div>
                 </div>
-                    <button onClick={() => {is_Online_mod(router,setWarning,toast,GameInfo,SetGameInfo)}} id="play" className="relative  h-[40px] md:h-[50px] lg:h-[60px] w-[80px] md:w-[100px] lg:w-[120px] text-xl md:text-2xl lg:text-3xl font-semibold text-white-500 bg-blue-500 hover:bg-blue-600 mt-[50px] md:mt-[75px] lg:mt-[100px] rounded-lg shadow-2xl shadow-blue-500 hover:shadow-blue-600 ">
+                    <button onClick={() => {is_Online_mod(router,setWarning,toast,GameContext.GameInfo,GameContext.SetGameInfo)}} id="play" className="relative  h-[40px] md:h-[50px] lg:h-[60px] w-[80px] md:w-[100px] lg:w-[120px] text-xl md:text-2xl lg:text-3xl font-semibold text-white-500 bg-blue-500 hover:bg-blue-600 mt-[50px] md:mt-[75px] lg:mt-[100px] rounded-lg shadow-2xl shadow-blue-500 hover:shadow-blue-600 ">
                         <p>
                             Play
                         </p>
                     </button>
             </div>
-        </GameInfoContext.Provider>
     );
 }
 export default PingPongSettings;

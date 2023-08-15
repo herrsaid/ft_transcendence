@@ -15,7 +15,7 @@ import { useEffect,useContext,useState } from "react";
 import UserContext from "@/app/(root)/UserContext";
 import p5 from "p5";
 import './Game.css'
-import { GetGameInfoContext, GameContextType } from '../../GameContext/GameCoentext';
+import { GetGameInfoContext, GameContextType } from '../../GameContext/GameContext';
 
 let GameWidth: number = 800,GameHeight: number = 400;
 let BallWidth: number = 15, BallHeight = 15, BallXpos: number = GameWidth/2, BallYpos: number = GameHeight/2;
