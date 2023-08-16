@@ -13,9 +13,9 @@ export default function Community()
     return(
         <div className="flex h-full">
             <reciverContext.Provider value={{reciver, setReciver}}>
-            <div className="w-1/3 "> <Chats /> </div>
-            <div className="w-2/3 "><Messages /></div>
-            <div className="w-1/3 "><Info /></div>
+            <div className="w-1/3 max-sm:hidden"> <Chats /> </div>
+            <div className="w-2/3 max-sm:w-full"><Messages /></div>
+            <div className="w-1/3 max-md:hidden"><Info /></div>
             </reciverContext.Provider>
         </div>
     )

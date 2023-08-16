@@ -48,7 +48,7 @@ export default  function Header()
   
      
 
-      function openMenu(event){
+      function openMenu(event:any){
         const dropdownMenu = document.getElementById('dropdownMenu');
         const profileImg = document.querySelector('.profile-img');
         const isClickInside = profileImg?.contains(event.target);

@@ -12,4 +12,9 @@ export interface UserContextType {
    }
 const UserContext = createContext<UserContextType>(user);
 
+
+// if have any problem on this version just remove line above and replace with yours
+
+// yours: const UserContext = createContext<any>(null);
+
 export default UserContext;
