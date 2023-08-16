@@ -1,4 +1,5 @@
-"use client";
+'use client'
+
 import {useState } from 'react';
 import Header from './Components/Header/Header'
 import BottomNav from './Components/BottomNav/BottomNav'
@@ -7,6 +8,7 @@ import { Providers } from "./providers";
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import UserContext from './UserContext';
+import GameInfoContext,{GameInfoType,GameInfoStateType,GetGameInfoContext} from '../(root)/Game/GameContext/GameContext';
 import useSWR from "swr"
 
 const metadata = {
@@ -22,6 +24,21 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   const [user, setUser] = useState({});
+  const [GameInfo,SetGameInfo] = useState<GameInfoType>(
+    {
+        Points: 10,
+        Speed: 4,
+        pause_game: 0,
+        RoomMood: true,
+        other_tools: 0,
+        host: false,
+        Online: 1,
+        Access:0,
+        myusername: "Player I",
+        enemmyusername: "Player II",
+        myimage: "/2.jpg",
+        enemmyimage: "/3.jpg",
+    });
   const router = useRouter();
 
   
@@ -61,7 +78,9 @@ fetchData
         {Cookies.get('access_token') != undefined && <Header/>}
         {Cookies.get('access_token') != undefined && <BottomNav/>}
         <div className='child'>
+          <GameInfoContext.Provider value={{ GameInfo,SetGameInfo }}>
               {Cookies.get('access_token') != undefined && children}
+          </GameInfoContext.Provider>
         </div>
           
             

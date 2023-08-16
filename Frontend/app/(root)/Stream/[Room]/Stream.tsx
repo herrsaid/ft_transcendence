@@ -3,7 +3,7 @@
 import { useEffect,useContext,useState } from "react";
 import p5 from "p5";
 import './Stream.css';
-import { player1 } from '../../../(game)/Game/Online/Socket/start_game_socket';
+import { player1 } from '../../../(root)/Game/Online/Socket/start_game_socket';
 import { Access,RoomNumber } from '../page';
 
 import UserContext from "@/app/(root)/UserContext";

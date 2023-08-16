@@ -1,6 +1,6 @@
 'use client'
 
-
+/* ************************************************************************** */
 /*                                                        :::      ::::::::   */
 /*   Game.tsx                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
@@ -198,9 +198,9 @@ function GameStatusChecker(p5: p5,GameContext:GameContextType): boolean
 
 const Game = () => {
   const contexUser = useContext(UserContext);
+  const GameContext = GetGameInfoContext();
   const [reslt1, setReslt1] = useState(0);
   const [reslt2, setReslt2] = useState(0);
-  const GameContext = GetGameInfoContext();
   useEffect(() => {
     let x = 25;
 

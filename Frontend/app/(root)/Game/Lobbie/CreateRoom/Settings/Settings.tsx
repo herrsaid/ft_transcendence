@@ -130,6 +130,7 @@ async function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<st
     {
         setWarning('');
         console.log("room:",GameInfo.RoomMood);
+        console.log(GameInfo.myusername);
         socket.emit('CreateRoom',{
             Speed: GameInfo.Speed,
             Points: GameInfo.Points,
@@ -240,6 +241,7 @@ const PingPongSettings = ({ router }: any) =>
             GameContext.SetGameInfo({...GameContext.GameInfo, myimage:process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + contexUser.user.profile_img,});
         else
             GameContext.SetGameInfo({...GameContext.GameInfo, myimage:contexUser.user.profile_img,});
+        console.log(GameContext.GameInfo.myimage,process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + contexUser.user.profile_img,contexUser.user.profile_img)
     },[]);
     return(
 
