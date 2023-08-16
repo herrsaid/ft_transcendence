@@ -20,21 +20,10 @@ import { useContext } from 'react';
 import UserContext from "@/app/(root)/UserContext";
 import {  useToast } from '@chakra-ui/react'
 import GameInfoContext,{GameInfoType,GameInfoStateType,GetGameInfoContext} from '../../../GameContext/GameContext';
+import { player1 } from "../../../Online/Socket/start_game_socket";
+import { player2 } from '../../../Online/Socket/start_game_socket';
 
-let newGameInfo:GameInfoType = {
-    Points: 10,
-    Speed: 4,
-    pause_game: 0,
-    RoomMood: true,
-    other_tools: 0,
-    host: false,
-    Online: 1,
-    Access:0,
-    myusername: "Player I",
-    enemmyusername: "Player II",
-    myimage: "/2.jpg",
-    enemmyimage: "/3.jpg",
-  };
+let newGameInfo:GameInfoType;
 
 function change_map_value(param: number)
 {
@@ -140,7 +129,9 @@ function change_pausegame_value(param: number)
 async function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<string>>,toast:any,GameInfo:GameInfoType,SetGameInfo:GameInfoStateType)
 {
     const settings = document.getElementById("Settings")
-    if(GameInfo.Online === 1)
+    newGameInfo.myusername = GameInfo.myusername;
+    newGameInfo.myimage = GameInfo.myimage;
+    if(newGameInfo.Online === 1)
     {
         setWarning('');
         socket.emit('CreateRoom',{
@@ -171,7 +162,7 @@ async function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<st
                   });
                 
         });
-        if(GameInfo.RoomMood === false && settings)
+        if(newGameInfo.RoomMood === false && settings)
         {
             settings.innerHTML = "";
             let Room:HTMLElement = document.createElement("div");
@@ -208,8 +199,6 @@ async function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<st
             settings.style.animation = "Animation 3s infinite";
         }
             socket.on('SendData', (username,playerimg,data) => {
-            newGameInfo.myusername = GameInfo.myusername;
-            newGameInfo.myimage = GameInfo.myimage;
             newGameInfo.enemmyusername = username;
             newGameInfo.enemmyimage = playerimg;
             newGameInfo.host = data;
@@ -221,10 +210,16 @@ async function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<st
     }
     else
     {
-        if(GameInfo.other_tools === 1)
+        if(newGameInfo.other_tools === 1)
+        {
+            SetGameInfo(newGameInfo);
             router.replace('/Game/Ofline/2P');
+        }
         else
+        {
+            SetGameInfo(newGameInfo);
             router.replace('/Game/Ofline/BOT');
+        }
     }
 }
 
@@ -250,6 +245,25 @@ const PingPongSettings = ({ router }: any) =>
     const [Warning, setWarning] = useState("");
     const toast = useToast();
 
+    useEffect(() => {
+        console.log('user re-enter this page');
+        player1.disconnect();
+        player2.disconnect();
+        newGameInfo = {
+            Points: 10,
+            Speed: 4,
+            pause_game: 0,
+            RoomMood: true,
+            other_tools: 0,
+            host: false,
+            Online: 1,
+            Access:0,
+            myusername: "Player I",
+            enemmyusername: "Player II",
+            myimage: "/2.jpg",
+            enemmyimage: "/3.jpg",
+          };
+      }, []);
     if(!contexUser.user.username || !contexUser.user.profile_img)
     {
         return(
