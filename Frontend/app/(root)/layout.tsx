@@ -66,6 +66,7 @@ export default function RootLayout({
          
         if (!res.ok)
             throw new Error("failed to fetch users");
+        SetGameInfo({...GameInfo,myusername:jsonData.username,myimage:jsonData.profile_img});
         return res.json();
       }
 

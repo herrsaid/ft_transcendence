@@ -234,24 +234,13 @@ const PingPongSettings = ({ router }: any) =>
     const contexUser = useContext(UserContext);
     const [Warning, setWarning] = useState("");
     const toast = useToast();
-    console.log("username "+ contexUser.user.username,GameContext.GameInfo.myusername);
-            console.log("image "+ contexUser.user.profile_img,GameContext.GameInfo.myimage)
-    // if(!contexUser.user.username || !contexUser.user.profile_img)
-    // {
-    //     return(
-    //         <div className=" bgtet h-[500px] md:h-[600px] lg:h-[700px] w-[400px] md:w-[500px] lg:w-[600px] mx-auto rounded-lg shadow-2xl py-[20px] "></div>
-    //     );
-    // }
-    useEffect(()=>
+    
+    if(!contexUser.user.username || !contexUser.user.profile_img)
     {
-            GameContext.SetGameInfo({...GameContext.GameInfo, myusername:contexUser.user.username,});
-            if (contexUser.user.is_profile_img_updated)
-                GameContext.SetGameInfo({...GameContext.GameInfo, myimage: process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + contexUser.user.profile_img,});
-            else
-            GameContext.SetGameInfo({...GameContext.GameInfo, myimage:contexUser.user.profile_img,});
-            console.log("11username "+contexUser.user.username,GameContext.GameInfo.myusername);
-            console.log("11image "+contexUser.user.profile_img,GameContext.GameInfo.myimage)
-    },[]);
+        return(
+            <div className=" bgtet h-[500px] md:h-[600px] lg:h-[700px] w-[400px] md:w-[500px] lg:w-[600px] mx-auto rounded-lg shadow-2xl py-[20px] "></div>
+        );
+    }
     return(
 
        // #C56CDD,#18184a
