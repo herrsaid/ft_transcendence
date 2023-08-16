@@ -40,7 +40,7 @@ export default function Messages()
             <div>
                 <Profile/>
             </div>
-            <div className="flex flex-col h-[90%] p-3">
+            <div className="flex flex-col h-[80%] p-3">
                 {/* <Message class="self-end rounded-lg bg-sky-900 p-2" content="hellow"></Message> */}
                 {
                         messages.map((message,index) => {
