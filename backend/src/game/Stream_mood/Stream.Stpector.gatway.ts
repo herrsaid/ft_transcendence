@@ -20,7 +20,7 @@ import {
   import { GameStreamAttribute } from '../game_brain/methods/Game_stream_attribute';
   import { GameObj } from '../start_game/play.ball.gateway';
   let none: Socket;
-  @WebSocketGateway(1340, {
+  @WebSocketGateway(1342, {
     cors: { origin: '*', credentials: true },
   })
   export class PlaySpactatorGateway implements OnGatewayDisconnect {

@@ -249,6 +249,10 @@ const PingPongSettings = ({ router }: any) =>
         console.log('user re-enter this page');
         player1.disconnect();
         player2.disconnect();
+        socket.disconnect();
+        player1.connect();
+        player2.connect();
+        socket.connect();
         newGameInfo = {
             Points: 10,
             Speed: 4,

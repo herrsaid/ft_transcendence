@@ -3,10 +3,10 @@
 import { useEffect,useContext,useState } from "react";
 import p5 from "p5";
 import './Stream.css';
-import { player1 } from '../../../(root)/Game/Online/Socket/start_game_socket';
 import StreamInfoContext,{StreamInfoType,StreamInfoStateType,GetStreamInfoContext, StreamContextType} from '../../Stream/StreamContext/StreamContext'
 
 import UserContext from "@/app/(root)/UserContext";
+import { stream } from '../Socket/start_stream_socket';
 
 let GameWidth: number = 800, GameHeight: number = 400, GameSpeed: number = 4;
 let BallWidth: number = GameWidth/52, BallHeight = GameHeight/26, BallXpos: number = GameWidth/2, BallYpos: number = GameHeight/2;
@@ -17,6 +17,8 @@ let Result2Val: number = 0;
 let first_conection_val:boolean=false, message: string = '';
 let Player1UserName:string ="player I",Player2UserName:string ="player II";
 let Player1Image:string ="/2.jpg",Player2Image:string ="/3.jpg";
+
+
 
 function ConvertServerData(ServerData:number,Mood:number)
 {
@@ -53,13 +55,13 @@ function first_conection(StreamContext:StreamContextType)
   if(first_conection_val === false)
 		{
 			first_conection_val = true;
-      player1.emit("new_spectator",StreamContext.StreamInfo.RoomNumber);
+      stream.emit("new_spectator",StreamContext.StreamInfo.RoomNumber);
 		}
 }
 
 function GetPlayersData()
 {
-  player1.on('send_players_data',(data)=>
+  stream.on('send_players_data',(data)=>
   {
     Racket1Ypos = ConvertServerData(data.Racket1Ypos,0);
     Racket2Ypos = ConvertServerData(data.Racket2Ypos,0);

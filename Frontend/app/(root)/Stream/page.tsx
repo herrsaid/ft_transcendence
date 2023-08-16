@@ -1,23 +1,26 @@
 'use client'
 
 import { useEffect } from 'react';
-import { player1 } from '../../(root)/Game/Online/Socket/start_game_socket'
+import { stream } from './Socket/start_stream_socket';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 import { useRouter } from 'next/navigation';
 import './style/style.css';
 import StreamInfoContext,{StreamInfoType,StreamInfoStateType,GetStreamInfoContext, StreamContextType} from '../Stream/StreamContext/StreamContext'
 
+let NewStreamInfo:StreamInfoType;
+
 function SpectatorMood(Room: number, router: AppRouterInstance,StreamContext:StreamContextType)
 {
-  StreamContext.SetStreamInfo({...StreamContext.StreamInfo,Access:1,});
-  StreamContext.SetStreamInfo({...StreamContext.StreamInfo,RoomNumber:Room,});
-    router.replace(`/Stream/Room${Room+1}`);
+  NewStreamInfo.Access = 1;
+  NewStreamInfo.RoomNumber = Room;
+  StreamContext.SetStreamInfo(NewStreamInfo);
+  router.replace(`/Stream/Room${Room+1}`);
 }
 
 function  GetNumberOfRooms(router: AppRouterInstance,StreamContext:StreamContextType)
 {
-  player1.emit('LoadStream');
-  player1.on('LoadStream',(Room: number)=>
+  stream.emit('LoadStream');
+  stream.on('LoadStream',(Room: number)=>
   {
     let Rooms = document.getElementById('Rooms');
     if( Room === 0 && Rooms)
@@ -49,6 +52,16 @@ export default function Stream() {
   {
     setInterval(()=>{GetNumberOfRooms(router,StreamContext);},1000);
   });
+  useEffect(()=>
+  {
+    console.log('user re-enter this page');
+    NewStreamInfo =
+    {
+      Access:0,
+      RoomNumber:0
+    };
+
+  },[]);
     return (
       <div className="container mx-auto px-2 py-[250px] text-center items-center ">
         <div className="mx-auto">

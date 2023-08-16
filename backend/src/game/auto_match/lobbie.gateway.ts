@@ -123,7 +123,6 @@ import {
       if(Rooms[data.RoomNumber].players.length === 2)
       {
         Rooms[data.RoomNumber].players[0].PlayerSocket.emit('SendData',Rooms[data.RoomNumber].players[1].Player,Rooms[data.RoomNumber].players[1].PlayerImg,true);
-        // Rooms[data.RoomNumber].players[1].PlayerSocket.emit('SendData',Rooms[data.RoomNumber].players[0].Player,false);
         console.log("Launch Public Room");
       }
       console.log(Rooms);
