@@ -25,8 +25,8 @@ export default function RootLayout({
   const router = useRouter();
 
   
-  if (Cookies.get('access_token') == undefined)
-      router.replace('/login')
+  // if (Cookies.get('access_token') == undefined)
+  //     router.replace('/login')
 
 
   const fetchData = async (url:string) => {
@@ -58,11 +58,15 @@ fetchData
       <body >
       <Providers>
       <UserContext.Provider value={{user, setUser}}>
-        {Cookies.get('access_token') != undefined && <Header/>}
-        {Cookies.get('access_token') != undefined && <BottomNav/>}
-        <div className='child'>
-              {Cookies.get('access_token') != undefined && children}
-        </div>
+        {/* {Cookies.get('access_token') != undefined && <Header/>} */}
+        <Header/>
+        {/* {Cookies.get('access_token') != undefined && <BottomNav/>} */}
+        <BottomNav/>
+        {/* <div className='child'> */}
+              {/* {Cookies.get('access_token') != undefined && children} */}
+
+        { children}
+      {/* </div> */}
           
             
             

@@ -1,5 +1,5 @@
 "use client"
-import { useRouter, useSearchParams } from 'next/navigation';
+import {  useRouter, useSearchParams } from 'next/navigation';
 import Cookies from 'js-cookie';
 import useSWR from "swr"
 import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
@@ -10,6 +10,7 @@ import ProfileUserState from './Components/ProfileUserState';
 import HistoryUser from './Components/HistoryUser';
 import { useContext } from "react";
 import UserContext from '../UserContext';
+
 export default  function User()
 {
     const router = useRouter();
@@ -40,6 +41,10 @@ export default  function User()
     fetchUserData
     );
 
+
+    console.log(data)
+    if (data == undefined)
+        router.replace('/profile')
     if (isLoading)
     {
         return <div className="container mx-auto px-2 py-10">
