@@ -19,21 +19,42 @@ import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 import { useRouter } from 'next/navigation';
 import './Rooms.css';
 import UserContext from "@/app/(root)/UserContext";
-import { GetGameInfoContext, GameContextType } from '../../GameContext/GameContext';
+import { GetGameInfoContext, GameContextType, GameInfoType } from '../../GameContext/GameContext';
+
+let newGameInfo:GameInfoType = {
+  Points: 10,
+  Speed: 4,
+  pause_game: 0,
+  RoomMood: true,
+  other_tools: 0,
+  host: false,
+  Online: 1,
+  Access:0,
+  myusername: "Player I",
+  enemmyusername: "Player II",
+  myimage: "/2.jpg",
+  enemmyimage: "/3.jpg",
+};
+
 async function JoinToRoom(Room: number, router: AppRouterInstance,GameContext:GameContextType)
 {
   let RoomNumber = Room+1;
-  let Username = GameContext.GameInfo.myusername;
-  let myimage = GameContext.GameInfo.myimage;
+  newGameInfo.myusername = GameContext.GameInfo.myusername;
+  newGameInfo.myimage = GameContext.GameInfo.myimage;
+  let Username = newGameInfo.myusername;
+  let myimage = newGameInfo.myimage;
   socket.emit('JoinUser',{RoomNumber,Username,myimage});
   await socket.on('SendData', (username,playerimg,data) => {
-    GameContext.SetGameInfo({...GameContext.GameInfo,enemmyusername:username});
-    GameContext.SetGameInfo({...GameContext.GameInfo,enemmyimage:playerimg});
-    GameContext.SetGameInfo({...GameContext.GameInfo,host:data});
+    newGameInfo.enemmyusername = username;
+    newGameInfo.enemmyimage = playerimg;
+    newGameInfo.host = data;
   });
   await socket.on('JoinAccepted',(speed:number,points: number)=>
   {
-    GameContext.SetGameInfo({...GameContext.GameInfo,Access:1});
+    newGameInfo.Access=1;
+    newGameInfo.Access = speed;
+    newGameInfo.Access = points;
+    GameContext.SetGameInfo(newGameInfo);
     socket.disconnect();
     router.replace(`/Game/Online/Play`);
   });
@@ -77,11 +98,11 @@ export default function Rooms() {
   const router: AppRouterInstance = useRouter();
   useEffect(()=>
   {
-    GameContext.SetGameInfo({...GameContext.GameInfo, myusername:contexUser.user.username,});
+    newGameInfo.myusername = contexUser.user.username;
     if (contexUser.user.is_profile_img_updated)
-      GameContext.SetGameInfo({...GameContext.GameInfo, myimage:process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + contexUser.user.profile_img,});
+      newGameInfo.myimage=process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + contexUser.user.profile_img;
     else
-      GameContext.SetGameInfo({...GameContext.GameInfo, myimage:contexUser.user.profile_img,});
+      newGameInfo.myimage=contexUser.user.profile_img;
   },[]);
   useEffect(()=>
   {

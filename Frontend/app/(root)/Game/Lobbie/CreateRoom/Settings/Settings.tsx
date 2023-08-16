@@ -21,6 +21,21 @@ import UserContext from "@/app/(root)/UserContext";
 import {  useToast } from '@chakra-ui/react'
 import GameInfoContext,{GameInfoType,GameInfoStateType,GetGameInfoContext} from '../../../GameContext/GameContext';
 
+let newGameInfo:GameInfoType = {
+    Points: 10,
+    Speed: 4,
+    pause_game: 0,
+    RoomMood: true,
+    other_tools: 0,
+    host: false,
+    Online: 1,
+    Access:0,
+    myusername: "Player I",
+    enemmyusername: "Player II",
+    myimage: "/2.jpg",
+    enemmyimage: "/3.jpg",
+  };
+
 function change_map_value(param: number,GameInfo:GameInfoType,SetGameInfo:GameInfoStateType)
 {
     for(let a=1;a<4;a++)
@@ -32,7 +47,7 @@ function change_map_value(param: number,GameInfo:GameInfoType,SetGameInfo:GameIn
     const changemap= document.getElementById(`points${param}`);
     if(changemap !== null)
         changemap.style.backgroundColor = " rgb(99 102 241)";
-    SetGameInfo({...GameInfo, Points:param*10,});
+    newGameInfo.Points = param*10;
 }
 
 function change_online_value(param: number,GameInfo:GameInfoType,SetGameInfo:GameInfoStateType)
@@ -87,7 +102,7 @@ function change_online_value(param: number,GameInfo:GameInfoType,SetGameInfo:Gam
             pause_game_0_p.innerHTML = "No";
         }
     }
-    SetGameInfo({...GameInfo, Online:param,});
+    newGameInfo.Online = param;
 }
 
 function change_other_tools_value(param: number,GameInfo:GameInfoType,SetGameInfo:GameInfoStateType)
@@ -101,7 +116,7 @@ function change_other_tools_value(param: number,GameInfo:GameInfoType,SetGameInf
     const changemap= document.getElementById(`other_tools_${param}`);
     if(changemap !== null)
         changemap.style.backgroundColor = " rgb(99 102 241)";
-    SetGameInfo({...GameInfo, other_tools:param,});
+    newGameInfo.other_tools = param;
 }
 
 function change_pausegame_value(param: number,GameInfo:GameInfoType,SetGameInfo:GameInfoStateType)
@@ -115,28 +130,25 @@ function change_pausegame_value(param: number,GameInfo:GameInfoType,SetGameInfo:
     const changemap = document.getElementById(`pause_game_${param}`);
     if(changemap !== null)
         changemap.style.backgroundColor = " rgb(99 102 241)";
-    SetGameInfo({...GameInfo, pause_game:param,});
+    newGameInfo.pause_game = param;
     if(param)
-        SetGameInfo({...GameInfo, RoomMood:true,});
+        newGameInfo.RoomMood=true;
     else
-        SetGameInfo({...GameInfo, RoomMood:false,});
+        newGameInfo.RoomMood=false;
 }
 
 async function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<string>>,toast:any,GameInfo:GameInfoType,SetGameInfo:GameInfoStateType)
 {
-    
     const settings = document.getElementById("Settings")
     if(GameInfo.Online === 1)
     {
         setWarning('');
-        console.log("room:",GameInfo.RoomMood);
-        console.log(GameInfo.myusername);
         socket.emit('CreateRoom',{
-            Speed: GameInfo.Speed,
-            Points: GameInfo.Points,
+            Speed: newGameInfo.Speed,
+            Points: newGameInfo.Points,
             myusername: GameInfo.myusername,
             myimage: GameInfo.myimage,
-            RoomMood: GameInfo.RoomMood,
+            RoomMood: newGameInfo.RoomMood,
         });
         socket.on('CreateRefused', (message: string) => {
                 setWarning(message);
@@ -196,10 +208,13 @@ async function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<st
             settings.style.animation = "Animation 3s infinite";
         }
             socket.on('SendData', (username,playerimg,data) => {
-            SetGameInfo({...GameInfo, enemmyusername:username,});
-            SetGameInfo({...GameInfo, enemmyimage:playerimg,});
-            SetGameInfo({...GameInfo, host:data,});
-            SetGameInfo({...GameInfo, Access:1,});
+            newGameInfo.myusername = GameInfo.myusername;
+            newGameInfo.myimage = GameInfo.myimage;
+            newGameInfo.enemmyusername = username;
+            newGameInfo.enemmyimage = playerimg;
+            newGameInfo.host = data;
+            newGameInfo.Access = 1;
+            SetGameInfo(newGameInfo);
             socket.disconnect();
             router.replace('/Game//Online/Play');
         });
@@ -224,7 +239,7 @@ function change_pos(param :number,GameInfo:GameInfoType,SetGameInfo:GameInfoStat
         element.style.left = "-12.5%";
         else
         element.style.left = "35%";
-        SetGameInfo({...GameInfo, Speed:param,});
+        newGameInfo.Speed=param;
     }
 }
 
@@ -234,7 +249,7 @@ const PingPongSettings = ({ router }: any) =>
     const contexUser = useContext(UserContext);
     const [Warning, setWarning] = useState("");
     const toast = useToast();
-    
+
     if(!contexUser.user.username || !contexUser.user.profile_img)
     {
         return(
