@@ -4,9 +4,7 @@ import { useEffect,useContext,useState } from "react";
 import p5 from "p5";
 import './Game.css';
 import { player1, player2 } from '../Socket/start_game_socket';
-import { host, Access, Speed, Points, myusername, enemmyusername,enemmyimage,myimage} from '../../Lobbie/CreateRoom/Settings/Settings';
-import { host2, Access2, Speed2, Points2, myusername2, enemmyusername2,enemmyimage2,myimage2} from '../../Lobbie/Rooms/Rooms';
-
+import { GetGameInfoContext, GameContextType } from '../../GameContext/GameContext';
 import UserContext from "@/app/(root)/UserContext";
 
 
@@ -17,62 +15,6 @@ let Racket2Width: number = GameWidth/80, Racket2Height =  Math.floor(GameHeight/
 let Result1Val: number = 0;
 let Result2Val: number = 0;
 let first_conection_val:boolean=false, message: string = '';
-//-----------------------------------------------------------\\
-let host1: boolean = false;
-let Points1: number = 0;
-let Speed1: number = 0;
-let Access1: number = 0;
-let myusername1: string | null = null;
-let enemmyusername1: string | null = null;
-let myimage1: string | null = null;
-let enemmyimage1: string | null = null;
-
-if(Access === 1)
-{
-    host1 = host; 
-    Access1 = Access; 
-    Speed1 = Speed; 
-    Points1 = Points;
-    if(myusername)
-      myusername1 = myusername; 
-    else
-      myusername1 = "playerI"; 
-    if(enemmyusername)
-      enemmyusername1 = enemmyusername; 
-    else
-      enemmyusername1 = 'playerII';
-    if(myimage)
-      myimage1 = myimage;
-    else
-      myimage1 = "/2.jpg";
-    if(enemmyimage)
-      enemmyimage1 = enemmyimage;
-    else
-      enemmyimage1 = "/3.jpg";
-}
-else
-{
-    host1 = host2;
-    Access1 = Access2;
-    Speed1 = Speed2;
-    Points1 = Points2;
-    if(myusername2)
-      myusername1 = myusername2;
-    else
-      myusername1 = "playerI"; 
-    if(enemmyusername2)
-      enemmyusername1 = enemmyusername2;
-    else
-      enemmyusername1 = 'playerII';
-    if(myimage2)
-      myimage1 = myimage2;
-    else
-      myimage1 = "/2.jpg";
-    if(enemmyimage2)
-      enemmyimage1 = enemmyimage2;
-    else
-      enemmyimage1 = "/3.jpg";
-}
 
 function ConvertServerData(ServerData:number,Mood:number)
 {
@@ -111,9 +53,9 @@ function Racket2(p5: p5, x: number, y: number, w: number, h: number)
   p5.rect(x, y, w, h,10);
 }
 
-function BallAnimation ()
+function BallAnimation (GameContext:GameContextType)
 {
-  if(host1)
+  if(GameContext.GameInfo.host)
   {  
     player1.on('BallPos',(GameInfo)=>
     {
@@ -173,9 +115,9 @@ function Racket2Animation(p5: p5): undefined
     Racket2Ypos =  ConvertServerData(data,0);
   });
 }
-function first_conection(p5:p5)
+function first_conection(p5:p5,GameContext:GameContextType)
 {
-  if(!Access1)
+  if(!GameContext.GameInfo.Access)
   {
     if(document.getElementById('sketch-container'))
       p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
@@ -187,10 +129,22 @@ function first_conection(p5:p5)
   else if(first_conection_val === false)
 	{
 		first_conection_val = true;
-      if(host1)
-			  player1.emit('first_conection',{Speed1,Points1,myusername1,myimage1});
+      if(GameContext.GameInfo.host)
+			  player1.emit('first_conection',
+      {
+        Speed1: GameContext.GameInfo.Speed,
+        Points1:GameContext.GameInfo.Points,
+        myusername1:GameContext.GameInfo.myusername,
+        myimage1:GameContext.GameInfo.myimage,
+      });
       else
-			  player2.emit('first_conection',{Speed1,Points1,myusername1,myimage1});
+			  player2.emit('first_conection',
+        {
+          Speed1: GameContext.GameInfo.Speed,
+          Points1:GameContext.GameInfo.Points,
+          myusername1:GameContext.GameInfo.myusername,
+          myimage1:GameContext.GameInfo.myimage,
+        });
 	}
   return true;
 }
@@ -242,10 +196,10 @@ function NewValue(p5:p5)
     canvas.position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
 }
 
-function GameStatusChecker(p5: p5): boolean
+function GameStatusChecker(p5: p5,GameContext:GameContextType): boolean
 {
   p5.textSize(GameWidth/26);
-  if(host1)
+  if(GameContext.GameInfo.host)
   {
 		player1.on('GameEnd',(data: string)=>
     {
@@ -279,6 +233,7 @@ function GameStatusChecker(p5: p5): boolean
 
 const Game = () => {
   const contexUser = useContext(UserContext);
+  const GameContext = GetGameInfoContext();
   const [reslt1, setReslt1] = useState(0);
   const [reslt2, setReslt2] = useState(0);
   useEffect(() => {
@@ -288,15 +243,15 @@ const Game = () => {
       
       p5.draw = () => {
         NewValue(p5);
-        if(!first_conection(p5))
+        if(!first_conection(p5,GameContext))
           return ;
-        if(GameStatusChecker(p5))
+        if(GameStatusChecker(p5,GameContext))
         {
           if(document.getElementById('sketch-container'))
             p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
           p5.background(25);
-          BallAnimation();
-          if (host1)
+          BallAnimation(GameContext);
+          if (GameContext.GameInfo.host)
             Racket1Animation(p5);
           else
             Racket2Animation(p5);
@@ -321,19 +276,19 @@ const Game = () => {
   return (
     <div className="relative flex mx-auto my-auto w-[100%] h-[100vh]">
       <div className=" relative flex h-[12.5vw] w-[50%] lg:h-[125px] lg:w-[500px] mx-auto">
-        <img className=" relative flex w-[25%] h-[100%] bg-center rounded-tl-xl" src={myimage1!.toString()}/>
+        <img className=" relative flex w-[25%] h-[100%] bg-center rounded-tl-xl" src={GameContext.GameInfo.myimage!.toString()}/>
         {/* <img className=" relative flex w-[50%] h-[50%%] bg-center" src={myimage1!}/> */}
         <div className="absolute flex w-[60%] h-[100%] left-[20%] trapezoid z-10">
         </div>
         {/* <img className="relative flex w-[50%] h-[25vw] bg-center" src={enemmyimage1!}/> */}
-        <img className="relative flex left-[50%] w-[25%] h-[100%] bg-center rounded-tr-xl" src={enemmyimage1!}/>
+        <img className="relative flex left-[50%] w-[25%] h-[100%] bg-center rounded-tr-xl" src={GameContext.GameInfo.enemmyimage!}/>
       </div>
       <div  className=" absolute flex h-[12.5vw] w-[25%] lg:h-[125px] lg:w-[250px] left-[37.5%] lg:left-[43.3%] rounded-xl z-20">
-        <div className="relative my-auto px-[5%]  flex z-20 text-white text-[1.5vw] lg:text-[1vw]">{myusername1!}</div>
+        <div className="relative my-auto px-[5%]  flex z-20 text-white text-[1.5vw] lg:text-[1vw]">{GameContext.GameInfo.myusername!}</div>
         <div className="relative my-auto  flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">{reslt1}</div>
         <div className="relative my-auto mx-auto flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">-</div>
         <div className="relative my-auto   flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">{reslt2}</div>
-        <div className="relative my-auto px-[5%]  flex z-20 text-white text-[1.5vw] lg:text-[1vw]">{enemmyusername1!.toString()}</div>
+        <div className="relative my-auto px-[5%]  flex z-20 text-white text-[1.5vw] lg:text-[1vw]">{GameContext.GameInfo.enemmyusername!.toString()}</div>
       </div>
       {/* <div className="relative flex h-[40vw] w-[60%] mx-auto"> */}
         <div id="sketch-container" className="absolute flex mx-auto my-auto w-[100%] h-[50vw]"></div>

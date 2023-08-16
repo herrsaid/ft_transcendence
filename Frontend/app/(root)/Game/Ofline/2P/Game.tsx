@@ -1,5 +1,6 @@
+'use client'
+
 /* ************************************************************************** */
-/*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   Game.tsx                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
@@ -10,14 +11,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-'use client'
 import { useEffect,useContext,useState } from "react";
 import UserContext from "@/app/(root)/UserContext";
 import p5 from "p5";
 import './Game.css'
-import {Speed, Points,myusername,myimage} from '../../Lobbie/CreateRoom/Settings/Settings';
+import { GetGameInfoContext, GameContextType } from '../../GameContext/GameContext';
 
-let GameWidth: number = 800,GameHeight: number = 400,GameSpeed: number = Speed,GameTarget:number = Points;
+let GameWidth: number = 800,GameHeight: number = 400;
 let BallWidth: number = 15, BallHeight = 15, BallXpos: number = GameWidth/2, BallYpos: number = GameHeight/2;
 let Racket1Width: number = 10, Racket1Height = 60, Racket1Xpos: number = 5, Racket1Ypos: number = 170;
 let Racket2Width: number = 10, Racket2Height = 60, Racket2Xpos: number = 785, Racket2Ypos: number = 170;
@@ -119,20 +119,20 @@ function BallAnimation(p5: p5)
   }
 }
 
-function Racket1Animation(p5: p5): undefined
+function Racket1Animation(p5: p5,GameContext:GameContextType): undefined
 {
   if(p5.key == 'w' && (Racket1Ypos > 0))
-    Racket1Ypos -= GameSpeed;
+    Racket1Ypos -= GameContext.GameInfo.Speed;
   else if (p5.key == 's' && (Racket1Ypos < (GameHeight - Racket1Height)))
-    Racket1Ypos += GameSpeed;
+    Racket1Ypos += GameContext.GameInfo.Speed;
 }
 
-function Racket2Animation(p5: p5): undefined
+function Racket2Animation(p5: p5,GameContext:GameContextType): undefined
 {
   if(p5.key == 'ArrowUp' && (Racket2Ypos > 0))
-    Racket2Ypos -= GameSpeed;
+    Racket2Ypos -= GameContext.GameInfo.Speed;
   else if (p5.key == 'ArrowDown' && (Racket2Ypos < (GameHeight - Racket2Height)))
-    Racket2Ypos += GameSpeed;
+    Racket2Ypos += GameContext.GameInfo.Speed;;
 }
 
 function NewValue(p5:p5)
@@ -177,16 +177,16 @@ function NewValue(p5:p5)
     canvas.position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
 }
 
-function GameStatusChecker(p5: p5): boolean
+function GameStatusChecker(p5: p5,GameContext:GameContextType): boolean
 {
-  if(GameTarget <= Result1Val)
+  if(GameContext.GameInfo.Points <= Result1Val)
   {
     p5.background(0);
     p5.fill(255,255,255);
-    p5.text(`${myusername} WIN`, GameWidth/2 - GameWidth/12, GameHeight/2 + GameHeight/12);
+    p5.text(`${GameContext.GameInfo.myusername} WIN`, GameWidth/2 - GameWidth/12, GameHeight/2 + GameHeight/12);
     return false;
   }
-  else if(GameTarget <= Result2Val)
+  else if(GameContext.GameInfo.Points <= Result2Val)
   {
     p5.background(0);
     p5.fill(255,255,255);
@@ -198,6 +198,7 @@ function GameStatusChecker(p5: p5): boolean
 
 const Game = () => {
   const contexUser = useContext(UserContext);
+  const GameContext = GetGameInfoContext();
   const [reslt1, setReslt1] = useState(0);
   const [reslt2, setReslt2] = useState(0);
   useEffect(() => {
@@ -209,13 +210,13 @@ const Game = () => {
       
       p5.draw = () => {
         NewValue(p5);
-        if(!GameStatusChecker(p5))
+        if(!GameStatusChecker(p5,GameContext))
           return;
         p5.background(25);
-        for(let a=0;a<GameSpeed;a++)
+        for(let a=0;a<GameContext.GameInfo.Speed;a++)
           BallAnimation(p5);
-        Racket1Animation(p5);
-        Racket2Animation(p5);
+        Racket1Animation(p5,GameContext);
+        Racket2Animation(p5,GameContext);
         LineCenter(p5);
         setReslt1(Result1Val);
         setReslt2(Result2Val);
@@ -234,7 +235,7 @@ const Game = () => {
   return (
     <div className="relative flex mx-auto my-auto w-[100%] h-[100vh]">
       <div className=" relative flex h-[12.5vw] w-[50%] lg:h-[125px] lg:w-[500px] mx-auto">
-        <img className=" relative flex w-[25%] h-[100%] bg-center rounded-tl-xl" src={myimage!.toString()}/>
+        <img className=" relative flex w-[25%] h-[100%] bg-center rounded-tl-xl" src={GameContext.GameInfo.myimage!.toString()}/>
         {/* <img className=" relative flex w-[50%] h-[50%%] bg-center" src={myimage1!}/> */}
         <div className="absolute flex w-[60%] h-[100%] left-[20%] trapezoid z-10">
         </div>
@@ -242,7 +243,7 @@ const Game = () => {
         <img className="relative flex left-[50%] w-[25%] h-[100%] bg-center rounded-tr-xl" src={"/3.jpg"}/>
       </div>
       <div  className=" absolute flex h-[12.5vw] w-[25%] lg:h-[125px] lg:w-[250px] left-[37.5%] lg:left-[43.3%] rounded-xl z-20">
-        <div className="relative my-auto px-[5%]  flex z-20 text-white text-[1.5vw] lg:text-[1vw]">{myusername!.toString()}</div>
+        <div className="relative my-auto px-[5%]  flex z-20 text-white text-[1.5vw] lg:text-[1vw]">{GameContext.GameInfo.myusername!.toString()}</div>
         <div className="relative my-auto  flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">{reslt1}</div>
         <div className="relative my-auto mx-auto flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">-</div>
         <div className="relative my-auto   flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">{reslt2}</div>

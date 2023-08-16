@@ -1,3 +1,5 @@
+'use client'
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -9,8 +11,6 @@
 /*   Updated: 2023/08/03 08:36:52 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-'use client'
 
 import PingPongSettings from "./Settings/Settings";
 import { useRouter } from 'next/navigation'
