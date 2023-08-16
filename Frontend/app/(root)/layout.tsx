@@ -8,8 +8,9 @@ import { Providers } from "./providers";
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import UserContext from './UserContext';
-import GameInfoContext,{GameInfoType,GameInfoStateType,GetGameInfoContext} from '../(root)/Game/GameContext/GameContext';
+import GameInfoContext,{GameInfoType,GameInfoStateType,GetGameInfoContext} from './Game/GameContext/GameContext';
 import useSWR from "swr"
+import StreamInfoContext,{StreamInfoType,StreamInfoStateType,GetStreamInfoContext} from './Stream/StreamContext/StreamContext';
 
 const metadata = {
   title: 'PingPong',
@@ -25,20 +26,25 @@ export default function RootLayout({
 }) {
   const [user, setUser] = useState({});
   const [GameInfo,SetGameInfo] = useState<GameInfoType>(
-    {
-        Points: 10,
-        Speed: 4,
-        pause_game: 0,
-        RoomMood: true,
-        other_tools: 0,
-        host: false,
-        Online: 1,
-        Access:0,
-        myusername: "Player I",
-        enemmyusername: "Player II",
-        myimage: "/2.jpg",
-        enemmyimage: "/3.jpg",
-    });
+  {
+      Points: 10,
+      Speed: 4,
+      pause_game: 0,
+      RoomMood: true,
+      other_tools: 0,
+      host: false,
+      Online: 1,
+      Access:0,
+      myusername: "Player I",
+      enemmyusername: "Player II",
+      myimage: "/2.jpg",
+      enemmyimage: "/3.jpg",
+  });
+  const [StreamInfo,SetStreamInfo] = useState<StreamInfoType>(
+  {
+    Access:0,
+    RoomNumber:0
+  });
   const router = useRouter();
 
   
@@ -86,9 +92,11 @@ fetchData
       {/* </div> */}
         
         {/* <div className='child'> */}
-          <GameInfoContext.Provider value={{ GameInfo,SetGameInfo }}>
-              {children}
-          </GameInfoContext.Provider>
+        <GameInfoContext.Provider value={{ GameInfo,SetGameInfo }}>
+          <StreamInfoContext.Provider value={{ StreamInfo,SetStreamInfo }}>
+            {children}
+          </StreamInfoContext.Provider>
+        </GameInfoContext.Provider>
         {/* </div> */}
           
             

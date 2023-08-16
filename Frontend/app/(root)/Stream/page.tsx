@@ -5,17 +5,16 @@ import { player1 } from '../../(root)/Game/Online/Socket/start_game_socket'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 import { useRouter } from 'next/navigation';
 import './style/style.css';
+import StreamInfoContext,{StreamInfoType,StreamInfoStateType,GetStreamInfoContext, StreamContextType} from '../Stream/StreamContext/StreamContext'
 
-
-export let Access: number = 0,RoomNumber:number = 0;
-function SpectatorMood(Room: number, router: AppRouterInstance)
+function SpectatorMood(Room: number, router: AppRouterInstance,StreamContext:StreamContextType)
 {
-  Access = 1;
-  RoomNumber = Room;
+  StreamContext.SetStreamInfo({...StreamContext.StreamInfo,Access:1,});
+  StreamContext.SetStreamInfo({...StreamContext.StreamInfo,RoomNumber:Room,});
     router.replace(`/Stream/Room${Room+1}`);
 }
 
-function  GetNumberOfRooms(router: AppRouterInstance)
+function  GetNumberOfRooms(router: AppRouterInstance,StreamContext:StreamContextType)
 {
   player1.emit('LoadStream');
   player1.on('LoadStream',(Room: number)=>
@@ -34,7 +33,7 @@ function  GetNumberOfRooms(router: AppRouterInstance)
         element_btn.innerHTML = '<p>Watch</p>';
         element.setAttribute("id",`Room`);
         element_btn.setAttribute("id",`Watch`);
-        element_btn.onclick= ()=>{SpectatorMood(a,router)};
+        element_btn.onclick= ()=>{SpectatorMood(a,router,StreamContext)};
         element.appendChild(element_btn);
         Rooms.appendChild(element);
       
@@ -44,10 +43,11 @@ function  GetNumberOfRooms(router: AppRouterInstance)
 }
 
 export default function Stream() {
+  const StreamContext = GetStreamInfoContext();
   const router: AppRouterInstance = useRouter();
   useEffect(()=>
   {
-    setInterval(()=>{GetNumberOfRooms(router);},1000);
+    setInterval(()=>{GetNumberOfRooms(router,StreamContext);},1000);
   });
     return (
       <div className="container mx-auto px-2 py-[250px] text-center items-center ">

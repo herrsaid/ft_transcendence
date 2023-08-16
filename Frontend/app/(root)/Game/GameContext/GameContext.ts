@@ -47,7 +47,7 @@ const GameInfoContext = createContext<GameContextType>(game);
 export function GetGameInfoContext() {
   const context = useContext(GameInfoContext);
   if (!context) {
-    throw new Error('useGameInfoContext must be used within a GameInfoProvider');
+    throw new Error('GetGameInfoContext must be used within a GameInfoProvider');
   }
   return context;
 }
