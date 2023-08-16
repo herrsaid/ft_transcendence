@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:18 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/12 20:47:24 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/13 18:42:31 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,18 @@ export let Speed2: number = 0;
 export let Access2: number = 0,RoomNumber:number = 0;
 export let myusername2: string | null = null;
 export let enemmyusername2: string | null = null;
+export let myimage2: string | null = null;
+export let enemmyimage2: string | null = null;
 async function JoinToRoom(Room: number, router: AppRouterInstance)
 {
   RoomNumber = Room+1;
   let Username = myusername2;
-  socket.emit('JoinUser',{RoomNumber,Username,});
-  await socket.on('SendData', (username,data) => {
+  let myimage = myimage2;
+  socket.emit('JoinUser',{RoomNumber,Username,myimage});
+  await socket.on('SendData', (username,playerimg,data) => {
     enemmyusername2 = username;
+    enemmyimage2 = playerimg
     host2 = data;
-    console.log("data: "+enemmyusername2+" "+data);
   });
   await socket.on('JoinAccepted',(speed:number,points: number)=>
   {
@@ -46,7 +49,7 @@ async function JoinToRoom(Room: number, router: AppRouterInstance)
   });
   await socket.on('JoinRefused',(data: string)=>
   {
-    console.log('herehere: '+data);
+    console.log(data);
   });
 }
 async function  GetNumberOfRooms(router: AppRouterInstance)
@@ -82,6 +85,10 @@ export default function Rooms() {
   const router: AppRouterInstance = useRouter();
   const contexUser = useContext(UserContext);
   myusername2 = contexUser.user.username;
+    if (contexUser.user.is_profile_img_updated)
+        myimage2 = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + contexUser.user.profile_img;
+    else
+        myimage2 = contexUser.user.profile_img;
   useEffect(()=>
   {
     setInterval(()=>{GetNumberOfRooms(router);},1000);

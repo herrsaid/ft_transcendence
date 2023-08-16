@@ -60,8 +60,8 @@ export class GameLogic
         // after that a chenge the result to be very closer to 10 or -10 if the ball on the first or on the last
         data.RoomInfo.Alpha = ballYpos_racket_par_10 - (10 - ballYpos_racket_par_10);
         //change Alpha value  it to int
-        Math.floor(data.RoomInfo.Alpha);
-        // - then reverse Alpha value to bet very closer to 1 and -1 if the ball on the first or on the last  and very closer to 10  if  it very closer to conter of racket
+        data.RoomInfo.Alpha = Math.floor(data.RoomInfo.Alpha);
+        // - then reverse Alpha value to be very closer to 1 and -1 or if the ball on the first or on the last or very closer to 10 or if  it very closer to conter of racket
         // - if ball on the conter of racket value of Alpha will be 0
         if(data.RoomInfo.Alpha === -10|| data.RoomInfo.Alpha === 10)
             data.RoomInfo.Alpha = 9;
@@ -79,10 +79,9 @@ export class GameLogic
     {
         // this.debug(data);
         // allways let ball move on horizontal if BallXdirection is positive ball move right else ball move left
-        data.BallInfo.BallXpos += (data.BallInfo.BallXdirection * data.RoomInfo.GameSpeed);
+        data.BallInfo.BallXpos += Math.floor(data.BallInfo.BallXdirection);
         //if ballYpos not in the same Rakect2Yposenter enter this condition
-        if((data.BallInfo.BallYpos - (data.BallInfo.BallHeight/2)) < data.RacketsInfo.Racket2Ypos
-            || (data.BallInfo.BallYpos - (data.BallInfo.BallHeight/2)) > (data.RacketsInfo.Racket2Ypos + data.RacketsInfo.Racket2Height))
+        if(data.BallInfo.BallYpos < data.RacketsInfo.Racket2Ypos || data.BallInfo.BallYpos > (data.RacketsInfo.Racket2Ypos + data.RacketsInfo.Racket2Height))
         {
             // check if ball spiped racket of player2 if true then player1 get point, the ball sets to center of the game, and  the game sleep 3000 ms
             if(data.BallInfo.BallXpos > data.RoomInfo.GameWidth)
@@ -91,7 +90,7 @@ export class GameLogic
                 //if player1 get target of the game then gamestatus will false and the simulation will end
                 if(++data.PlayersInfo.Result1Val >= data.RoomInfo.GamePoints)
                     data.RoomInfo.GameStatus = 0;
-                data.BallInfo.BallXpos = data.RoomInfo.GameWidth/2;
+                data.BallInfo.BallXpos = Math.floor(data.RoomInfo.GameWidth/2);
                 data.RoomInfo.Sleep = 100;
             }
         }
@@ -106,9 +105,9 @@ export class GameLogic
             }
         }
         //if ballYpos not in the same Rakect1Yposenter enter this condition
-        if((data.BallInfo.BallYpos - (data.BallInfo.BallHeight/2)) < data.RacketsInfo.Racket1Ypos
-            || (data.BallInfo.BallYpos - (data.BallInfo.BallHeight/2)) > (data.RacketsInfo.Racket1Ypos + data.RacketsInfo.Racket1Height))
+        if(data.BallInfo.BallYpos < data.RacketsInfo.Racket1Ypos || data.BallInfo.BallYpos > (data.RacketsInfo.Racket1Ypos + data.RacketsInfo.Racket1Height))
         {
+
             // check if ball spiped racket of player1 if true then player2 get point, the ball sets to center of the game, and  the game sleep 3000 ms
             if(data.BallInfo.BallXpos < 0)
             {
@@ -116,7 +115,7 @@ export class GameLogic
                 //if player2 get target of the game then gamestatus will false and the simulation will end
                 if(++data.PlayersInfo.Result2Val >= data.RoomInfo.GamePoints)
                     data.RoomInfo.GameStatus = 0;
-                data.BallInfo.BallXpos = data.RoomInfo.GameWidth/2;
+                data.BallInfo.BallXpos = Math.floor(data.RoomInfo.GameWidth/2);
                 data.RoomInfo.Sleep = 100;
             }
         }
@@ -137,7 +136,7 @@ export class GameLogic
                 data.BallInfo.BallYdirection = -1;
             if(data.BallInfo.BallYpos < data.BallInfo.BallHeight/2)
                 data.BallInfo.BallYdirection = +1;
-            data.BallInfo.BallYpos += (data.BallInfo.BallYdirection * data.RoomInfo.GameSpeed);
+            data.BallInfo.BallYpos += (data.BallInfo.BallYdirection);
         }
     }
 }

@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:18 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/12 21:56:55 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/13 18:34:38 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ export let other_tools: number = 0;
 export let host: boolean = false;
 export let Online: number = 1;
 export let Access: number = 0;
-export let myusername: string | null = null;
+export let myusername: string | null = "PLAYER I";
 export let enemmyusername: string | null = null;
+export let myimage: string | null = "/2.jpg";
+export let enemmyimage: string | null = null;
 function change_map_value(param: number)
 {
     for(let a=1;a<4;a++)
@@ -137,7 +139,7 @@ async function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<st
     {
         setWarning('');
         console.log("room:",RoomMood);
-        socket.emit('CreateRoom',{Speed,Points,myusername,RoomMood,});
+        socket.emit('CreateRoom',{Speed,Points,myusername,myimage,RoomMood,});
         socket.on('CreateRefused', (message: string) => {
                 setWarning(message);
                 const Warn = document.getElementById("warning");
@@ -159,7 +161,6 @@ async function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<st
                   });
                 
         });
-        console.log('here');
         if(RoomMood === false && settings)
         {
             settings.innerHTML = "";
@@ -196,8 +197,9 @@ async function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<st
             settings.style.filter = "blur(15px)";
             settings.style.animation = "Animation 3s infinite";
         }
-            socket.on('SendData', (username,data) => {
+            socket.on('SendData', (username,playerimg,data) => {
             enemmyusername = username;
+            enemmyimage = playerimg;
             host = data;
             Access = 1;
             socket.disconnect();
@@ -234,6 +236,10 @@ const PingPongSettings = ({ router }: any) =>
     const [Warning, setWarning] = useState("");
     const toast = useToast();
     myusername = contexUser.user.username;
+    if (contexUser.user.is_profile_img_updated)
+        myimage = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + contexUser.user.profile_img;
+    else
+        myimage = contexUser.user.profile_img;
     return(
 
        // #C56CDD,#18184a
@@ -325,7 +331,7 @@ const PingPongSettings = ({ router }: any) =>
                     </div>
                 </div>
             </div>
-                <button onClick={() => {is_Online_mod(router,setWarning,toast)}} id="play" className="relative  h-[40px] md:h-[50px] lg:h-[60px] w-[80px] md:w-[100px] lg:w-[120px] text-xl md:text-2xl lg:text-3xl font-semibold text-white-500 bg-blue-500 hover:bg-blue-600 mt-[50px] md:mt-[75px] lg:mt-[100px rounded-lg shadow-2xl shadow-blue-500 hover:shadow-blue-600 ">
+                <button onClick={() => {is_Online_mod(router,setWarning,toast)}} id="play" className="relative  h-[40px] md:h-[50px] lg:h-[60px] w-[80px] md:w-[100px] lg:w-[120px] text-xl md:text-2xl lg:text-3xl font-semibold text-white-500 bg-blue-500 hover:bg-blue-600 mt-[50px] md:mt-[75px] lg:mt-[100px] rounded-lg shadow-2xl shadow-blue-500 hover:shadow-blue-600 ">
                     <p>
                         Play
                     </p>

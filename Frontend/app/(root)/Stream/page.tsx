@@ -17,22 +17,17 @@ function SpectatorMood(Room: number, router: AppRouterInstance)
 
 function  GetNumberOfRooms(router: AppRouterInstance)
 {
-  console.log("here");
   player1.emit('LoadStream');
   player1.on('LoadStream',(Room: number)=>
   {
-    console.log(Room);
     let Rooms = document.getElementById('Rooms');
     if( Room === 0 && Rooms)
       Rooms.innerHTML = '<p> No Streams available for now </p>';
     else if(Rooms)
     {
       Rooms.innerHTML = '';
-      console.log("inside Rooms");
       for(let a=0;a<Room;a++)
       {
-        if(a === 0)
-        console.log("inside Loop");
         let element:HTMLElement = document.createElement("div");
         let element_btn:HTMLElement = document.createElement("button");
         element.innerHTML = `<p> Room Number: ${a+1}`;

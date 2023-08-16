@@ -6,7 +6,7 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:27:03 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/07 11:43:16 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/13 18:12:25 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ import {
   } from '@nestjs/websockets';
   import { Socket, Server } from 'socket.io';
   import { GameObj } from './play.ball.gateway';
-  export let Player1ID: string = '',speed1: number = 0,points1: number = 0,myusername:string = '';
+  export let Player1ID: string = '',speed1: number = 0,points1: number = 0,myusername:string = '',myimage:string = '';
   let none: Socket;
   @WebSocketGateway(1340, {
     cors: { origin: '*', credentials: true },
@@ -32,6 +32,7 @@ import {
       speed1 = data.Speed1;
       points1 = data.Points1;
       myusername = data.myusername1;
+      myimage = data.myimage1;
       console.log(data);
       console.log('Player1Arr_content: ', Player1ID);
     }

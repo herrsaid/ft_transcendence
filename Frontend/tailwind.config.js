@@ -10,6 +10,13 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    screens: {
+      'mn2': {'min': '0px', 'max': '320px'},
+      'mn': {'min': '320px', 'max': '640px'},
+      'sm': {'min': '640px'},
+      'lg': {'min': '1024px'},
+      'md': {'min': '768px'},
+    },
   },
   plugins: [],
 }
