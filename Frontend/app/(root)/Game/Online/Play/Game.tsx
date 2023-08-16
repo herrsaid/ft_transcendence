@@ -14,7 +14,7 @@ let Racket1Width: number = GameWidth/80, Racket1Height =  Math.floor(GameHeight/
 let Racket2Width: number = GameWidth/80, Racket2Height =  Math.floor(GameHeight/6), Racket2Xpos: number = GameWidth-15, Racket2Ypos: number = (GameHeight/2) - (Racket1Height/2);
 let Result1Val: number = 0;
 let Result2Val: number = 0;
-let first_conection_val:boolean=false, message: string = '';
+let first_conection_val:boolean, message: string;
 
 function ConvertServerData(ServerData:number,Mood:number)
 {
@@ -210,6 +210,8 @@ function GameStatusChecker(p5: p5,GameContext:GameContextType): boolean
       p5.background(0);
       p5.fill(255,255,255);
       p5.text(message, GameWidth/2 - GameWidth/12, GameHeight/2 + GameHeight/12);
+      player1.disconnect();
+      player1.connect();
       return false;
     }
   }
@@ -217,6 +219,8 @@ function GameStatusChecker(p5: p5,GameContext:GameContextType): boolean
   {
 		player2.on('GameEnd',(data: string)=>
     {
+      player2.disconnect();
+      player2.connect();
       message = data;
     });
     if(message !== '')
@@ -237,6 +241,9 @@ const Game = () => {
   const [reslt1, setReslt1] = useState(0);
   const [reslt2, setReslt2] = useState(0);
   useEffect(() => {
+    console.log('user re-enter this page');
+    first_conection_val=false;
+    message = '';
     const sketch = (p5: p5) => {
       p5.setup = () => {
       };

@@ -56,6 +56,7 @@ async function JoinToRoom(Room: number, router: AppRouterInstance,GameContext:Ga
     newGameInfo.Points = points;
     GameContext.SetGameInfo(newGameInfo);
     socket.disconnect();
+    socket.connect();
     router.replace(`/Game/Online/Play`);
   });
   await socket.on('JoinRefused',(data: string)=>

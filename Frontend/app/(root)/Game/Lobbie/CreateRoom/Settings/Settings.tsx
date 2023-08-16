@@ -205,6 +205,7 @@ async function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<st
             newGameInfo.Access = 1;
             SetGameInfo(newGameInfo);
             socket.disconnect();
+            socket.connect();
             router.replace('/Game//Online/Play');
         });
     }
