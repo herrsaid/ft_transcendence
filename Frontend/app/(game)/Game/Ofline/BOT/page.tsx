@@ -1,3 +1,5 @@
+'use client'
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -5,18 +7,18 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/02 10:25:21 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/03 10:31:36 by mabdelou         ###   ########.fr       */
+/*   Created: 2023/08/02 10:25:40 by mabdelou          #+#    #+#             */
+/*   Updated: 2023/08/02 10:25:41 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-import './Rooms/Rooms.css'
-import Rooms from './Rooms/Rooms';
+import Game from './Game';
+import './Game.css'
 const page = () => 
 {
     return(
-        <div id='Game'>
-            <Rooms/>
+        <div className='Game'>
+            <Game/>
         </div>
     );
 }

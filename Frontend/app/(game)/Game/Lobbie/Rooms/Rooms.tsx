@@ -1,3 +1,5 @@
+'use client'
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -10,7 +12,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-'use client'
 
 import { useEffect,useContext } from 'react';
 import { socket } from '../../Online/Socket/auto_match_socket'
@@ -71,16 +72,17 @@ async function  GetNumberOfRooms(router: AppRouterInstance,GameContext:GameConte
 }
 
 export default function Rooms() {
-  const router: AppRouterInstance = useRouter();
-  const contexUser = useContext(UserContext);
   const GameContext = GetGameInfoContext();
-  GameContext.SetGameInfo({...GameContext.GameInfo, myusername:contexUser.user.username,});
-  // SetGameInfo({...GameInfo, other_tools:param,});
-  // myusername2 = contexUser.user.username;
+  const contexUser = useContext(UserContext);
+  const router: AppRouterInstance = useRouter();
+  useEffect(()=>
+  {
+    GameContext.SetGameInfo({...GameContext.GameInfo, myusername:contexUser.user.username,});
     if (contexUser.user.is_profile_img_updated)
       GameContext.SetGameInfo({...GameContext.GameInfo, myimage:process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + contexUser.user.profile_img,});
     else
       GameContext.SetGameInfo({...GameContext.GameInfo, myimage:contexUser.user.profile_img,});
+  },[]);
   useEffect(()=>
   {
     setInterval(()=>{GetNumberOfRooms(router,GameContext);},1000);

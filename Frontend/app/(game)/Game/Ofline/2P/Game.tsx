@@ -1,5 +1,6 @@
-/* ************************************************************************** */
-/*                                                                            */
+'use client'
+
+
 /*                                                        :::      ::::::::   */
 /*   Game.tsx                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
@@ -10,7 +11,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-'use client'
 import { useEffect,useContext,useState } from "react";
 import UserContext from "@/app/(root)/UserContext";
 import p5 from "p5";

@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react';
-import { player1 } from '../Game/Online/Socket/start_game_socket'
+import { player1 } from '../../(game)/Game/Online/Socket/start_game_socket'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 import { useRouter } from 'next/navigation';
 import './style/style.css';

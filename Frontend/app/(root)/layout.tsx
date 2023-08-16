@@ -7,7 +7,6 @@ import { Providers } from "./providers";
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import UserContext from './UserContext';
-import GameInfoContext,{GameInfoType,GameInfoStateType,GetGameInfoContext} from './Game/GameContext/GameContext';
 import useSWR from "swr"
 
 const metadata = {
@@ -23,21 +22,6 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   const [user, setUser] = useState({});
-    const [GameInfo,SetGameInfo] = useState<GameInfoType>(
-    {
-        Points: 10,
-        Speed: 4,
-        pause_game: 0,
-        RoomMood: true,
-        other_tools: 0,
-        host: false,
-        Online: 1,
-        Access:0,
-        myusername: "Player I",
-        enemmyusername: "Player II",
-        myimage: "/2.jpg",
-        enemmyimage: "/3.jpg",
-    });
   const router = useRouter();
 
   
@@ -83,8 +67,6 @@ fetchData
             
             
         </UserContext.Provider>
-        <GameInfoContext.Provider value={{ GameInfo,SetGameInfo }}>
-        </GameInfoContext.Provider>
       </Providers>
       </body>
     </html>

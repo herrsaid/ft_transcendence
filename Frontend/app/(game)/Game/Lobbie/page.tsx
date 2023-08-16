@@ -1,3 +1,5 @@
+'use client'
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -6,17 +8,19 @@
 /*   By: mabdelou <mabdelou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/02 10:25:21 by mabdelou          #+#    #+#             */
-/*   Updated: 2023/08/03 08:36:52 by mabdelou         ###   ########.fr       */
+/*   Updated: 2023/08/03 10:31:36 by mabdelou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-'use client'
+import './Rooms/Rooms.css'
+import Rooms from './Rooms/Rooms';
+const page = () => 
+{
+    return(
+        <div id='Game'>
+            <Rooms/>
+        </div>
+    );
+}
 
-import PingPongSettings from "./Settings/Settings";
-import { useRouter } from 'next/navigation'
-export default function Game() {
-  const router = useRouter();
-    return (
-        <PingPongSettings router={router} />
-    )
-  }
+export default page;

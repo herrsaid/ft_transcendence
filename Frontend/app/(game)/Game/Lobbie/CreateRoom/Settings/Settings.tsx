@@ -1,4 +1,5 @@
 'use client'
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -14,7 +15,7 @@
 
 import "./Settings.css"
 import { socket } from '../../../Online/Socket/auto_match_socket'
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useContext } from 'react';
 import UserContext from "@/app/(root)/UserContext";
 import {  useToast } from '@chakra-ui/react'
@@ -176,7 +177,7 @@ async function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<st
             start.setAttribute("id",`start`);
             Player1name.innerHTML = 'mabdelou';
             Player2name.innerHTML = 'unknown';
-            Player1Pic.innerHTML = `<img src=${sessionStorage.getItem('avatar')!}></img>`;
+            Player1Pic.innerHTML = `<img src=${GameInfo.myimage}></img>`;
             VS.innerHTML = '<p> VS </p>';
             Player2Pic.innerHTML = `<img src="/avatar.png"></img>`;
             start.innerHTML = `<button> Start </button>`;
@@ -222,23 +223,24 @@ function change_pos(param :number,GameInfo:GameInfoType,SetGameInfo:GameInfoStat
         element.style.left = "-12.5%";
         else
         element.style.left = "35%";
-        console.log("before "+GameInfo.Speed, param);
         SetGameInfo({...GameInfo, Speed:param,});
-        console.log("after "+GameInfo.Speed, param);
     }
 }
 
 const PingPongSettings = ({ router }: any) => 
 {
+    const GameContext = GetGameInfoContext();
     const contexUser = useContext(UserContext);
     const [Warning, setWarning] = useState("");
-    const GameContext = GetGameInfoContext();
     const toast = useToast();
-    GameContext.SetGameInfo({...GameContext.GameInfo, myusername:contexUser.user.username,});
-    if (contexUser.user.is_profile_img_updated)
-        GameContext.SetGameInfo({...GameContext.GameInfo, myimage:process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + contexUser.user.profile_img,});
-    else
-        GameContext.SetGameInfo({...GameContext.GameInfo, myimage:contexUser.user.profile_img,});
+    useEffect(()=>
+    {
+        GameContext.SetGameInfo({...GameContext.GameInfo, myusername:contexUser.user.username,});
+        if (contexUser.user.is_profile_img_updated)
+            GameContext.SetGameInfo({...GameContext.GameInfo, myimage:process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + contexUser.user.profile_img,});
+        else
+            GameContext.SetGameInfo({...GameContext.GameInfo, myimage:contexUser.user.profile_img,});
+    },[]);
     return(
 
        // #C56CDD,#18184a
