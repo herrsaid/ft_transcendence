@@ -14,10 +14,10 @@ export interface GameInfoType
   host: boolean,
   Online: number,
   Access: number,
-  myusername: string | null,
-  enemmyusername: string | null,
-  myimage: string | null,
-  enemmyimage: string | null,
+  myusername: string,
+  enemmyusername: string,
+  myimage: string,
+  enemmyimage: string,
 }
  export interface GameContextType {
   GameInfo: GameInfoType;

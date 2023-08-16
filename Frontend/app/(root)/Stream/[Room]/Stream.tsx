@@ -4,7 +4,7 @@ import { useEffect,useContext,useState } from "react";
 import p5 from "p5";
 import './Stream.css';
 import { player1 } from '../../../(root)/Game/Online/Socket/start_game_socket';
-import { Access,RoomNumber } from '../page';
+import StreamInfoContext,{StreamInfoType,StreamInfoStateType,GetStreamInfoContext, StreamContextType} from '../../Stream/StreamContext/StreamContext'
 
 import UserContext from "@/app/(root)/UserContext";
 
@@ -48,12 +48,12 @@ function Racket2(p5: p5, x: number, y: number, w: number, h: number)
   p5.rect(x, y, w, h,10);
 }
 
-function first_conection()
+function first_conection(StreamContext:StreamContextType)
 {
   if(first_conection_val === false)
 		{
 			first_conection_val = true;
-      player1.emit("new_spectator",RoomNumber);
+      player1.emit("new_spectator",StreamContext.StreamInfo.RoomNumber);
 		}
 }
 
@@ -135,6 +135,7 @@ function NewValue(p5:p5)
 
 const Game = () => {
   const contexUser = useContext(UserContext);
+  const StreamContext = GetStreamInfoContext();
   const [reslt1, setReslt1] = useState(0);
   const [reslt2, setReslt2] = useState(0);
   useEffect(() => {
@@ -146,7 +147,7 @@ const Game = () => {
       {
         GetPlayersData();
         NewValue(p5);
-        if(!Access)
+        if(!StreamContext.StreamInfo.Access)
         {
           if(document.getElementById('sketch-container'))
             p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
@@ -156,7 +157,7 @@ const Game = () => {
           p5.text("please sign-in before playing", GameWidth/2 - GameWidth/4, GameHeight/2 + GameHeight/24);
           return ;
         }
-        first_conection();
+        first_conection(StreamContext);
         if(document.getElementById('sketch-container'))
           p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
         p5.background(25);
