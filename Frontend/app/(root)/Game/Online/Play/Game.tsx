@@ -129,24 +129,52 @@ function first_conection(p5:p5,GameContext:GameContextType)
   else if(first_conection_val === false)
 	{
 		first_conection_val = true;
+    console.log(GameContext.GameInfo.host);
       if(GameContext.GameInfo.host)
-			  player1.emit('first_conection',
       {
-        Speed1: GameContext.GameInfo.Speed,
-        Points1:GameContext.GameInfo.Points,
-        myusername1:GameContext.GameInfo.myusername,
-        myimage1:GameContext.GameInfo.myimage,
-      });
-      else
-			  player2.emit('first_conection',
+        player1.emit('first_conection',
         {
           Speed1: GameContext.GameInfo.Speed,
           Points1:GameContext.GameInfo.Points,
           myusername1:GameContext.GameInfo.myusername,
           myimage1:GameContext.GameInfo.myimage,
         });
-	}
+      }
+      else
+		  {
+        player2.emit('first_conection',
+        {
+          Speed1: GameContext.GameInfo.Speed,
+          Points1:GameContext.GameInfo.Points,
+          myusername1:GameContext.GameInfo.myusername,
+          myimage1:GameContext.GameInfo.myimage,
+        });
+      }
+    }
   return true;
+}
+
+function initialze_data()
+{
+  GameWidth = 800;
+  GameHeight = 400;
+  GameSpeed = 4;
+  BallWidth = GameWidth/52;
+  BallHeight = GameHeight/26;
+  BallXpos = GameWidth/2;
+  BallYpos = GameHeight/2;
+  Racket1Width = GameWidth/80;
+  Racket1Height =  Math.floor(GameHeight/6);
+  Racket1Xpos = 5;
+  Racket1Ypos = (GameHeight/2) - (Racket1Height/2);
+  Racket2Width = GameWidth/80;
+  Racket2Height =  Math.floor(GameHeight/6);
+  Racket2Xpos = GameWidth-15;
+  Racket2Ypos = (GameHeight/2) - (Racket1Height/2);
+  Result1Val = 0;
+  Result2Val = 0;
+  first_conection_val= false;
+  message = '';
 }
 
 function NewValue(p5:p5)
@@ -241,9 +269,8 @@ const Game = () => {
   const [reslt1, setReslt1] = useState(0);
   const [reslt2, setReslt2] = useState(0);
   useEffect(() => {
+    initialze_data();
     console.log('user re-enter this page');
-    first_conection_val=false;
-    message = '';
     const sketch = (p5: p5) => {
       p5.setup = () => {
       };

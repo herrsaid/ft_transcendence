@@ -10,10 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-import {
-    WebSocketGateway,
-    WebSocketServer,
-  } from '@nestjs/websockets';
+// import {
+//     WebSocketGateway,
+//     WebSocketServer,
+//   } from '@nestjs/websockets';
   import { Interval } from "@nestjs/schedule";
   import { Player1ID,speed1,points1,myusername,myimage} from './play.player1.gateway'
   import { Player2ID,speed2,points2,enemyusername,enemyimage} from './play.player2.gateway'
@@ -22,9 +22,11 @@ import {
 import { HistoryManager } from '../data_manager/HistoryManager';
 import { GameInfoManager } from '../data_manager/GameInfoManager';
 import { UserService } from 'src/user/services/user.service';
+import { Injectable } from '@nestjs/common';
 
-  export let GameObj: data[] = [];
+export let GameObj: data[] = [];
 
+@Injectable()
   export class BallGateway{
     constructor(private HistoryManager:HistoryManager,private GameInfo:GameInfoManager,
       private UserManager:UserService)
@@ -145,7 +147,6 @@ import { UserService } from 'src/user/services/user.service';
         GameObj[Room].PlayersInfo.Player2Client.emit('BallPos', Gameinfo);
     }
 
-    @WebSocketServer()
     @Interval(16)
     handleSendBallPos()
     {

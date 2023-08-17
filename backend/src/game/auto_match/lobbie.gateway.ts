@@ -109,21 +109,18 @@ import {
         if(Rooms[data.RoomNumber].players.length < 2)
         {
           Rooms[data.RoomNumber].players.push(player_data);
+          Rooms[data.RoomNumber].players[0].PlayerSocket.emit(
+            'SendData',Rooms[data.RoomNumber].players[1].Player,Rooms[data.RoomNumber].players[1].PlayerImg,true);
           Rooms[data.RoomNumber].players[1].PlayerSocket.emit(
-            'SendData',Rooms[data.RoomNumber].players[0].Player,Rooms[data.RoomNumber].players[0].PlayerImg,false
-          );
-          client.emit('JoinAccepted',Rooms[data.RoomNumber].Speed,Rooms[data.RoomNumber].Points);
+            'SendData',Rooms[data.RoomNumber].players[0].Player,Rooms[data.RoomNumber].players[0].PlayerImg,false);
+            client.emit('JoinAccepted',Rooms[data.RoomNumber].Speed,Rooms[data.RoomNumber].Points);
+            console.log("Launch Public Room");
         }
         else
         {
           client.emit('JoinRefused','Room is full or already in match');
           return ;
         }
-      }
-      if(Rooms[data.RoomNumber].players.length === 2)
-      {
-        Rooms[data.RoomNumber].players[0].PlayerSocket.emit('SendData',Rooms[data.RoomNumber].players[1].Player,Rooms[data.RoomNumber].players[1].PlayerImg,true);
-        console.log("Launch Public Room");
       }
       console.log(Rooms);
     }
