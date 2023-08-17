@@ -24,9 +24,7 @@ import { GameInfoManager } from '../data_manager/GameInfoManager';
 import { UserService } from 'src/user/services/user.service';
 
   export let GameObj: data[] = [];
-  @WebSocketGateway(1340, {
-    cors: { origin: '*', credentials: true },
-  })
+
   export class BallGateway{
     constructor(private HistoryManager:HistoryManager,private GameInfo:GameInfoManager,
       private UserManager:UserService)
@@ -118,7 +116,6 @@ import { UserService } from 'src/user/services/user.service';
         GameObj[Room].PlayersInfo.Player2Client.emit('GameEnd',"YOU WIN");
         
       }
-
       //disconnect players from room
       if(GameObj[Room].PlayersInfo.Player1Client !== undefined)
         GameObj[Room].PlayersInfo.Player1Client.disconnect();
@@ -159,6 +156,8 @@ import { UserService } from 'src/user/services/user.service';
           this.new_connect()
         for(let a = 0 ; a<GameObj.length; a++ )
         {
+          if(!GameObj.length)
+            break;
           if(GameObj[a].RoomInfo.Sleep <= 0 && GameObj[a].RoomInfo.GameStatus === 1)
           {
             //call function that contains Game logic
