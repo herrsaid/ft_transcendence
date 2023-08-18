@@ -15,8 +15,7 @@ let Racket1Width: number = GameWidth/80, Racket1Height =  Math.floor(GameHeight/
 let Racket2Width: number = GameWidth/80, Racket2Height =  Math.floor(GameHeight/6), Racket2Xpos: number = GameWidth-15, Racket2Ypos: number = (GameHeight/2) - (Racket1Height/2);
 let Result1Val: number = 0;
 let Result2Val: number = 0;
-let first_conection_val:boolean, message: string;
-
+let first_conection_val:boolean,access:boolean = false, message: string; 
 function ConvertServerData(ServerData:number,Mood:number)
 {
   if(Mood)
@@ -60,20 +59,26 @@ function BallAnimation (GameContext:GameContextType)
   {  
     player1.on('BallPos',(GameInfo)=>
     {
-      BallXpos = GameWidth - ConvertServerData(GameInfo.BallXpos,1);
-      BallYpos = GameHeight -  ConvertServerData(GameInfo.BallYpos,0);
-      Result1Val = GameInfo.Result2Val;
-      Result2Val = GameInfo.Result1Val;
+      if(access)
+      {
+        BallXpos = GameWidth - ConvertServerData(GameInfo.BallXpos,1);
+        BallYpos = GameHeight -  ConvertServerData(GameInfo.BallYpos,0);
+        Result1Val = GameInfo.Result2Val;
+        Result2Val = GameInfo.Result1Val;
+      }
     });
   }
   else
   {
     player2.on('BallPos',(GameInfo)=>
     {
-      BallXpos = ConvertServerData(GameInfo.BallXpos,1);
-      BallYpos = ConvertServerData(GameInfo.BallYpos,0);
-      Result1Val = GameInfo.Result1Val;
-      Result2Val = GameInfo.Result2Val;
+      if(access)
+      {
+        BallXpos = ConvertServerData(GameInfo.BallXpos,1);
+        BallYpos = ConvertServerData(GameInfo.BallYpos,0);
+        Result1Val = GameInfo.Result1Val;
+        Result2Val = GameInfo.Result2Val;
+      }
     });
   }
 }
@@ -93,7 +98,8 @@ function Racket1Animation(p5: p5): undefined
   player1.emit('send_player1_data',ConvertClientData(((GameHeight - Racket1Height) - Racket1Ypos),0));
 	player1.on('send_player1_data',(data)=> 
   {
-    Racket2Ypos =  (GameHeight - Racket2Height) - ConvertServerData(data,0);
+    if(access)
+      Racket2Ypos =  (GameHeight - Racket2Height) - ConvertServerData(data,0);
   });
 }
 
@@ -113,7 +119,8 @@ function Racket2Animation(p5: p5): undefined
   player2.emit('send_player2_data', ConvertClientData(Racket1Ypos,0));
 	player2.on('send_player2_data',(data)=> 
   {
-    Racket2Ypos =  ConvertServerData(data,0);
+    if(access)
+      Racket2Ypos =  ConvertServerData(data,0);
   });
 }
 function first_conection(p5:p5,GameContext:GameContextType)
@@ -135,20 +142,20 @@ function first_conection(p5:p5,GameContext:GameContextType)
       {
         player1.emit('first_conection',
         {
-          Speed1: GameContext.GameInfo.Speed,
-          Points1:GameContext.GameInfo.Points,
-          myusername1:GameContext.GameInfo.myusername,
-          myimage1:GameContext.GameInfo.myimage,
+          Speed: GameContext.GameInfo.Speed,
+          Points:GameContext.GameInfo.Points,
+          myusername:GameContext.GameInfo.myusername,
+          myimage:GameContext.GameInfo.myimage,
         });
       }
       else
 		  {
         player2.emit('first_conection',
         {
-          Speed1: GameContext.GameInfo.Speed,
-          Points1:GameContext.GameInfo.Points,
-          myusername1:GameContext.GameInfo.myusername,
-          myimage1:GameContext.GameInfo.myimage,
+          Speed: GameContext.GameInfo.Speed,
+          Points:GameContext.GameInfo.Points,
+          myusername:GameContext.GameInfo.myusername,
+          myimage:GameContext.GameInfo.myimage,
         });
       }
     }
@@ -179,6 +186,7 @@ function initialze_data()
   Result1Val = 0;
   Result2Val = 0;
   first_conection_val= false;
+  access = true;
   message = '';
 }
 
@@ -236,7 +244,8 @@ function GameStatusChecker(p5: p5,GameContext:GameContextType): boolean
   {
 		player1.on('GameEnd',(data: string)=>
     {
-      message = data;
+      if(access)
+        message = data;
     });
     if(message !== '')
     {
@@ -251,7 +260,8 @@ function GameStatusChecker(p5: p5,GameContext:GameContextType): boolean
   {
 		player2.on('GameEnd',(data: string)=>
     {
-      message = data;
+      if(access)
+        message = data;
     });
     if(message !== '')
     {
@@ -308,6 +318,10 @@ const Game = () => {
     };
 
     new p5(sketch);
+    return()=>
+    {
+      access = false;
+    };
   }, []);
 
   return (

@@ -23,7 +23,7 @@ import { player1,player2 } from "../../Online/Socket/start_game_socket";
 import { socket } from '../../Online/Socket/auto_match_socket';
 
 let newGameInfo:GameInfoType;
-
+let access:boolean = false; 
 async function JoinToRoom(Room: number, router: AppRouterInstance,GameContext:GameContextType)
 {
   console.log("button-pressed");
@@ -34,23 +34,30 @@ async function JoinToRoom(Room: number, router: AppRouterInstance,GameContext:Ga
   let myimage = newGameInfo.myimage;
   socket.emit('JoinUser',{RoomNumber,Username,myimage});
   await socket.on('SendData', (username,playerimg,data) => {
-    newGameInfo.enemmyusername = username;
-    newGameInfo.enemmyimage = playerimg;
-    newGameInfo.host = data;
+    if(access)
+    {
+      newGameInfo.enemmyusername = username;
+      newGameInfo.enemmyimage = playerimg;
+      newGameInfo.host = data;
+    }
   });
   await socket.on('JoinAccepted',(speed:number,points: number)=>
   {
-    newGameInfo.Access=1;
-    newGameInfo.Speed = speed;
-    newGameInfo.Points = points;
-    GameContext.SetGameInfo(newGameInfo);
-    // console.log("conection_closed on room");
-    // socket.emit('conection_closed');
-    router.replace(`/Game/Online/Play`);
+    if(access)
+    {
+      newGameInfo.Access=1;
+      newGameInfo.Speed = speed;
+      newGameInfo.Points = points;
+      GameContext.SetGameInfo(newGameInfo);
+      // console.log("conection_closed on room");
+      // socket.emit('conection_closed');
+      router.replace(`/Game/Online/Play`);
+    }
   });
   await socket.on('JoinRefused',(data: string)=>
   {
-    console.log(data);
+    if(access)
+      console.log(data);
   });
 }
 async function  GetNumberOfRooms(router: AppRouterInstance,GameContext:GameContextType)
@@ -58,25 +65,28 @@ async function  GetNumberOfRooms(router: AppRouterInstance,GameContext:GameConte
   socket.emit('GetRooms');
   await socket.on('GetRooms',(Room: number)=>
   {
-    let Rooms = document.getElementById('Rooms');
-    if( Room === 0 && Rooms)
+    if(access)
     {
-      Rooms.innerHTML = '<p > No Rooms available for now </p>';
-    }
-    else if(Rooms)
-    {
-      Rooms.innerHTML = '';
-      for(let a=0;a<Room;a++)
+      let Rooms = document.getElementById('Rooms');
+      if( Room === 0 && Rooms)
       {
-        let element:HTMLElement = document.createElement("div");
-        let element_btn:HTMLElement = document.createElement("button");
-        element.innerHTML = `<p> Room Number: ${a+1}`;
-        element_btn.innerHTML = '<p>Join</p>';
-        element.setAttribute("class",`Room`);
-        element_btn.setAttribute("id",`Join`);
-        element_btn.onclick= ()=>{JoinToRoom(a,router,GameContext)};
-        element.appendChild(element_btn);
-        Rooms.appendChild(element);
+        Rooms.innerHTML = '<p > No Rooms available for now </p>';
+      }
+      else if(Rooms)
+      {
+        Rooms.innerHTML = '';
+        for(let a=0;a<Room;a++)
+        {
+          let element:HTMLElement = document.createElement("div");
+          let element_btn:HTMLElement = document.createElement("button");
+          element.innerHTML = `<p> Room Number: ${a+1}`;
+          element_btn.innerHTML = '<p>Join</p>';
+          element.setAttribute("class",`Room`);
+          element_btn.setAttribute("id",`Join`);
+          element_btn.onclick= ()=>{JoinToRoom(a,router,GameContext)};
+          element.appendChild(element_btn);
+          Rooms.appendChild(element);
+        }
       }
     }
   });
@@ -115,9 +125,11 @@ export default function Rooms() {
   useEffect(()=>
   {
     let interval: NodeJS.Timer  = setInterval(()=>{GetNumberOfRooms(router,GameContext);},1000);
+    access = true;
     return ()=> 
     {
       clearInterval(interval);
+      access = false;
     };
   });
     return (

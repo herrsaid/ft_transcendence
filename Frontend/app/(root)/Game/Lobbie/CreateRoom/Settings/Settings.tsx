@@ -22,8 +22,9 @@ import GameInfoContext,{GameInfoType,GameInfoStateType,GetGameInfoContext, GameC
 import { player1,player2 } from "../../../Online/Socket/start_game_socket";
 import { socket } from '../../../Online/Socket/auto_match_socket'
 
-let newGameInfo:GameInfoType;
 
+let newGameInfo:GameInfoType;
+let access:boolean = false; 
 function change_map_value(param: number)
 {
     for(let a=1;a<4;a++)
@@ -141,6 +142,8 @@ async function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<st
             RoomMood: newGameInfo.RoomMood,
         });
         socket.on('CreateRefused', (message: string) => {
+            if(access)
+            {
                 setWarning(message);
                 const Warn = document.getElementById("warning");
                 if(settings)
@@ -159,7 +162,7 @@ async function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<st
                     duration: 5000,
                     isClosable: true,
                   });
-                
+            }  
         });
         if(newGameInfo.RoomMood === false && settings)
         {
@@ -197,16 +200,18 @@ async function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<st
             settings.style.filter = "blur(15px)";
             settings.style.animation = "Animation 3s infinite";
         }
-            socket.on('SendData', (username,playerimg,data) => {
-            newGameInfo.enemmyusername = username;
-            newGameInfo.enemmyimage = playerimg;
-            newGameInfo.host = data;
-            newGameInfo.Access = 1;
-            console.log(router.path)
-            GameContext.SetGameInfo(newGameInfo);
             console.log("conection_closed on settings");
-            // socket.emit('conection_closed');
-            router.replace('/Game//Online/Play');
+            socket.on('SendData', (username,playerimg,data) => {
+            if(access)
+            {
+                newGameInfo.enemmyusername = username;
+                newGameInfo.enemmyimage = playerimg;
+                newGameInfo.host = data;
+                newGameInfo.Access = 1;
+                GameContext.SetGameInfo(newGameInfo);
+                // socket.emit('conection_closed');
+                router.replace('/Game//Online/Play');
+            }
         });
     }
     else
@@ -265,6 +270,8 @@ const PingPongSettings = ({ router }: any) =>
             myimage: "/2.jpg",
             enemmyimage: "/3.jpg",
           };
+          access = true;
+          return()=>{console.log("i'm leaving");access = false;};
       }, []);
     if(!contexUser.user.username || !contexUser.user.profile_img)
     {
