@@ -18,7 +18,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useContext } from 'react';
 import UserContext from "@/app/(root)/UserContext";
 import {  useToast } from '@chakra-ui/react'
-import GameInfoContext,{GameInfoType,GameInfoStateType,GetGameInfoContext} from '../../../GameContext/GameContext';
+import GameInfoContext,{GameInfoType,GameInfoStateType,GetGameInfoContext, GameContextType} from '../../../GameContext/GameContext';
 import { player1,player2 } from "../../../Online/Socket/start_game_socket";
 import { socket } from '../../../Online/Socket/auto_match_socket'
 
@@ -125,19 +125,19 @@ function change_pausegame_value(param: number)
         newGameInfo.RoomMood=false;
 }
 
-async function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<string>>,toast:any,GameInfo:GameInfoType,SetGameInfo:GameInfoStateType)
+async function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<string>>,toast:any,GameContext:GameContextType)
 {
     const settings = document.getElementById("Settings")
-    newGameInfo.myusername = GameInfo.myusername;
-    newGameInfo.myimage = GameInfo.myimage;
+    newGameInfo.myusername = GameContext.GameInfo.myusername;
+    newGameInfo.myimage = GameContext.GameInfo.myimage;
     if(newGameInfo.Online === 1)
     {
         setWarning('');
         socket.emit('CreateRoom',{
             Speed: newGameInfo.Speed,
             Points: newGameInfo.Points,
-            myusername: GameInfo.myusername,
-            myimage: GameInfo.myimage,
+            myusername: GameContext.GameInfo.myusername,
+            myimage: GameContext.GameInfo.myimage,
             RoomMood: newGameInfo.RoomMood,
         });
         socket.on('CreateRefused', (message: string) => {
@@ -180,7 +180,7 @@ async function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<st
             start.setAttribute("id",`start`);
             Player1name.innerHTML = 'mabdelou';
             Player2name.innerHTML = 'unknown';
-            Player1Pic.innerHTML = `<img src=${GameInfo.myimage}></img>`;
+            Player1Pic.innerHTML = `<img src=${GameContext.GameInfo.myimage}></img>`;
             VS.innerHTML = '<p> VS </p>';
             Player2Pic.innerHTML = `<img src="/avatar.png"></img>`;
             start.innerHTML = `<button> Start </button>`;
@@ -202,9 +202,10 @@ async function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<st
             newGameInfo.enemmyimage = playerimg;
             newGameInfo.host = data;
             newGameInfo.Access = 1;
-            SetGameInfo(newGameInfo);
+            console.log(router.path)
+            GameContext.SetGameInfo(newGameInfo);
             console.log("conection_closed on settings");
-            socket.emit('conection_closed');
+            // socket.emit('conection_closed');
             router.replace('/Game//Online/Play');
         });
     }
@@ -212,12 +213,12 @@ async function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<st
     {
         if(newGameInfo.other_tools === 1)
         {
-            SetGameInfo(newGameInfo);
+            GameContext.SetGameInfo(newGameInfo);
             router.replace('/Game/Ofline/2P');
         }
         else
         {
-            SetGameInfo(newGameInfo);
+            GameContext.SetGameInfo(newGameInfo);
             router.replace('/Game/Ofline/BOT');
         }
     }
@@ -361,7 +362,7 @@ const PingPongSettings = ({ router }: any) =>
                         </div>
                     </div>
                 </div>
-                    <button onClick={() => {is_Online_mod(router,setWarning,toast,GameContext.GameInfo,GameContext.SetGameInfo)}} id="play" className="relative  h-[40px] md:h-[50px] lg:h-[60px] w-[80px] md:w-[100px] lg:w-[120px] text-xl md:text-2xl lg:text-3xl font-semibold text-white-500 bg-blue-500 hover:bg-blue-600 mt-[50px] md:mt-[75px] lg:mt-[100px] rounded-lg shadow-2xl shadow-blue-500 hover:shadow-blue-600 ">
+                    <button onClick={() => {is_Online_mod(router,setWarning,toast,GameContext)}} id="play" className="relative  h-[40px] md:h-[50px] lg:h-[60px] w-[80px] md:w-[100px] lg:w-[120px] text-xl md:text-2xl lg:text-3xl font-semibold text-white-500 bg-blue-500 hover:bg-blue-600 mt-[50px] md:mt-[75px] lg:mt-[100px] rounded-lg shadow-2xl shadow-blue-500 hover:shadow-blue-600 ">
                         <p>
                             Play
                         </p>

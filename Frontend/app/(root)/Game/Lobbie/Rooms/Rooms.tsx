@@ -22,20 +22,7 @@ import { GetGameInfoContext, GameContextType, GameInfoType } from '../../GameCon
 import { player1,player2 } from "../../Online/Socket/start_game_socket";
 import { socket } from '../../Online/Socket/auto_match_socket';
 
-let newGameInfo:GameInfoType = {
-  Points: 10,
-  Speed: 4,
-  pause_game: 0,
-  RoomMood: true,
-  other_tools: 0,
-  host: false,
-  Online: 1,
-  Access:0,
-  myusername: "Player I",
-  enemmyusername: "Player II",
-  myimage: "/2.jpg",
-  enemmyimage: "/3.jpg",
-};
+let newGameInfo:GameInfoType;
 
 async function JoinToRoom(Room: number, router: AppRouterInstance,GameContext:GameContextType)
 {
@@ -57,8 +44,8 @@ async function JoinToRoom(Room: number, router: AppRouterInstance,GameContext:Ga
     newGameInfo.Speed = speed;
     newGameInfo.Points = points;
     GameContext.SetGameInfo(newGameInfo);
-    console.log("conection_closed on room");
-    socket.emit('conection_closed');
+    // console.log("conection_closed on room");
+    // socket.emit('conection_closed');
     router.replace(`/Game/Online/Play`);
   });
   await socket.on('JoinRefused',(data: string)=>
@@ -105,6 +92,20 @@ export default function Rooms() {
     player1.emit('conection_closed');
     player2.emit('conection_closed');
     socket.emit('conection_closed');
+    newGameInfo = {
+      Points: 10,
+      Speed: 4,
+      pause_game: 0,
+      RoomMood: true,
+      other_tools: 0,
+      host: false,
+      Online: 1,
+      Access:0,
+      myusername: "Player I",
+      enemmyusername: "Player II",
+      myimage: "/2.jpg",
+      enemmyimage: "/3.jpg",
+    };
     newGameInfo.myusername = contexUser.user.username;
     if (contexUser.user.is_profile_img_updated)
       newGameInfo.myimage=process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + contexUser.user.profile_img;

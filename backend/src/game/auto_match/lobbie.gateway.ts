@@ -115,15 +115,17 @@ import {
             Rooms[data.RoomNumber].players[1].PlayerSocket.emit(
               'SendData',Rooms[data.RoomNumber].players[0].Player,Rooms[data.RoomNumber].players[0].PlayerImg,false);
               client.emit('JoinAccepted',Rooms[data.RoomNumber].Speed,Rooms[data.RoomNumber].Points);
-        }
-        else
-        {
-          client.emit('JoinRefused','Room is full or already in match');
-          return ;
-        }
-      }
-      console.log(Rooms);
-      console.log("Launch Public Room");
+            }
+            else
+            {
+              client.emit('JoinRefused','Room is full or already in match');
+              return ;
+            }
+          }
+          console.log(Rooms);
+          console.log("Launch Public Room");
+          for(let a=0;a<Rooms[data.RoomNumber].players.length;a++)
+            Rooms[data.RoomNumber].players[a].PlayerSocket.emit('conection_closed');
     }
     @SubscribeMessage('GetRooms')
     handleGetRooms(client: Socket): void
