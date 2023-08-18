@@ -57,7 +57,7 @@ async function JoinToRoom(Room: number, router: AppRouterInstance,GameContext:Ga
     newGameInfo.Speed = speed;
     newGameInfo.Points = points;
     GameContext.SetGameInfo(newGameInfo);
-    // console.log("conection_closed");
+    console.log("conection_closed on room");
     socket.emit('conection_closed');
     router.replace(`/Game/Online/Play`);
   });

@@ -36,6 +36,7 @@ export let GameObj: data[] = [];
     first_connect()
     {
       GameObj.push(new data());
+      console.log("push first simulation");
       GameObj[0].RoomInfo.GameSpeed = speed1 | speed2;
       GameObj[0].RoomInfo.GamePoints= points1 | points2;
       GameObj[0].PlayersInfo.Player1UserName = myusername;
@@ -51,6 +52,7 @@ export let GameObj: data[] = [];
     new_connect()
     {
       GameObj.push(new data());
+      console.log("push new simulation");
       GameObj[GameObj.length - 1].RoomInfo.GameSpeed = speed1 | speed2;
       GameObj[GameObj.length - 1].RoomInfo.GamePoints= points1 | points2;
       GameObj[GameObj.length - 1].PlayersInfo.Player1UserName = myusername;

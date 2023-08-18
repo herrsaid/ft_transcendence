@@ -137,14 +137,14 @@ import {
     @SubscribeMessage('conection_closed')
     handleconection_closed(client: Socket): void {
         for(let a = 0;a<Rooms.length; a++)
-          Rooms[a].players = Rooms[a].players.filter(player => player.PlayerSocket !== client)
+          Rooms[a].players = Rooms[a].players.filter(player => player.PlayerSocket !== client);
         Rooms = Rooms.filter(elem => elem.players.length !== 0);
         console.log("Remove Old Room");
         console.log(Rooms);
       }
     handleDisconnect(client: Socket): void {
       for(let a = 0;a<Rooms.length; a++)
-        Rooms[a].players = Rooms[a].players.filter(player => player.PlayerSocket !== client)
+        Rooms[a].players = Rooms[a].players.filter(player => player.PlayerSocket !== client);
       Rooms = Rooms.filter(elem => elem.players.length !== 0);
       console.log("Remove Old Room");
       console.log(Rooms);

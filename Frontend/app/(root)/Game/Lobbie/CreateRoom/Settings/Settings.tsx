@@ -203,6 +203,7 @@ async function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<st
             newGameInfo.host = data;
             newGameInfo.Access = 1;
             SetGameInfo(newGameInfo);
+            console.log("conection_closed on settings");
             socket.emit('conection_closed');
             router.replace('/Game//Online/Play');
         });
