@@ -164,8 +164,6 @@ function first_conection(p5:p5,GameContext:GameContextType)
 function initialze_data()
 {
   console.log('user re-enter game page');
-  player1.emit('conection_closed');
-  player2.emit('conection_closed');
   socket.emit('conection_closed');
   GameWidth = 800;
   GameHeight = 400;
