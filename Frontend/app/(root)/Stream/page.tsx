@@ -1,11 +1,14 @@
 'use client'
 
 import { useEffect } from 'react';
-import { stream } from './Socket/start_stream_socket';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 import { useRouter } from 'next/navigation';
 import './style/style.css';
 import StreamInfoContext,{StreamInfoType,StreamInfoStateType,GetStreamInfoContext, StreamContextType} from '../Stream/StreamContext/StreamContext'
+import { stream } from './Socket/start_stream_socket';
+import { player1, player2 } from '../Game/Online/Socket/start_game_socket';
+import { socket } from '../Game/Online/Socket/auto_match_socket';
+
 
 let NewStreamInfo:StreamInfoType;
 
@@ -50,11 +53,19 @@ export default function Stream() {
   const router: AppRouterInstance = useRouter();
   useEffect(()=>
   {
-    setInterval(()=>{GetNumberOfRooms(router,StreamContext);},1000);
+    let interval:NodeJS.Timer = setInterval(()=>{GetNumberOfRooms(router,StreamContext);},1000);
+    return ()=> 
+    {
+      clearInterval(interval);
+    };
   });
   useEffect(()=>
   {
-    console.log('user re-enter this page');
+    
+    console.log('user re-enter stream page');
+    player1.emit('conection_closed');
+    player2.emit('conection_closed');
+    socket.emit('conection_closed');
     NewStreamInfo =
     {
       Access:0,

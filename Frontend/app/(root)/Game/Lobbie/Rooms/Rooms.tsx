@@ -14,12 +14,13 @@
 
 
 import { useEffect,useContext } from 'react';
-import { socket } from '../../Online/Socket/auto_match_socket'
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 import { useRouter } from 'next/navigation';
 import './Rooms.css';
 import UserContext from "@/app/(root)/UserContext";
 import { GetGameInfoContext, GameContextType, GameInfoType } from '../../GameContext/GameContext';
+import { player1,player2 } from "../../Online/Socket/start_game_socket";
+import { socket } from '../../Online/Socket/auto_match_socket';
 
 let newGameInfo:GameInfoType = {
   Points: 10,
@@ -38,6 +39,7 @@ let newGameInfo:GameInfoType = {
 
 async function JoinToRoom(Room: number, router: AppRouterInstance,GameContext:GameContextType)
 {
+  console.log("button-pressed");
   let RoomNumber = Room+1;
   newGameInfo.myusername = GameContext.GameInfo.myusername;
   newGameInfo.myimage = GameContext.GameInfo.myimage;
@@ -55,8 +57,8 @@ async function JoinToRoom(Room: number, router: AppRouterInstance,GameContext:Ga
     newGameInfo.Speed = speed;
     newGameInfo.Points = points;
     GameContext.SetGameInfo(newGameInfo);
-    socket.disconnect();
-    socket.connect();
+    // console.log("conection_closed");
+    socket.emit('conection_closed');
     router.replace(`/Game/Online/Play`);
   });
   await socket.on('JoinRefused',(data: string)=>
@@ -99,6 +101,10 @@ export default function Rooms() {
   const router: AppRouterInstance = useRouter();
   useEffect(()=>
   {
+    console.log('user re-enter rooms page');
+    player1.emit('conection_closed');
+    player2.emit('conection_closed');
+    socket.emit('conection_closed');
     newGameInfo.myusername = contexUser.user.username;
     if (contexUser.user.is_profile_img_updated)
       newGameInfo.myimage=process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + contexUser.user.profile_img;
@@ -107,7 +113,11 @@ export default function Rooms() {
   },[]);
   useEffect(()=>
   {
-    setInterval(()=>{GetNumberOfRooms(router,GameContext);},1000);
+    let interval: NodeJS.Timer  = setInterval(()=>{GetNumberOfRooms(router,GameContext);},1000);
+    return ()=> 
+    {
+      clearInterval(interval);
+    };
   });
     return (
       <div className="container mx-auto px-2 py-[250px] text-center items-center ">

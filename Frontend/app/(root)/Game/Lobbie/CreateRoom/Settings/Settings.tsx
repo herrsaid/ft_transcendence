@@ -14,14 +14,13 @@
 
 
 import "./Settings.css"
-import { socket } from '../../../Online/Socket/auto_match_socket'
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useContext } from 'react';
 import UserContext from "@/app/(root)/UserContext";
 import {  useToast } from '@chakra-ui/react'
 import GameInfoContext,{GameInfoType,GameInfoStateType,GetGameInfoContext} from '../../../GameContext/GameContext';
-import { player1 } from "../../../Online/Socket/start_game_socket";
-import { player2 } from '../../../Online/Socket/start_game_socket';
+import { player1,player2 } from "../../../Online/Socket/start_game_socket";
+import { socket } from '../../../Online/Socket/auto_match_socket'
 
 let newGameInfo:GameInfoType;
 
@@ -204,8 +203,7 @@ async function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<st
             newGameInfo.host = data;
             newGameInfo.Access = 1;
             SetGameInfo(newGameInfo);
-            socket.disconnect();
-            socket.connect();
+            socket.emit('conection_closed');
             router.replace('/Game//Online/Play');
         });
     }
@@ -247,13 +245,10 @@ const PingPongSettings = ({ router }: any) =>
     const toast = useToast();
 
     useEffect(() => {
-        console.log('user re-enter this page');
-        player1.disconnect();
-        player2.disconnect();
-        socket.disconnect();
-        player1.connect();
-        player2.connect();
-        socket.connect();
+        console.log('user re-enter createroom page');
+        player1.emit('conection_closed');
+        player2.emit('conection_closed');
+        socket.emit('conection_closed');
         newGameInfo = {
             Points: 10,
             Speed: 4,

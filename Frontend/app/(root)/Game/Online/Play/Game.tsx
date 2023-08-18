@@ -3,9 +3,10 @@
 import { useEffect,useContext,useState } from "react";
 import p5 from "p5";
 import './Game.css';
-import { player1, player2 } from '../Socket/start_game_socket';
 import { GetGameInfoContext, GameContextType } from '../../GameContext/GameContext';
 import UserContext from "@/app/(root)/UserContext";
+import { player1, player2 } from '../Socket/start_game_socket';
+import { socket } from '../../Online/Socket/auto_match_socket';
 
 
 let GameWidth: number = 800, GameHeight: number = 400, GameSpeed: number = 4;
@@ -156,6 +157,10 @@ function first_conection(p5:p5,GameContext:GameContextType)
 
 function initialze_data()
 {
+  console.log('user re-enter game page');
+  player1.emit('conection_closed');
+  player2.emit('conection_closed');
+  socket.emit('conection_closed');
   GameWidth = 800;
   GameHeight = 400;
   GameSpeed = 4;
@@ -238,8 +243,7 @@ function GameStatusChecker(p5: p5,GameContext:GameContextType): boolean
       p5.background(0);
       p5.fill(255,255,255);
       p5.text(message, GameWidth/2 - GameWidth/12, GameHeight/2 + GameHeight/12);
-      player1.disconnect();
-      player1.connect();
+      player1.emit('conection_closed');
       return false;
     }
   }
@@ -247,8 +251,6 @@ function GameStatusChecker(p5: p5,GameContext:GameContextType): boolean
   {
 		player2.on('GameEnd',(data: string)=>
     {
-      player2.disconnect();
-      player2.connect();
       message = data;
     });
     if(message !== '')
@@ -256,6 +258,7 @@ function GameStatusChecker(p5: p5,GameContext:GameContextType): boolean
       p5.background(0);
       p5.fill(255,255,255);
       p5.text(message, GameWidth/2 - GameWidth/12, GameHeight/2 + GameHeight/12);
+      player2.emit('conection_closed');
       return false;
     }
 
@@ -270,7 +273,6 @@ const Game = () => {
   const [reslt2, setReslt2] = useState(0);
   useEffect(() => {
     initialze_data();
-    console.log('user re-enter this page');
     const sketch = (p5: p5) => {
       p5.setup = () => {
       };

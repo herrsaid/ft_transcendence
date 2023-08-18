@@ -109,12 +109,12 @@ import {
         if(Rooms[data.RoomNumber].players.length < 2)
         {
           Rooms[data.RoomNumber].players.push(player_data);
+          console.log("Push New Room");
           Rooms[data.RoomNumber].players[0].PlayerSocket.emit(
             'SendData',Rooms[data.RoomNumber].players[1].Player,Rooms[data.RoomNumber].players[1].PlayerImg,true);
-          Rooms[data.RoomNumber].players[1].PlayerSocket.emit(
-            'SendData',Rooms[data.RoomNumber].players[0].Player,Rooms[data.RoomNumber].players[0].PlayerImg,false);
-            client.emit('JoinAccepted',Rooms[data.RoomNumber].Speed,Rooms[data.RoomNumber].Points);
-            console.log("Launch Public Room");
+            Rooms[data.RoomNumber].players[1].PlayerSocket.emit(
+              'SendData',Rooms[data.RoomNumber].players[0].Player,Rooms[data.RoomNumber].players[0].PlayerImg,false);
+              client.emit('JoinAccepted',Rooms[data.RoomNumber].Speed,Rooms[data.RoomNumber].Points);
         }
         else
         {
@@ -123,6 +123,7 @@ import {
         }
       }
       console.log(Rooms);
+      console.log("Launch Public Room");
     }
     @SubscribeMessage('GetRooms')
     handleGetRooms(client: Socket): void
@@ -133,6 +134,14 @@ import {
           Public_Rooms++;
       client.emit('GetRooms',Public_Rooms);
     }
+    @SubscribeMessage('conection_closed')
+    handleconection_closed(client: Socket): void {
+        for(let a = 0;a<Rooms.length; a++)
+          Rooms[a].players = Rooms[a].players.filter(player => player.PlayerSocket !== client)
+        Rooms = Rooms.filter(elem => elem.players.length !== 0);
+        console.log("Remove Old Room");
+        console.log(Rooms);
+      }
     handleDisconnect(client: Socket): void {
       for(let a = 0;a<Rooms.length; a++)
         Rooms[a].players = Rooms[a].players.filter(player => player.PlayerSocket !== client)
