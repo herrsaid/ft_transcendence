@@ -128,8 +128,8 @@ export default function Rooms() {
     access = true;
     return ()=> 
     {
-      clearInterval(interval);
       access = false;
+      clearInterval(interval);
     };
   });
     return (

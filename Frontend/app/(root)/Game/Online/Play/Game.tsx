@@ -137,7 +137,6 @@ function first_conection(p5:p5,GameContext:GameContextType)
   else if(first_conection_val === false)
 	{
 		first_conection_val = true;
-    console.log(GameContext.GameInfo.host,GameContext.GameInfo.Speed,GameContext.GameInfo.Points);
       if(GameContext.GameInfo.host)
       {
         player1.emit('first_conection',
@@ -282,14 +281,14 @@ const Game = () => {
   const [reslt1, setReslt1] = useState(0);
   const [reslt2, setReslt2] = useState(0);
   useEffect(() => {
-    initialze_data();
     console.log(GameContext.GameInfo.host,GameContext.GameInfo.Speed,GameContext.GameInfo.Points);
+    initialze_data();
     const sketch = (p5: p5) => {
       p5.setup = () => {
       };
       
       p5.draw = () => {
-        NewValue(p5);
+        NewValue(p5);      
         if(!first_conection(p5,GameContext))
           return ;
         if(GameStatusChecker(p5,GameContext))
@@ -317,9 +316,10 @@ const Game = () => {
       }
     };
 
-    new p5(sketch);
+    const test:p5 = new p5(sketch);
     return()=>
     {
+      test.remove()
       access = false;
     };
   }, []);
