@@ -160,8 +160,11 @@ export let GameObj: data[] = [];
         for(let a = 0 ; a<GameObj.length; a++ )
         {
           if(!GameObj.length)
+          {
+            console.log("break");
             break;
-          if(GameObj[a].RoomInfo.Sleep <= 0 && GameObj[a].RoomInfo.GameStatus === 1)
+          }
+            if(GameObj[a].RoomInfo.Sleep <= 0 && GameObj[a].RoomInfo.GameStatus === 1)
           {
             //call function that contains Game logic
             let gamespeed = GameObj[a].RoomInfo.GameSpeed;

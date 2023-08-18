@@ -29,10 +29,10 @@ import {
     @SubscribeMessage('first_conection')
     handleFirst_conct(client: Socket, data): void {
       Player2ID = client.id;
-      speed2 = data.Speed1;
-      points2 = data.Points1;
-      enemyusername = data.myusername1;
-      enemyimage = data.myimage1;
+      speed2 = data.Speed;
+      points2 = data.Points;
+      enemyusername = data.myusername;
+      enemyimage = data.myimage;
       console.log(data);
       console.log('Player2Arr_content: ', Player2ID);
     }
