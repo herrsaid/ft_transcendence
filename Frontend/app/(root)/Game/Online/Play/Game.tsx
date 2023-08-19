@@ -29,24 +29,24 @@ const Game = () => {
       
       p5.draw = () => {
         NewValue(p5);      
-        p5.background(25);
-        Racket1(p5,GameData.Racket1Xpos,GameData.Racket1Ypos,GameData.Racket1Width,GameData.Racket1Height);
-        LineCenter(p5);
-        Racket2(p5,GameData.Racket2Xpos,GameData.Racket2Ypos,GameData.Racket2Width,GameData.Racket2Height);
-        Ball(p5,GameData.BallXpos,GameData.BallYpos,GameData.BallWidth,GameData.BallHeight);
         if(!first_conection(p5,GameContext))
           return ;
         if(GameStatusChecker(p5,GameContext))
         {
           if(document.getElementById('sketch-container'))
-          p5.createCanvas(GameData.GameWidth, GameData.GameHeight).parent('sketch-container').position((window.innerWidth-GameData.GameWidth)/2,GameData.GameHeight/4,'absolute');
+            p5.createCanvas(GameData.GameWidth, GameData.GameHeight).parent('sketch-container').position((window.innerWidth-GameData.GameWidth)/2,GameData.GameHeight/4,'absolute');
+          p5.background(25);
           BallAnimation(GameContext);
           if (GameContext.GameInfo.host)
             Racket1Animation(p5);
           else
             Racket2Animation(p5);
+          LineCenter(p5);
           setReslt1(GameData.Result1Val);
           setReslt2(GameData.Result2Val);
+          Ball(p5,GameData.BallXpos,GameData.BallYpos,GameData.BallWidth,GameData.BallHeight);
+          Racket1(p5,GameData.Racket1Xpos,GameData.Racket1Ypos,GameData.Racket1Width,GameData.Racket1Height);
+          Racket2(p5,GameData.Racket2Xpos,GameData.Racket2Ypos,GameData.Racket2Width,GameData.Racket2Height);
         }
         else
           return;
