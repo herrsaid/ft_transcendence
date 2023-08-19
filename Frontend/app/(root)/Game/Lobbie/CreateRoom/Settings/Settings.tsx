@@ -259,7 +259,7 @@ const PingPongSettings = ({ router }: any) =>
         newGameInfo = {
             Points: 10,
             Speed: 4,
-            pause_game: 0,
+            pause_game: 1,
             RoomMood: true,
             other_tools: 0,
             host: false,

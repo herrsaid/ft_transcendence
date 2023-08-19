@@ -317,7 +317,7 @@ const Game = () => {
     const test:p5 = new p5(sketch);
     return()=>
     {
-      test.remove()
+      test.remove();
       access = false;
     };
   }, []);

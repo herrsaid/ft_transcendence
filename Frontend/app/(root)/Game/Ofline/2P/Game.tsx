@@ -21,6 +21,7 @@ let GameWidth: number = 800,GameHeight: number = 400;
 let BallWidth: number = 15, BallHeight = 15, BallXpos: number = GameWidth/2, BallYpos: number = GameHeight/2;
 let Racket1Width: number = 10, Racket1Height = 60, Racket1Xpos: number = 5, Racket1Ypos: number = 170;
 let Racket2Width: number = 10, Racket2Height = 60, Racket2Xpos: number = 785, Racket2Ypos: number = 170;
+let access:boolean = true;
 let Result1Val: number = 0;
 let Result2Val: number = 0;
 let BallXDirection: number = 1, BallYDirection: number = 1, alpha: number = -1;
@@ -193,7 +194,7 @@ function GameStatusChecker(p5: p5,GameContext:GameContextType): boolean
     p5.text('PLAYER II WIN', GameWidth/2 - GameWidth/12, GameHeight/2 + GameHeight/12);
     return false;
   }
-  return true;
+  return access;
 }
 
 const Game = () => {
@@ -227,9 +228,22 @@ const Game = () => {
       p5.keyReleased = () =>{
         p5.key = '';
       }
+      p5.keyPressed = () =>{
+        if(GameContext.GameInfo.pause_game && p5.key === 'p')
+        {
+          if(access)
+          access = false;
+          else
+            access = true;
+        }
+      }
     };
 
-    new p5(sketch);
+    const test:p5 = new p5(sketch);
+    return()=>
+    {
+      test.remove();
+    };
   }, []);
 
   return (

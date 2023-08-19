@@ -17,15 +17,10 @@ import UserContext from "@/app/(root)/UserContext";
 import { GetGameInfoContext, GameContextType } from '../../GameContext/GameContext';
 import p5 from "p5";
 import './Game.css'
+import { GameClass } from './GameClass/GameClass';
 
-let GameWidth: number = 800,GameHeight: number = 400;
-let BallWidth: number = 15, BallHeight = 15, BallXpos: number = GameWidth/2, BallYpos: number = GameHeight/2;
-let Racket1Width: number = 10, Racket1Height = 60, Racket1Xpos: number = 5, Racket1Ypos: number = 170;
-let Racket2Width: number = 10, Racket2Height = 60, Racket2Xpos: number = 785, Racket2Ypos: number = 170;
-let BallXDirection: number = 1, BallYDirection: number = 1, alpha: number = -1;
-let Result1Val: number = 0;
-let Result2Val: number = 0;
-let gamediv: p5.Renderer;
+
+export let GameData:GameClass = new GameClass();
 function Ball(p5: p5, x: number, y: number, w: number, h: number)
 {
   p5.fill(255,255,255);
@@ -34,8 +29,8 @@ function Ball(p5: p5, x: number, y: number, w: number, h: number)
 function LineCenter(p5: p5)
 {
   p5.fill('yellow');
-  for(let a=0;a<GameWidth/2;a+=35)
-    p5.rect(GameWidth/2, a, 5, 30,20);
+  for(let a=0;a<GameData.GameWidth/2;a+=35)
+    p5.rect(GameData.GameWidth/2, a, 5, 30,20);
 }
 function Racket1(p5: p5, x: number, y: number, w: number, h: number)
 {
@@ -56,65 +51,65 @@ function GetAlpha(p5: p5,BallYpos: number, RacketYpos: number, RacketHeight: num
       else
         ballYpos_racket = 0;
       let ballYpos_racket_par_100: number = p5.int(ballYpos_racket/(p5.int(RacketHeight/10)));
-      alpha = ballYpos_racket_par_100 - (10 - ballYpos_racket_par_100);
-      alpha = Math.floor(alpha);
-      if(alpha === -10|| alpha === 10)
-        alpha = 9;
-      if(alpha > 0)
-        alpha -= 10;
-      else if(alpha < 0)
-        alpha += 10;
+      GameData.alpha = ballYpos_racket_par_100 - (10 - ballYpos_racket_par_100);
+      GameData.alpha = Math.floor(GameData.alpha);
+      if(GameData.alpha === -10|| GameData.alpha === 10)
+        GameData.alpha = 9;
+      if(GameData.alpha > 0)
+        GameData.alpha -= 10;
+      else if(GameData.alpha < 0)
+        GameData.alpha += 10;
       if(ballYpos_racket_par_100 > 5)
-        BallYDirection = 1;
+        GameData.BallYDirection = 1;
       else
-        BallYDirection = -1;
-      if(alpha < 0)
-        alpha *= -1;
+        GameData.BallYDirection = -1;
+      if(GameData.alpha < 0)
+        GameData.alpha *= -1;
 }
 function BallAnimation(p5: p5)
 {
-  BallXpos += Math.floor(BallXDirection);
-  if(BallYpos < Racket2Ypos || BallYpos > (Racket2Ypos + Racket2Height))
+  GameData.BallXpos += Math.floor(GameData.BallXDirection);
+  if(GameData.BallYpos < GameData.Racket2Ypos || GameData.BallYpos > (GameData.Racket2Ypos + GameData.Racket2Height))
   {
-    if(BallXpos > GameWidth)
+    if(GameData.BallXpos > GameData.GameWidth)
     {
-      BallXDirection = -1;
-      Result1Val++;
-      BallXpos = Math.floor(GameWidth/2);
+      GameData.BallXDirection = -1;
+      GameData.Result1Val++;
+      GameData.BallXpos = Math.floor(GameData.GameWidth/2);
     }
   }
   else
   {
-    if(BallXpos > (GameWidth-(BallWidth+Racket1Width)))
+    if(GameData.BallXpos > (GameData.GameWidth-(GameData.BallWidth+GameData.Racket1Width)))
     {
-      BallXDirection = -1;
-      GetAlpha(p5,BallYpos,Racket2Ypos,Racket2Height);
+      GameData.BallXDirection = -1;
+      GetAlpha(p5,GameData.BallYpos,GameData.Racket2Ypos,GameData.Racket2Height);
     }
   }
-  if(BallYpos < Racket1Ypos || BallYpos > (Racket1Ypos + Racket1Height))
+  if(GameData.BallYpos < GameData.Racket1Ypos || GameData.BallYpos > (GameData.Racket1Ypos + GameData.Racket1Height))
   {
-    if(BallXpos < 0)
+    if(GameData.BallXpos < 0)
     {
-      BallXDirection = +1;
-      Result2Val++;
-      BallXpos =  Math.floor(GameWidth/2);
+      GameData.BallXDirection = +1;
+      GameData.Result2Val++;
+      GameData.BallXpos =  Math.floor(GameData.GameWidth/2);
     }
   }
   else
   {
-    if(BallXpos < (BallWidth + Racket2Width))
+    if(GameData.BallXpos < (GameData.BallWidth + GameData.Racket2Width))
     {
-      BallXDirection = +1;
-      GetAlpha(p5,BallYpos,Racket1Ypos,Racket1Height);
+      GameData.BallXDirection = +1;
+      GetAlpha(p5,GameData.BallYpos,GameData.Racket1Ypos,GameData.Racket1Height);
     }
   }
-  if(BallXpos % alpha === 0)
+  if(GameData.BallXpos % GameData.alpha === 0)
   {
-    if(BallYpos > GameHeight-BallHeight/2)
-      BallYDirection = -1
-    if(BallYpos < BallHeight/2)
-      BallYDirection = +1
-    BallYpos += BallYDirection;
+    if(GameData.BallYpos > GameData.GameHeight-GameData.BallHeight/2)
+      GameData.BallYDirection = -1
+    if(GameData.BallYpos < GameData.BallHeight/2)
+      GameData.BallYDirection = +1
+    GameData.BallYpos += GameData.BallYDirection;
   }
 }
 
@@ -122,25 +117,28 @@ function Racket1Animation(p5: p5,GameContext:GameContextType): undefined
 {
   if(p5.mouseY > 0 && p5.mouseY < 400 && p5.mouseX > 0 && p5.mouseX < 400)
   {
-    if(p5.mouseY< Racket1Ypos && (Racket1Ypos > 0))
-      Racket1Ypos -= GameContext.GameInfo.Speed;
-    else if(p5.mouseY > Racket1Ypos && (Racket1Ypos < (GameHeight - Racket1Height)))
-      Racket1Ypos += GameContext.GameInfo.Speed;
+    if(p5.mouseY< GameData.Racket1Ypos && (GameData.Racket1Ypos > 0))
+      GameData.Racket1Ypos -= GameContext.GameInfo.Speed;
+    else if(p5.mouseY > GameData.Racket1Ypos && (GameData.Racket1Ypos < (GameData.GameHeight - GameData.Racket1Height)))
+      GameData.Racket1Ypos += GameContext.GameInfo.Speed;
   }
-    if((p5.key == 'w' || p5.key == 'ArrowUp') && (Racket1Ypos > 0))
-    Racket1Ypos -= GameContext.GameInfo.Speed;
-  else if ((p5.key == 's' || p5.key == 'ArrowDown') && (Racket1Ypos < (GameHeight - Racket1Height)))
-    Racket1Ypos += GameContext.GameInfo.Speed;
+    if((p5.key == 'w' || p5.key == 'ArrowUp') && (GameData.Racket1Ypos > 0))
+    GameData.Racket1Ypos -= GameContext.GameInfo.Speed;
+  else if ((p5.key == 's' || p5.key == 'ArrowDown') && (GameData.Racket1Ypos < (GameData.GameHeight - GameData.Racket1Height)))
+    GameData.Racket1Ypos += GameContext.GameInfo.Speed;
 }
 function Racket2Animation(p5: p5,GameContext:GameContextType)
 {
   let rand = p5.random(100);
   // if(rand > 95)
   //   await setTimeout(()=>{},10000);
-  if(BallYpos < Racket2Ypos && (Racket2Ypos > 0))
-    Racket2Ypos -= GameContext.GameInfo.Speed;
-  else if (BallYpos > (Racket2Ypos+Racket2Height)   && (Racket2Ypos < (GameHeight - Racket2Height)))
-    Racket2Ypos += GameContext.GameInfo.Speed;
+  if(GameData.BallXDirection > 0 && GameData.BallXpos > (GameData.GameWidth/2 + GameData.GameWidth/4))
+  {
+    if(GameData.BallYpos < GameData.Racket2Ypos && (GameData.Racket2Ypos > 0))
+    GameData.Racket2Ypos -= GameContext.GameInfo.Speed;
+    else if (GameData.BallYpos > (GameData.Racket2Ypos+GameData.Racket2Height)   && (GameData.Racket2Ypos < (GameData.GameHeight - GameData.Racket2Height)))
+    GameData.Racket2Ypos += GameContext.GameInfo.Speed;
+  }
 }
 
 function NewValue(p5:p5)
@@ -149,59 +147,59 @@ function NewValue(p5:p5)
   let w:number = Math.floor(window.innerWidth) ;
   let h:number = Math.floor(window.innerWidth/2);
   if(document.getElementById('sketch-container'))
-    canvas = p5.createCanvas(GameWidth, GameHeight).parent('sketch-container');
-  if((w !== GameWidth || h !== GameHeight) && window.innerWidth < 1080)
+    canvas = p5.createCanvas(GameData.GameWidth, GameData.GameHeight).parent('sketch-container');
+  if((w !== GameData.GameWidth || h !== GameData.GameHeight) && window.innerWidth < 1080)
   {
-    BallXpos = Math.floor(((BallXpos*100)/GameWidth)*(w/100));
-    BallYpos = Math.floor(((BallYpos*100)/GameHeight)*(h/100));
-    Racket1Ypos = Math.floor(((Racket1Ypos*100)/GameHeight)*(h/100));
-    Racket2Ypos = Math.floor(((Racket2Ypos*100)/GameHeight)*(h/100));
-    GameWidth = w;
-    GameHeight =  h;
-    BallWidth = Math.floor(GameWidth/52);
-    BallHeight = Math.floor(GameHeight/26);
-    Racket1Width = Math.floor(GameWidth/80);
-    Racket1Height = Math.floor(GameHeight/6);
-    Racket1Xpos = Math.floor(GameWidth/160);
-    Racket2Width = Math.floor(GameWidth/80);
-    Racket2Height = Math.floor(GameHeight/6);
-    Racket2Xpos = Math.floor(GameWidth-((GameWidth/80)+(GameWidth/160)));
-    p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
+    GameData.BallXpos = Math.floor(((GameData.BallXpos*100)/GameData.GameWidth)*(w/100));
+    GameData.BallYpos = Math.floor(((GameData.BallYpos*100)/GameData.GameHeight)*(h/100));
+    GameData.Racket1Ypos = Math.floor(((GameData.Racket1Ypos*100)/GameData.GameHeight)*(h/100));
+    GameData.Racket2Ypos = Math.floor(((GameData.Racket2Ypos*100)/GameData.GameHeight)*(h/100));
+    GameData.GameWidth = w;
+    GameData.GameHeight =  h;
+    GameData.BallWidth = Math.floor(GameData.GameWidth/52);
+    GameData.BallHeight = Math.floor(GameData.GameHeight/26);
+    GameData.Racket1Width = Math.floor(GameData.GameWidth/80);
+    GameData.Racket1Height = Math.floor(GameData.GameHeight/6);
+    GameData.Racket1Xpos = Math.floor(GameData.GameWidth/160);
+    GameData.Racket2Width = Math.floor(GameData.GameWidth/80);
+    GameData.Racket2Height = Math.floor(GameData.GameHeight/6);
+    GameData.Racket2Xpos = Math.floor(GameData.GameWidth-((GameData.GameWidth/80)+(GameData.GameWidth/160)));
+    p5.createCanvas(GameData.GameWidth, GameData.GameHeight).parent('sketch-container').position((window.innerWidth-GameData.GameWidth)/2,GameData.GameHeight/4,'absolute');
     p5.background(25);
     console.log("------------------------------");
-    console.log("GameWidth: ",GameWidth);
-    console.log("GameHeight: ",GameHeight);
-    console.log("BallWidth: ",BallWidth);
-    console.log("BallHeight: ",BallHeight);
-    console.log("Racket1Width: ",Racket1Width);
-    console.log("Racket1Height: ",Racket1Height);
-    console.log("Racket1Xpos: ",Racket1Xpos);
-    console.log("Racket2Width: ",Racket2Width);
-    console.log("Racket2Height: ",Racket2Height);
-    console.log("Racket2Xpos: ",Racket2Xpos);
+    console.log("GameWidth: ",GameData.GameWidth);
+    console.log("GameHeight: ",GameData.GameHeight);
+    console.log("BallWidth: ",GameData.BallWidth);
+    console.log("BallHeight: ",GameData.BallHeight);
+    console.log("Racket1Width: ",GameData.Racket1Width);
+    console.log("Racket1Height: ",GameData.Racket1Height);
+    console.log("Racket1Xpos: ",GameData.Racket1Xpos);
+    console.log("Racket2Width: ",GameData.Racket2Width);
+    console.log("Racket2Height: ",GameData.Racket2Height);
+    console.log("Racket2Xpos: ",GameData.Racket2Xpos);
     console.log("------------------------------");
   }
   if(canvas)
-    canvas.position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
+    canvas.position((window.innerWidth-GameData.GameWidth)/2,GameData.GameHeight/4,'absolute');
 }
 
 function GameStatusChecker(p5: p5,GameContext:GameContextType): boolean
 {
-  if(GameContext.GameInfo.Points <= Result1Val)
+  if(GameContext.GameInfo.Points <= GameData.Result1Val)
   {
     p5.background(0);
     p5.fill(255,255,255);
-    p5.text(`${GameContext.GameInfo.myusername} WIN`, GameWidth/2 - GameWidth/12, GameHeight/2 + GameHeight/12);
+    p5.text(`${GameContext.GameInfo.myusername} WIN`, GameData.GameWidth/2 - GameData.GameWidth/12, GameData.GameHeight/2 + GameData.GameHeight/12);
     return false;
   }
-  else if(GameContext.GameInfo.Points <= Result2Val)
+  else if(GameContext.GameInfo.Points <= GameData.Result2Val)
   {
     p5.background(0);
     p5.fill(255,255,255);
-    p5.text('BOT WIN', GameWidth/2 - GameWidth/12, GameHeight/2 + GameHeight/12);
+    p5.text('BOT WIN', GameData.GameWidth/2 - GameData.GameWidth/12, GameData.GameHeight/2 + GameData.GameHeight/12);
     return false;
   }
-  return true;
+  return GameData.access;
 }
 
 const Game = () => {
@@ -217,27 +215,48 @@ const Game = () => {
       };
       
       p5.draw = () => {
+        console.log("------------------------------");
+        console.log("BallXDirection: ",GameData.BallXDirection);
+        console.log("BallYDirection: ",GameData.BallYDirection);
+        console.log("BallXpos: ",GameData.BallXpos);
+        console.log("BallYpos: ",GameData.BallYpos);
+        console.log("Racket1Ypos: ",GameData.Racket1Ypos);
+        console.log("Racket2Ypos: ",GameData.Racket2Ypos);
+        console.log("------------------------------");
         NewValue(p5);
+        p5.background(25);
+        Racket1(p5,GameData.Racket1Xpos,GameData.Racket1Ypos,GameData.Racket1Width,GameData.Racket1Height);
+        LineCenter(p5);
+        Racket2(p5,GameData.Racket2Xpos,GameData.Racket2Ypos,GameData.Racket2Width,GameData.Racket2Height);
+        Ball(p5,GameData.BallXpos,GameData.BallYpos,GameData.BallWidth,GameData.BallHeight);
         if(!GameStatusChecker(p5,GameContext))
           return;
-        p5.background(25);
         for(let a=0;a<GameContext.GameInfo.Speed;a++)
           BallAnimation(p5);
         Racket1Animation(p5,GameContext);
         Racket2Animation(p5,GameContext);
-        LineCenter(p5);
-        setReslt1(Result1Val);
-        setReslt2(Result2Val);
-        Ball(p5,BallXpos,BallYpos,BallWidth,BallHeight);
-        Racket1(p5,Racket1Xpos,Racket1Ypos,Racket1Width,Racket1Height);
-        Racket2(p5,Racket2Xpos,Racket2Ypos,Racket2Width,Racket2Height);
+        setReslt1(GameData.Result1Val);
+        setReslt2(GameData.Result2Val);
       };
       p5.keyReleased = () =>{
         p5.key = '';
       }
+      p5.keyPressed = () =>{
+        if(GameContext.GameInfo.pause_game && p5.key === 'p')
+        {
+          if(GameData.access)
+          GameData.access = false;
+          else
+            GameData.access = true;
+        }
+      }
     };
 
-    new p5(sketch);
+    const test:p5 = new p5(sketch);
+    return()=>
+    {
+      test.remove();
+    };
   }, []);
 
   return (
