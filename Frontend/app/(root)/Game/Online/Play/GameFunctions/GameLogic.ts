@@ -33,7 +33,7 @@ export function BallAnimation (GameContext:GameContextType)
     });
   }
 }
-export function Racket1Animation(p5: p5): undefined
+export function Racket1Animation(p5: p5)
 {
   if((p5.key == 'w' || p5.key == 'ArrowUp') && (GameData.Racket1Ypos > 0))
     GameData.Racket1Ypos -= GameData.GameSpeed;
@@ -54,7 +54,7 @@ export function Racket1Animation(p5: p5): undefined
   });
 }
 
-export function Racket2Animation(p5: p5): undefined
+export function Racket2Animation(p5: p5)
 {
   if((p5.key == 'w' || p5.key == 'ArrowUp') && (GameData.Racket1Ypos > 0))
     GameData.Racket1Ypos -= GameData.GameSpeed;

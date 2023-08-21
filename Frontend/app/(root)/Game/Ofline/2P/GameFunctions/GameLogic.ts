@@ -3,7 +3,7 @@ import { GameData } from '../Game';
 import { GameContextType } from '../../../GameContext/GameContext';
 
 
-export function GetAlpha(p5: p5,BallYpos: number, RacketYpos: number, RacketHeight: number): undefined
+export function GetAlpha(p5: p5,BallYpos: number, RacketYpos: number, RacketHeight: number)
 {
   let ballYpos_racket: number;
       if(BallYpos > RacketYpos || BallYpos < (RacketYpos + RacketHeight))
@@ -73,7 +73,7 @@ export function BallAnimation(p5: p5)
   }
 }
 
-export function Racket1Animation(p5: p5,GameContext:GameContextType): undefined
+export function Racket1Animation(p5: p5,GameContext:GameContextType)
 {
   if(p5.key == 'w' && (GameData.Racket1Ypos > 0))
     GameData.Racket1Ypos -= GameContext.GameInfo.Speed;
@@ -81,7 +81,7 @@ export function Racket1Animation(p5: p5,GameContext:GameContextType): undefined
     GameData.Racket1Ypos += GameContext.GameInfo.Speed;
 }
 
-export function Racket2Animation(p5: p5,GameContext:GameContextType): undefined
+export function Racket2Animation(p5: p5,GameContext:GameContextType)
 {
   if(p5.key == 'ArrowUp' && (GameData.Racket2Ypos > 0))
     GameData.Racket2Ypos -= GameContext.GameInfo.Speed;
