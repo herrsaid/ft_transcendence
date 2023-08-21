@@ -121,10 +121,12 @@ export let GameObj: data[] = [];
         
       }
       //disconnect players from room
-      if(GameObj[Room].PlayersInfo.Player1Client !== undefined)
-        GameObj[Room].PlayersInfo.Player1Client.emit('conection_closed');
-      if(GameObj[Room].PlayersInfo.Player2Client !== undefined)
-        GameObj[Room].PlayersInfo.Player2Client.emit('conection_closed');
+      // if(GameObj[Room].PlayersInfo.Player1Client !== undefined)
+      //   GameObj[Room].PlayersInfo.Player1Client.emit('conection_closed');
+      // if(GameObj[Room].PlayersInfo.Player2Client !== undefined)
+      //   GameObj[Room].PlayersInfo.Player2Client.emit('conection_closed');
+      GameObj[Room].PlayersInfo.Player1ID = '';
+      GameObj[Room].PlayersInfo.Player2ID = '';
       // remove Object of this room
       console.log('['+GameObj.length+']');
       if(GameObj.length === 1 && GameObj[0].PlayersInfo.Player1ID === '' && GameObj[0].PlayersInfo.Player2ID === '')

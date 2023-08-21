@@ -62,6 +62,7 @@ import {
         }
       }
       Player1ID = '';
+      console.log("player1 disconnectI");
     }
     handleDisconnect(client: Socket): void {
         for(let a = 0 ; a<GameObj.length; a++ )
@@ -74,6 +75,7 @@ import {
           }
         }
         Player1ID = '';
+        console.log("player1 disconnectII");
       }
   }
   
