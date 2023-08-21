@@ -28,6 +28,22 @@ export function NewValue(p5:p5)
     p5.createCanvas(GameData.GameWidth, GameData.GameHeight).parent('sketch-container').position((window.innerWidth-GameData.GameWidth)/2,GameData.GameHeight/4,'absolute');
     p5.background(25);
   }
+  else if (window.innerWidth >= 1080)
+  {
+    GameData.GameWidth = Math.floor(1080);
+    GameData.GameHeight =  Math.floor(540);
+    GameData.BallWidth = Math.floor(GameData.GameWidth/52);
+    GameData.BallHeight = Math.floor(GameData.GameHeight/26);
+    GameData.Racket1Width = Math.floor(GameData.GameWidth/80);
+    GameData.Racket1Height = Math.floor(GameData.GameHeight/6);
+    GameData.Racket1Xpos = Math.floor(GameData.GameWidth/160);
+    GameData.Racket2Width = Math.floor(GameData.GameWidth/80);
+    GameData.Racket2Height = Math.floor(GameData.GameHeight/6);
+    GameData.Racket2Xpos = Math.floor(GameData.GameWidth-((GameData.GameWidth/80)+(GameData.GameWidth/160)));
+    if(document.getElementById('sketch-container'))
+      p5.createCanvas(GameData.GameWidth, GameData.GameHeight).parent('sketch-container').position((window.innerWidth-GameData.GameWidth)/2,GameData.GameHeight/4,'absolute');
+    p5.background(25);
+  }
   if(canvas)
     canvas.position((window.innerWidth-GameData.GameWidth)/2,GameData.GameHeight/4,'absolute');
 }
