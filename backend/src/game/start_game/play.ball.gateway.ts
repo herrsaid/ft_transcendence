@@ -116,9 +116,10 @@ export let GameObj: data[] = [];
         && GameObj[Room].PlayersInfo.Player1Client !== undefined
         && GameObj[Room].PlayersInfo.Player2Client !== undefined)
       {
-        GameObj[Room].PlayersInfo.Player1Client.emit('GameEnd',"YOU WIN");
-        GameObj[Room].PlayersInfo.Player2Client.emit('GameEnd',"YOU WIN");
-        
+        if(GameObj[Room].PlayersInfo.Result1Val === 0)
+          GameObj[Room].PlayersInfo.Player1Client.emit('GameEnd',"YOU WIN");
+        if(GameObj[Room].PlayersInfo.Result2Val === 0)
+          GameObj[Room].PlayersInfo.Player2Client.emit('GameEnd',"YOU WIN");
       }
       //disconnect players from room
       // if(GameObj[Room].PlayersInfo.Player1Client !== undefined)
