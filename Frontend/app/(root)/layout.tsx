@@ -13,6 +13,7 @@ import useSWR from "swr"
 import StreamInfoContext,{StreamInfoType,StreamInfoStateType,GetStreamInfoContext} from './Stream/StreamContext/StreamContext';
 import { socket } from './Game/Online/Socket/auto_match_socket';
 import { useToast } from '@chakra-ui/react';
+import Notification from './Components/Notification/Notification';
 
 const metadata = {
   title: 'PingPong',
@@ -20,13 +21,13 @@ const metadata = {
   viewport: 'width=device-width, initial-scale=1.0',
 }
 
-
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const toast = useToast();
+  // const toast = useToast();
+  let RoomINdex:number = 0, access:boolean = true; 
   const [user, setUser] = useState({});
   const [GameInfo,SetGameInfo] = useState<GameInfoType>(
   {
@@ -82,31 +83,30 @@ fetchData
 );
 useEffect(()=>
 {
-  let access:boolean = true;
-  let interval:NodeJS.Timer = setInterval(()=>
+  let notification:HTMLElement| null = document.getElementById('notification');
+  let content:HTMLElement| null = document.getElementById('content');
+  let timeout:NodeJS.Timeout = setTimeout(()=>
   {
-
     socket.emit("Online",GameInfo.myusername);
-    socket.on("SendRequest",(data:string)=>
+    socket.on("SendRequest",(data)=>
     {
-      console.log("request sent");
-      if(access)
-      {
-        toast({
-          title: 'notification',
-          description: data,
-          position: 'top-right',
-          status: 'info',
-          duration: 5000,
-          isClosable: true,
-        });
-        access = false;
-      }
+        if(notification && content)
+        {
+          console.log("request sent");
+          notification.style.opacity = "1";
+          content.innerText = data.message;
+          RoomINdex = data.RoomINdex;
+          SetGameInfo({...GameInfo,enemmyusername:data.inviterusername,enemmyimage:data.inviterImg});
+        }
     });
-  },1000);
+  },3000);
+  // if(notification)
+  //   notification.style.opacity = "0";
+  access = true;
   return ()=>
   {
-    clearInterval(interval);
+    access = false;
+    clearTimeout(timeout);
   };
 });
   return (
@@ -128,6 +128,7 @@ useEffect(()=>
         {/* <div className='child'> */}
         <GameInfoContext.Provider value={{ GameInfo,SetGameInfo }}>
           <StreamInfoContext.Provider value={{ StreamInfo,SetStreamInfo }}>
+            <Notification RoomINdex={RoomINdex} access={access}/>
             {children}
           </StreamInfoContext.Provider>
         </GameInfoContext.Provider>

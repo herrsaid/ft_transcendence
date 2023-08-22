@@ -24,7 +24,7 @@ import { socket } from '../../Online/Socket/auto_match_socket';
 
 let newGameInfo:GameInfoType;
 let access:boolean = false; 
-async function JoinToRoom(Room: number, router: AppRouterInstance,GameContext:GameContextType)
+function JoinToRoom(Room: number, router: AppRouterInstance,GameContext:GameContextType)
 {
   console.log("button-pressed");
   let RoomNumber = Room+1;
@@ -32,8 +32,8 @@ async function JoinToRoom(Room: number, router: AppRouterInstance,GameContext:Ga
   newGameInfo.myimage = GameContext.GameInfo.myimage;
   let Username = newGameInfo.myusername;
   let myimage = newGameInfo.myimage;
-  socket.emit('JoinUser',{RoomNumber,Username,myimage});
-  await socket.on('SendData', (username,playerimg,data) => {
+  socket.emit('JoinPublicRoom',{RoomNumber,Username,myimage});
+  socket.on('SendData', (username,playerimg,data) => {
     if(access)
     {
       newGameInfo.enemmyusername = username;
@@ -41,7 +41,7 @@ async function JoinToRoom(Room: number, router: AppRouterInstance,GameContext:Ga
       newGameInfo.host = data;
     }
   });
-  await socket.on('JoinAccepted',(speed:number,points: number)=>
+  socket.on('JoinAccepted',(speed:number,points: number)=>
   {
     if(access)
     {
@@ -54,7 +54,7 @@ async function JoinToRoom(Room: number, router: AppRouterInstance,GameContext:Ga
       router.replace(`/Game/Online/Play`);
     }
   });
-  await socket.on('JoinRefused',(data: string)=>
+  socket.on('JoinRefused',(data: string)=>
   {
     if(access)
       console.log(data);
