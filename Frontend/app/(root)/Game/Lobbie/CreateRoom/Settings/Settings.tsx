@@ -21,247 +21,16 @@ import {  useToast } from '@chakra-ui/react'
 import GameInfoContext,{GameInfoType,GameInfoStateType,GetGameInfoContext, GameContextType} from '../../../GameContext/GameContext';
 import { player1,player2 } from "../../../Online/Socket/start_game_socket";
 import { socket } from '../../../Online/Socket/auto_match_socket'
+import { GetMatchMood } from './SettingsFuntions/MatchMood';
+import { GetSpeed } from './SettingsFuntions/Speed';
+import { GetPoints } from './SettingsFuntions/Points';
+import { GetPauseGame_RoomMood } from './SettingsFuntions/PauseGame_RoomMood';
+import { GetOtherTools_Invite } from './SettingsFuntions/OtherTools_Invite';
+import { StartRoom } from './SettingsFuntions/StartRoom';
 
 
-let newGameInfo:GameInfoType;
-let access:boolean = false; 
-function change_map_value(param: number)
-{
-    for(let a=1;a<4;a++)
-    {
-        const mapv = document.getElementById(`points${a}`);
-        if(mapv !== null)
-            mapv.style.backgroundColor = " rgb(67,56,202)";
-    }
-    const changemap= document.getElementById(`points${param}`);
-    if(changemap !== null)
-        changemap.style.backgroundColor = " rgb(99 102 241)";
-    newGameInfo.Points = param*10;
-}
-
-function change_online_value(param: number)
-{
-    const changemap= document.getElementById(`match_mood_${param}`);
-    const play = document.getElementById('play');
-    const play2 = document.getElementById('play2');
-    const other_tools = document.getElementById('other_tools');
-    const main= document.getElementById("other_tools");
-    const p= document.getElementById("other_tools_p");
-    const p0= document.getElementById("other_tools_0");
-    const p1= document.getElementById("other_tools_1");
-    const invt= document.getElementById("invite");
-    const pause_game_p = document.getElementById('pause_game_p');
-    const pause_game_0_p = document.getElementById('pause_game_0_p');
-    const pause_game_1_p = document.getElementById('pause_game_1_p');
-    for(let a=0;a<2;a++)
-    {
-        const match_mood_ = document.getElementById(`match_mood_${a}`);
-        if(match_mood_ !== null)
-            match_mood_.style.backgroundColor = " rgb(67,56,202)";
-    }
-    if(changemap !== null)
-        changemap.style.backgroundColor = " rgb(99 102 241)";
-    if(param === 1)
-    {
-        
-        if(play !== null)
-            play.style.zIndex = "1";
-        if(play2 !== null)
-            play2.style.zIndex = "2";
-        if(main && p && p0 && p1 && invt)
-        {
-            p.innerHTML = "Invite :";
-            if(!newGameInfo.RoomMood)
-            {
-                main.style.display = "1";
-                invt.style.opacity = "1";
-            }
-            else
-            {
-                main.style.opacity = "0";
-                invt.style.opacity = "0";
-            }
-            p0.style.opacity = "0";
-            p1.style.opacity = "0";
-        }
-            if(pause_game_p !== null
-            && pause_game_0_p !== null
-            && pause_game_1_p !== null)
-        {
-            pause_game_p.innerHTML = "Room &nbsp;Mood :";
-            pause_game_1_p.innerHTML = "Public";
-            pause_game_0_p.innerHTML = "Private";
-        }
-    }
-    else
-    {
-        if(play !== null)
-            play.style.zIndex = "2";
-        if(play2 !== null)
-            play2.style.zIndex = "1";
-            if(main && p && p0 && p1 && invt)
-            {
-                p.innerHTML = "Other &nbsp;Tools :";
-                main.style.opacity = "1";
-                invt.style.opacity = "0";
-                p0.style.opacity = "1";
-                p1.style.opacity = "1";
-            }
-            if(pause_game_p !== null
-            && pause_game_0_p !== null
-            && pause_game_1_p !== null)
-        {
-            pause_game_p.innerHTML = "Pause Game :";
-            pause_game_1_p.innerHTML = "Yes";
-            pause_game_0_p.innerHTML = "No";
-        }
-    }
-    newGameInfo.Online = param;
-}
-
-function change_other_tools_value(param: number)
-{
-    for(let a=0;a<2;a++)
-    {
-        const other_tools_ = document.getElementById(`other_tools_${a}`)
-        if(other_tools_ !== null)
-            other_tools_.style.backgroundColor = " rgb(67,56,202)";
-    }
-    const changemap= document.getElementById(`other_tools_${param}`);
-    if(changemap !== null)
-        changemap.style.backgroundColor = " rgb(99 102 241)";
-    newGameInfo.other_tools = param;
-}
-
-function change_pausegame_value(param: number)
-{
-    let main= document.getElementById("other_tools");
-    let p= document.getElementById("other_tools_p");
-    let p0= document.getElementById("other_tools_0");
-    let p1= document.getElementById("other_tools_1");
-    let invt= document.getElementById("invite");
-    for(let a=0;a<2;a++)
-    {
-        const pause_game_ = document.getElementById(`pause_game_${a}`);
-        if(pause_game_ !== null)
-            pause_game_.style.backgroundColor = " rgb(67,56,202)";
-    }
-    const changemap = document.getElementById(`pause_game_${param}`);
-    if(changemap !== null)
-        changemap.style.backgroundColor = " rgb(99 102 241)";
-    newGameInfo.pause_game = param;
-    if(param)
-    {
-        if(newGameInfo.Online)
-        {
-            newGameInfo.RoomMood=true;
-            if(main && p && p0 && p1 && invt)
-            {
-                main.style.opacity = "0";
-                invt.style.opacity = "0";
-            }
-        }
-    }
-    else
-    {
-        if(newGameInfo.Online)
-        {
-            newGameInfo.RoomMood=false;
-            if(main && p && p0 && p1 && invt)
-            {
-                p.innerHTML = "Invite :";
-                main.style.opacity = "1";
-                invt.style.opacity = "1";
-                invt.style.display = "flex"
-                p0.style.opacity = "0";
-                p1.style.opacity = "0";
-            }
-        }
-    }
-}
-
-async function is_Online_mod(router: any,toast:any,GameContext:GameContextType)
-{
-    const settings = document.getElementById("Settings")
-    const input_elem:HTMLElement | null = document.getElementById("input_val");
-    let input_value:String = ''; 
-    if (input_elem)
-        input_value = input_elem.value;
-    console.log(input_value);
-    newGameInfo.myusername = GameContext.GameInfo.myusername;
-    newGameInfo.myimage = GameContext.GameInfo.myimage;
-    if(newGameInfo.Online === 1)
-    {
-        socket.emit('CreateRoom',{
-            Speed: newGameInfo.Speed,
-            Points: newGameInfo.Points,
-            myusername: GameContext.GameInfo.myusername,
-            myimage: GameContext.GameInfo.myimage,
-            RoomMood: newGameInfo.RoomMood,
-            InputValue: input_value,
-        });
-        socket.on('CreateRefused', (message: string) => {
-            if(access)
-            {
-                if(settings)
-                    settings.style.filter = "blur(0px)";
-                toast({
-                    title: 'Error',
-                    description: message,
-                    position: 'top-right',
-                    status: 'error',
-                    duration: 5000,
-                    isClosable: true,
-                  });
-            }  
-        });
-        if(settings)
-        {
-            settings.style.filter = "blur(15px)";
-            settings.style.animation = "Animation 3s infinite";
-        }
-            socket.on('SendData', (username,playerimg,data) => {
-            if(access)
-            {
-                newGameInfo.enemmyusername = username;
-                newGameInfo.enemmyimage = playerimg;
-                newGameInfo.host = data;
-                newGameInfo.Access = 1;
-                GameContext.SetGameInfo(newGameInfo);
-                socket.emit('conection_closed at settings');
-                router.replace('/Game//Online/Play');
-            }
-        });
-    }
-    else
-    {
-        if(newGameInfo.other_tools === 1)
-        {
-            GameContext.SetGameInfo(newGameInfo);
-            router.replace('/Game/Ofline/2P');
-        }
-        else
-        {
-            GameContext.SetGameInfo(newGameInfo);
-            router.replace('/Game/Ofline/BOT');
-        }
-    }
-}
-
-function change_pos(param :number)
-{
-    const element = document.getElementById("scroll");
-    if(element != null)
-    {
-        if(param === 1)
-        element.style.left = "-60%";
-        else if(param === 2)
-        element.style.left = "-12.5%";
-        else
-        element.style.left = "35%";
-        newGameInfo.Speed=param;
-    }
-}
+export let newGameInfo:GameInfoType;
+export let access:boolean = false; 
 
 const PingPongSettings = ({ router }: any) => 
 {
@@ -311,9 +80,9 @@ const PingPongSettings = ({ router }: any) =>
                             Speed :
                         </p>
                         <div className="relative flex my-auto  mx-auto h-[2px] w-[200px] md:w-[250px] lg:w-[300px] bg-indigo-500">
-                        <button  onClick={()=>  change_pos(1)} id="p_1" className="relative flex left-[0%] md:left-[0%] lg:left-[0%] bottom-[25px] text-white-500">x1</button>
-                        <button  onClick={()=>  change_pos(2)} id="p_2" className="relative flex left-[38.5%] md:left-[38.5%] lg:left-[38.5%] bottom-[25px] text-white-500">x2</button>
-                        <button  onClick={()=>  change_pos(4)} id="p_4" className="relative flex left-[75%] md:left-[80%] lg:left-[82.5%] bottom-[25px] text-white-500 ">x4</button>
+                        <button  onClick={()=>  GetSpeed(1)} id="p_1" className="relative flex left-[0%] md:left-[0%] lg:left-[0%] bottom-[25px] text-white-500">x1</button>
+                        <button  onClick={()=>  GetSpeed(2)} id="p_2" className="relative flex left-[38.5%] md:left-[38.5%] lg:left-[38.5%] bottom-[25px] text-white-500">x2</button>
+                        <button  onClick={()=>  GetSpeed(4)} id="p_4" className="relative flex left-[75%] md:left-[80%] lg:left-[82.5%] bottom-[25px] text-white-500 ">x4</button>
                             <div id="scroll" className="relative flex mx-auto w-[25px] h-[10px] bg-indigo-500 bottom-[4px] rounded-lg shadow-2xl left-[32%] md:left-[35%] lg:left-[38%]"></div>
                         </div>
                     </div>
@@ -322,17 +91,17 @@ const PingPongSettings = ({ router }: any) =>
                             Points :
                         </p>
                         <div className="relative flex my-auto bottom-[5px]  mx-auto h-[2px] w-[200px] md:w-[250px] lg:w-[300px]">
-                            <button  onClick={()=> change_map_value(1)} id="points1" className="relative flex w-[40px] h-[30px] left-[0%] md:left-[0%] lg:left-[0%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-500">
+                            <button  onClick={()=> GetPoints(1)} id="points1" className="relative flex w-[40px] h-[30px] left-[0%] md:left-[0%] lg:left-[0%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-500">
                                 <p className="mx-auto my-auto">
                                     10
                                 </p>
                             </button>
-                            <button onClick={()=> change_map_value(2)} id="points2" className="relative flex w-[40px] h-[30px] left-[20%] md:left-[25%] lg:left-[27.5%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
+                            <button onClick={()=> GetPoints(2)} id="points2" className="relative flex w-[40px] h-[30px] left-[20%] md:left-[25%] lg:left-[27.5%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
                                 <p className="mx-auto my-auto">
                                     20
                                 </p>
                             </button>
-                            <button onClick={()=> change_map_value(3)} id="points3" className="relative flex w-[40px] h-[30px] left-[40%] md:left-[52.5%] lg:left-[60%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
+                            <button onClick={()=> GetPoints(3)} id="points3" className="relative flex w-[40px] h-[30px] left-[40%] md:left-[52.5%] lg:left-[60%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
                                 <p className="mx-auto my-auto">
                                     30
                                 </p>
@@ -343,12 +112,12 @@ const PingPongSettings = ({ router }: any) =>
                         <p className="relative flex left-[10%] bottom-[5px] text-xl md:text-2xl lg:text-3xl font-semibold text-white-500">
                             Match Mood :
                         </p>
-                        <button onClick={()=> change_online_value(0)} id="match_mood_0" className="relative flex w-[60px] h-[30px] left-[15%] top-[0px] md:left-[20%] lg:left-[20%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
+                        <button onClick={()=> GetMatchMood(0)} id="match_mood_0" className="relative flex w-[60px] h-[30px] left-[15%] top-[0px] md:left-[20%] lg:left-[20%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
                             <p  className="mx-auto my-auto">
                                 Ofline
                             </p>
                         </button>
-                        <button onClick={()=> change_online_value(1)} id="match_mood_1" className="relative flex w-[60px] h-[30px] left-[22.5%] top-[0px] md:left-[30%] lg:left-[33%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-500">
+                        <button onClick={()=> GetMatchMood(1)} id="match_mood_1" className="relative flex w-[60px] h-[30px] left-[22.5%] top-[0px] md:left-[30%] lg:left-[33%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-500">
                             <p  className="mx-auto my-auto">
                                 Online
                             </p>
@@ -358,12 +127,12 @@ const PingPongSettings = ({ router }: any) =>
                         <p id="pause_game_p" className="relative flex left-[10%] bottom-[5px] text-xl md:text-2xl lg:text-3xl font-semibold text-white-500">
                             Room  &nbsp;Mood :
                         </p>
-                        <button onClick={()=> change_pausegame_value(0)} id="pause_game_0" className="relative flex w-[60px] h-[30px] left-[15%] top-[0px] md:left-[20%] lg:left-[20%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
+                        <button onClick={()=> GetPauseGame_RoomMood(0)} id="pause_game_0" className="relative flex w-[60px] h-[30px] left-[15%] top-[0px] md:left-[20%] lg:left-[20%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
                             <p id="pause_game_0_p" className="mx-auto my-auto">
                                 private
                             </p>
                         </button>
-                        <button onClick={()=> change_pausegame_value(1)} id="pause_game_1" className="relative flex w-[60px] h-[30px] left-[22.5%] top-[0px] md:left-[30%] lg:left-[33%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-500">
+                        <button onClick={()=> GetPauseGame_RoomMood(1)} id="pause_game_1" className="relative flex w-[60px] h-[30px] left-[22.5%] top-[0px] md:left-[30%] lg:left-[33%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-500">
                             <p id="pause_game_1_p" className="mx-auto my-auto">
                                 Public
                             </p>
@@ -373,7 +142,7 @@ const PingPongSettings = ({ router }: any) =>
                             <p id="other_tools_p" className="relative flex left-[10%] bottom-[5px] text-xl md:text-2xl lg:text-3xl font-semibold text-white-500">
                                     Other &nbsp;Tools :
                             </p>
-                            <button onClick={()=> change_other_tools_value(0)} id="other_tools_0" className="relative flex w-[60px] h-[30px] left-[15%] top-[0px] md:left-[20%] lg:left-[20%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-500">
+                            <button onClick={()=> GetOtherTools_Invite(0)} id="other_tools_0" className="relative flex w-[60px] h-[30px] left-[15%] top-[0px] md:left-[20%] lg:left-[20%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-500">
                                 <p className="mx-auto my-auto">
                                     Bot
                                 </p>
@@ -382,7 +151,7 @@ const PingPongSettings = ({ router }: any) =>
                                 <input id= "input_val" type='text' placeholder="invite user..." className=" absolute h-[30px] w-[150px] left-[45%] bg-indigo-500 rounded-md text-center ">
                                 </input>
                             </form>
-                            <button onClick={()=> change_other_tools_value(1)} id="other_tools_1" className="relative flex w-[60px] h-[30px] left-[22.5%] top-[0px] md:left-[30%] lg:left-[33%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
+                            <button onClick={()=> GetOtherTools_Invite(1)} id="other_tools_1" className="relative flex w-[60px] h-[30px] left-[22.5%] top-[0px] md:left-[30%] lg:left-[33%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
                                 <p className="mx-auto my-auto">
                                 2P
                                 </p>
@@ -390,7 +159,7 @@ const PingPongSettings = ({ router }: any) =>
                         </div>
                     </div>
                 </div>
-                    <button onClick={() => {is_Online_mod(router,toast,GameContext)}} id="play" className="relative  h-[40px] md:h-[50px] lg:h-[60px] w-[80px] md:w-[100px] lg:w-[120px] text-xl md:text-2xl lg:text-3xl font-semibold text-white-500 bg-blue-500 hover:bg-blue-600 mt-[50px] md:mt-[75px] lg:mt-[100px] rounded-lg shadow-2xl shadow-blue-500 hover:shadow-blue-600 ">
+                    <button onClick={() => {StartRoom(router,toast,GameContext)}} id="play" className="relative  h-[40px] md:h-[50px] lg:h-[60px] w-[80px] md:w-[100px] lg:w-[120px] text-xl md:text-2xl lg:text-3xl font-semibold text-white-500 bg-blue-500 hover:bg-blue-600 mt-[50px] md:mt-[75px] lg:mt-[100px] rounded-lg shadow-2xl shadow-blue-500 hover:shadow-blue-600 ">
                         <p>
                             Play
                         </p>
