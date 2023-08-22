@@ -15,7 +15,7 @@ import { PingPongGateway } from './auto_match/lobbie.gateway';
 import { PlayPlayer1Gateway } from './start_game/play.player1.gateway';
 import { PlayPlayer2Gateway } from './start_game/play.player2.gateway';
 import { GameLogic } from './game_brain/logic/game_server_logic';
-import { PlaySpactatorGateway } from './Stream_mood/Stream.Stpector.gatway';
+import { PlaySpactatorGateway } from './Stream_mood/Stream.Stpector.gateway';
 import { GameStreamAttribute } from './game_brain/methods/Game_stream_attribute';
 import { HistoryManager } from './data_manager/HistoryManager';
 import { TypeOrmModule } from '@nestjs/typeorm';

@@ -1,6 +1,6 @@
 'use client'
 
-import {useState } from 'react';
+import {useEffect, useState } from 'react';
 import Header from './Components/Header/Header'
 import BottomNav from './Components/BottomNav/BottomNav'
 import './globals.css'
@@ -11,6 +11,8 @@ import UserContext from './UserContext';
 import GameInfoContext,{GameInfoType,GameInfoStateType,GetGameInfoContext} from './Game/GameContext/GameContext';
 import useSWR from "swr"
 import StreamInfoContext,{StreamInfoType,StreamInfoStateType,GetStreamInfoContext} from './Stream/StreamContext/StreamContext';
+import { socket } from './Game/Online/Socket/auto_match_socket';
+import { useToast } from '@chakra-ui/react';
 
 const metadata = {
   title: 'PingPong',
@@ -24,6 +26,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const toast = useToast();
   const [user, setUser] = useState({});
   const [GameInfo,SetGameInfo] = useState<GameInfoType>(
   {
@@ -77,8 +80,35 @@ export default function RootLayout({
 const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/me`,
 fetchData
 );
+useEffect(()=>
+{
+  let access:boolean = true;
+  let interval:NodeJS.Timer = setInterval(()=>
+  {
 
-
+    socket.emit("Online",GameInfo.myusername);
+    socket.on("SendRequest",(data:string)=>
+    {
+      console.log("request sent");
+      if(access)
+      {
+        toast({
+          title: 'notification',
+          description: data,
+          position: 'top-right',
+          status: 'info',
+          duration: 5000,
+          isClosable: true,
+        });
+        access = false;
+      }
+    });
+  },1000);
+  return ()=>
+  {
+    clearInterval(interval);
+  };
+});
   return (
     
     <html lang="en">

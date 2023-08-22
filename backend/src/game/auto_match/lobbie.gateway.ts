@@ -19,6 +19,7 @@ import {
   import { Socket, Server } from 'socket.io';
   import { RoomClass } from './auto_match_class/RoomClass';
   import { PlayerClass } from  './auto_match_class/PlayerClass';
+  import { OnlineClass } from './Online_class/OnlineClass';
   import {
     RoomSettingsEntity,
     UserInfo,
@@ -26,12 +27,35 @@ import {
   } from '../PingPong.Entity';
   
   export let Rooms: RoomClass[] = [];
+  export let Online: OnlineClass[] = [];
   @WebSocketGateway(1339, {
     cors: { origin: '*', credentials: true },
   })
   export class PingPongGateway implements OnGatewayDisconnect {
     @WebSocketServer()
     
+    @SubscribeMessage('Online')
+    handleOnline(client: Socket, username:string ): void {
+        let data:OnlineClass = new OnlineClass();
+        data.Player = username;
+        data.PlayerSocket = client;
+        if(username != '')
+        {
+          let elem:OnlineClass = Online.find((elem)=> elem.PlayerSocket.id === client.id);
+          if(elem === undefined)
+          {
+            Online.push(data);
+            console.log(`new player is online ${data.Player}`);
+            // console.log(Online);
+          }
+          else if(elem.Player !== username)
+          {
+            elem.Player = username;
+            console.log(`update player usename to: ${data.Player}`);
+          }
+          }
+      }
+
     @SubscribeMessage('CreateRoom')
     handleCreateRoom(client: Socket, data: RoomSettingsEntity): void {
       if(data.myusername === null)
@@ -61,7 +85,7 @@ import {
         check.players[0].PlayerSocket.emit('SendData',check.players[1].Player,check.players[1].PlayerImg,true);
         check.players[1].PlayerSocket.emit('SendData',check.players[0].Player,check.players[0].PlayerImg,false);
         console.log(Rooms);
-        console.log("Launch Private Room");
+        console.log("Launch Public Room");
         return;
       }
       else
@@ -72,6 +96,12 @@ import {
         Room.Points = data.Points;
         Room.RoomMood = data.RoomMood;
         Rooms.push(Room);
+        // let test:OnlineClass = Online.find(elem =>{elem.Player !== player_data.Player});
+        // for(let a=0;a<Online.length;a++)
+        //   console.log(Online[a].Player,player_data.Player);
+        // console.log(test);
+        // if(test)
+        client.emit('SendRequest',`request sent from: ${player_data.Player}`);
         console.log("Push New Room");
       }
       console.log(Rooms);
@@ -148,7 +178,10 @@ import {
       for(let a = 0;a<Rooms.length; a++)
         Rooms[a].players = Rooms[a].players.filter(player => player.PlayerSocket !== client);
       Rooms = Rooms.filter(elem => elem.players.length !== 0);
-      console.log("Remove Old Room");
+      let test = Online.find(elem => elem.PlayerSocket.id === client.id)
+      if(test)
+        console.log(`Remove Old Room && player ${test.Player} disconnect`);
+      Online = Online.filter(elem => elem.PlayerSocket.id !== client.id);
       console.log(Rooms);
     }
   }
