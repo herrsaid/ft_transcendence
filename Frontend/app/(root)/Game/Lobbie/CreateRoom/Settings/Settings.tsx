@@ -45,6 +45,11 @@ function change_online_value(param: number)
     const play = document.getElementById('play');
     const play2 = document.getElementById('play2');
     const other_tools = document.getElementById('other_tools');
+    const main= document.getElementById("other_tools");
+    const p= document.getElementById("other_tools_p");
+    const p0= document.getElementById("other_tools_0");
+    const p1= document.getElementById("other_tools_1");
+    const invt= document.getElementById("invite");
     const pause_game_p = document.getElementById('pause_game_p');
     const pause_game_0_p = document.getElementById('pause_game_0_p');
     const pause_game_1_p = document.getElementById('pause_game_1_p');
@@ -63,9 +68,23 @@ function change_online_value(param: number)
             play.style.zIndex = "1";
         if(play2 !== null)
             play2.style.zIndex = "2";
-        if(other_tools !== null)
-            other_tools.style.opacity = "0";
-        if(pause_game_p !== null
+        if(main && p && p0 && p1 && invt)
+        {
+            p.innerHTML = "Invite :";
+            if(!newGameInfo.RoomMood)
+            {
+                main.style.display = "1";
+                invt.style.opacity = "1";
+            }
+            else
+            {
+                main.style.opacity = "0";
+                invt.style.opacity = "0";
+            }
+            p0.style.opacity = "0";
+            p1.style.opacity = "0";
+        }
+            if(pause_game_p !== null
             && pause_game_0_p !== null
             && pause_game_1_p !== null)
         {
@@ -80,9 +99,15 @@ function change_online_value(param: number)
             play.style.zIndex = "2";
         if(play2 !== null)
             play2.style.zIndex = "1";
-        if(other_tools !== null)
-            other_tools.style.opacity = "1";
-        if(pause_game_p !== null
+            if(main && p && p0 && p1 && invt)
+            {
+                p.innerHTML = "Other &nbsp;Tools :";
+                main.style.opacity = "1";
+                invt.style.opacity = "0";
+                p0.style.opacity = "1";
+                p1.style.opacity = "1";
+            }
+            if(pause_game_p !== null
             && pause_game_0_p !== null
             && pause_game_1_p !== null)
         {
@@ -110,6 +135,11 @@ function change_other_tools_value(param: number)
 
 function change_pausegame_value(param: number)
 {
+    let main= document.getElementById("other_tools");
+    let p= document.getElementById("other_tools_p");
+    let p0= document.getElementById("other_tools_0");
+    let p1= document.getElementById("other_tools_1");
+    let invt= document.getElementById("invite");
     for(let a=0;a<2;a++)
     {
         const pause_game_ = document.getElementById(`pause_game_${a}`);
@@ -121,39 +151,60 @@ function change_pausegame_value(param: number)
         changemap.style.backgroundColor = " rgb(99 102 241)";
     newGameInfo.pause_game = param;
     if(param)
-        newGameInfo.RoomMood=true;
+    {
+        if(newGameInfo.Online)
+        {
+            newGameInfo.RoomMood=true;
+            if(main && p && p0 && p1 && invt)
+            {
+                main.style.opacity = "0";
+                invt.style.opacity = "0";
+            }
+        }
+    }
     else
-        newGameInfo.RoomMood=false;
+    {
+        if(newGameInfo.Online)
+        {
+            newGameInfo.RoomMood=false;
+            if(main && p && p0 && p1 && invt)
+            {
+                p.innerHTML = "Invite :";
+                main.style.opacity = "1";
+                invt.style.opacity = "1";
+                invt.style.display = "flex"
+                p0.style.opacity = "0";
+                p1.style.opacity = "0";
+            }
+        }
+    }
 }
 
-async function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<string>>,toast:any,GameContext:GameContextType)
+async function is_Online_mod(router: any,toast:any,GameContext:GameContextType)
 {
     const settings = document.getElementById("Settings")
+    const input_elem:HTMLElement | null = document.getElementById("input_val");
+    let input_value:String = ''; 
+    if (input_elem)
+        input_value = input_elem.value;
+    console.log(input_value);
     newGameInfo.myusername = GameContext.GameInfo.myusername;
     newGameInfo.myimage = GameContext.GameInfo.myimage;
     if(newGameInfo.Online === 1)
     {
-        setWarning('');
         socket.emit('CreateRoom',{
             Speed: newGameInfo.Speed,
             Points: newGameInfo.Points,
             myusername: GameContext.GameInfo.myusername,
             myimage: GameContext.GameInfo.myimage,
             RoomMood: newGameInfo.RoomMood,
+            InputValue: input_value,
         });
         socket.on('CreateRefused', (message: string) => {
             if(access)
             {
-                setWarning(message);
-                const Warn = document.getElementById("warning");
                 if(settings)
                     settings.style.filter = "blur(0px)";
-                if(Warn)
-                {
-                    Warn.style.animation = "none";
-                    void Warn.offsetHeight;
-                    Warn.style.animation = "Animation2 0.2s 3";
-                }
                 toast({
                     title: 'Error',
                     description: message,
@@ -164,43 +215,11 @@ async function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<st
                   });
             }  
         });
-        if(newGameInfo.RoomMood === false && settings)
-        {
-            settings.innerHTML = "";
-            let Room:HTMLElement = document.createElement("div");
-            let Player1Pic:HTMLElement = document.createElement("div");
-            let VS:HTMLElement = document.createElement("div");
-            let Player2Pic:HTMLElement = document.createElement("div");
-            let Player1name:HTMLElement = document.createElement("div");
-            let Player2name:HTMLElement = document.createElement("div");
-            let start:HTMLElement = document.createElement("div");
-            Room.setAttribute("id",`Room`);
-            Player1name.setAttribute("id",`Player1name`);
-            Player2name.setAttribute("id",`Player2name`);
-            Player1Pic.setAttribute("id",`Player1Pic`);
-            VS.setAttribute("id",`VS`);
-            Player2Pic.setAttribute("id",`Player2Pic`);
-            start.setAttribute("id",`start`);
-            Player1name.innerHTML = 'mabdelou';
-            Player2name.innerHTML = 'unknown';
-            Player1Pic.innerHTML = `<img src=${GameContext.GameInfo.myimage}></img>`;
-            VS.innerHTML = '<p> VS </p>';
-            Player2Pic.innerHTML = `<img src="/avatar.png"></img>`;
-            start.innerHTML = `<button> Start </button>`;
-            Room.appendChild(Player1name);
-            Room.appendChild(Player2name);
-            Room.appendChild(Player1Pic);
-            Room.appendChild(VS);
-            Room.appendChild(Player2Pic);
-            Room.appendChild(start);
-            settings.appendChild(Room);
-        }
-        else if(settings)
+        if(settings)
         {
             settings.style.filter = "blur(15px)";
             settings.style.animation = "Animation 3s infinite";
         }
-            console.log("conection_closed on settings");
             socket.on('SendData', (username,playerimg,data) => {
             if(access)
             {
@@ -209,7 +228,7 @@ async function is_Online_mod(router: any, setWarning: Dispatch<SetStateAction<st
                 newGameInfo.host = data;
                 newGameInfo.Access = 1;
                 GameContext.SetGameInfo(newGameInfo);
-                // socket.emit('conection_closed');
+                socket.emit('conection_closed at settings');
                 router.replace('/Game//Online/Play');
             }
         });
@@ -248,7 +267,6 @@ const PingPongSettings = ({ router }: any) =>
 {
     const GameContext = GetGameInfoContext();
     const contexUser = useContext(UserContext);
-    const [Warning, setWarning] = useState("");
     const toast = useToast();
 
     useEffect(() => {
@@ -353,23 +371,26 @@ const PingPongSettings = ({ router }: any) =>
                     </div>
                         <div id="other_tools"  className="relative flex h-[30px] top-[250px] md:top-[300px] lg:top-[400px] opacity-0">
                             <p id="other_tools_p" className="relative flex left-[10%] bottom-[5px] text-xl md:text-2xl lg:text-3xl font-semibold text-white-500">
-                                    Other &nbsp;Tools  &nbsp;:
+                                    Other &nbsp;Tools :
                             </p>
                             <button onClick={()=> change_other_tools_value(0)} id="other_tools_0" className="relative flex w-[60px] h-[30px] left-[15%] top-[0px] md:left-[20%] lg:left-[20%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-500">
                                 <p className="mx-auto my-auto">
                                     Bot
                                 </p>
                             </button>
+                            <form  id="invite">
+                                <input id= "input_val" type='text' placeholder="invite user..." className=" absolute h-[30px] w-[150px] left-[45%] bg-indigo-500 rounded-md text-center ">
+                                </input>
+                            </form>
                             <button onClick={()=> change_other_tools_value(1)} id="other_tools_1" className="relative flex w-[60px] h-[30px] left-[22.5%] top-[0px] md:left-[30%] lg:left-[33%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
                                 <p className="mx-auto my-auto">
                                 2P
                                 </p>
                             </button>
-                            <div id="warning">{Warning}</div>
                         </div>
                     </div>
                 </div>
-                    <button onClick={() => {is_Online_mod(router,setWarning,toast,GameContext)}} id="play" className="relative  h-[40px] md:h-[50px] lg:h-[60px] w-[80px] md:w-[100px] lg:w-[120px] text-xl md:text-2xl lg:text-3xl font-semibold text-white-500 bg-blue-500 hover:bg-blue-600 mt-[50px] md:mt-[75px] lg:mt-[100px] rounded-lg shadow-2xl shadow-blue-500 hover:shadow-blue-600 ">
+                    <button onClick={() => {is_Online_mod(router,toast,GameContext)}} id="play" className="relative  h-[40px] md:h-[50px] lg:h-[60px] w-[80px] md:w-[100px] lg:w-[120px] text-xl md:text-2xl lg:text-3xl font-semibold text-white-500 bg-blue-500 hover:bg-blue-600 mt-[50px] md:mt-[75px] lg:mt-[100px] rounded-lg shadow-2xl shadow-blue-500 hover:shadow-blue-600 ">
                         <p>
                             Play
                         </p>

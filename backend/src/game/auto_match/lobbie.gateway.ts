@@ -96,12 +96,9 @@ import {
         Room.Points = data.Points;
         Room.RoomMood = data.RoomMood;
         Rooms.push(Room);
-        // let test:OnlineClass = Online.find(elem =>{elem.Player !== player_data.Player});
-        // for(let a=0;a<Online.length;a++)
-        //   console.log(Online[a].Player,player_data.Player);
-        // console.log(test);
-        // if(test)
-        client.emit('SendRequest',`request sent from: ${player_data.Player}`);
+        let test:OnlineClass = Online.find(elem => elem.Player === data.InputValue);
+        if(test && test.Player !== data.myusername)
+          test.PlayerSocket.emit('SendRequest',`request sent from: ${player_data.Player}`);
         console.log("Push New Room");
       }
       console.log(Rooms);

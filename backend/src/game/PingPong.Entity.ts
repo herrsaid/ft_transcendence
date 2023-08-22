@@ -26,6 +26,8 @@ export class RoomSettingsEntity {
   myusername: string | null;
   @IsString()
   myimage: string | null;
+  @IsString()
+  InputValue: string | null;
 }
 
 export class UserInfo {
