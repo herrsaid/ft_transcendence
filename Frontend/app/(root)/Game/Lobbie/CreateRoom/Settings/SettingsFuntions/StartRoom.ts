@@ -24,9 +24,12 @@ export function StartRoom(router: any,toast:any,GameContext:GameContextType)
         });
         socket.on("RequestRefused",()=>
         {
-            console.log("from: RequestRefused");
-            if(access)
-                router.replace('/Game/Lobbie/');
+            if(access && settings && loading)
+            {
+                settings.style.filter = "blur(0px)";
+                loading.style.opacity = "0";
+                console.log("RequestRefused");
+            }
         });
         socket.on('CreateRefused', (message: string) => {
             if(access)
@@ -45,6 +48,7 @@ export function StartRoom(router: any,toast:any,GameContext:GameContextType)
         });
         if(settings && loading)
         {
+            console.log("always enter");
             settings.style.filter = "blur(15px)";
             loading.style.opacity = "1";
             settings.style.animation = "Animation 3s infinite";

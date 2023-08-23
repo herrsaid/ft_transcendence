@@ -26,9 +26,9 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  // const toast = useToast();
-  let RoomINdex:number = 0, access:boolean = true; 
   const [user, setUser] = useState({});
+  const [RoomINdex,SetRoomIndex] = useState(0);
+  const [access,Setaccess] = useState(false);
   const [GameInfo,SetGameInfo] = useState<GameInfoType>(
   {
       Points: 10,
@@ -83,6 +83,8 @@ fetchData
 );
 useEffect(()=>
 {
+  let notification:HTMLElement| null = document.getElementById('notification');
+  let content:HTMLElement| null = document.getElementById('content');
   socket.emit("Online",GameInfo.myusername);
   socket.on("SendRequest",(data)=>
   {
@@ -91,10 +93,10 @@ useEffect(()=>
       notification.style.opacity = "1";
       notification.style.display = "flex";
       content.innerText = data.message;
-      RoomINdex = data.RoomINdex;
+      SetRoomIndex(data.RoomINdex);
       SetGameInfo({...GameInfo,enemmyusername:data.inviterusername,enemmyimage:data.inviterImg});
     }
-    access = true;
+    Setaccess(true);
   });
   socket.on("DisplayNotification",(message)=>
   {
@@ -103,21 +105,20 @@ useEffect(()=>
         notification.style.opacity = "1";
         notification.style.display = "flex";
         content.innerText = message;
-      }
-      access = true;
+    }
+    Setaccess(false);
+    console.log("number of times enter");
   });
-  let notification:HTMLElement| null = document.getElementById('notification');
-  let content:HTMLElement| null = document.getElementById('content');
   let interval:NodeJS.Timer = setInterval(()=>
   {
     if(notification)
     {
       notification.style.opacity = "0";
       notification.style.display = "none";
-      socket.emit("RequestRefused",RoomINdex);
+      if(access)
+        socket.emit("RequestRefused",RoomINdex);
     }
-    console.log("just test");
-    access = false;
+    Setaccess(false);
     // RoomINdex = -1;
   },10000);
   console.log(access);
