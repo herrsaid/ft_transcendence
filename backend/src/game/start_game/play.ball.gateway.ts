@@ -111,7 +111,23 @@ export let GameObj: data[] = [];
         GameObj[Room].PlayersInfo.Player1Client.emit('GameEnd',"YOU WIN");
         GameObj[Room].PlayersInfo.Player2Client.emit('GameEnd',"YOU LOSE");
       }
-      // player leave Room
+      //timeout playerI colect target
+      else if(GameObj[Room].PlayersInfo.Result2Val <=  GameObj[Room].PlayersInfo.Result1Val
+        && GameObj[Room].PlayersInfo.Player1Client !== undefined
+        && GameObj[Room].PlayersInfo.Player2Client !== undefined)
+      {
+        GameObj[Room].PlayersInfo.Player1Client.emit('GameEnd',"YOU LOSE");
+        GameObj[Room].PlayersInfo.Player2Client.emit('GameEnd',"YOU WIN");
+      }
+      //timeout playerII colect target
+      else if(GameObj[Room].PlayersInfo.Result1Val <=  GameObj[Room].PlayersInfo.Result2Val
+        && GameObj[Room].PlayersInfo.Player1Client !== undefined
+        && GameObj[Room].PlayersInfo.Player2Client !== undefined)
+      {
+        GameObj[Room].PlayersInfo.Player2Client.emit('GameEnd',"YOU LOSE");
+        GameObj[Room].PlayersInfo.Player1Client.emit('GameEnd',"YOU WIN");
+      }
+        // player leave Room
       else if(GameObj[Room].PlayersInfo.Player2ID === ''
         && GameObj[Room].PlayersInfo.Player1Client !== undefined
         && GameObj[Room].PlayersInfo.Player2Client !== undefined)
@@ -121,6 +137,7 @@ export let GameObj: data[] = [];
         if(GameObj[Room].PlayersInfo.Result2Val === 0)
           GameObj[Room].PlayersInfo.Player2Client.emit('GameEnd',"YOU WIN");
       }
+
       //disconnect players from room
       // if(GameObj[Room].PlayersInfo.Player1Client !== undefined)
       //   GameObj[Room].PlayersInfo.Player1Client.emit('conection_closed');
@@ -167,12 +184,14 @@ export let GameObj: data[] = [];
             console.log("break");
             break;
           }
-            if(GameObj[a].RoomInfo.Sleep <= 0 && GameObj[a].RoomInfo.GameStatus === 1)
+            if(GameObj[a].RoomInfo.Sleep <= 0 && GameObj[a].RoomInfo.GameStatus === 1 && GameObj[a].RoomInfo.TimeOut > 0)
           {
             //call function that contains Game logic
             let gamespeed = GameObj[a].RoomInfo.GameSpeed;
             for(let loop=0;loop<gamespeed;loop++)
               GameObj[a].Logic.Head(GameObj[a]);
+              GameObj[a].RoomInfo.TimeOut -= 16;
+              console.log("TimeOut: " + GameObj[a].RoomInfo.TimeOut);
             //call function that send room data to all players on this room
             this.send_data_to_players(a)
             //call function that send room data to all spectators on this room

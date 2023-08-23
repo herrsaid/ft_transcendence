@@ -23,6 +23,7 @@ export class GameRommAttribute{
     public GameStatus: number;
     public Alpha: number;
     public Sleep: number;
+    public TimeOut: number;
 
     constructor()
     {
@@ -33,6 +34,7 @@ export class GameRommAttribute{
         this.GamePoints = 0;
         this.Alpha = 1;
         this.Sleep = 100;
+        this.TimeOut = 90000;
     }
 }
 export let RoomInfo:GameRommAttribute = new GameRommAttribute();
