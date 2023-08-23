@@ -101,7 +101,7 @@ useEffect(()=>
   {
     if(notification)
       notification.style.opacity = "0";
-  },5000);
+  },10000);
   access = true;
   return ()=>
   {

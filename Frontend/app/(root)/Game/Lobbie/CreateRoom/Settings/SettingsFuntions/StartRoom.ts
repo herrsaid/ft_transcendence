@@ -4,8 +4,9 @@ import { GameContextType } from '../../../../GameContext/GameContext';
 
 export function StartRoom(router: any,toast:any,GameContext:GameContextType)
 {
-    const settings = document.getElementById("Settings")
-    const input_elem:HTMLElement | null = document.getElementById("input_val");
+    const settings = document.getElementById("Settings");
+    const loading = document.getElementById("wifi-loader");
+    const input_elem:any = document.getElementById("input_val");
     let input_value:String = ''; 
     if (input_elem)
         input_value = input_elem.value;
@@ -37,9 +38,10 @@ export function StartRoom(router: any,toast:any,GameContext:GameContextType)
                   });
             }  
         });
-        if(settings)
+        if(settings && loading)
         {
             settings.style.filter = "blur(15px)";
+            loading.style.opacity = "1";
             settings.style.animation = "Animation 3s infinite";
         }
             socket.on('SendData', (username,playerimg,data) => {
