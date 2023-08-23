@@ -7,15 +7,18 @@ import Cookies from 'js-cookie';
 import UserContext from "../../UserContext";
 import reciverContext from "../reciverContext";
 import { useContext } from "react";
+import activeContext from "../activeContext";
 
 
 export default function Messages()
 {
+    const active = useContext(activeContext);
     const user = useContext(UserContext);
     const reciver = useContext(reciverContext);
     const [messages, setMessages] = useState([]);
     const [value, setValue] = useState('');
     const inputRef = useRef(null)
+    console.log(active.active);
     useEffect(()=> {
         fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/messages?id=${1}`,{
             method: 'GET', headers:{
