@@ -88,24 +88,41 @@ useEffect(()=>
   {
     if(notification && content)
     {
-        console.log("request sent");
-        notification.style.opacity = "1";
-        content.innerText = data.message;
-        RoomINdex = data.RoomINdex;
-        SetGameInfo({...GameInfo,enemmyusername:data.inviterusername,enemmyimage:data.inviterImg});
+      notification.style.opacity = "1";
+      notification.style.display = "flex";
+      content.innerText = data.message;
+      RoomINdex = data.RoomINdex;
+      SetGameInfo({...GameInfo,enemmyusername:data.inviterusername,enemmyimage:data.inviterImg});
     }
+    access = true;
+  });
+  socket.on("DisplayNotification",(message)=>
+  {
+    if(notification && content)
+    {
+        notification.style.opacity = "1";
+        notification.style.display = "flex";
+        content.innerText = message;
+      }
+      access = true;
   });
   let notification:HTMLElement| null = document.getElementById('notification');
   let content:HTMLElement| null = document.getElementById('content');
   let interval:NodeJS.Timer = setInterval(()=>
   {
     if(notification)
+    {
       notification.style.opacity = "0";
+      notification.style.display = "none";
+      socket.emit("RequestRefused",RoomINdex);
+    }
+    console.log("just test");
+    access = false;
+    // RoomINdex = -1;
   },10000);
-  access = true;
+  console.log(access);
   return ()=>
   {
-    access = false;
     clearInterval(interval);
   };
 });

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 const JoinPrivateRoom = (GameContext:GameContextType,RoomINdex:number,router: AppRouterInstance,access:boolean)=>
 {
+  let notification:HTMLElement| null = document.getElementById('notification');
     let newGameInfo:GameInfoType = GameContext.GameInfo;
     let obj = 
     {
@@ -13,25 +14,23 @@ const JoinPrivateRoom = (GameContext:GameContextType,RoomINdex:number,router: Ap
         myimage: GameContext.GameInfo.myimage,
     };
     socket.emit("JoinPrivateRoom",obj);
-    console.log(access);
     socket.on('SendData', (username,playerimg,data) => {
-        if(access)
-        {
           newGameInfo.enemmyusername = username;
           newGameInfo.enemmyimage = playerimg;
           newGameInfo.host = data;
-        }
       });
       socket.on('JoinAccepted',(speed:number,points: number)=>
       {
-        if(access)
-        {
           newGameInfo.Access=1;
           newGameInfo.Speed = speed;
           newGameInfo.Points = points;
           GameContext.SetGameInfo(newGameInfo);
+          if(notification)
+          {
+            notification.style.opacity = "0";
+            notification.style.display = "none";
+          }
           router.replace(`/Game/Online/Play`);
-        }
     });
 }
 
@@ -44,7 +43,11 @@ const Notification = ({RoomINdex,access}:{RoomINdex:number,access:boolean}) =>
           className='fixed w-[200px] h-[60px] top-[5px] left-1/2 transform -translate-x-1/2
           my-auto rounded-md bg-indigo-500 flex flex-wrap overflow-hidden
           opacity-0 z-50'
-          onClick={()=>{JoinPrivateRoom(GameContext,RoomINdex,router,access)}} >
+          onClick={()=>
+          {
+            if(access)
+              JoinPrivateRoom(GameContext,RoomINdex,router,access)
+          }} >
           <img className='relative w-[20px]  h-[20px] flex  mt-[10px] ml-[10px]' src="/info.png">
           </img>
           <div className='relative w-[60px] h-[25px] mt-[10px] ml-[10px] flex text-sm font-bold'>

@@ -10,7 +10,6 @@ export function StartRoom(router: any,toast:any,GameContext:GameContextType)
     let input_value:String = ''; 
     if (input_elem)
         input_value = input_elem.value;
-    console.log(input_value);
     newGameInfo.myusername = GameContext.GameInfo.myusername;
     newGameInfo.myimage = GameContext.GameInfo.myimage;
     if(newGameInfo.Online === 1)
@@ -22,6 +21,12 @@ export function StartRoom(router: any,toast:any,GameContext:GameContextType)
             myimage: GameContext.GameInfo.myimage,
             RoomMood: newGameInfo.RoomMood,
             InputValue: input_value,
+        });
+        socket.on("RequestRefused",()=>
+        {
+            console.log("from: RequestRefused");
+            if(access)
+                router.replace('/Game/Lobbie/');
         });
         socket.on('CreateRefused', (message: string) => {
             if(access)
@@ -52,8 +57,7 @@ export function StartRoom(router: any,toast:any,GameContext:GameContextType)
                 newGameInfo.host = data;
                 newGameInfo.Access = 1;
                 GameContext.SetGameInfo(newGameInfo);
-                socket.emit('conection_closed at settings');
-                router.replace('/Game//Online/Play');
+                router.replace('/Game/Online/Play');
             }
         });
     }

@@ -46,13 +46,21 @@ import {
           {
             Online.push(data);
             console.log(`new player is online ${data.Player}`);
-            // console.log(Online);
           }
           else if(elem.Player !== username)
           {
             elem.Player = username;
             console.log(`update player usename to: ${data.Player}`);
           }
+        }
+      }
+      @SubscribeMessage('RequestRefused')
+      handleRequestRefused(client: Socket,RoomIndex:number): void {
+        console.log("RequestRefused");
+        if(Rooms[RoomIndex] && Rooms[RoomIndex].players[0])
+        {
+          Rooms[RoomIndex].players[0].PlayerSocket.emit('DisplayNotification','Request Refused');
+          // Rooms[RoomIndex].players[0].PlayerSocket.emit("RequestRefused");
         }
       }
 
@@ -68,7 +76,6 @@ import {
         client.emit('CreateRefused',"you can't Create two Rooms");
         return ;
       }
-      // console.log(data);
       let player_data:PlayerClass = new PlayerClass;
       player_data.Player = data.myusername;
       player_data.PlayerImg = data.myimage;
