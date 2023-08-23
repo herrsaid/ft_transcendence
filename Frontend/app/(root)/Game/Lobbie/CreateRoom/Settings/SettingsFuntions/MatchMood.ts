@@ -36,14 +36,20 @@ export function GetMatchMood(param: number)
             {
                 main.style.display = "1";
                 invt.style.opacity = "1";
+                main.style.display = "flex";
+                invt.style.display = "flex";
             }
             else
             {
                 main.style.opacity = "0";
                 invt.style.opacity = "0";
+                main.style.display = "none";
+                invt.style.display = "none";
             }
             p0.style.opacity = "0";
             p1.style.opacity = "0";
+            p0.style.display = "none";
+            p1.style.display = "none";
         }
             if(pause_game_p !== null
             && pause_game_0_p !== null
@@ -65,8 +71,12 @@ export function GetMatchMood(param: number)
                 p.innerHTML = "Other &nbsp;Tools :";
                 main.style.opacity = "1";
                 invt.style.opacity = "0";
+                main.style.display = "flex";
+                invt.style.display = "none";
                 p0.style.opacity = "1";
                 p1.style.opacity = "1";
+                p0.style.display = "flex";
+                p1.style.display = "flex";
             }
             if(pause_game_p !== null
             && pause_game_0_p !== null

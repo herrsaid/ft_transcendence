@@ -61,7 +61,7 @@ const PingPongSettings = ({ router }: any) =>
         );
     }
     return(
-        <Settings/>
+        <Settings router={router}/>
     );
 }
 export default PingPongSettings;

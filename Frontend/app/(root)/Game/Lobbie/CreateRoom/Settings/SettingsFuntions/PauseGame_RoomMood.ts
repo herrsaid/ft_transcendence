@@ -26,6 +26,8 @@ export function GetPauseGame_RoomMood(param: number)
             {
                 main.style.opacity = "0";
                 invt.style.opacity = "0";
+                main.style.display = "none";
+                invt.style.display = "none";
             }
         }
     }
@@ -39,9 +41,12 @@ export function GetPauseGame_RoomMood(param: number)
                 p.innerHTML = "Invite :";
                 main.style.opacity = "1";
                 invt.style.opacity = "1";
+                main.style.display = "flex";
                 invt.style.display = "flex"
                 p0.style.opacity = "0";
                 p1.style.opacity = "0";
+                p0.style.display = "none";
+                p1.style.display = "none";
             }
         }
     }
