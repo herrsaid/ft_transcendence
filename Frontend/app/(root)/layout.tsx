@@ -107,7 +107,6 @@ useEffect(()=>
         content.innerText = message;
     }
     Setaccess(false);
-    console.log("number of times enter");
   });
   let interval:NodeJS.Timer = setInterval(()=>
   {
@@ -120,8 +119,7 @@ useEffect(()=>
     }
     Setaccess(false);
     // RoomINdex = -1;
-  },3000);
-  console.log(access);
+  },6000);
   return ()=>
   {
     clearInterval(interval);

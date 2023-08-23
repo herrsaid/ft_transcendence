@@ -22,12 +22,12 @@ export function CreateRoomLogic(client: Socket, data: RoomSettingsEntity): void 
     player_data.PlayerImg = data.myimage;
     player_data.PlayerId = client.id;
     player_data.PlayerSocket = client;
-    let check:RoomClass = Rooms.find(elem => elem.Points === data.Points && elem.Speed === data.Speed);
-    if(check !== undefined && check.RoomMood !== false)
+    let check:RoomClass = Rooms.find(elem => elem.Points === data.Points && elem.Speed === data.Speed && elem.RoomMood == data.RoomMood);
+    if(check !== undefined)
     {
-      if(check.players.find(elem => elem.PlayerId === client.id) !== undefined)
-        return ;
-      else
+      // if(check.players.find(elem => elem.PlayerId === client.id) !== undefined)
+      //   return ;
+      // else
         console.log("Push New User");
       check.players.push(player_data);
       check.players[0].PlayerSocket.emit('SendData',check.players[1].Player,check.players[1].PlayerImg,true);
@@ -53,8 +53,15 @@ export function CreateRoomLogic(client: Socket, data: RoomSettingsEntity): void 
         RoomINdex: (Rooms.length-1),
       }
       if(test && test.Player !== data.myusername)
+      {
         test.PlayerSocket.emit('SendRequest',obj);
-      console.log("Push New Room");
+        console.log("Push New Room");
+      }
+      else
+      {
+        client.emit('DisplayNotification','Request Refused');
+        client.emit("RequestRefused");      
+      }
     }
     console.log(Rooms);
   }

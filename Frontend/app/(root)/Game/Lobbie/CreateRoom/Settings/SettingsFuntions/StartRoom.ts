@@ -30,7 +30,6 @@ export function StartRoom(router: any,toast:any,GameContext:GameContextType)
                 settings.style.animation = "Animation 1s";
                 loading.style.opacity = "0";
                 socket.emit("conection_closed");
-                console.log("RequestRefused");
             }
         });
         socket.on('CreateRefused', (message: string) => {
@@ -50,7 +49,6 @@ export function StartRoom(router: any,toast:any,GameContext:GameContextType)
         });
         if(settings && loading)
         {
-            console.log("always enter");
             settings.style.filter = "blur(15px)";
             loading.style.opacity = "1";
             settings.style.animation = "Animation 3s infinite";
