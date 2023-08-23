@@ -83,30 +83,30 @@ fetchData
 );
 useEffect(()=>
 {
+  socket.emit("Online",GameInfo.myusername);
+  socket.on("SendRequest",(data)=>
+  {
+    if(notification && content)
+    {
+        console.log("request sent");
+        notification.style.opacity = "1";
+        content.innerText = data.message;
+        RoomINdex = data.RoomINdex;
+        SetGameInfo({...GameInfo,enemmyusername:data.inviterusername,enemmyimage:data.inviterImg});
+    }
+  });
   let notification:HTMLElement| null = document.getElementById('notification');
   let content:HTMLElement| null = document.getElementById('content');
-  let timeout:NodeJS.Timeout = setTimeout(()=>
+  let interval:NodeJS.Timer = setInterval(()=>
   {
-    socket.emit("Online",GameInfo.myusername);
-    socket.on("SendRequest",(data)=>
-    {
-        if(notification && content)
-        {
-          console.log("request sent");
-          notification.style.opacity = "1";
-          content.innerText = data.message;
-          RoomINdex = data.RoomINdex;
-          SetGameInfo({...GameInfo,enemmyusername:data.inviterusername,enemmyimage:data.inviterImg});
-        }
-    });
-  },3000);
-  // if(notification)
-  //   notification.style.opacity = "0";
+    if(notification)
+      notification.style.opacity = "0";
+  },5000);
   access = true;
   return ()=>
   {
     access = false;
-    clearTimeout(timeout);
+    clearInterval(interval);
   };
 });
   return (
