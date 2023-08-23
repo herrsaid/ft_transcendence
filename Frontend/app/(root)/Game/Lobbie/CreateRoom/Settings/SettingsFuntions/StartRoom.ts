@@ -27,7 +27,9 @@ export function StartRoom(router: any,toast:any,GameContext:GameContextType)
             if(access && settings && loading)
             {
                 settings.style.filter = "blur(0px)";
+                settings.style.animation = "Animation 1s";
                 loading.style.opacity = "0";
+                socket.emit("conection_closed");
                 console.log("RequestRefused");
             }
         });

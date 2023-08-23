@@ -120,7 +120,7 @@ useEffect(()=>
     }
     Setaccess(false);
     // RoomINdex = -1;
-  },10000);
+  },3000);
   console.log(access);
   return ()=>
   {
