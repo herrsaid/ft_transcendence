@@ -22,6 +22,7 @@ import {
   import {
     RoomSettingsEntity,
     UserInfo,
+    UserInfo1,
   } from '../PingPong.Entity';
 import { OnlineLogic } from './Functions/Online';
 import { RequestRefusedLogic } from './Functions/RequestRefused';
@@ -46,9 +47,9 @@ import { ConectionClosedLogic, DisconnectLogic } from './Functions/Disconnect_Co
     }
 
     @SubscribeMessage('RequestRefused')
-    handleRequestRefused(client: Socket,RoomIndex:number): void
+    handleRequestRefused(client: Socket,targrt:string): void
     {
-      RequestRefusedLogic(RoomIndex);
+      RequestRefusedLogic(targrt);
     }
 
     @SubscribeMessage('CreateRoom')
@@ -63,7 +64,7 @@ import { ConectionClosedLogic, DisconnectLogic } from './Functions/Disconnect_Co
       JoinPublicRoomLogic(client,data);
     }
     @SubscribeMessage('JoinPrivateRoom')
-    handleJoinPrivateRoom(client: Socket, data: UserInfo): void 
+    handleJoinPrivateRoom(client: Socket, data: UserInfo1): void 
     {
       JoinPrivateRoomLogic(client,data);
     }

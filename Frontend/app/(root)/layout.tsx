@@ -27,7 +27,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   const [user, setUser] = useState({});
-  const [RoomINdex,SetRoomIndex] = useState(0);
+  const [InviterName,SetInviterName] = useState("");
   const [access,Setaccess] = useState(false);
   const [GameInfo,SetGameInfo] = useState<GameInfoType>(
   {
@@ -93,9 +93,11 @@ useEffect(()=>
       notification.style.opacity = "1";
       notification.style.display = "flex";
       content.innerText = data.message;
-      SetRoomIndex(data.RoomINdex);
-      SetGameInfo({...GameInfo,enemmyusername:data.inviterusername,enemmyimage:data.inviterImg});
     }
+    if(InviterName !=  "" && InviterName != data.inviterusername)
+      socket.emit("RequestRefused",InviterName);
+    SetInviterName(data.inviterusername);
+    SetGameInfo({...GameInfo,enemmyusername:data.inviterusername,enemmyimage:data.inviterImg});
     Setaccess(true);
   });
   socket.on("DisplayNotification",(message)=>
@@ -114,11 +116,11 @@ useEffect(()=>
     {
       notification.style.opacity = "0";
       notification.style.display = "none";
-      if(access)
-        socket.emit("RequestRefused",RoomINdex);
+      if(access && InviterName !=  "")
+        socket.emit("RequestRefused",InviterName);
     }
+    SetInviterName("");
     Setaccess(false);
-    // RoomINdex = -1;
   },6000);
   return ()=>
   {
@@ -144,7 +146,7 @@ useEffect(()=>
         {/* <div className='child'> */}
         <GameInfoContext.Provider value={{ GameInfo,SetGameInfo }}>
           <StreamInfoContext.Provider value={{ StreamInfo,SetStreamInfo }}>
-            <Notification RoomINdex={RoomINdex} access={access}/>
+            <Notification InviterName={InviterName} access={access}/>
             {children}
           </StreamInfoContext.Provider>
         </GameInfoContext.Provider>

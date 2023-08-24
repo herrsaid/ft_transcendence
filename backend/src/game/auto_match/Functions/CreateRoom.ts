@@ -23,7 +23,7 @@ export function CreateRoomLogic(client: Socket, data: RoomSettingsEntity): void 
     player_data.PlayerId = client.id;
     player_data.PlayerSocket = client;
     let check:RoomClass = Rooms.find(elem => elem.Points === data.Points && elem.Speed === data.Speed && elem.RoomMood == data.RoomMood);
-    if(check !== undefined)
+    if(check !== undefined && data.RoomMood !== false)
     {
       // if(check.players.find(elem => elem.PlayerId === client.id) !== undefined)
       //   return ;
@@ -36,7 +36,16 @@ export function CreateRoomLogic(client: Socket, data: RoomSettingsEntity): void 
       console.log("Launch Public Room");
       return;
     }
-    else
+    else if(data.RoomMood !== false)
+    {
+      let Room:RoomClass = new RoomClass;
+      Room.players.push(player_data);
+      Room.Speed = data.Speed;
+      Room.Points = data.Points;
+      Room.RoomMood = data.RoomMood;
+      Rooms.push(Room);
+    }
+    else if(data.RoomMood === false)
     {
       let Room:RoomClass = new RoomClass;
       Room.players.push(player_data);
@@ -50,7 +59,6 @@ export function CreateRoomLogic(client: Socket, data: RoomSettingsEntity): void 
         message: `invite from: ${player_data.Player}`,
         inviterImg: data.myimage,
         inviterusername: data.myusername,
-        RoomINdex: (Rooms.length-1),
       }
       if(test && test.Player !== data.myusername)
       {
