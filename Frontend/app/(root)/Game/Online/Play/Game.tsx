@@ -33,7 +33,7 @@ const Game = () => {
           return ;
         if(GameStatusChecker(p5,GameContext))
         {
-          if(document.getElementById('sketch-container'))
+          if(document.getElementById('sketch-container') && typeof window !== "undefined")
             p5.createCanvas(GameData.GameWidth, GameData.GameHeight).parent('sketch-container').position((window.innerWidth-GameData.GameWidth)/2,GameData.GameHeight/4,'absolute');
           p5.background(25);
           BallAnimation(GameContext);

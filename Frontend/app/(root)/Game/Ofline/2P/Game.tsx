@@ -11,21 +11,19 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-import { useEffect,useContext,useState } from "react";
-import UserContext from "@/app/(root)/UserContext";
 import p5 from "p5";
-import './Game.css'
-import { GetGameInfoContext, GameContextType } from '../../GameContext/GameContext';
-
 import { GameClass } from './GameClass/GameClass';
 import { NewValue } from './GameFunctions/Initialise';
-import { Ball, LineCenter, Racket1, Racket2 } from './GameFunctions/GameDrawer';
+import { useEffect,useState } from "react";
 import { GameStatusChecker } from './GameFunctions/GameChecker';
+import { GetGameInfoContext} from '../../GameContext/GameContext';
+import { Ball, LineCenter, Racket1, Racket2 } from './GameFunctions/GameDrawer';
 import { BallAnimation, Racket1Animation, Racket2Animation } from './GameFunctions/GameLogic';
+
+import './Game.css'
 
 export let GameData:GameClass;
 const Game = () => {
-  const contexUser = useContext(UserContext);
   const GameContext = GetGameInfoContext();
   const [reslt1, setReslt1] = useState(0);
   const [reslt2, setReslt2] = useState(0);

@@ -1,3 +1,4 @@
+'use client'
 
 import "../Settings.css"
 import {  useToast } from '@chakra-ui/react'

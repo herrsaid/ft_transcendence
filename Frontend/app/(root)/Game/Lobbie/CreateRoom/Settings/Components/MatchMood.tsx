@@ -1,3 +1,5 @@
+'use client'
+
 import { GetMatchMood } from "../SettingsFuntions/MatchMood";
 
 const MatchMood = ({ router }: any) => 

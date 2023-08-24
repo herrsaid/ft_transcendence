@@ -1,3 +1,5 @@
+'use client'
+
 import { GetPoints } from "../SettingsFuntions/Points";
 
 const Points = ({ router }: any) => 
