@@ -15,7 +15,7 @@ export default  function Profile()
 
     return(
         
-        <div className="container mx-auto px-2 py-10">
+        <div className="container mx-auto px-2 py-10 pb-32">
                 <ProfileHeader avatar={usercontext.user.profile_img} username={usercontext.user.username} email={usercontext.user.email} rank={usercontext.user.rank}
                 avatar_updated={usercontext.user.is_profile_img_updated} 
                 />
