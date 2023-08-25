@@ -44,7 +44,7 @@ export default function Chats()
                     <button className="absolute right-2 top-1" type="submit"><BiSearchAlt size={21}/></button>
                 </form>
             </div>
-            <div className="pl-3 h-[100%]">
+            <div className="pl-3 h-[100%] overflow-scroll">
                 {(forg)?newArray:<Groups/>}
             </div>
         </div>
