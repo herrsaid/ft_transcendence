@@ -11,11 +11,11 @@ export default function Info()
     const active = useContext(activeContext);
     const back_click = ()=>{active.setActive('message')}
     return (
-        <div className="flex flex-col h-full w-full justify-between self-center">
-            <div className="w-full self-center text-2xl pb-3 flex justify-between"><div><button className='sm:hidden' onClick={back_click}><IoIosArrowBack/></button></div><h1>Info</h1> <div></div></div>
+        <div className="flex flex-col h-full justify-between">
+            <div className="self-center text-2xl pb-3 flex justify-between"><div><button className='sm:hidden' onClick={back_click}><IoIosArrowBack/></button></div><h1>Info</h1> <div></div></div>
             <div className="text-center flex flex-col">
                 <div className='w-60 self-center pb-10'>
-                    <img className='rounded-full self-center w-60' src={reciver.reciver.avatar} alt="img" />
+                    <img className='rounded-full self-center w-36' src={reciver.reciver.avatar} alt="img" />
                 </div>
                 <div className='text-center text-2xl mb-1'>
                     <h1 className='text-center '>{reciver.reciver.username}</h1>
