@@ -19,6 +19,7 @@ export default function BottomNav()
     
     return(
         <>
+        {/* //this the old bottomnavbar */}
         <nav id="BottomNav" className="fixed bottom-2 lg:bottom-2 w-full overflow-hidden z-50">
             <div className="container mx-auto">
                 <div className="w-full h-[60px] bg-black/20 backdrop-blur rounded-full max-w-[460px] mx-auto 
@@ -45,27 +46,19 @@ export default function BottomNav()
       </button>
       <nav className="hidden mt-4 navitem">
         <ul>
-          {/* <li className="mb-2"><a href="#" className="block hover:text-gray-300">Home</a></li>
-          <li className="mb-2"><a href="#" className="block hover:text-gray-300">About</a></li>
-          <li className="mb-2"><a href="#" className="block hover:text-gray-300">Services</a></li>
-          <li className="mb-2"><a href="#" className="block hover:text-gray-300">Contact</a></li>
-          <li><img src="/avatar.png" alt="" /></li> */}
-
-
+          
 
           <Link href='/' className=" mt-2 rounded-full cursor-pointer w-[50px] h-[50px] flex items-center justify-center bg-gradient-to-br from-purple-600 to-indigo-800"><IoHome size={30} /></Link>
-                    <Link href='/profile' className=" mt-2 rounded-full cursor-pointer w-[50px] h-[50px] flex items-center justify-center bg-gradient-to-br from-purple-600 to-indigo-800"><CgProfile size={30}/></Link>
-                    <Link href='/Game/Lobbie' className="mt-2 rounded-full cursor-pointer w-[50px] h-[50px] flex items-center justify-center bg-gradient-to-br from-purple-600 to-indigo-800"><GiPingPongBat size={30}/></Link>
-                    <Link href='/community' className="mt-2 rounded-full cursor-pointer w-[50px] h-[50px] flex items-center justify-center bg-gradient-to-br from-purple-600 to-indigo-800"> <BsFillChatFill size={30}/> </Link>
-                    <Link href='/profile/Setting' className="mt-2 rounded-full cursor-pointer w-[50px] h-[50px] flex items-center justify-center bg-gradient-to-br from-purple-600 to-indigo-800"><IoSettingsSharp size={30} /></Link>
+           <Link href='/profile' className=" mt-2 rounded-full cursor-pointer w-[50px] h-[50px] flex items-center justify-center bg-gradient-to-br from-purple-600 to-indigo-800"><CgProfile size={30}/></Link>
+            <Link href='/Game/Lobbie' className="mt-2 rounded-full cursor-pointer w-[50px] h-[50px] flex items-center justify-center bg-gradient-to-br from-purple-600 to-indigo-800"><GiPingPongBat size={30}/></Link>
+            <Link href='/community' className="mt-2 rounded-full cursor-pointer w-[50px] h-[50px] flex items-center justify-center bg-gradient-to-br from-purple-600 to-indigo-800"> <BsFillChatFill size={30}/> </Link>
+            <Link href='/profile/Setting' className="mt-2 rounded-full cursor-pointer w-[50px] h-[50px] flex items-center justify-center bg-gradient-to-br from-purple-600 to-indigo-800"><IoSettingsSharp size={30} /></Link>
         </ul>
         
       </nav>
     </aside>
        
             
-                    
-                
         </>
     )
 }
