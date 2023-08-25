@@ -2,6 +2,8 @@ import { AppRouterInstance } from "next/dist/shared/lib/app-router-context";
 import { GameContextType, GameInfoType, GetGameInfoContext } from "../../Game/GameContext/GameContext";
 import { socket } from "../../Game/Online/Socket/auto_match_socket";
 import { useRouter } from "next/navigation";
+import { GetGameDataContext, GameDataContextType, GameDataType } from '../../Game/Online/Play/GameClass/GameClass';
+import GameInfoContext from '../../Game/GameContext/GameContext';
 
 const JoinPrivateRoom = (GameContext:GameContextType,InviterName:string,router: AppRouterInstance,access:boolean)=>
 {
@@ -38,7 +40,8 @@ const JoinPrivateRoom = (GameContext:GameContextType,InviterName:string,router: 
 const Notification = ({InviterName,access}:{InviterName:string,access:boolean}) => 
 {
     const router: AppRouterInstance = useRouter();
-    const GameContext = GetGameInfoContext();
+    const GameContext:GameContextType = GetGameInfoContext();
+    const GDC:GameDataContextType = GetGameDataContext();
     return(
         <div id="notification"
           className='fixed w-[200px] h-[60px] top-[5px] left-1/2 transform -translate-x-1/2
@@ -47,8 +50,12 @@ const Notification = ({InviterName,access}:{InviterName:string,access:boolean}) 
           onClick={()=>
           {
             if(access)
+            {
+              router.replace(`/Game/Lobbie`);
               JoinPrivateRoom(GameContext,InviterName,router,access)
-          }} >
+              GDC.SetGameData(new GameDataType());
+            }
+            }} >
           <img className='relative w-[20px]  h-[20px] flex  mt-[10px] ml-[10px]' src="/info.png">
           </img>
           <div className='relative w-[60px] h-[25px] mt-[10px] ml-[10px] flex text-sm font-bold'>

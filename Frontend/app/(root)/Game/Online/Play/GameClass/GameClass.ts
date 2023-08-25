@@ -69,7 +69,7 @@ export interface GameDataContextType {
   
   
   const GameDataContext = createContext<GameDataContextType>(obj);
-  export function GetGameDataContext() {
+  export function GetGameDataContext():GameDataContextType {
     const context = useContext(GameDataContext);
     if (!context) {
       throw new Error('GetGameInfoContext must be used within a GameInfoProvider');

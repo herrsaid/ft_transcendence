@@ -15,6 +15,8 @@ import { socket } from './Game/Online/Socket/auto_match_socket';
 import Notification from './Components/Notification/Notification';
 import GameDataContext,{ GameDataType } from './Game/Online/Play/GameClass/GameClass';
 
+export let InGame:{IG:boolean} = {IG: false};
+
 const metadata = {
   title: 'PingPong',
   description: 'PingPong Game 2023',
@@ -82,11 +84,27 @@ useEffect(()=>
       notification.style.display = "flex";
       content.innerText = data.message;
     }
-    if(InviterName !=  "" && InviterName != data.inviterusername)
+    console.log("InGame: "+InGame.IG);
+    if(InGame.IG)
+    {
+      if(notification)
+      {
+        notification.style.opacity = "0";
+        notification.style.display = "none";
+      }
+      socket.emit("RequestRefused",data.inviterusername);
+      Setaccess(false);
+    }
+    else if(InviterName !=  "" && InviterName != data.inviterusername)
+    {
       socket.emit("RequestRefused",InviterName);
-    SetInviterName(data.inviterusername);
-    SetGameInfo({...GameInfo,enemmyusername:data.inviterusername,enemmyimage:data.inviterImg});
-    Setaccess(true);
+    }
+    else
+    {
+      SetInviterName(data.inviterusername);
+      SetGameInfo({...GameInfo,enemmyusername:data.inviterusername,enemmyimage:data.inviterImg});
+      Setaccess(true);
+    }
   });
   socket.on("DisplayNotification",(message)=>
   {
