@@ -3,13 +3,16 @@ import {ImBlocked} from 'react-icons/im'
 import { GoReport } from "react-icons/go";
 import { useContext } from 'react';
 import reciverContext from '../reciverContext';
-
+import {IoIosArrowBack} from 'react-icons/io'
+import activeContext from '../activeContext';
 export default function Info()
 {
     const reciver = useContext(reciverContext);
+    const active = useContext(activeContext);
+    const back_click = ()=>{active.setActive('message')}
     return (
         <div className="flex flex-col h-full w-full justify-between self-center">
-            <div className="self-center text-2xl pb-3">Info</div>
+            <div className="w-full self-center text-2xl pb-3 flex justify-between"><div><button className='sm:hidden' onClick={back_click}><IoIosArrowBack/></button></div><h1>Info</h1> <div></div></div>
             <div className="text-center flex flex-col">
                 <div className='w-60 self-center pb-10'>
                     <img className='rounded-full self-center w-60' src={reciver.reciver.avatar} alt="img" />

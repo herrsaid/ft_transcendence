@@ -39,12 +39,11 @@ export default function Messages()
         setValue('')
     }
     return(
-        <div className="flex flex-col justify-center h-[87dvh] border-r border-l border-gray-500">
+        <div className="flex flex-col  justify-center  border-r border-l h-[87vh]  border-gray-500">
             <div>
                 <Profile/>
             </div>
             <div className="flex flex-col h-[80%] p-3">
-                {/* <Message class="self-end rounded-lg bg-sky-900 p-2" content="hellow"></Message> */}
                 {
                         messages.map((message,index) => {
                             if(message.src == user.user.id && message.dst == reciver.reciver.id)
@@ -54,7 +53,7 @@ export default function Messages()
                         })
                 }
             </div>
-            <div className="self-center relative w-[90%]">
+            <div className="self-center w-[50%] fixed bottom-5">
                 <form onSubmit={send}>
                     <input onChange={event => setValue(event.target.value)} value={value} ref={inputRef} className="focus:outline-none rounded-full bg-sky-900 p-1 pl-2 w-full" type="text" placeholder="Message..." />
                     <button className="absolute top-2 right-2" type="submit"><VscSend /></button>
