@@ -48,7 +48,7 @@ const History = () => {
 
     if (data)
     {
-        myHistory = data.map(history => {
+        myHistory = data.map((history:any) => {
             return <OneHistory key={history.key} 
             rank={history.rank}
             score={history.score}

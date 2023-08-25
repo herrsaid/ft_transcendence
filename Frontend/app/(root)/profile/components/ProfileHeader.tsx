@@ -58,7 +58,7 @@ let rankbg;
         new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + props.avatar;
     return (
         
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-6 flex-wrap">
     <div className="flex items-center">
      
       <div className="relative">
@@ -82,7 +82,7 @@ let rankbg;
 
     <div className="text-right">
       <Link href="/profile/Setting">
-      <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md" >Edit</button>
+      <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md mt-4" >Edit</button>
       </Link>
       
     </div>

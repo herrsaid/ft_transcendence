@@ -34,7 +34,7 @@ export default function LiveGames() {
       <div className="live-game-card bg-gradient-to-br from-indigo-600 to-indigo-800 rounded-lg shadow-md p-6 flex flex-col justify-between">
         <div className="text-white text-lg font-semibold mb-4">Find New Friends</div>
         <p className="text-white">Discover new players to challenge!</p>
-        <a href="#" className="text-blue-400 font-semibold mt-4">Find Friends</a>
+        <Link className="text-blue-400 font-semibold mt-4 rounded-lg inline-block" href="/Users">Find Friends</Link>
       </div>
     </div>
   </div>

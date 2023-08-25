@@ -59,7 +59,7 @@ const HistoryUser = (props:props) => {
 
     if (data)
     {
-        myHistory = data.map(history => {
+        myHistory = data.map((history:any) => {
             return <OneHistoryUser key={history.key} 
             rank={history.rank}
             score={history.score}

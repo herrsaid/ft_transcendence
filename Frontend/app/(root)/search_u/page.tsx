@@ -1,6 +1,6 @@
 "use client"
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 import Cookies from 'js-cookie';
 
@@ -52,15 +52,22 @@ export default function SearchPage()
                 </div>   
         </div>
     }
-
+    
+    if (data.length == 0)
+    {
+        return <div className="container mx-auto px-2 py-10 pb-32">User Not Found</div>
+    }
     if (!data)
-        return null;
+    {
+        return <div className="container mx-auto px-2 py-10 pb-32">User Not Found</div>
+    }
+        
     return(
        <>
        <div>
        <div className="Friends">
             
-       {data.map(user => {
+       {data.map((user:any) => {
         return <OneFriend key={user.id} 
         image={user.profile_img}  
         username={user.username} 
