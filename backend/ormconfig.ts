@@ -1,3 +1,4 @@
+import Groups from "Database/entity/Groups.entity";
 import { Messages } from "Database/entity/Message.entity";
 import { FriendRequest } from "src/entities/friend/friend-request.entity";
 import { User } from "src/entities/user/user.entity";
@@ -12,7 +13,7 @@ const config : PostgresConnectionOptions = {
     port: 5432,
     username: "postgres",
     password: "postgres",
-    entities:[User,FriendRequest, Messages,History,GameUserInfo,GameArchievement],
+    entities:[User,FriendRequest, Messages,History,GameUserInfo,GameArchievement,Groups],
     synchronize: true,
 };
 

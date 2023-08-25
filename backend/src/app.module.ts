@@ -35,6 +35,8 @@ import { GameArchievement, GameUserInfo, History } from './game/PingPong.Entity'
 import { GameInfoManager } from './game/data_manager/GameInfoManager';
 import { ArchievementManager } from './game/data_manager/ArchievementManager';
 import { GroupsController } from './groups/groups.controller';
+import Groups from 'Database/entity/Groups.entity';
+import { GroupsService } from 'Database/services/groups/groups.service';
 
 @Module({
   imports: [GameModule, AuthModule, TypeOrmModule.forRoot(config),
@@ -43,7 +45,7 @@ import { GroupsController } from './groups/groups.controller';
    
     UserModule,
   
-    TypeOrmModule.forFeature([User,FriendRequest,Messages,History,GameUserInfo,GameArchievement]), JwtModule.register({
+    TypeOrmModule.forFeature([User,FriendRequest,Messages,History,GameUserInfo,GameArchievement,Groups]), JwtModule.register({
     global: true,
     secret: jwtConstants.secret,
     signOptions: { expiresIn: '30d' },
@@ -65,7 +67,8 @@ import { GroupsController } from './groups/groups.controller';
     MessageService,
     HistoryManager,
     GameInfoManager,
-    ArchievementManager
+    ArchievementManager,
+    GroupsService
   ],
 })
 export class AppModule {}
