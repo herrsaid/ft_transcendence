@@ -117,19 +117,22 @@ useEffect(()=>
   return (
     
     <html lang="en">
-      <body >
+      <body>
       <Providers>
       <UserContext.Provider value={{user, setUser}}>
         {/* {Cookies.get('access_token') != undefined && <Header/>} */}
         <Header/>
         {/* {Cookies.get('access_token') != undefined && <BottomNav/>} */}
+        <div className='flex'>
+
+        
         <BottomNav/>
         {/* <div className='child'> */}
               {/* {Cookies.get('access_token') != undefined && children} */}
 
       
       {/* </div> */}
-        
+      <main className="flex-1 pl-4">
         {/* <div className='child'> */}
         <GameInfoContext.Provider value={{ GameInfo,SetGameInfo }}>
           <GameDataContext.Provider value={{ GameData,SetGameData}}>
@@ -140,8 +143,8 @@ useEffect(()=>
           </GameDataContext.Provider>
         </GameInfoContext.Provider>
         {/* </div> */}
-          
-            
+          </main>
+        </div>
             
         </UserContext.Provider>
       </Providers>
