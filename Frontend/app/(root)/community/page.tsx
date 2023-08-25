@@ -14,8 +14,8 @@ export default function Community()
     const [active, setActive] = useState('message');
     
     return(
-        <div className="flex flex-col border-3 border-gray-500 h-auto">
-        <div className="flex grow border-2 border-green-500">
+        <div className="flex flex-col h-auto">
+        <div className="flex grow h-[87vh]">
             <reciverContext.Provider value={{reciver, setReciver}}>
             <activeContext.Provider value={{active, setActive}}>
             <div className="w-1/3 max-sm:hidden"> <Chats /> </div>

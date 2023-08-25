@@ -5,10 +5,10 @@ import { GroupsService } from 'Database/services/groups/groups.service';
 
 @Controller('groups')
 export class GroupsController {
-    // constructor(private readonly GroupService:GroupsService){}
+    constructor(private readonly GroupService:GroupsService){}
     @Post('create')
     create(@Body() Group){
-        // this.GroupService.create_group({name:'said'});
+        this.GroupService.create_group(Group);
         return 'created'
     }
 }
