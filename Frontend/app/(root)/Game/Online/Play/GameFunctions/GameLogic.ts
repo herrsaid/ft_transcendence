@@ -3,6 +3,7 @@ import { GameContextType } from '../../../GameContext/GameContext';
 import { player1, player2 } from '../../../Online/Socket/start_game_socket';
 import { ConvertClientData, ConvertServerData } from './ConvertData';
 import { GameDataContextType } from '../GameClass/GameClass';
+import { InGame } from '@/app/(root)/layout';
 
 export function BallAnimation (GameContext:GameContextType,GDC:GameDataContextType)
 {
@@ -79,17 +80,18 @@ export function first_conection(p5:p5,GameContext:GameContextType,GDC:GameDataCo
   if(!GameContext.GameInfo.Access)
   {
     if(document.getElementById('sketch-container') && typeof window !== "undefined")
-      p5.createCanvas(GDC.GameData.GameWidth, GDC.GameData.GameHeight).parent('sketch-container').position((window.innerWidth-GDC.GameData.GameWidth)/2,GDC.GameData.GameHeight/4,'absolute');
-    p5.background(0);
-    p5.fill(255,255,255);
+    p5.createCanvas(GDC.GameData.GameWidth, GDC.GameData.GameHeight).parent('sketch-container').position((window.innerWidth-GDC.GameData.GameWidth)/2,GDC.GameData.GameHeight/4,'absolute');
+  p5.background(0);
+  p5.fill(255,255,255);
     p5.text("please sign-in before playing", GDC.GameData.GameWidth/2 - GDC.GameData.GameWidth/4, GDC.GameData.GameHeight/2 + GDC.GameData.GameHeight/24);
     return false;
   }
   else if(GDC.GameData.first_conection_val === false)
 	{
-		GDC.GameData.first_conection_val = true;
-      if(GameContext.GameInfo.host)
-      {
+    InGame.IG = true;
+    GDC.GameData.first_conection_val = true;
+    if(GameContext.GameInfo.host)
+    {
         player1.emit('first_conection',
         {
           Speed: GameContext.GameInfo.Speed,

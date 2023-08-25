@@ -9,6 +9,7 @@ import { BallAnimation, Racket1Animation, Racket2Animation, first_conection } fr
 import { Ball, LineCenter, Racket1, Racket2 } from './GameFunctions/GameDrawer';
 import { NewValue, initialze_data } from './GameFunctions/Initialise';
 import { GameStatusChecker } from './GameFunctions/GameChecker';
+import { InGame } from "@/app/(root)/layout";
 
 
 const Game = () => {
@@ -71,6 +72,7 @@ const Game = () => {
           LeftNav.style.display = "block";
       }
       test.remove();
+      InGame.IG = false;
       GameDataContext.GameData.access = false;
     };
   }, []);
