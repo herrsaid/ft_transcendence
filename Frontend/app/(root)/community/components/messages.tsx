@@ -39,7 +39,7 @@ export default function Messages()
         setValue('')
     }
     return(
-        <div className="flex flex-col  justify-center relative  border-r border-l h-[100%]">
+        <div className="flex flex-col  justify-center relative  h-[100%]">
             <div>
                 <Profile/>
             </div>

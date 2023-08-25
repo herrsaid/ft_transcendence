@@ -8,6 +8,7 @@ import {
     ModalBody,
     ModalCloseButton,
   } from '@chakra-ui/react'
+import Group from "./group";
 
   
   export default function Groups()
@@ -16,9 +17,33 @@ import {
     const openclose = () => {setIsOpen(!isOpen)};
     return (
         <div className="flex flex-col justify-between h-[100%]">
-            <div>hhhhfhhfhf</div>
-            
-            <div className="self-center">
+            <Group />
+            <Group />
+            <Group />
+            <Group />
+            <Group />
+            <Group />
+            <Group />
+            <Group />
+            <Group />
+            <Group />
+            <Group />
+            <Group />
+            <Group />
+            <Group />
+            <Group />
+            <Group />
+            <Group />
+            <Group />
+            <Group />
+            <Group />
+            <Group />
+            <Group />
+            <Group />
+            <Group />
+            <Group />
+            <Group />
+            <div className="self-center fixed bottom-4">
                 <button className="bg-green-600 rounded-lg p-1" onClick={openclose}>New Group</button>
             </div >
             <Modal isOpen={isOpen} onClose={openclose}>
