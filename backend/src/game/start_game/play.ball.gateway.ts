@@ -111,21 +111,29 @@ export let GameObj: data[] = [];
         GameObj[Room].PlayersInfo.Player1Client.emit('GameEnd',"YOU WIN");
         GameObj[Room].PlayersInfo.Player2Client.emit('GameEnd',"YOU LOSE");
       }
-      //timeout playerI colect target
-      else if(GameObj[Room].PlayersInfo.Result2Val <=  GameObj[Room].PlayersInfo.Result1Val
+      //timeout playerI Win
+      else if(GameObj[Room].PlayersInfo.Result2Val <  GameObj[Room].PlayersInfo.Result1Val
         && GameObj[Room].PlayersInfo.Player1Client !== undefined
         && GameObj[Room].PlayersInfo.Player2Client !== undefined)
       {
         GameObj[Room].PlayersInfo.Player1Client.emit('GameEnd',"YOU LOSE");
         GameObj[Room].PlayersInfo.Player2Client.emit('GameEnd',"YOU WIN");
       }
-      //timeout playerII colect target
-      else if(GameObj[Room].PlayersInfo.Result1Val <=  GameObj[Room].PlayersInfo.Result2Val
+      //timeout playerII Win
+      else if(GameObj[Room].PlayersInfo.Result1Val <  GameObj[Room].PlayersInfo.Result2Val
         && GameObj[Room].PlayersInfo.Player1Client !== undefined
         && GameObj[Room].PlayersInfo.Player2Client !== undefined)
       {
-        GameObj[Room].PlayersInfo.Player2Client.emit('GameEnd',"YOU LOSE");
         GameObj[Room].PlayersInfo.Player1Client.emit('GameEnd',"YOU WIN");
+        GameObj[Room].PlayersInfo.Player2Client.emit('GameEnd',"YOU LOSE");
+      }
+      //timeout playerII  && playerI Win
+      else if(GameObj[Room].PlayersInfo.Result1Val ===  GameObj[Room].PlayersInfo.Result2Val
+        && GameObj[Room].PlayersInfo.Player1Client !== undefined
+        && GameObj[Room].PlayersInfo.Player2Client !== undefined)
+      {
+        GameObj[Room].PlayersInfo.Player1Client.emit('GameEnd',"YOU WIN");
+        GameObj[Room].PlayersInfo.Player2Client.emit('GameEnd',"YOU WIN");
       }
         // player leave Room
       else if(GameObj[Room].PlayersInfo.Player2ID === ''

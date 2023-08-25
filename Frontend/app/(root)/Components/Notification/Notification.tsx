@@ -30,6 +30,7 @@ const JoinPrivateRoom = (GameContext:GameContextType,InviterName:string,router: 
             notification.style.opacity = "0";
             notification.style.display = "none";
           }
+          // router.replace(`/Game/Lobbie`);
           router.replace(`/Game/Online/Play`);
     });
 }
