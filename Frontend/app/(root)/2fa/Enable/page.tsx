@@ -11,7 +11,7 @@ import { Input, useToast } from '@chakra-ui/react';
 export default  function TwoFactor()
 {
     const router = useRouter();
-    const [qrCodeDataUrl, setQRCodeDataUrl] = useState("");
+    const [qrCodeDataUrl, setQRCodeDataUrl] =  useState<string>("");;
     const [code, setcode] = useState("");
     const toast = useToast()
 
@@ -31,7 +31,12 @@ export default  function TwoFactor()
            
             const reader = new FileReader();
             reader.onloadend = () => {
-              setQRCodeDataUrl(reader.result);
+              if (typeof reader.result === 'string') {
+                setQRCodeDataUrl(reader.result);
+              } else {
+                console.error('Unexpected result type from FileReader.');
+              }
+              // setQRCodeDataUrl(reader.result);
             };
             reader.readAsDataURL(blob);
           })
