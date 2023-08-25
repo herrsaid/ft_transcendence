@@ -1,6 +1,10 @@
+'use client'
 
+import {Dispatch,SetStateAction, createContext, useContext } from "react";
 
-export class GameClass
+export type GameDataSetterType = Dispatch<SetStateAction<GameDataType>>;
+
+export class GameDataType
 {
     public GameWidth: number;
     public GameHeight: number;
@@ -52,3 +56,24 @@ export class GameClass
         this.Result2Val = 0;
     }
 }
+
+export interface GameDataContextType {
+    GameData: GameDataType;
+    SetGameData: GameDataSetterType;
+   }
+  
+   const obj: GameDataContextType = {
+    GameData :new GameDataType,
+    SetGameData: () => {}
+  };
+  
+  
+  const GameDataContext = createContext<GameDataContextType>(obj);
+  export function GetGameDataContext() {
+    const context = useContext(GameDataContext);
+    if (!context) {
+      throw new Error('GetGameInfoContext must be used within a GameInfoProvider');
+    }
+    return context;
+  }
+  export default GameDataContext;

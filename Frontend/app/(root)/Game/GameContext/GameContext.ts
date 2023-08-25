@@ -3,21 +3,38 @@
 import {Dispatch,SetStateAction, createContext, useContext } from "react";
 
 export type GameInfoStateType = Dispatch<SetStateAction<GameInfoType>>;
-export interface GameInfoType
+export class GameInfoType
 {
-  
-  Points: number,
-  Speed: number,
-  pause_game: number,
-  RoomMood: boolean ,
-  other_tools: number,
-  host: boolean,
-  Online: number,
-  Access: number,
-  myusername: string,
-  enemmyusername: string,
-  myimage: string,
-  enemmyimage: string,
+  public Points: number;
+  public Speed: number;
+  public pause_game: number;
+  public RoomMood: boolean ;
+  public other_tools: number;
+  public host: boolean;
+  public Online: number;
+  public Access: number;
+  public myusername: string;
+  public enemmyusername: string;
+  public myimage: string;
+  public enemmyimage: string;
+
+  constructor()
+  {
+    this.Points = 10;
+    this.Speed = 4;
+    this.pause_game = 0;
+    this.RoomMood = true;
+    this.other_tools = 0;
+    this.host = false;
+    this.Online = 1;
+    this.Access =0;
+    this.myusername = "Player I";
+    this.enemmyusername = "Player II";
+    this.myimage = "/2.jpg";
+    this.enemmyimage = "/3.jpg";
+  }
+
+
 }
  export interface GameContextType {
   GameInfo: GameInfoType;
@@ -25,20 +42,7 @@ export interface GameInfoType
  }
 
 const game: GameContextType = {
-  GameInfo :{
-    Points: 10,
-    Speed: 4,
-    pause_game: 0,
-    RoomMood: true,
-    other_tools: 0,
-    host: false,
-    Online: 1,
-    Access:0,
-    myusername: "Player I",
-    enemmyusername: "Player II",
-    myimage: "/2.jpg",
-    enemmyimage: "/3.jpg",
-  },
+  GameInfo : new GameInfoType(),
   SetGameInfo: () => {}
 };
 

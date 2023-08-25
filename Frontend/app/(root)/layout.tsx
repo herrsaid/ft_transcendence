@@ -8,12 +8,12 @@ import { Providers } from "./providers";
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import UserContext from './UserContext';
-import GameInfoContext,{GameInfoType,GameInfoStateType,GetGameInfoContext} from './Game/GameContext/GameContext';
+import GameInfoContext,{GameInfoType} from './Game/GameContext/GameContext';
 import useSWR from "swr"
-import StreamInfoContext,{StreamInfoType,StreamInfoStateType,GetStreamInfoContext} from './Stream/StreamContext/StreamContext';
+import StreamInfoContext,{StreamInfoType} from './Stream/StreamContext/StreamContext';
 import { socket } from './Game/Online/Socket/auto_match_socket';
-import { useToast } from '@chakra-ui/react';
 import Notification from './Components/Notification/Notification';
+import GameDataContext,{ GameDataType } from './Game/Online/Play/GameClass/GameClass';
 
 const metadata = {
   title: 'PingPong',
@@ -29,21 +29,8 @@ export default function RootLayout({
   const [user, setUser] = useState({});
   const [InviterName,SetInviterName] = useState("");
   const [access,Setaccess] = useState(false);
-  const [GameInfo,SetGameInfo] = useState<GameInfoType>(
-  {
-      Points: 10,
-      Speed: 4,
-      pause_game: 0,
-      RoomMood: true,
-      other_tools: 0,
-      host: false,
-      Online: 1,
-      Access:0,
-      myusername: "Player I",
-      enemmyusername: "Player II",
-      myimage: "/2.jpg",
-      enemmyimage: "/3.jpg",
-  });
+  const [GameInfo,SetGameInfo] = useState<GameInfoType>( new GameInfoType());
+  const [GameData,SetGameData] = useState<GameDataType>(new GameDataType());
   const [StreamInfo,SetStreamInfo] = useState<StreamInfoType>(
   {
     Access:0,
@@ -145,10 +132,12 @@ useEffect(()=>
         
         {/* <div className='child'> */}
         <GameInfoContext.Provider value={{ GameInfo,SetGameInfo }}>
-          <StreamInfoContext.Provider value={{ StreamInfo,SetStreamInfo }}>
-            <Notification InviterName={InviterName} access={access}/>
-            {children}
-          </StreamInfoContext.Provider>
+          <GameDataContext.Provider value={{ GameData,SetGameData}}>
+            <StreamInfoContext.Provider value={{ StreamInfo,SetStreamInfo }}>
+              <Notification InviterName={InviterName} access={access}/>
+              {children}
+            </StreamInfoContext.Provider>
+          </GameDataContext.Provider>
         </GameInfoContext.Provider>
         {/* </div> */}
           
