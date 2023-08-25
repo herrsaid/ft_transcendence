@@ -1,25 +1,25 @@
 import p5 from 'p5';
-import { GameData } from '../Game';
+import { GameDataContextType } from '../GameClass/GameClass';
 
-export function Ball(p5: p5, x: number, y: number, w: number, h: number)
+export function Ball(p5: p5,GDC:GameDataContextType)
 {
   p5.fill(255,255,255);
-  p5.ellipse(x, y, w, h);
+  p5.ellipse(GDC.GameData.BallXpos, GDC.GameData.BallYpos, GDC.GameData.BallWidth, GDC.GameData.BallHeight);
 }
-export function LineCenter(p5: p5)
+export function LineCenter(p5: p5,GDC:GameDataContextType)
 {
   p5.fill('yellow');
-  for(let a=0;a<GameData.GameWidth/2;a+=35)
-    p5.rect(GameData.GameWidth/2, a, 5, 30,20);
+  for(let a=0;a<GDC.GameData.GameWidth/2;a+=35)
+    p5.rect(GDC.GameData.GameWidth/2, a, 5, 30,20);
 }
-export function Racket1(p5: p5, x: number, y: number, w: number, h: number)
+export function Racket1(p5: p5,GDC:GameDataContextType)
 {
   p5.fill('blue');
-  p5.rect(x, y, w, h,10);
+  p5.rect(GDC.GameData.Racket1Xpos,GDC.GameData.Racket1Ypos,GDC.GameData.Racket1Width,GDC.GameData.Racket1Height,10);
 }
 
-export function Racket2(p5: p5, x: number, y: number, w: number, h: number)
+export function Racket2(p5: p5,GDC:GameDataContextType)
 {
   p5.fill('red');
-  p5.rect(x, y, w, h,10);
+  p5.rect(GDC.GameData.Racket2Xpos,GDC.GameData.Racket2Ypos,GDC.GameData.Racket2Width,GDC.GameData.Racket2Height,10);
 }

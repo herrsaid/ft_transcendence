@@ -1,52 +1,51 @@
 'use client'
 
-import { useEffect,useContext,useState } from "react";
+import { useEffect,useState } from "react";
 import p5 from "p5";
 import './Game.css';
-import { GetGameInfoContext, GameContextType } from '../../GameContext/GameContext';
-import UserContext from "@/app/(root)/UserContext";
-import { GameDataType } from './GameClass/GameClass';
+import { GetGameInfoContext} from '../../GameContext/GameContext';
+import { GameDataType, GetGameDataContext } from './GameClass/GameClass';
 import { BallAnimation, Racket1Animation, Racket2Animation, first_conection } from './GameFunctions/GameLogic';
 import { Ball, LineCenter, Racket1, Racket2 } from './GameFunctions/GameDrawer';
 import { NewValue, initialze_data } from './GameFunctions/Initialise';
 import { GameStatusChecker } from './GameFunctions/GameChecker';
 
 
-export let GameData:GameDataType;
-
 const Game = () => {
-  const contexUser = useContext(UserContext);
   const GameContext = GetGameInfoContext();
+  const GameDataContext = GetGameDataContext();
   const [reslt1, setReslt1] = useState(0);
   const [reslt2, setReslt2] = useState(0);
   useEffect(() => {
-    GameData = new GameDataType();
+    GameDataContext.SetGameData(new GameDataType());
     console.log(GameContext.GameInfo.host,GameContext.GameInfo.Speed,GameContext.GameInfo.Points);
-    initialze_data(GameContext);
+    initialze_data(GameContext,GameDataContext);
     const sketch = (p5: p5) => {
       p5.setup = () => {
       };
       
       p5.draw = () => {
-        NewValue(p5);      
-        if(!first_conection(p5,GameContext))
+        NewValue(p5,GameDataContext);      
+        if(!first_conection(p5,GameContext,GameDataContext))
           return ;
-        if(GameStatusChecker(p5,GameContext))
+        if(GameStatusChecker(p5,GameContext,GameDataContext))
         {
           if(document.getElementById('sketch-container') && typeof window !== "undefined")
-            p5.createCanvas(GameData.GameWidth, GameData.GameHeight).parent('sketch-container').position((window.innerWidth-GameData.GameWidth)/2,GameData.GameHeight/4,'absolute');
+            p5.createCanvas(GameDataContext.GameData.GameWidth, GameDataContext.GameData.GameHeight)
+              .parent('sketch-container')
+              .position((window.innerWidth-GameDataContext.GameData.GameWidth)/2,GameDataContext.GameData.GameHeight/4,'absolute');
           p5.background(25);
-          BallAnimation(GameContext);
+          BallAnimation(GameContext,GameDataContext);
           if (GameContext.GameInfo.host)
-            Racket1Animation(p5);
+            Racket1Animation(p5,GameDataContext);
           else
-            Racket2Animation(p5);
-          LineCenter(p5);
-          setReslt1(GameData.Result1Val);
-          setReslt2(GameData.Result2Val);
-          Ball(p5,GameData.BallXpos,GameData.BallYpos,GameData.BallWidth,GameData.BallHeight);
-          Racket1(p5,GameData.Racket1Xpos,GameData.Racket1Ypos,GameData.Racket1Width,GameData.Racket1Height);
-          Racket2(p5,GameData.Racket2Xpos,GameData.Racket2Ypos,GameData.Racket2Width,GameData.Racket2Height);
+            Racket2Animation(p5,GameDataContext);
+          LineCenter(p5,GameDataContext);
+          setReslt1(GameDataContext.GameData.Result1Val);
+          setReslt2(GameDataContext.GameData.Result2Val);
+          Ball(p5,GameDataContext);
+          Racket1(p5,GameDataContext);
+          Racket2(p5,GameDataContext);
         }
         else
           return;
@@ -60,7 +59,7 @@ const Game = () => {
     return()=>
     {
       test.remove();
-      GameData.access = false;
+      GameDataContext.GameData.access = false;
     };
   }, []);
 

@@ -16,8 +16,7 @@
 import "./Settings.css"
 import { useEffect,useContext } from "react";
 import UserContext from "@/app/(root)/UserContext";
-import {  useToast } from '@chakra-ui/react'
-import {GameInfoType,GetGameInfoContext} from '../../../GameContext/GameContext';
+import {GameInfoType} from '../../../GameContext/GameContext';
 import { player1,player2 } from "../../../Online/Socket/start_game_socket";
 import { socket } from '../../../Online/Socket/auto_match_socket'
 
@@ -30,8 +29,6 @@ export let access:boolean = false;
 const PingPongSettings = ({ router }: any) => 
 {
     const contexUser = useContext(UserContext);
-    const toast = useToast();
-
     useEffect(() => {
         console.log('user re-enter createroom page');
         player1.emit('conection_closed');
