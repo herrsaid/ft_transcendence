@@ -73,6 +73,24 @@ export default function Stream() {
     };
 
   },[]);
+  useEffect(() =>
+  {
+    let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
+    let LeftNav:HTMLElement| null = document.getElementById('LeftNav');
+    if(BottomNav && LeftNav)
+    {
+        BottomNav.style.display = "block";
+        LeftNav.style.display = "none";
+    }
+    return()=>
+    {
+        if(BottomNav && LeftNav)
+        {
+            BottomNav.style.display = "none";
+            LeftNav.style.display = "block";
+        }
+    };
+  });
     return (
       <div className="container mx-auto px-2 py-[250px] text-center items-center ">
         <div className="mx-auto">

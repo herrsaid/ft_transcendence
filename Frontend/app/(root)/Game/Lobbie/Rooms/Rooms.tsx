@@ -121,17 +121,30 @@ export default function Rooms() {
       newGameInfo.myimage=process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + contexUser.user.profile_img;
     else
       newGameInfo.myimage=contexUser.user.profile_img;
-  },[]);
-  useEffect(()=>
-  {
-    let interval: NodeJS.Timer  = setInterval(()=>{GetNumberOfRooms(router,GameContext);},1000);
-    access = true;
-    return ()=> 
+    },[]);
+    useEffect(()=>
     {
-      access = false;
-      clearInterval(interval);
-    };
-  });
+      let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
+      let LeftNav:HTMLElement| null = document.getElementById('LeftNav');
+      let interval: NodeJS.Timer  = setInterval(()=>{GetNumberOfRooms(router,GameContext);},1000);
+      
+      access = true;
+      if(BottomNav && LeftNav)
+      {
+        BottomNav.style.display = "block";
+        LeftNav.style.display = "none";
+      }
+      return ()=> 
+      {
+        if(BottomNav && LeftNav)
+        {
+          BottomNav.style.display = "none";
+          LeftNav.style.display = "block";
+        }
+        access = false;
+        clearInterval(interval);
+      };
+    });
     return (
       <div className="container mx-auto px-2 py-[250px] text-center items-center ">
         <div className="mx-auto">

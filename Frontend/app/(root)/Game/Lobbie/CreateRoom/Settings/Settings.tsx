@@ -51,6 +51,26 @@ const PingPongSettings = ({ router }: any) =>
           access = true;
           return()=>{console.log("i'm leaving");access = false;};
       }, []);
+      useEffect(() =>
+      {
+        let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
+        let LeftNav:HTMLElement| null = document.getElementById('LeftNav');
+        if(BottomNav && LeftNav)
+        {
+            BottomNav.style.display = "block";
+            LeftNav.style.display = "none";
+        }
+        return()=>
+        {
+            if(BottomNav && LeftNav)
+            {
+                BottomNav.style.display = "none";
+                LeftNav.style.display = "block";
+            }
+            console.log("i'm leaving");
+            access = false;
+        };
+    });
     if(!contexUser.user.username || !contexUser.user.profile_img)
     {
         return(

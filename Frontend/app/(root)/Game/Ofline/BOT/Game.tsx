@@ -72,6 +72,24 @@ const Game = () => {
       test.remove();
     };
   }, []);
+  useEffect(() =>
+  {
+    let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
+    let LeftNav:HTMLElement| null = document.getElementById('LeftNav');
+    if(BottomNav && LeftNav)
+    {
+        BottomNav.style.display = "block";
+        LeftNav.style.display = "none";
+    }
+    return()=>
+    {
+        if(BottomNav && LeftNav)
+        {
+            BottomNav.style.display = "none";
+            LeftNav.style.display = "block";
+        }
+    };
+});
 
   return (
     <div className="relative flex mx-auto my-auto w-[100%] h-[calc(50vw+12.5vw)] lg:h-[calc(540px+12.5vw)]">

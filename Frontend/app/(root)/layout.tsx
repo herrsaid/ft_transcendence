@@ -68,6 +68,14 @@ export default function RootLayout({
 const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/me`,
 fetchData
 );
+
+useEffect(()=>
+{
+  let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
+  
+  if(BottomNav)
+    BottomNav.style.display = "none";
+},[]);
 useEffect(()=>
 {
   let notification:HTMLElement| null = document.getElementById('notification');
@@ -132,7 +140,7 @@ useEffect(()=>
 
       
       {/* </div> */}
-      <main className="flex-1 pl-4">
+      <main className="flex-1">
         {/* <div className='child'> */}
         <GameInfoContext.Provider value={{ GameInfo,SetGameInfo }}>
           <GameDataContext.Provider value={{ GameData,SetGameData}}>
