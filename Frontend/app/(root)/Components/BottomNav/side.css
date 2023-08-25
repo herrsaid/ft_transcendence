@@ -1,0 +1,24 @@
+.sidebar {
+    width: 10px;
+    height: 320px;
+    transition: width 0.2s;
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+    background-color: transparent;
+  }
+  .sidebar-open {
+    width: 60px;
+    background-color: black/25;
+  }
+
+  @keyframes slideInFromLeft {
+    0% {
+        scale: 1.2
+    }
+    100% {
+        scale: 1;
+    }
+  }
+  .buttona{
+    animation: slideInFromLeft 1s ease-in-out infinite; 
+}
