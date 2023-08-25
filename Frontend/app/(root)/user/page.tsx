@@ -20,7 +20,9 @@ export default  function User()
 
 
     if (usercontext.user.username == username)
+    {
         router.back()
+    }
     const fetchUserData = async (url:string) => {
         const res = await fetch(url, {
             method: 'GET',
@@ -42,9 +44,6 @@ export default  function User()
     );
 
 
-    console.log(data)
-    if (data == undefined)
-        router.replace('/profile')
     if (isLoading)
     {
         return <div className="container mx-auto px-2 py-10">
@@ -60,7 +59,7 @@ export default  function User()
     }
 
     if (!data)
-        return null;
+        return <div className="container mx-auto px-2 py-10 pb-32">User Not Found</div>;
 
 
     return(

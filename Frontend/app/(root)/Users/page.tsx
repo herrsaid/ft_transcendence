@@ -1,13 +1,12 @@
 'use client'
-import OneFriend from "./OneFriend";
 import Cookies from 'js-cookie';
 import { useRouter } from "next/navigation";
 import useSWR from "swr"
+import OneFriend from '../profile/components/OneFriend';
+import SearchInput from '../Components/SearchInput/SearchInput';
 
-
-        
-const Friends = () => {
-    
+export default  function Users()
+{
     const router = useRouter();
     let myFriends;
     
@@ -31,48 +30,36 @@ const Friends = () => {
     fetchFriends
     );
 
-    // if (!data.length)
-    // {
-    //     return (
-    //         <main className="container mx-auto py-8 px-4">
-    //     <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4">
-        
-                
-    //     <div className="live-game-card bg-gradient-to-br from-indigo-600 to-indigo-800 rounded-lg shadow-md p-6 flex flex-col justify-between">
-        
-    //     <p className="text-white">You Dont have Any Friends!</p>
-    //   </div>
-        
-    //     </div>
-    //   </main>
-    //     )
-        
-    // }
+
 
     if (data)
     {
         myFriends = data.map((friend:any) => {
-            return <OneFriend key={friend.id} 
+            return <div  key={friend.id} className='mb-2'><OneFriend 
             image={friend.profile_img}  
             username={friend.username} 
             status={friend.status}
             id={friend.id}
             avatar_updated={friend.is_profile_img_updated}
             />
+            </div>
+            
         })
     }
+    return(
 
-    
-    return (
+        <div className="stats-bg max-w-md w-full p-6 rounded-lg shadow-md">
+        <h1 className="text-2xl font-semibold mb-4">Find Friends</h1>
+        <div className=' mb-6'>
+        <SearchInput/>
+        </div>
         
-        <main className="container mx-auto py-8 px-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
 
-        {myFriends ? myFriends : "No friend!"}
+        {/* <ul className="divide-y divide-gray-300"> */}
             
-            </div>
-      </main>
-        
+            {myFriends ? myFriends : "No friend!"}   
+           
+        {/* </ul> */}
+    </div>
     );
-};
-export default Friends;
+}
