@@ -14,7 +14,7 @@ export default function Profile(props:any)
     const handleclick = () =>{active.setActive('chats')}
     const info_click = () => {active.setActive('info')}
     return (
-        <div className="container flex h-20 top-0 sticky bg-sky-900 justify-between rounded-xl">
+        <div className="container flex h-20 top-0 sticky justify-between rounded-xl">
             <div className="flex">
                 <div className='sm:hidden mt-3 p-3 rounded-full'>
                     <button onClick={handleclick}><IoMdArrowRoundBack /></button>

@@ -4,7 +4,7 @@
   .profile-img {
     width: 40px;
     height: 40px;
-    border: 2px solid #3182ce;
+    border: 2px solid rgb(168 85 247);
     border-radius: 50%;
     cursor: pointer;
   }
@@ -13,7 +13,7 @@
     position: absolute;
     top: 3rem;
     right: 1rem;
-    width: 100px;
+    width: 220px;
     background: linear-gradient(-45deg, #C56CDD,#18184a);
     background-size: 400% 400%;
     font-size: 16px;
@@ -72,9 +72,21 @@
     padding: 8px;
     transition: 0.4s;
     border-radius: 8px;
+    width: 200px;
   }
 
   .link_drop:hover{
     background-color: var(--back-color);
 
   }
+
+
+  .h1_link{
+  background-color: var(--back-color);
+  margin-top:8px;
+}
+
+.h1_link:hover{
+  background: linear-gradient(-45deg, #C56CDD,#18184a);
+  background-size: 400% 400%;
+}

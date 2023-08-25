@@ -48,11 +48,11 @@ export default function BottomNav()
         <ul>
           
 
-          <Link href='/' className=" mt-2 rounded-full cursor-pointer w-[50px] h-[50px] flex items-center justify-center bg-gradient-to-br from-purple-600 to-indigo-800"><IoHome size={30} /></Link>
-           <Link href='/profile' className=" mt-2 rounded-full cursor-pointer w-[50px] h-[50px] flex items-center justify-center bg-gradient-to-br from-purple-600 to-indigo-800"><CgProfile size={30}/></Link>
-            <Link href='/Game/Lobbie' className="mt-2 rounded-full cursor-pointer w-[50px] h-[50px] flex items-center justify-center bg-gradient-to-br from-purple-600 to-indigo-800"><GiPingPongBat size={30}/></Link>
-            <Link href='/community' className="mt-2 rounded-full cursor-pointer w-[50px] h-[50px] flex items-center justify-center bg-gradient-to-br from-purple-600 to-indigo-800"> <BsFillChatFill size={30}/> </Link>
-            <Link href='/profile/Setting' className="mt-2 rounded-full cursor-pointer w-[50px] h-[50px] flex items-center justify-center bg-gradient-to-br from-purple-600 to-indigo-800"><IoSettingsSharp size={30} /></Link>
+          <Link href='/' className="forhover mt-2 rounded-full cursor-pointer w-[50px] h-[50px] flex items-center justify-center bg-gradient-to-br from-purple-600 to-indigo-800"><IoHome size={30} /></Link>
+           <Link href='/profile' className="forhover mt-2 rounded-full cursor-pointer w-[50px] h-[50px] flex items-center justify-center bg-gradient-to-br from-purple-600 to-indigo-800"><CgProfile size={30}/></Link>
+            <Link href='/Game/Lobbie' className="forhover mt-2 rounded-full cursor-pointer w-[50px] h-[50px] flex items-center justify-center bg-gradient-to-br from-purple-600 to-indigo-800"><GiPingPongBat size={30}/></Link>
+            <Link href='/community' className="forhover mt-2 rounded-full cursor-pointer w-[50px] h-[50px] flex items-center justify-center bg-gradient-to-br from-purple-600 to-indigo-800"> <BsFillChatFill size={30}/> </Link>
+            <Link href='/profile/Setting' className="forhover mt-2 rounded-full cursor-pointer w-[50px] h-[50px] flex items-center justify-center bg-gradient-to-br from-purple-600 to-indigo-800"><IoSettingsSharp size={30} /></Link>
         </ul>
         
       </nav>
