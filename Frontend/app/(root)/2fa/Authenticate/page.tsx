@@ -36,6 +36,7 @@ export default  function TwoFactor()
         toast({
           title: 'Code Invalid.',
           description: "Wrong authentication code.",
+          position: 'top-right',
           status: 'error',
           duration: 2000,
           isClosable: true,
@@ -46,10 +47,11 @@ export default  function TwoFactor()
       {
         setcode("")
         toast({
-          title: '2FA Enabed in this Account.',
-          description: "We've Enabled 2FA in Your account.",
+          title: 'Welcome Back.',
+          description: "Welcome back to Your account.",
+          position: 'top-right',
           status: 'info',
-          duration: 6000,
+          duration: 3000,
           isClosable: true,
         })
         router.replace("/profile");

@@ -60,8 +60,8 @@ const History = () => {
     }
    
 
-    
-    if (!data.length)
+    try{
+        if (!data.length)
     {
         return (
             <main className="container mx-auto py-8 px-4">
@@ -82,6 +82,12 @@ const History = () => {
         )
         
     }
+    }
+    catch{
+        router.replace("/login")
+    }
+    
+    
 
 
     return (

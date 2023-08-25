@@ -18,24 +18,24 @@ export default  function Header()
 
     const logout = async ()  => {
    
-        
+      document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
 
-        
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/log-out`, {
-            method: 'POST',
-            headers: {
-            Authorization: `Bearer ${Cookies.get('access_token')}`,
-                },
-        });
+      router.replace("/login");
+    //     const res = await fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/log-out`, {
+    //         method: 'POST',
+    //         headers: {
+    //         Authorization: `Bearer ${Cookies.get('access_token')}`,
+    //             },
+    //     });
 
-        console.log(res.status)
-        if (res.status == 401)
-            router.replace("/login")
-        else if (res.status == 200)
-            router.replace("/login")
+    //     console.log(res.status)
+    //     if (res.status == 401)
+    //         router.replace("/login")
+    //     else if (res.status == 200)
+    //         router.replace("/login")
              
-    if (!res.ok)
-        throw new Error("failed to fetch users");
+    // if (!res.ok)
+    //     throw new Error("failed to fetch users");
         };
 
 
