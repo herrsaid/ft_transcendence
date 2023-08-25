@@ -1,3 +1,5 @@
+'use client'
+
 import { GetOtherTools_Invite } from "../SettingsFuntions/OtherTools_Invite";
 
 const PauseGame_RoomMood = ({ router }: any) => 

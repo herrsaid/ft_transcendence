@@ -35,8 +35,22 @@ export class UserInfo {
   @IsNotEmpty()
   RoomNumber: number;
   @IsString()
+  @IsNotEmpty()
   Username: string | null;
   @IsString()
+  @IsNotEmpty()
+  myimage: string | null;
+}
+
+export class UserInfo1 {
+  @IsString()
+  @IsNotEmpty()
+  target: string;
+  @IsString()
+  @IsNotEmpty()
+  Username: string | null;
+  @IsString()
+  @IsNotEmpty()
   myimage: string | null;
 }
 

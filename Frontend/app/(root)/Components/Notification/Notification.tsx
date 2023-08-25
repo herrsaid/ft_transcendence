@@ -3,13 +3,13 @@ import { GameContextType, GameInfoType, GetGameInfoContext } from "../../Game/Ga
 import { socket } from "../../Game/Online/Socket/auto_match_socket";
 import { useRouter } from "next/navigation";
 
-const JoinPrivateRoom = (GameContext:GameContextType,RoomINdex:number,router: AppRouterInstance,access:boolean)=>
+const JoinPrivateRoom = (GameContext:GameContextType,InviterName:string,router: AppRouterInstance,access:boolean)=>
 {
   let notification:HTMLElement| null = document.getElementById('notification');
     let newGameInfo:GameInfoType = GameContext.GameInfo;
     let obj = 
     {
-        RoomNumber: RoomINdex,
+        target: InviterName,
         Username: GameContext.GameInfo.myusername,
         myimage: GameContext.GameInfo.myimage,
     };
@@ -34,7 +34,7 @@ const JoinPrivateRoom = (GameContext:GameContextType,RoomINdex:number,router: Ap
     });
 }
 
-const Notification = ({RoomINdex,access}:{RoomINdex:number,access:boolean}) => 
+const Notification = ({InviterName,access}:{InviterName:string,access:boolean}) => 
 {
     const router: AppRouterInstance = useRouter();
     const GameContext = GetGameInfoContext();
@@ -46,7 +46,7 @@ const Notification = ({RoomINdex,access}:{RoomINdex:number,access:boolean}) =>
           onClick={()=>
           {
             if(access)
-              JoinPrivateRoom(GameContext,RoomINdex,router,access)
+              JoinPrivateRoom(GameContext,InviterName,router,access)
           }} >
           <img className='relative w-[20px]  h-[20px] flex  mt-[10px] ml-[10px]' src="/info.png">
           </img>

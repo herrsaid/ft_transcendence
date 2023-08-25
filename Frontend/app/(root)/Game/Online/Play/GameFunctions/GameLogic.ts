@@ -78,7 +78,7 @@ export function first_conection(p5:p5,GameContext:GameContextType)
 {
   if(!GameContext.GameInfo.Access)
   {
-    if(document.getElementById('sketch-container'))
+    if(document.getElementById('sketch-container') && typeof window !== "undefined")
       p5.createCanvas(GameData.GameWidth, GameData.GameHeight).parent('sketch-container').position((window.innerWidth-GameData.GameWidth)/2,GameData.GameHeight/4,'absolute');
     p5.background(0);
     p5.fill(255,255,255);

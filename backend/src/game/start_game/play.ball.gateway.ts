@@ -190,8 +190,9 @@ export let GameObj: data[] = [];
             let gamespeed = GameObj[a].RoomInfo.GameSpeed;
             for(let loop=0;loop<gamespeed;loop++)
               GameObj[a].Logic.Head(GameObj[a]);
+            // for calc time of match default is 1m:30s
               GameObj[a].RoomInfo.TimeOut -= 16;
-              console.log("TimeOut: " + GameObj[a].RoomInfo.TimeOut);
+              // console.log("TimeOut: " + GameObj[a].RoomInfo.TimeOut);
             //call function that send room data to all players on this room
             this.send_data_to_players(a)
             //call function that send room data to all spectators on this room

@@ -1,3 +1,5 @@
+'use client'
+
 import { GetPauseGame_RoomMood } from "../SettingsFuntions/PauseGame_RoomMood";
 
 

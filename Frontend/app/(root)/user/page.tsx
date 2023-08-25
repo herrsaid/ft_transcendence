@@ -66,7 +66,7 @@ export default  function User()
     return(
        
 
-                <div className="container mx-auto px-2 py-10">
+                <div className="container mx-auto px-2 py-10 pb-32">
 
                     <ProfileHeader  avatar={data.profile_img} username={data.username} email={data.email} rank={data.rank}
                 avatar_updated={data.is_profile_img_updated} id={data.id} status={data.status} isIngame={data.isInGame}/>

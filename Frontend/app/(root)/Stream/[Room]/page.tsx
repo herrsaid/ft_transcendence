@@ -1,3 +1,5 @@
+'use client'
+
 import Stream from './Stream';
 import './Stream.css'
 const page = () => 

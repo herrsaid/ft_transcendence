@@ -1,12 +1,14 @@
+import { RoomClass } from "../auto_match_class/RoomClass";
 import { Rooms } from "../lobbie.gateway";
 
 
 
-export function RequestRefusedLogic(RoomIndex:number): void {
+export function RequestRefusedLogic(target:string): void {
     console.log("RequestRefused");
-    if(Rooms[RoomIndex] && Rooms[RoomIndex].players[0])
+    let Room:RoomClass = Rooms.find(elem => elem.players.find(elem=> elem.Player === target) !== undefined);
+    if(Room && Room.players[0])
     {
-      Rooms[RoomIndex].players[0].PlayerSocket.emit('DisplayNotification','Request Refused');
-      Rooms[RoomIndex].players[0].PlayerSocket.emit("RequestRefused");
+      Room.players[0].PlayerSocket.emit('DisplayNotification','Request Refused');
+      Room.players[0].PlayerSocket.emit("RequestRefused");
     }
   }

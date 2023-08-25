@@ -4,6 +4,8 @@ import { GameData } from '../Game';
 
 export function NewValue(p5:p5)
 {
+  if (typeof window === "undefined")
+    return;
   let canvas:p5.Element| null = null;
   let w:number = Math.floor(window.innerWidth) ;
   let h:number = Math.floor(window.innerWidth/2);
