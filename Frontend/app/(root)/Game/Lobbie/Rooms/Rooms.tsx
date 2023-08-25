@@ -98,6 +98,14 @@ export default function Rooms() {
   const router: AppRouterInstance = useRouter();
   useEffect(()=>
   {
+    let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
+    let LeftNav:HTMLElement| null = document.getElementById('LeftNav');
+
+    if(BottomNav && LeftNav)
+    {
+      BottomNav.style.display = "block";
+      LeftNav.style.display = "none";
+    }
     console.log('user re-enter rooms page');
     player1.emit('conection_closed');
     player2.emit('conection_closed');
@@ -121,30 +129,25 @@ export default function Rooms() {
       newGameInfo.myimage=process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + contexUser.user.profile_img;
     else
       newGameInfo.myimage=contexUser.user.profile_img;
-    },[]);
-    useEffect(()=>
+    return ()=> 
     {
-      let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
-      let LeftNav:HTMLElement| null = document.getElementById('LeftNav');
-      let interval: NodeJS.Timer  = setInterval(()=>{GetNumberOfRooms(router,GameContext);},1000);
-      
-      access = true;
       if(BottomNav && LeftNav)
       {
-        BottomNav.style.display = "block";
-        LeftNav.style.display = "none";
+        BottomNav.style.display = "none";
+        LeftNav.style.display = "block";
       }
-      return ()=> 
-      {
-        if(BottomNav && LeftNav)
-        {
-          BottomNav.style.display = "none";
-          LeftNav.style.display = "block";
-        }
-        access = false;
-        clearInterval(interval);
-      };
-    });
+    };
+  },[]);
+  useEffect(()=>
+  {
+    let interval: NodeJS.Timer  = setInterval(()=>{GetNumberOfRooms(router,GameContext);},1000); 
+    access = true;
+    return ()=> 
+    {
+      access = false;
+      clearInterval(interval);
+    };
+  });
     return (
       <div className="container mx-auto px-2 py-[250px] text-center items-center ">
         <div className="mx-auto">

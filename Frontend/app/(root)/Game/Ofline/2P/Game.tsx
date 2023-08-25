@@ -27,7 +27,15 @@ const Game = () => {
   const GameContext = GetGameInfoContext();
   const [reslt1, setReslt1] = useState(0);
   const [reslt2, setReslt2] = useState(0);
-  useEffect(() => {
+  useEffect(() =>
+  {
+    let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
+    let LeftNav:HTMLElement| null = document.getElementById('LeftNav');
+    if(BottomNav && LeftNav)
+    {
+        BottomNav.style.display = "block";
+        LeftNav.style.display = "none";
+    }
     GameData = new GameClass();
     const sketch = (p5: p5) => {
       p5.setup = () => {
@@ -66,28 +74,15 @@ const Game = () => {
     const test:p5 = new p5(sketch);
     return()=>
     {
+      if(BottomNav && LeftNav)
+      {
+          BottomNav.style.display = "none";
+          LeftNav.style.display = "block";
+      }
       test.remove();
     };
   }, []);
-  useEffect(() =>
-      {
-        let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
-        let LeftNav:HTMLElement| null = document.getElementById('LeftNav');
-        if(BottomNav && LeftNav)
-        {
-            BottomNav.style.display = "block";
-            LeftNav.style.display = "none";
-        }
-        return()=>
-        {
-            if(BottomNav && LeftNav)
-            {
-                BottomNav.style.display = "none";
-                LeftNav.style.display = "block";
-            }
-        };
-    });
-
+  
   return (
     <div className="relative flex mx-auto my-auto w-[100%] h-[100vh]">
       <div className=" relative flex h-[12.5vw] w-[50%] lg:h-[125px] lg:w-[500px] mx-auto">

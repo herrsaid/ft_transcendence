@@ -71,13 +71,6 @@ fetchData
 
 useEffect(()=>
 {
-  let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
-  
-  if(BottomNav)
-    BottomNav.style.display = "none";
-},[]);
-useEffect(()=>
-{
   let notification:HTMLElement| null = document.getElementById('notification');
   let content:HTMLElement| null = document.getElementById('content');
   socket.emit("Online",GameInfo.myusername);

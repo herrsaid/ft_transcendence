@@ -30,6 +30,13 @@ const PingPongSettings = ({ router }: any) =>
 {
     const contexUser = useContext(UserContext);
     useEffect(() => {
+        let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
+        let LeftNav:HTMLElement| null = document.getElementById('LeftNav');
+        if(BottomNav && LeftNav)
+        {
+            BottomNav.style.display = "block";
+            LeftNav.style.display = "none";
+        }
         console.log('user re-enter createroom page');
         player1.emit('conection_closed');
         player2.emit('conection_closed');
@@ -49,19 +56,7 @@ const PingPongSettings = ({ router }: any) =>
             enemmyimage: "/3.jpg",
           };
           access = true;
-          return()=>{console.log("i'm leaving");access = false;};
-      }, []);
-      useEffect(() =>
-      {
-        let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
-        let LeftNav:HTMLElement| null = document.getElementById('LeftNav');
-        if(BottomNav && LeftNav)
-        {
-            BottomNav.style.display = "block";
-            LeftNav.style.display = "none";
-        }
-        return()=>
-        {
+          return()=>{
             if(BottomNav && LeftNav)
             {
                 BottomNav.style.display = "none";
@@ -70,7 +65,8 @@ const PingPongSettings = ({ router }: any) =>
             console.log("i'm leaving");
             access = false;
         };
-    });
+      }, []);
+      
     if(!contexUser.user.username || !contexUser.user.profile_img)
     {
         return(
