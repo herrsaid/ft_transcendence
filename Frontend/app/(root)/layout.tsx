@@ -41,8 +41,15 @@ export default function RootLayout({
   const router = useRouter();
 
   
-  // if (Cookies.get('access_token') == undefined)
-  //     router.replace('/login')
+  useEffect(() => {
+    
+    if (typeof window !== 'undefined') {
+      const accessToken = Cookies.get('access_token');
+      if (accessToken === undefined) {
+        router.replace('/login');
+      }
+    }
+  }, []);
 
 
   const fetchData = async (url:string) => {
