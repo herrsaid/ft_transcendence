@@ -115,7 +115,7 @@ function NewValue(p5:p5)
     Racket2Xpos = Math.floor(GameWidth-((GameWidth/80)+(GameWidth/160)));
     if(document.getElementById('sketch-container'))
       p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
-    p5.background(25);
+    p5.background("#090533");
   }
   else if (window.innerWidth >= 1080)
   {
@@ -131,7 +131,7 @@ function NewValue(p5:p5)
     Racket2Xpos = Math.floor(GameWidth-((GameWidth/80)+(GameWidth/160)));
     if(document.getElementById('sketch-container'))
       p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
-    p5.background(25);
+    p5.background("#090533");
   }
   if(canvas)
     canvas.position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
@@ -156,7 +156,7 @@ const Game = () => {
           if(document.getElementById('sketch-container'))
             p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
           p5.textSize(GameWidth/26);
-          p5.background(25);
+          p5.background("#090533");
           p5.fill(255,255,255);
           p5.text("please sign-in before playing", GameWidth/2 - GameWidth/4, GameHeight/2 + GameHeight/24);
           return ;
@@ -164,7 +164,7 @@ const Game = () => {
         first_conection(StreamContext);
         if(document.getElementById('sketch-container'))
           p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
-        p5.background(25);
+        p5.background("#090533");
         LineCenter(p5);
         setReslt1(Result1Val);
         setReslt2(Result2Val);

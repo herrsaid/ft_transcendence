@@ -28,7 +28,7 @@ export function NewValue(p5:p5)
     GameData.Racket2Height = Math.floor(GameData.GameHeight/6);
     GameData.Racket2Xpos = Math.floor(GameData.GameWidth-((GameData.GameWidth/80)+(GameData.GameWidth/160)));
     p5.createCanvas(GameData.GameWidth, GameData.GameHeight).parent('sketch-container').position((window.innerWidth-GameData.GameWidth)/2,GameData.GameHeight/4,'absolute');
-    p5.background(25);
+    p5.background("#090533");
   }
   else if (window.innerWidth >= 1080)
   {
@@ -44,7 +44,7 @@ export function NewValue(p5:p5)
     GameData.Racket2Xpos = Math.floor(GameData.GameWidth-((GameData.GameWidth/80)+(GameData.GameWidth/160)));
     if(document.getElementById('sketch-container'))
       p5.createCanvas(GameData.GameWidth, GameData.GameHeight).parent('sketch-container').position((window.innerWidth-GameData.GameWidth)/2,GameData.GameHeight/4,'absolute');
-    p5.background(25);
+    p5.background("#090533");
   }
   if(canvas)
     canvas.position((window.innerWidth-GameData.GameWidth)/2,GameData.GameHeight/4,'absolute');

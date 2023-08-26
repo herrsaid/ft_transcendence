@@ -13,7 +13,7 @@
 
 .trapezoid {
     border-bottom: 30px solid transparent;
-      border-Top: 12.6vw solid #000;
+      border-Top: 12.6vw solid #090533;
       border-left: 2vw solid transparent;
       border-right: 2vw solid transparent;
   }
@@ -21,7 +21,7 @@
   @media (min-width: 1024px) {
     .trapezoid {
       border-bottom: 30px solid transparent;
-        border-Top: 125px solid #000;
+        border-Top: 125px solid #090533;
         border-left: 22px solid transparent;
         border-right: 22px solid transparent;
     }

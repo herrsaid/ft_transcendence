@@ -24,7 +24,7 @@ export function GameStatusChecker(p5: p5,GameContext:GameContextType,GDC:GameDat
     });
     if(GDC.GameData.message !== '')
     {
-      p5.background(0);
+      p5.background("#090533");
       p5.fill(255,255,255);
       p5.text(GDC.GameData.message, GDC.GameData.GameWidth/2 - GDC.GameData.GameWidth/12, GDC.GameData.GameHeight/2 + GDC.GameData.GameHeight/12);
       InGame.IG = false;
@@ -44,7 +44,7 @@ export function GameStatusChecker(p5: p5,GameContext:GameContextType,GDC:GameDat
     });
     if(GDC.GameData.message !== '')
     {
-      p5.background(0);
+      p5.background("#090533");
       p5.fill(255,255,255);
       p5.text(GDC.GameData.message, GDC.GameData.GameWidth/2 - GDC.GameData.GameWidth/12, GDC.GameData.GameHeight/2 + GDC.GameData.GameHeight/12);
       InGame.IG = false;

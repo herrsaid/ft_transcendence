@@ -60,7 +60,7 @@ export function NewValue(p5:p5,GDC:GameDataContextType)
       p5.createCanvas(GDC.GameData.GameWidth, GDC.GameData.GameHeight)
         .parent('sketch-container')
         .position((window.innerWidth-GDC.GameData.GameWidth)/2,GDC.GameData.GameHeight/4,'absolute');
-    p5.background(25);
+      p5.background("#090533");
   }
   else if (window.innerWidth >= 1080)
   {
@@ -78,7 +78,7 @@ export function NewValue(p5:p5,GDC:GameDataContextType)
       p5.createCanvas(GDC.GameData.GameWidth, GDC.GameData.GameHeight)
         .parent('sketch-container')
         .position((window.innerWidth-GDC.GameData.GameWidth)/2,GDC.GameData.GameHeight/4,'absolute');
-    p5.background(25);
+      p5.background("#090533");
   }
   if(canvas)
     canvas.position((window.innerWidth-GDC.GameData.GameWidth)/2,GDC.GameData.GameHeight/4,'absolute');

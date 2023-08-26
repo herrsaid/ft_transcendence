@@ -52,8 +52,8 @@ const Notification = ({InviterName,access}:{InviterName:string,access:boolean}) 
             if(access)
             {
               router.replace(`/Game/Lobbie`);
-              JoinPrivateRoom(GameContext,InviterName,router,access)
               GDC.SetGameData(new GameDataType());
+              JoinPrivateRoom(GameContext,InviterName,router,access)
             }
             }} >
           <img className='relative w-[20px]  h-[20px] flex  mt-[10px] ml-[10px]' src="/info.png">
