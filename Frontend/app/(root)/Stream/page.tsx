@@ -61,7 +61,13 @@ export default function Stream() {
   });
   useEffect(()=>
   {
-    
+    let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
+    let LeftNav:HTMLElement| null = document.getElementById('LeftNav');
+    if(BottomNav && LeftNav)
+    {
+        BottomNav.style.display = "block";
+        LeftNav.style.display = "none";
+    }
     console.log('user re-enter stream page');
     player1.emit('conection_closed');
     player2.emit('conection_closed');
@@ -71,17 +77,6 @@ export default function Stream() {
       Access:0,
       RoomNumber:0
     };
-
-  },[]);
-  useEffect(() =>
-  {
-    let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
-    let LeftNav:HTMLElement| null = document.getElementById('LeftNav');
-    if(BottomNav && LeftNav)
-    {
-        BottomNav.style.display = "block";
-        LeftNav.style.display = "none";
-    }
     return()=>
     {
         if(BottomNav && LeftNav)
@@ -90,7 +85,7 @@ export default function Stream() {
             LeftNav.style.display = "block";
         }
     };
-  });
+  },[]);
     return (
       <div className="container mx-auto px-2 py-[250px] text-center items-center ">
         <div className="mx-auto">

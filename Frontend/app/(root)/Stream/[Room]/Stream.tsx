@@ -1,11 +1,9 @@
 'use client'
 
-import { useEffect,useContext,useState } from "react";
+import { useEffect,useState } from "react";
 import p5 from "p5";
 import './Stream.css';
-import StreamInfoContext,{StreamInfoType,StreamInfoStateType,GetStreamInfoContext, StreamContextType} from '../../Stream/StreamContext/StreamContext'
-
-import UserContext from "@/app/(root)/UserContext";
+import {GetStreamInfoContext, StreamContextType} from '../../Stream/StreamContext/StreamContext'
 import { stream } from '../Socket/start_stream_socket';
 
 let GameWidth: number = 800, GameHeight: number = 400, GameSpeed: number = 4;
@@ -138,7 +136,13 @@ function NewValue(p5:p5)
 }
 
 const Game = () => {
-  const contexUser = useContext(UserContext);
+  let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
+  let LeftNav:HTMLElement| null = document.getElementById('LeftNav');
+  if(BottomNav && LeftNav)
+  {
+      BottomNav.style.display = "block";
+      LeftNav.style.display = "none";
+  }
   const StreamContext = GetStreamInfoContext();
   const [reslt1, setReslt1] = useState(0);
   const [reslt2, setReslt2] = useState(0);
@@ -174,7 +178,16 @@ const Game = () => {
       }
     };
 
-    new p5(sketch);
+    const test:p5 = new p5(sketch);
+    return()=>
+    {
+      if(BottomNav && LeftNav)
+      {
+          BottomNav.style.display = "none";
+          LeftNav.style.display = "block";
+      }
+      test.remove();
+    };
   }, []);
   
   useEffect(() =>
