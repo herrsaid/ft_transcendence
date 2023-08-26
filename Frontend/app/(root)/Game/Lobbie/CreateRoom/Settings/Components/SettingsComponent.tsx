@@ -10,15 +10,10 @@ import OtherTools_Invite from './OtherTools_Invite';
 import PauseGame_RoomMood from './PauseGame_RoomMood';
 import Loading from "./Loading";
 import { GetGameInfoContext } from "@/app/(root)/Game/GameContext/GameContext";
-import { useContext } from "react";
-import UserContext from "@/app/(root)/UserContext";
-
-
 
 const Settings = ({ router }: any) => 
 {
     const GameContext = GetGameInfoContext();
-    const contexUser = useContext(UserContext);
     const toast = useToast();
     return(
         <>

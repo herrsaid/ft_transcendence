@@ -13,12 +13,14 @@
 /* ************************************************************************** */
 
 import Game from './Game';
+import { useRouter } from 'next/navigation'
 import './Game.css'
 const page = () => 
 {
+    const router = useRouter();
     return(
         <div id='Game'>
-            <Game/>
+            <Game router={router}/>
         </div>
     );
 }

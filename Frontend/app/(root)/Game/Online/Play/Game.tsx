@@ -12,7 +12,7 @@ import { GameStatusChecker } from './GameFunctions/GameChecker';
 import { InGame } from "@/app/(root)/layout";
 
 
-const Game = () => {
+const Game = ({ router }: any) => {
   let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
   let LeftNav:HTMLElement| null = document.getElementById('LeftNav');
   if(BottomNav && LeftNav)
@@ -34,7 +34,7 @@ const Game = () => {
       
       p5.draw = () => {
         NewValue(p5,GameDataContext);      
-        if(!first_conection(p5,GameContext,GameDataContext))
+        if(!first_conection(p5,GameContext,GameDataContext,router))
           return ;
         if(GameStatusChecker(p5,GameContext,GameDataContext))
         {
@@ -62,7 +62,7 @@ const Game = () => {
         p5.key = '';
       }
     };
-
+    let interval:NodeJS.Timeout = setInterval(()=>{if(!InGame.IG){router.replace('/Game/Lobbie')}},3000);
     const test:p5 = new p5(sketch);
     return()=>
     {
@@ -72,11 +72,14 @@ const Game = () => {
           LeftNav.style.display = "block";
       }
       test.remove();
+      clearInterval(interval);
       InGame.IG = false;
       GameDataContext.GameData.access = false;
     };
   }, []);
 
+  if(!GameContext.GameInfo.Access)
+    return (<div></div>);
   return (
     <div className="relative flex mx-auto my-auto w-[100%] h-[100vh]">
       <div className=" relative flex h-[12.5vw] w-[50%] lg:h-[125px] lg:w-[500px] mx-auto">
