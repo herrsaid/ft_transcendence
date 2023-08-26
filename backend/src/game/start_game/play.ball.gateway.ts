@@ -95,7 +95,13 @@ export let GameObj: data[] = [];
       this.HistoryManager.NewHistory(GameObj[Room]);
       //GameInfoManager for push gameuser information
       this.GameInfo.CreateOrUpdateGameInfo(GameObj[Room]);
-      // playerI colect target
+      //send to spectators that the simulation end
+      for(let Spectator = 0 ; Spectator<GameObj[Room].StreamsInfo.length; Spectator++)
+      {
+        if(GameObj[Room].StreamsInfo[Spectator].SpectatorSocket)
+        GameObj[Room].StreamsInfo[Spectator].SpectatorSocket.emit('SimulationEnd');
+      }
+    // playerI colect target
       if(GameObj[Room].RoomInfo.GamePoints <=  GameObj[Room].PlayersInfo.Result1Val
         && GameObj[Room].PlayersInfo.Player1Client !== undefined
         && GameObj[Room].PlayersInfo.Player2Client !== undefined)

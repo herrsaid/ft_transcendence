@@ -57,7 +57,7 @@ function first_conection(StreamContext:StreamContextType)
 		}
 }
 
-function GetPlayersData()
+function GetPlayersData(router:any)
 {
   stream.on('send_players_data',(data)=>
   {
@@ -83,6 +83,10 @@ function GetPlayersData()
       Player2Image = data.Player2Image;
     else
       Player2Image = "/3.jpg";
+  });
+  stream.on('SimulationEnd',()=>
+  {
+    router.replace('/Stream');
   });
 }
 
@@ -135,7 +139,7 @@ function NewValue(p5:p5)
     canvas.position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
 }
 
-const Game = () => {
+const Game = ({ router }: any) => {
   let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
   let LeftNav:HTMLElement| null = document.getElementById('LeftNav');
   if(BottomNav && LeftNav)
@@ -153,16 +157,11 @@ const Game = () => {
       
       p5.draw = () => 
       {
-        GetPlayersData();
+        GetPlayersData(router);
         NewValue(p5);
         if(!StreamContext.StreamInfo.Access)
         {
-          if(document.getElementById('sketch-container'))
-            p5.createCanvas(GameWidth, GameHeight).parent('sketch-container').position((window.innerWidth-GameWidth)/2,GameHeight/4,'absolute');
-          p5.textSize(GameWidth/26);
-          p5.background("#090533");
-          p5.fill(255,255,255);
-          p5.text("please sign-in before playing", GameWidth/2 - GameWidth/4, GameHeight/2 + GameHeight/24);
+          router.replace('/Stream');
           return ;
         }
         first_conection(StreamContext);
@@ -189,26 +188,9 @@ const Game = () => {
       test.remove();
     };
   }, []);
-  
-  useEffect(() =>
-      {
-        let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
-        let LeftNav:HTMLElement| null = document.getElementById('LeftNav');
-        if(BottomNav && LeftNav)
-        {
-            BottomNav.style.display = "block";
-            LeftNav.style.display = "none";
-        }
-        return()=>
-        {
-            if(BottomNav && LeftNav)
-            {
-                BottomNav.style.display = "none";
-                LeftNav.style.display = "block";
-            }
-        };
-    });
 
+    if(!StreamContext.StreamInfo.Access)
+      return (<div></div>);
   return (
     <div className="relative flex mx-auto my-auto w-[100%] h-[100vh]">
       <div className=" relative flex h-[12.5vw] w-[50%] lg:h-[125px] lg:w-[500px] mx-auto">

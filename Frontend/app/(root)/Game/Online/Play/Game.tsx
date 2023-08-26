@@ -62,8 +62,8 @@ const Game = ({ router }: any) => {
         p5.key = '';
       }
     };
-    let interval:NodeJS.Timeout = setInterval(()=>{if(!InGame.IG){router.replace('/Game/Lobbie')}},3000);
     const test:p5 = new p5(sketch);
+    const interval:NodeJS.Timeout = setInterval(()=>{if(!InGame.IG){router.replace('/Game/Lobbie')}},3000);
     return()=>
     {
       if(BottomNav && LeftNav)
