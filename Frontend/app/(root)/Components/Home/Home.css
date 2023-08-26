@@ -53,3 +53,64 @@
     background-size: 400% 400%;
     
   }
+
+
+  .aibanner{
+    background-image: url("../../../../public/mov.gif");
+    background-position: center;
+    background-size: cover;
+    
+    background-color: grey;
+background-blend-mode: multiply;
+  }
+
+
+  .playbanner{
+    background-image: url("../../../../public/play.jpg");
+    background-position: center;
+    background-size: cover;
+    
+    background-color: grey;
+background-blend-mode: multiply;
+  }
+
+  .starthome{
+    background-image: url("../../../../public/start2.jpg");
+    background-position: center;
+    background-size: cover;
+    
+    background-color: grey;
+background-blend-mode: multiply;
+  }
+
+
+  .bannerwatch{
+    background-image: url("../../../../public/stream.jpg");
+    background-position: center;
+    background-size: cover;
+    
+    background-color: grey;
+background-blend-mode: multiply;
+  }
+
+  .bannerchat{
+    background-image: url("../../../../public/login.gif");
+    background-position: center;
+    background-size: cover;
+    
+    /* background-color: grey;
+background-blend-mode: multiply; */
+  }
+
+  .bannerfind{
+    background-image: url("../../../../public/start1.jpg");
+    background-position: center;
+    background-size: cover;
+    
+    /* background-color: #3730a3;
+background-blend-mode: multiply; */
+  }
+
+
+  
+  
