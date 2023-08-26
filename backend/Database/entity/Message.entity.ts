@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import Groups from "./Groups.entity";
 
 @Entity()
 export class Messages{
@@ -10,4 +11,6 @@ export class Messages{
     dst: number
     @Column()
     content: string
+    @ManyToOne(() => Groups, (group) => group.messages)
+    group:Groups
 }

@@ -22,15 +22,14 @@ export class WebsockGateway {
   server: Server;
 
   online_users = [];
+  online = new Map()
   handleConnection(socket: Socket)
   {
     try{
       const token = socket.handshake.headers.authorization;
       const payload = jwt.verify(token, 'complexkey3884-asgfgsd,s33003400mmdma-434-4das111!!!!!+++')
-      if (this.online_users.findIndex(obj => obj.user_id == payload.id))
-        console.log("al youser maoujoud");
-      this.online_users.push({socket_id:socket.id,user_id:payload.id})
-      console.log(this.online_users, this.online_users.length)
+      this.online.set(payload.id, socket.id);
+      console.log(this.online);
       this.UserService.updateStatus(payload.id, {status:true})
     }catch(error){
       console.log('l9lawi ladkhlti')
@@ -40,23 +39,16 @@ export class WebsockGateway {
   handleDisconnect(socket: Socket)
   {
     console.log('disconnected ', socket.id)
-    this.online_users.splice(this.online_users.findIndex(obj => obj.socket_id == socket.id), 1);
     this.UserService.updateStatus(this.online_users.find(obj => obj.socket_id == socket.id), {status:false})
-  }
-  getSocketId(dst_id: number)
-  {
-    for (let i = 0; i < this.online_users.length; i++)
-    {
-      if (this.online_users[i].user_id == dst_id)
-        return this.online_users[i].socket_id;
-    }
-    return  "user Not online";
+    console.log(this.online);
   }
   @SubscribeMessage('message')
   handleMessage(client: Socket, payload: any): string {
     this.MessageService.create(payload);
-    let dst = this.getSocketId(payload.dst);
-    client.broadcast.to(dst).emit('message', payload)
+    let dst = this.online.get(payload.dst);
+    console.log(dst)
+    if(dst)
+      client.broadcast.to(dst).emit('message', payload)
     // client.broadcast.emit('message', payload);
     return 'Hello world!';
   }
