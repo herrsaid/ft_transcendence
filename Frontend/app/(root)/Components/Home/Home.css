@@ -56,7 +56,7 @@
 
 
   .aibanner{
-    background-image: url("../../../../public/ai.jpg");
+    background-image: url("../../../../public/mov.gif");
     background-position: center;
     background-size: cover;
     
@@ -94,12 +94,12 @@ background-blend-mode: multiply;
   }
 
   .bannerchat{
-    background-image: url("../../../../public/chat.jpg");
+    background-image: url("../../../../public/login.gif");
     background-position: center;
     background-size: cover;
     
-    background-color: grey;
-background-blend-mode: multiply;
+    /* background-color: grey;
+background-blend-mode: multiply; */
   }
 
   .bannerfind{
@@ -107,8 +107,8 @@ background-blend-mode: multiply;
     background-position: center;
     background-size: cover;
     
-    background-color: grey;
-background-blend-mode: multiply;
+    /* background-color: #3730a3;
+background-blend-mode: multiply; */
   }
 
 
