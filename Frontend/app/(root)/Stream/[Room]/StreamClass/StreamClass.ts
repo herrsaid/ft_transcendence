@@ -47,7 +47,7 @@ export class GameDataType
         this.BallXDirection = 1;
         this.BallYDirection = 1;
         this.alpha = -1;
-        this.access = true;
+        this.access = false;
         this.first_conection_val = false;
         this.message = ''; 
         this.Result1Val = 0;
