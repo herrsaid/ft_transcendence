@@ -83,6 +83,7 @@ const Game = () => {
           LeftNav.style.display = "block";
       }
       test.remove();
+      GameData = new GameClass();
     };
   }, []);
 

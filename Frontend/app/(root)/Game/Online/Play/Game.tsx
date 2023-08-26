@@ -74,7 +74,7 @@ const Game = ({ router }: any) => {
       test.remove();
       clearInterval(interval);
       InGame.IG = false;
-      GameDataContext.GameData.access = false;
+      GameDataContext.SetGameData(new GameDataType);
     };
   }, []);
 
