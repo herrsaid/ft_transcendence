@@ -367,6 +367,10 @@ export class UserService {
       {
         return `access_token=; HttpOnly; Path=/; Max-Age=0`;
       }
-
+      async getGroups(id:number)
+      {
+        const groups = await this.userRepo.findOne({where:{id:id},relations: ["groups"]})
+        console.log(groups);
+      }
 
 }

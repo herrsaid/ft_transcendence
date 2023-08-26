@@ -18,7 +18,6 @@ export default function Messages()
     const [messages, setMessages] = useState([]);
     const [value, setValue] = useState('');
     const inputRef = useRef(null)
-    console.log(active.active);
     useEffect(()=> {
         fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/messages?id=${1}`,{
             method: 'GET', headers:{
