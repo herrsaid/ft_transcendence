@@ -60,7 +60,6 @@ const Notification = () =>
           notification.style.display = "flex";
           content.innerText = data.message;
         }
-        console.log("InGame: "+InGame.IG);
         if(InGame.IG)
         {
           if(notification)
@@ -87,7 +86,6 @@ const Notification = () =>
       });
       socket.on("DisplayNotification",(message)=>
       {
-        console.log("InGame.il "+InGame.IL + " RoomMood " + InGame.RM)
         if(notification && content && (InGame.IL && InGame.RM === false))
         {
             notification.style.opacity = "1";

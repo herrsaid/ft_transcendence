@@ -35,7 +35,7 @@ export let GameObj: data[] = [];
     first_connect()
     {
       GameObj.push(new data());
-      console.log("push first simulation");
+      console.log("push first simulation "+'['+GameObj.length+']');
       GameObj[0].RoomInfo.GameSpeed = speed1 | speed2;
       GameObj[0].RoomInfo.GamePoints= points1 | points2;
       GameObj[0].PlayersInfo.Player1UserName = myusername;
@@ -51,7 +51,7 @@ export let GameObj: data[] = [];
     new_connect()
     {
       GameObj.push(new data());
-      console.log("push new simulation");
+      console.log("push new simulation "+'['+GameObj.length+']');
       GameObj[GameObj.length - 1].RoomInfo.GameSpeed = speed1 | speed2;
       GameObj[GameObj.length - 1].RoomInfo.GamePoints= points1 | points2;
       GameObj[GameObj.length - 1].PlayersInfo.Player1UserName = myusername;
@@ -188,7 +188,8 @@ export let GameObj: data[] = [];
       if(GameObj.length)
       {
         if(GameObj.find((elem)=> elem.PlayersInfo.Player1ID === Player1ID) === undefined
-          && GameObj.find((elem)=> elem.PlayersInfo.Player2ID === Player2ID) === undefined)
+          && GameObj.find((elem)=> elem.PlayersInfo.Player2ID === Player2ID) === undefined
+          && Player1ID !== '' && Player2ID !== '')
           this.new_connect()
         for(let a = 0 ; a<GameObj.length; a++ )
         {

@@ -77,7 +77,6 @@ export function StartRoom(router: any,toast:any,GameContext:GameContextType)
             socket.on('SendData', (username,playerimg,data) => {
             if(access)
             {
-                console.log("catch signal from StartRoom");
                 newGameInfo.enemmyusername = username;
                 newGameInfo.enemmyimage = playerimg;
                 newGameInfo.host = data;
