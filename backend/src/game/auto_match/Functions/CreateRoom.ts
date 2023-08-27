@@ -1,6 +1,6 @@
 import { Online, Rooms } from "../lobbie.gateway";
 import { Socket, Server } from 'socket.io';
-import { OnlineClass } from '../Online_class/OnlineClass';
+import { OnlineClass } from '../auto_match_class/OnlineClass';
 import { PlayerClass } from "../auto_match_class/PlayerClass";
 import { RoomSettingsEntity } from "src/game/PingPong.Entity";
 import { RoomClass } from "../auto_match_class/RoomClass";

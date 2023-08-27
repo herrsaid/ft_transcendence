@@ -15,12 +15,12 @@ export function StartRoom(router: any,toast:any,GameContext:GameContextType)
     newGameInfo.myimage = GameContext.GameInfo.myimage;
     if(newGameInfo.Online === 1)
     {
-        if(notification)
-        {
-            notification.style.opacity = "0";
-            notification.style.display = "none";
-            socket.emit("RequestRefused",GameContext.GameInfo.enemmyusername);
-        }
+        // if(notification)
+        // {
+        //     notification.style.opacity = "0";
+        //     notification.style.display = "none";
+        //     socket.emit("RequestRefused",GameContext.GameInfo.enemmyusername);
+        // }
         socket.emit('CreateRoom',{
             Speed: newGameInfo.Speed,
             Points: newGameInfo.Points,
