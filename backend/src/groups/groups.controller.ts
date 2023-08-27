@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import Groups from 'Database/entity/Groups.entity';
 import { groupDto } from './groupsDto';
 import { GroupsService } from 'Database/services/groups/groups.service';
@@ -16,12 +16,16 @@ export class GroupsController {
     @Post('add')
     async add(@Body() Group)
     {
-        const groupsss = await this.User.getGroups(1);
-        console.log(groupsss)
         const user = await this.User.findOne(Group.UserId);
         const group = await this.GroupService.findOne(Group.GroupId)
         group.users.push(user);
         this.GroupService.save(group)
         return 'added'
+    }
+    @Get('mygroups')
+    async mygroups(@Query() param:any)
+    {
+        const groups = await this.User.getGroups(param.id);
+        return groups;
     }
 }

@@ -9,7 +9,7 @@ export default class Groups{
     id: number;
     @Column()
     name:string
-    @ManyToMany(() => User)
+    @ManyToMany(() => User, (user) => user.groups)
     @JoinTable()
     users: User[];
     @OneToMany(() => Messages, (messages) => messages.group)

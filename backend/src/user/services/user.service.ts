@@ -6,6 +6,7 @@ import { Not, Repository } from 'typeorm';
 import { Observable, from, of, switchMap } from 'rxjs';
 import { FriendRequest } from 'src/entities/friend/friend-request.entity';
 import { FriendRequest_Interface, FriendRequest_Status } from 'src/entities/friend/interfaces/friend-request.interface';
+import { group } from 'console';
 
 @Injectable()
 export class UserService {
@@ -369,8 +370,12 @@ export class UserService {
       }
       async getGroups(id:number)
       {
-        const groups = await this.userRepo.findOne({where:{id:id},relations: ["groups"]})
-        console.log(groups);
+        try{
+            const groups = await this.userRepo.findOne({where:{id:id},relations: ['groups']})
+            return(groups.groups)
+        }
+        catch(error){
+            console.log('error')
+        }
       }
-
 }
