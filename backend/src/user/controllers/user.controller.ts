@@ -289,15 +289,15 @@ export class UserController {
     @Get('archievements/me')
     getMyArchievements(@Request() req)
     {
-        return this.ArchievementManager.GetAllUserArchievementByUsername(req.user.username);
+        return this.ArchievementManager.GetAllUserArchievementByUsername(req.user.id);
     }
 
 
     @UseGuards(AuthGuard)
-    @Get('archievements/player/:username')
-    getArchievementsUser(@Param('username') username)
+    @Get('archievements/player/:id')
+    getArchievementsUser(@Param('id') id:number)
     {
-        return this.ArchievementManager.GetAllUserArchievementByUsername(username);
+        return this.ArchievementManager.GetAllUserArchievementByUsername(id);
     }
     
 

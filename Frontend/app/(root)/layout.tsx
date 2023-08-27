@@ -53,24 +53,29 @@ export default function RootLayout({
 
 
   const fetchData = async (url:string) => {
-    const res = await fetch(url, {
-        method: 'GET',
-        headers: {
-            Authorization: `Bearer ${Cookies.get('access_token')}`
-         }});
-
-        if (res.status == 401)
-            router.replace("/login")
-        const jsonData = await res.json();
-        setUser(jsonData);
-         
-        if (!res.ok)
-            throw new Error("failed to fetch users");
-        if (jsonData.is_profile_img_updated)
-            SetGameInfo({...GameInfo,myusername:jsonData.username,myimage:process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + jsonData.profile_img});
-        else
-            SetGameInfo({...GameInfo,myusername:jsonData.username,myimage:jsonData.profile_img});
-        return res.json();
+    try{
+      const res = await fetch(url, {
+          method: 'GET',
+          headers: {
+              Authorization: `Bearer ${Cookies.get('access_token')}`
+           }});
+  
+          if (res.status == 401)
+              router.replace("/login")
+          const jsonData = await res.json();
+          setUser(jsonData);
+           
+          if (!res.ok)
+              throw new Error("failed to fetch data");
+          if (jsonData.is_profile_img_updated)
+              SetGameInfo({...GameInfo,myusername:jsonData.username,myimage:process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + jsonData.profile_img});
+          else
+              SetGameInfo({...GameInfo,myusername:jsonData.username,myimage:jsonData.profile_img});
+          return res.json();
+    }
+    catch{
+      throw new Error("failed to fetch data");
+    }
       }
 
 

@@ -3,13 +3,13 @@ import {  useRouter, useSearchParams } from 'next/navigation';
 import Cookies from 'js-cookie';
 import useSWR from "swr"
 import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
-import { Achievevements} from '../profile';
-import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
+import { SkeletonCircle, SkeletonText } from '@chakra-ui/react'
 import ProfileHeader from './Components/ProfileHeader';
 import ProfileUserState from './Components/ProfileUserState';
 import HistoryUser from './Components/HistoryUser';
 import { useContext } from "react";
 import UserContext from '../UserContext';
+import UserAchievevements from './Components/UserAchievevements';
 
 export default  function User()
 {
@@ -86,7 +86,7 @@ export default  function User()
                             <HistoryUser id={data.id}/>
                             </TabPanel>
                             <TabPanel>
-                            <Achievevements/>
+                            <UserAchievevements id={data.id}/>
                             </TabPanel>
                         </TabPanels>
                 </Tabs>
