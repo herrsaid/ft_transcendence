@@ -78,7 +78,10 @@ const Notification = () =>
         else
         {
           SetInviterName(data.inviterusername);
-          GameContext.SetGameInfo({...GameContext.GameInfo,enemmyusername:data.inviterusername,enemmyimage:data.inviterImg});
+          let newdata: GameInfoType = GameContext.GameInfo;
+          newdata.enemmyusername = data.inviterusername;
+          newdata.enemmyimage = data.inviterImg;
+          GameContext.SetGameInfo(newdata);
           Setaccess(true);
         }
       });
