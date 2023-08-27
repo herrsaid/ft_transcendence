@@ -1,10 +1,10 @@
+import { Socket } from 'socket.io';
 import { Online, Rooms } from "../lobbie.gateway";
-import { Socket, Server } from 'socket.io';
-import { OnlineClass } from '../Online_class/OnlineClass';
+import { OnlineClass } from '../auto_match_class/OnlineClass';
 import { PlayerClass } from "../auto_match_class/PlayerClass";
 import { RoomSettingsEntity } from "src/game/PingPong.Entity";
 import { RoomClass } from "../auto_match_class/RoomClass";
-
+import { GameObj } from "src/game/start_game/play.ball.gateway";
 
 export function CreateRoomLogic(client: Socket, data: RoomSettingsEntity): void {
     if(data.myusername === null)
@@ -15,6 +15,13 @@ export function CreateRoomLogic(client: Socket, data: RoomSettingsEntity): void 
     if(Rooms.find((elem)=> elem.players[0].Player === data.myusername) !== undefined)
     {
       client.emit('CreateRefused',"you can't Create two Rooms");
+      return ;
+    }
+    if(GameObj.find((elem)=>
+      elem.PlayersInfo.Player1UserName === data.myusername
+        || elem.PlayersInfo.Player2UserName === data.myusername) !== undefined)
+    {
+      client.emit('CreateRefused',"you are already in game");
       return ;
     }
     let player_data:PlayerClass = new PlayerClass;

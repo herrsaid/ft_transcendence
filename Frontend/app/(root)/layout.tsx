@@ -15,8 +15,6 @@ import { socket } from './Game/Online/Socket/auto_match_socket';
 import Notification from './Components/Notification/Notification';
 import GameDataContext,{ GameDataType } from './Game/Online/Play/GameClass/GameClass';
 
-export let InGame:{IG:boolean} = {IG: false};
-
 const metadata = {
   title: 'PingPong',
   description: 'PingPong Game 2023',
@@ -29,8 +27,6 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   const [user, setUser] = useState({});
-  const [InviterName,SetInviterName] = useState("");
-  const [access,Setaccess] = useState(false);
   const [GameInfo,SetGameInfo] = useState<GameInfoType>( new GameInfoType());
   const [GameData,SetGameData] = useState<GameDataType>(new GameDataType());
   const [StreamInfo,SetStreamInfo] = useState<StreamInfoType>(
@@ -83,68 +79,6 @@ const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/me`,
 fetchData
 );
 
-useEffect(()=>
-{
-  let notification:HTMLElement| null = document.getElementById('notification');
-  let content:HTMLElement| null = document.getElementById('content');
-  socket.emit("Online",GameInfo.myusername);
-  socket.on("SendRequest",(data)=>
-  {
-    if(notification && content)
-    {
-      notification.style.opacity = "1";
-      notification.style.display = "flex";
-      content.innerText = data.message;
-    }
-    console.log("InGame: "+InGame.IG);
-    if(InGame.IG)
-    {
-      if(notification)
-      {
-        notification.style.opacity = "0";
-        notification.style.display = "none";
-      }
-      socket.emit("RequestRefused",data.inviterusername);
-      Setaccess(false);
-    }
-    else if(InviterName !=  "" && InviterName != data.inviterusername)
-    {
-      socket.emit("RequestRefused",InviterName);
-    }
-    else
-    {
-      SetInviterName(data.inviterusername);
-      SetGameInfo({...GameInfo,enemmyusername:data.inviterusername,enemmyimage:data.inviterImg});
-      Setaccess(true);
-    }
-  });
-  socket.on("DisplayNotification",(message)=>
-  {
-    if(notification && content)
-    {
-        notification.style.opacity = "1";
-        notification.style.display = "flex";
-        content.innerText = message;
-    }
-    Setaccess(false);
-  });
-  let interval:NodeJS.Timer = setInterval(()=>
-  {
-    if(notification)
-    {
-      notification.style.opacity = "0";
-      notification.style.display = "none";
-      if(access && InviterName !=  "")
-        socket.emit("RequestRefused",InviterName);
-    }
-    SetInviterName("");
-    Setaccess(false);
-  },6000);
-  return ()=>
-  {
-    clearInterval(interval);
-  };
-});
   return (
     
     <html lang="en">
@@ -168,7 +102,7 @@ useEffect(()=>
         <GameInfoContext.Provider value={{ GameInfo,SetGameInfo }}>
           <GameDataContext.Provider value={{ GameData,SetGameData}}>
             <StreamInfoContext.Provider value={{ StreamInfo,SetStreamInfo }}>
-              <Notification InviterName={InviterName} access={access}/>
+              <Notification/>
               {children}
             </StreamInfoContext.Provider>
           </GameDataContext.Provider>

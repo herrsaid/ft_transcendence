@@ -8,6 +8,8 @@ import './Stream.css';
 import { GetPlayersData } from "./GameFunctions/GameLogic";
 import { NewValue, first_conection } from "./GameFunctions/Initialise";
 import { Ball, LineCenter, Racket1, Racket2 } from "./GameFunctions/GameDrawer";
+import { player1, player2 } from "../../Game/Online/Socket/start_game_socket";
+import { socket } from "../../Game/Online/Socket/auto_match_socket";
 
 export let StreamData:GameDataType = new GameDataType();
 
@@ -23,20 +25,23 @@ const Game = ({ router }: any) => {
   const [reslt1, setReslt1] = useState(0);
   const [reslt2, setReslt2] = useState(0);
   useEffect(() => {
+    player1.emit('conection_closed');
+    player2.emit('conection_closed');
+    socket.emit('conection_closed');
     const sketch = (p5: p5) => {
       p5.setup = () => {
       };
       
       p5.draw = () => 
       {
-        GetPlayersData(router);
+        first_conection(StreamContext);
         NewValue(p5);
+        GetPlayersData(router);
         if(!StreamContext.StreamInfo.Access)
         {
           router.replace('/Stream');
           return ;
         }
-        first_conection(StreamContext);
         if(document.getElementById('sketch-container'))
           p5.createCanvas(StreamData.GameWidth, StreamData.GameHeight)
             .parent('sketch-container')

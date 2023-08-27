@@ -15,36 +15,37 @@ export class GameInfoManager
     async CheckArchievementLogic(GameInfo:GameUserInfo): Promise<number>
     {
         let ArchievementLength:number;
-        if(GameInfo.totalwins === 1 && GameInfo.totalgames === 1)
+        if(GameInfo.totalwins === 1)
             this.Archievement.NewArchievement(GameInfo.userid,'FirstTimeWin');
-        if(GameInfo.totalosses === 1 && GameInfo.totalgames === 1)
+        if(GameInfo.totalosses === 1)
             this.Archievement.NewArchievement(GameInfo.userid,'FirstTimeLose');
         if(GameInfo.totalgames === 5)
             this.Archievement.NewArchievement(GameInfo.userid,'Play5Times');
-        else if(GameInfo.totalgames === 10)
+        if(GameInfo.totalgames === 10)
             this.Archievement.NewArchievement(GameInfo.userid,'Play10Times');
-        else if(GameInfo.totalgames === 15)
+        if(GameInfo.totalgames === 15)
             this.Archievement.NewArchievement(GameInfo.userid,'Play15Times');
         if(GameInfo.totalwins === 3)
             this.Archievement.NewArchievement(GameInfo.userid,'Win3Times');
-        else if(GameInfo.totalwins === 6)
+        if(GameInfo.totalwins === 6)
             this.Archievement.NewArchievement(GameInfo.userid,'Win6Times');
-        else if(GameInfo.totalwins === 9)
+        if(GameInfo.totalwins === 9)
             this.Archievement.NewArchievement(GameInfo.userid,'Win9Times');
         if(GameInfo.totalosses === 3)
             this.Archievement.NewArchievement(GameInfo.userid,'Lose3Times');
-        else if(GameInfo.totalosses === 6)
+        if(GameInfo.totalosses === 6)
             this.Archievement.NewArchievement(GameInfo.userid,'Lose6Times');
-        else if(GameInfo.totalosses === 9)
+        if(GameInfo.totalosses === 9)
             this.Archievement.NewArchievement(GameInfo.userid,'Lose9Times');
         ArchievementLength = (await (this.Archievement.GetAllUserArchievementByUsername(GameInfo.userid))).length;
+        console.log("ArchievementLength "+ ArchievementLength);
         if(ArchievementLength >= 4)
             this.Archievement.NewArchievement(GameInfo.userid,'Gain4Archievement');
-        else if(ArchievementLength >= 9)
+        if(ArchievementLength >= 9)
             this.Archievement.NewArchievement(GameInfo.userid,'Gain9Archievement');
-        else if(ArchievementLength >= 14)
+        if(ArchievementLength >= 13)
             this.Archievement.NewArchievement(GameInfo.userid,'Gain14Archievement');
-        else if(ArchievementLength === 15)
+        if(ArchievementLength >= 14)
             this.Archievement.NewArchievement(GameInfo.userid,'ArchievementColector');
         ArchievementLength = (await (this.Archievement.GetAllUserArchievementByUsername(GameInfo.userid))).length;
         return (ArchievementLength);

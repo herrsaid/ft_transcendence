@@ -21,7 +21,7 @@ import { player1,player2 } from "../../../Online/Socket/start_game_socket";
 import { socket } from '../../../Online/Socket/auto_match_socket'
 
 import Settings from "./Components/SettingsComponent";
-
+import { InGame } from "@/app/(root)/Components/Notification/Notification";
 
 export let newGameInfo:GameInfoType;
 export let access:boolean = false; 
@@ -45,7 +45,7 @@ const PingPongSettings = ({ router }: any) =>
             Points: 10,
             Speed: 4,
             pause_game: 1,
-            RoomMood: true,
+            RoomMood: 1,
             other_tools: 0,
             host: false,
             Online: 1,
@@ -64,6 +64,7 @@ const PingPongSettings = ({ router }: any) =>
             }
             console.log("i'm leaving");
             access = false;
+            InGame.IL = false;
         };
       }, []);
       

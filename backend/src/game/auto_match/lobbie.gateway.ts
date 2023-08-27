@@ -18,7 +18,7 @@ import {
   } from '@nestjs/websockets';
   import { Socket } from 'socket.io';
   import { RoomClass } from './auto_match_class/RoomClass';
-  import { OnlineClass } from './Online_class/OnlineClass';
+  import { OnlineClass } from './auto_match_class/OnlineClass';
   import {
     RoomSettingsEntity,
     UserInfo,

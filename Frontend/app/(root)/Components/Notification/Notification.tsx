@@ -3,7 +3,9 @@ import { GameContextType, GameInfoType, GetGameInfoContext } from "../../Game/Ga
 import { socket } from "../../Game/Online/Socket/auto_match_socket";
 import { useRouter } from "next/navigation";
 import { GetGameDataContext, GameDataContextType, GameDataType } from '../../Game/Online/Play/GameClass/GameClass';
-import GameInfoContext from '../../Game/GameContext/GameContext';
+import { useEffect, useState } from "react";
+
+export let InGame:{IG:boolean,IL:boolean,RM:boolean} = {IG: false,IL: false,RM:true};
 
 const JoinPrivateRoom = (GameContext:GameContextType,InviterName:string,router: AppRouterInstance,access:boolean)=>
 {
@@ -37,11 +39,79 @@ const JoinPrivateRoom = (GameContext:GameContextType,InviterName:string,router: 
     });
 }
 
-const Notification = ({InviterName,access}:{InviterName:string,access:boolean}) => 
+const Notification = () => 
 {
     const router: AppRouterInstance = useRouter();
     const GameContext:GameContextType = GetGameInfoContext();
     const GDC:GameDataContextType = GetGameDataContext();
+    const [InviterName,SetInviterName] = useState("");
+    const [access,Setaccess] = useState(false);
+
+    useEffect(()=>
+    {
+      let notification:HTMLElement| null = document.getElementById('notification');
+      let content:HTMLElement| null = document.getElementById('content');
+      socket.emit("Online",GameContext.GameInfo.myusername);
+      socket.on("SendRequest",(data)=>
+      {
+        if(notification && content)
+        {
+          notification.style.opacity = "1";
+          notification.style.display = "flex";
+          content.innerText = data.message;
+        }
+        if(InGame.IG)
+        {
+          if(notification)
+          {
+            notification.style.opacity = "0";
+            notification.style.display = "none";
+          }
+          socket.emit("RequestRefused",data.inviterusername);
+          Setaccess(false);
+        }
+        else if(InviterName !=  "" && InviterName != data.inviterusername)
+        {
+          socket.emit("RequestRefused",InviterName);
+        }
+        else
+        {
+          SetInviterName(data.inviterusername);
+          let newdata: GameInfoType = GameContext.GameInfo;
+          newdata.enemmyusername = data.inviterusername;
+          newdata.enemmyimage = data.inviterImg;
+          GameContext.SetGameInfo(newdata);
+          Setaccess(true);
+        }
+      });
+      socket.on("DisplayNotification",(message)=>
+      {
+        if(notification && content && (InGame.IL && InGame.RM === false))
+        {
+            notification.style.opacity = "1";
+            notification.style.display = "flex";
+            content.innerText = message;
+            Setaccess(false);
+        }
+      });
+      let interval:NodeJS.Timer = setInterval(()=>
+      {
+        if(notification)
+        {
+          notification.style.opacity = "0";
+          notification.style.display = "none";
+          if(access && InviterName !=  "")
+            socket.emit("RequestRefused",InviterName);
+        }
+        SetInviterName("");
+        Setaccess(false);
+      },6000);
+      return ()=>
+      {
+        clearInterval(interval);
+      };
+    });
+
     return(
         <div id="notification"
           className='fixed w-[200px] h-[60px] top-[5px] left-1/2 transform -translate-x-1/2

@@ -1,3 +1,4 @@
+import { InGame } from '@/app/(root)/Components/Notification/Notification';
 import { newGameInfo } from '../Settings';
 
 export function GetPauseGame_RoomMood(param: number)
@@ -17,11 +18,12 @@ export function GetPauseGame_RoomMood(param: number)
     if(changemap !== null)
         changemap.style.backgroundColor = " rgb(99 102 241)";
     newGameInfo.pause_game = param;
+    InGame.RM = !!param;
     if(param)
     {
         if(newGameInfo.Online)
         {
-            newGameInfo.RoomMood=true;
+            newGameInfo.RoomMood=1;
             if(main && p && p0 && p1 && invt)
             {
                 main.style.opacity = "0";
@@ -35,7 +37,7 @@ export function GetPauseGame_RoomMood(param: number)
     {
         if(newGameInfo.Online)
         {
-            newGameInfo.RoomMood=false;
+            newGameInfo.RoomMood=0;
             if(main && p && p0 && p1 && invt)
             {
                 p.innerHTML = "Invite :";

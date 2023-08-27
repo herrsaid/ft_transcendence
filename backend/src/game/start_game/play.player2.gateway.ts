@@ -54,11 +54,13 @@ import {
 	handleconection_closed(client: Socket): void {
       for(let a = 0 ; a<GameObj.length; a++ )
       {
-        if(GameObj[a].PlayersInfo.Player2ID === client.id)
+        if(GameObj[a].PlayersInfo.Player2ID === client.id && GameObj[a].PlayersInfo.Player2Client === client)
         {
           GameObj[a].RoomInfo.GameStatus = 0;
           GameObj[a].PlayersInfo.Player1ID = '';
           GameObj[a].PlayersInfo.Player2ID = '';
+          GameObj[a].PlayersInfo.Result1Val = 0;
+          GameObj[a].PlayersInfo.Result2Val = 2;
         }
       }
       Player2ID = '';
@@ -67,7 +69,7 @@ import {
   handleDisconnect(client: Socket): void {
       for(let a = 0 ; a<GameObj.length; a++ )
       {
-        if(GameObj[a].PlayersInfo.Player2ID === client.id)
+        if(GameObj[a].PlayersInfo.Player2ID === client.id && GameObj[a].PlayersInfo.Player2Client === client)
         {
           GameObj[a].RoomInfo.GameStatus = 0;
           GameObj[a].PlayersInfo.Player1ID = '';
