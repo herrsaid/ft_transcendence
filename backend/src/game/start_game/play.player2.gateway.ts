@@ -59,6 +59,8 @@ import {
           GameObj[a].RoomInfo.GameStatus = 0;
           GameObj[a].PlayersInfo.Player1ID = '';
           GameObj[a].PlayersInfo.Player2ID = '';
+          GameObj[a].PlayersInfo.Result1Val = 0;
+          GameObj[a].PlayersInfo.Result2Val = 2;
         }
       }
       Player2ID = '';

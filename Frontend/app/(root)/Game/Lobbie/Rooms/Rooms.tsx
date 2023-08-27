@@ -154,7 +154,10 @@ export default function Rooms() {
           <div id="Rooms" className="overflow-y-auto rounded-md p-6 h-[300px] mb-[40px] shadow-2xl" >
           </div>
           <div onClick={()=>{router.replace('/Game/Lobbie/CreateRoom');}} id="CreateRoom">
-          <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md inline-block font-semibold w-[200px] shadow-2xl shadow-blue-500 hover:shadow-blue-600 " >Create Room</button>
+            <button className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md inline-block font-semibold w-[200px] shadow-2xl shadow-blue-500 hover:shadow-blue-600 " >Create Room</button>
+          </div>
+          <div onClick={()=>{router.replace('/Stream');}} id="WatchStream">
+            <button className="bg-indigo-500 hover:bg-indigo-700 text-white py-2 px-4 mt-3 rounded-md inline-block font-semibold w-[200px] shadow-2xl shadow-blue-500 hover:shadow-blue-600 " >Watch Stream</button>
           </div>
         </div>
       </div>
