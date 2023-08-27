@@ -48,12 +48,22 @@ export default function Messages()
             </div>
             <div className="flex flex-col h-[87%] p-3 overflow-auto">
                 {
+                    (!reciver.reciver.isgroup)?
+                    (
                         messages.map((message:any,index:number) => {
                             if(message.src == user.user.id && message.dst == reciver.reciver.id)
                                 return( <Message key={index} content={message.content} class="self-end rounded-lg bg-sky-900 p-2 mb-2"/>)
                             else if (message.src == reciver.reciver.id && message.dst == user.user.id)
                                 return( <Message key={index} content={message.content} class="self-start rounded-lg bg-sky-900 p-2 mb-2"/>)
                         })
+                    ):(
+                        messages.map((message:any, index:number) =>{
+                            if (message.src == user.user.id && message.dst == reciver.reciver.id)
+                                return( <Message key={index} content={message.content} class="self-end rounded-lg bg-sky-900 p-2 mb-2"/>)
+                            else if (message.dst == reciver.reciver.id)
+                                return( <Message key={index} content={message.content} class="self-start rounded-lg bg-sky-900 p-2 mb-2"/>)
+                        })
+                    )
                 }
             </div>
             <div className="self-center w-[90%] absolute bottom-2">
