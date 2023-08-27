@@ -9,8 +9,7 @@ import { BallAnimation, Racket1Animation, Racket2Animation, first_conection } fr
 import { Ball, LineCenter, Racket1, Racket2 } from './GameFunctions/GameDrawer';
 import { NewValue, initialze_data } from './GameFunctions/Initialise';
 import { GameStatusChecker } from './GameFunctions/GameChecker';
-import { InGame } from "@/app/(root)/layout";
-
+import { InGame } from "@/app/(root)/Components/Notification/Notification";
 
 const Game = ({ router }: any) => {
   let BottomNav:HTMLElement| null = document.getElementById('BottomNav');

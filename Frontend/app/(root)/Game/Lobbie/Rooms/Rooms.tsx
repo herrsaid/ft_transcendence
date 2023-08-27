@@ -36,6 +36,7 @@ function JoinToRoom(Room: number, router: AppRouterInstance,GameContext:GameCont
   socket.on('SendData', (username,playerimg,data) => {
     if(access)
     {
+      console.log("catch signal from Room");
       newGameInfo.enemmyusername = username;
       newGameInfo.enemmyimage = playerimg;
       newGameInfo.host = data;
@@ -114,7 +115,7 @@ export default function Rooms() {
       Points: 10,
       Speed: 4,
       pause_game: 0,
-      RoomMood: true,
+      RoomMood: 1,
       other_tools: 0,
       host: false,
       Online: 1,

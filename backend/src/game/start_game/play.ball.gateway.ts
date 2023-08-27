@@ -14,11 +14,10 @@
 //     WebSocketGateway,
 //     WebSocketServer,
 //   } from '@nestjs/websockets';
-  import { Interval } from "@nestjs/schedule";
-  import { Player1ID,speed1,points1,myusername,myimage} from './play.player1.gateway'
-  import { Player2ID,speed2,points2,enemyusername,enemyimage} from './play.player2.gateway'
-  import {data } from '../game_brain/logic/game_server_class';
-  import e from 'express';
+import { Interval } from "@nestjs/schedule";
+import { Player1ID,speed1,points1,myusername,myimage} from './play.player1.gateway'
+import { Player2ID,speed2,points2,enemyusername,enemyimage} from './play.player2.gateway'
+import {data } from '../game_brain/logic/game_server_class';
 import { HistoryManager } from '../data_manager/HistoryManager';
 import { GameInfoManager } from '../data_manager/GameInfoManager';
 import { UserService } from 'src/user/services/user.service';

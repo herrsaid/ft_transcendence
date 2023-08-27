@@ -1,6 +1,7 @@
 import { newGameInfo,access } from '../Settings';
 import { socket } from '../../../../Online/Socket/auto_match_socket'
 import { GameContextType } from '../../../../GameContext/GameContext';
+import { InGame } from '@/app/(root)/Components/Notification/Notification';
 
 export function StartRoom(router: any,toast:any,GameContext:GameContextType)
 {
@@ -15,24 +16,26 @@ export function StartRoom(router: any,toast:any,GameContext:GameContextType)
     newGameInfo.myimage = GameContext.GameInfo.myimage;
     if(newGameInfo.Online === 1)
     {
-        // if(notification)
-        // {
-        //     notification.style.opacity = "0";
-        //     notification.style.display = "none";
-        //     socket.emit("RequestRefused",GameContext.GameInfo.enemmyusername);
-        // }
+        InGame.IL = true;
+        if(notification)
+        {
+            notification.style.opacity = "0";
+            notification.style.display = "none";
+            socket.emit("RequestRefused",GameContext.GameInfo.enemmyusername);
+        }
         socket.emit('CreateRoom',{
             Speed: newGameInfo.Speed,
             Points: newGameInfo.Points,
             myusername: GameContext.GameInfo.myusername,
             myimage: GameContext.GameInfo.myimage,
-            RoomMood: newGameInfo.RoomMood,
+            RoomMood: !!newGameInfo.RoomMood,
             InputValue: input_value,
         });
         socket.on("RequestRefused",()=>
         {
             if(access && settings && loading)
             {
+                InGame.IL = false;
                 settings.style.filter = "blur(0px)";
                 settings.style.animation = "Animation 1s";
                 loading.style.opacity = "0";
@@ -42,9 +45,20 @@ export function StartRoom(router: any,toast:any,GameContext:GameContextType)
         socket.on('CreateRefused', (message: string) => {
             if(access)
             {
-                if(settings)
+                if(settings && loading)
+                {
+                    if(message === "you can't Create two Rooms")
                     settings.style.filter = "blur(0px)";
-                toast({
+                    else
+                    {
+                        InGame.IL = false;
+                        settings.style.filter = "blur(0px)";
+                        settings.style.animation = "Animation 1s";
+                        loading.style.opacity = "0";
+                        socket.emit("conection_closed");
+                    }
+                }
+                    toast({
                     title: 'Error',
                     description: message,
                     position: 'top-right',
@@ -63,6 +77,7 @@ export function StartRoom(router: any,toast:any,GameContext:GameContextType)
             socket.on('SendData', (username,playerimg,data) => {
             if(access)
             {
+                console.log("catch signal from StartRoom");
                 newGameInfo.enemmyusername = username;
                 newGameInfo.enemmyimage = playerimg;
                 newGameInfo.host = data;

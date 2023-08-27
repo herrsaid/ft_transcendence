@@ -3,7 +3,7 @@ import { GameContextType } from '../../../GameContext/GameContext';
 import { player1, player2 } from '../../../Online/Socket/start_game_socket';
 import { ConvertClientData, ConvertServerData } from './ConvertData';
 import { GameDataContextType } from '../GameClass/GameClass';
-import { InGame } from '@/app/(root)/layout';
+import { InGame } from '@/app/(root)/Components/Notification/Notification';
 
 export function BallAnimation (GameContext:GameContextType,GDC:GameDataContextType)
 {

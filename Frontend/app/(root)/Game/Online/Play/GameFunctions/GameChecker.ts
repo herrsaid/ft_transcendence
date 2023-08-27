@@ -2,8 +2,7 @@ import p5 from 'p5';
 import { GameContextType } from '../../../GameContext/GameContext';
 import { player1, player2 } from '../../Socket/start_game_socket';
 import { GameDataContextType } from '../GameClass/GameClass';
-import { InGame } from '@/app/(root)/layout';
-
+import { InGame } from '@/app/(root)/Components/Notification/Notification';
 
 
 
