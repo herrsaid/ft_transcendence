@@ -6,6 +6,7 @@ import activeContext from '../activeContext';
 import {IoMdArrowRoundBack} from 'react-icons/io'
 import { handleClientScriptLoad } from 'next/script';
 import { info } from 'console';
+import {HiUserGroup} from 'react-icons/hi'
 
 export default function Profile(props:any)
 {
@@ -19,8 +20,8 @@ export default function Profile(props:any)
                 <div className='sm:hidden mt-3 p-3 rounded-full'>
                     <button onClick={handleclick}><IoMdArrowRoundBack /></button>
                 </div>
-                <img className="w-12 h-12 rounded-full m-2" src={reciver.reciver.avatar} alt=""/>
-                <p className="m-2 mt-4">{reciver.reciver.username}</p>
+                {(!reciver.reciver.isgroup)?<img className="w-12 h-12 rounded-full m-2" src={reciver.reciver.avatar} alt=""/>:<HiUserGroup size={30} />}
+                <p className="m-2 mt-4">{(reciver.reciver.isgroup)?reciver.reciver.name:reciver.reciver.username}</p>
             </div>
             <div className='md:hidden m-4 mt-6 hover:bg-gray-500 rounded-full h-6 w-6'>
                 <button onClick={info_click}><BsFillInfoCircleFill/></button>

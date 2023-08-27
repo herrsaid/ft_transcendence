@@ -23,7 +23,7 @@ export class WebsockGateway {
 
   online_users = [];
   online = new Map()
-  handleConnection(socket: Socket)
+  async handleConnection(socket: Socket)
   {
     try{
       const token = socket.handshake.headers.authorization;
@@ -31,6 +31,9 @@ export class WebsockGateway {
       this.online.set(payload.id, socket.id);
       console.log(this.online);
       this.UserService.updateStatus(payload.id, {status:true})
+      const groups = await this.UserService.getGroups(payload.id);
+      for (let i = 0; i < groups.length; i++)
+        socket.join(groups[i].id.toString())
     }catch(error){
       console.log('l9lawi ladkhlti')
       socket.disconnect(); 
@@ -44,12 +47,21 @@ export class WebsockGateway {
   }
   @SubscribeMessage('message')
   handleMessage(client: Socket, payload: any): string {
-    this.MessageService.create(payload);
-    let dst = this.online.get(payload.dst);
-    console.log(dst)
-    if(dst)
-      client.broadcast.to(dst).emit('message', payload)
-    // client.broadcast.emit('message', payload);
+    // private message
+    if (!payload.isGroup)
+    {
+      this.MessageService.create(payload);
+      let dst = this.online.get(payload.dst);
+      console.log(dst)
+      if(dst)
+        client.broadcast.to(dst).emit('message', payload)
+    }
+    // groups message
+    else
+    {
+      console.log('from to not connect',payload.dst);
+      client.broadcast.to(payload.dst.toString()).emit('message',payload);
+    }
     return 'Hello world!';
   }
 }

@@ -15,7 +15,7 @@ export default function Messages()
     const active = useContext(activeContext);
     const user = useContext(UserContext);
     const reciver = useContext(reciverContext);
-    const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = useState<any>([]);
     const [value, setValue] = useState('');
     const inputRef = useRef(null)
     useEffect(()=> {
@@ -28,13 +28,17 @@ export default function Messages()
     }, [])
     useEffect(() => {
         socket.on('message', (data:any) =>{
-            setMessages(old => [...old, {src:data.src, dst:data.dst,content:data.content}])
+            console.log(data)
+            setMessages((old:any) => [...old, {src:data.src, dst:data.dst,content:data.content}])
         })
     },[])
-    const send = (e)=>{
+    const send = (e:any)=>{
         e.preventDefault();
-        socket.emit('message', {src:user.user.id, dst:reciver.reciver.id, content:value})
-        setMessages(old => [...old, {src:user.user.id, dst:reciver.reciver.id, content:value}]);
+        if(!reciver.reciver.isgroup)
+            socket.emit('message', {src:user.user.id, dst:reciver.reciver.id, content:value})
+        else
+            socket.emit('message', {src:user.user.id, dst:reciver.reciver.id, content:value, isGroup:true})
+        setMessages((old:any) => [...old, {src:user.user.id, dst:reciver.reciver.id, content:value}]);
         setValue('')
     }
     return(
@@ -44,7 +48,7 @@ export default function Messages()
             </div>
             <div className="flex flex-col h-[87%] p-3 overflow-auto">
                 {
-                        messages.map((message,index) => {
+                        messages.map((message:any,index:number) => {
                             if(message.src == user.user.id && message.dst == reciver.reciver.id)
                                 return( <Message key={index} content={message.content} class="self-end rounded-lg bg-sky-900 p-2 mb-2"/>)
                             else if (message.src == reciver.reciver.id && message.dst == user.user.id)

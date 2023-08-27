@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import {
     Modal,
     ModalOverlay,
@@ -11,12 +11,14 @@ import {
 import Group from "./group";
 import Cookies from 'js-cookie';
 import {useForm, SubmitHandler, FormProvider} from 'react-hook-form'
+import UserContext from "../../UserContext";
   
   export default function Groups()
   {
     const [isOpen, setIsOpen] = useState(false);
     const openclose = () => {setIsOpen(!isOpen)};
-
+    const [group, setGroup] = useState([]);
+    const user = useContext(UserContext);
     const hrf = useForm()
     const onSubmit = hrf.handleSubmit(data =>{
       fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/create`,{
@@ -27,9 +29,22 @@ import {useForm, SubmitHandler, FormProvider} from 'react-hook-form'
         body: JSON.stringify({name:data.name})
     })
     })
+    useEffect(()=>{
+      fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/mygroups?id=${user.user.id}`,{
+        method: 'GET',
+        headers:{
+          Authorization: `Bearer ${Cookies.get('access_token')}`,
+        }
+      }).then((response) => response.json()).then(data => setGroup(data))
+    },[])
+    console.log(group)
     return (
         <div className="flex flex-col justify-between h-[100%]">
-
+            <div >
+              {
+                group.map((data:any, index) => {return(<Group key={index} name={data.name} id={data.id}/>)})
+              }
+            </div>
             <div className="self-center fixed bottom-4">
                 <button className="bg-green-600 rounded-lg p-1" onClick={openclose}>New Group</button>
             </div >

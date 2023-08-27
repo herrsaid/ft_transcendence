@@ -11,6 +11,8 @@ export class Messages{
     dst: number
     @Column()
     content: string
+    @Column({type:'boolean', default:true})
+    toGroup = false
     @ManyToOne(() => Groups, (group) => group.messages)
     group:Groups
 }
