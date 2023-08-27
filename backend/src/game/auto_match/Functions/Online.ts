@@ -1,6 +1,6 @@
 import { Online } from "../lobbie.gateway";
 import { Socket } from 'socket.io';
-import { OnlineClass } from '../Online_class/OnlineClass';
+import { OnlineClass } from '../auto_match_class/OnlineClass';
 
 export function OnlineLogic(client: Socket, username:string ): void
 {

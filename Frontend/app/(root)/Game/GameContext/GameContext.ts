@@ -8,7 +8,7 @@ export class GameInfoType
   public Points: number;
   public Speed: number;
   public pause_game: number;
-  public RoomMood: boolean ;
+  public RoomMood: number ;
   public other_tools: number;
   public host: boolean;
   public Online: number;
@@ -23,7 +23,7 @@ export class GameInfoType
     this.Points = 10;
     this.Speed = 4;
     this.pause_game = 0;
-    this.RoomMood = true;
+    this.RoomMood = 1;
     this.other_tools = 0;
     this.host = false;
     this.Online = 1;

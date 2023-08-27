@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context';
 import { useRouter } from 'next/navigation';
 import './style/style.css';
-import StreamInfoContext,{StreamInfoType,StreamInfoStateType,GetStreamInfoContext, StreamContextType} from '../Stream/StreamContext/StreamContext'
+import {StreamInfoType,GetStreamInfoContext, StreamContextType} from '../Stream/StreamContext/StreamContext'
 import { stream } from './Socket/start_stream_socket';
 import { player1, player2 } from '../Game/Online/Socket/start_game_socket';
 import { socket } from '../Game/Online/Socket/auto_match_socket';

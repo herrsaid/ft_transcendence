@@ -1,9 +1,14 @@
-import OneAchievevement from "./OneAchievement";
 import Cookies from 'js-cookie';
 import Link from "next/link";
 import useSWR from "swr"
-        
-const Achievevements = () => {
+import UserOneAchievement from "./UserOneAchievement";
+
+
+interface Achievevement{
+    id:number,
+}
+
+const UserAchievevements = (props:Achievevement) => {
 
   
   let myAchievevement;
@@ -19,7 +24,7 @@ const Achievevements = () => {
 }
 
 
-  const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/archievements/me`,
+  const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/archievements/player/${props.id}`,
   Achievevement
   );
 
@@ -27,7 +32,7 @@ const Achievevements = () => {
   if (data)
     {
       myAchievevement = data.map((Achievevement:any) => {
-            return <OneAchievevement name={Achievevement.archievement_name} key={Achievevement.key}/>
+            return <UserOneAchievement name={Achievevement.archievement_name} key={Achievevement.key}/>
         });
     }
 
@@ -43,7 +48,7 @@ const Achievevements = () => {
               
       <div className="live-game-card bg-gradient-to-br from-indigo-600 to-indigo-800 rounded-lg shadow-md p-6 flex flex-col justify-between">
       <div className="text-white text-lg font-semibold mb-4">Play Games Now</div>
-      <p className="text-white">You Dont have Any Achievevement Yet!</p>
+      <p className="text-white">This User Dont have Any Achievevement Yet!</p>
       <Link href="/Game/Lobbie" className="text-blue-400 font-semibold mt-4">
       Play Now
       </Link>
@@ -75,4 +80,4 @@ const Achievevements = () => {
 
     );
 };
-export default Achievevements;
+export default UserAchievevements;

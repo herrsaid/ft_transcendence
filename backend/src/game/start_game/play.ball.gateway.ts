@@ -14,11 +14,10 @@
 //     WebSocketGateway,
 //     WebSocketServer,
 //   } from '@nestjs/websockets';
-  import { Interval } from "@nestjs/schedule";
-  import { Player1ID,speed1,points1,myusername,myimage} from './play.player1.gateway'
-  import { Player2ID,speed2,points2,enemyusername,enemyimage} from './play.player2.gateway'
-  import {data } from '../game_brain/logic/game_server_class';
-  import e from 'express';
+import { Interval } from "@nestjs/schedule";
+import { Player1ID,speed1,points1,myusername,myimage} from './play.player1.gateway'
+import { Player2ID,speed2,points2,enemyusername,enemyimage} from './play.player2.gateway'
+import {data } from '../game_brain/logic/game_server_class';
 import { HistoryManager } from '../data_manager/HistoryManager';
 import { GameInfoManager } from '../data_manager/GameInfoManager';
 import { UserService } from 'src/user/services/user.service';
@@ -36,7 +35,7 @@ export let GameObj: data[] = [];
     first_connect()
     {
       GameObj.push(new data());
-      console.log("push first simulation");
+      console.log("push first simulation "+'['+GameObj.length+']');
       GameObj[0].RoomInfo.GameSpeed = speed1 | speed2;
       GameObj[0].RoomInfo.GamePoints= points1 | points2;
       GameObj[0].PlayersInfo.Player1UserName = myusername;
@@ -52,7 +51,7 @@ export let GameObj: data[] = [];
     new_connect()
     {
       GameObj.push(new data());
-      console.log("push new simulation");
+      console.log("push new simulation "+'['+GameObj.length+']');
       GameObj[GameObj.length - 1].RoomInfo.GameSpeed = speed1 | speed2;
       GameObj[GameObj.length - 1].RoomInfo.GamePoints= points1 | points2;
       GameObj[GameObj.length - 1].PlayersInfo.Player1UserName = myusername;
@@ -120,7 +119,8 @@ export let GameObj: data[] = [];
       //timeout playerI Win
       else if(GameObj[Room].PlayersInfo.Result2Val <  GameObj[Room].PlayersInfo.Result1Val
         && GameObj[Room].PlayersInfo.Player1Client !== undefined
-        && GameObj[Room].PlayersInfo.Player2Client !== undefined)
+        && GameObj[Room].PlayersInfo.Player2Client !== undefined
+        && GameObj[Room].RoomInfo.TimeOut <= 0)
       {
         GameObj[Room].PlayersInfo.Player1Client.emit('GameEnd',"YOU LOSE");
         GameObj[Room].PlayersInfo.Player2Client.emit('GameEnd',"YOU WIN");
@@ -128,7 +128,8 @@ export let GameObj: data[] = [];
       //timeout playerII Win
       else if(GameObj[Room].PlayersInfo.Result1Val <  GameObj[Room].PlayersInfo.Result2Val
         && GameObj[Room].PlayersInfo.Player1Client !== undefined
-        && GameObj[Room].PlayersInfo.Player2Client !== undefined)
+        && GameObj[Room].PlayersInfo.Player2Client !== undefined
+        && GameObj[Room].RoomInfo.TimeOut <= 0)
       {
         GameObj[Room].PlayersInfo.Player1Client.emit('GameEnd',"YOU WIN");
         GameObj[Room].PlayersInfo.Player2Client.emit('GameEnd',"YOU LOSE");
@@ -136,7 +137,8 @@ export let GameObj: data[] = [];
       //timeout playerII  && playerI Win
       else if(GameObj[Room].PlayersInfo.Result1Val ===  GameObj[Room].PlayersInfo.Result2Val
         && GameObj[Room].PlayersInfo.Player1Client !== undefined
-        && GameObj[Room].PlayersInfo.Player2Client !== undefined)
+        && GameObj[Room].PlayersInfo.Player2Client !== undefined
+        && GameObj[Room].RoomInfo.TimeOut <= 0)
       {
         GameObj[Room].PlayersInfo.Player1Client.emit('GameEnd',"YOU WIN");
         GameObj[Room].PlayersInfo.Player2Client.emit('GameEnd',"YOU WIN");
@@ -146,10 +148,10 @@ export let GameObj: data[] = [];
         && GameObj[Room].PlayersInfo.Player1Client !== undefined
         && GameObj[Room].PlayersInfo.Player2Client !== undefined)
       {
-        if(GameObj[Room].PlayersInfo.Result1Val === 0)
-          GameObj[Room].PlayersInfo.Player1Client.emit('GameEnd',"YOU WIN");
         if(GameObj[Room].PlayersInfo.Result2Val === 0)
           GameObj[Room].PlayersInfo.Player2Client.emit('GameEnd',"YOU WIN");
+        if(GameObj[Room].PlayersInfo.Result1Val === 0)
+          GameObj[Room].PlayersInfo.Player1Client.emit('GameEnd',"YOU WIN");
       }
 
       //disconnect players from room
@@ -189,7 +191,8 @@ export let GameObj: data[] = [];
       if(GameObj.length)
       {
         if(GameObj.find((elem)=> elem.PlayersInfo.Player1ID === Player1ID) === undefined
-          && GameObj.find((elem)=> elem.PlayersInfo.Player2ID === Player2ID) === undefined)
+          && GameObj.find((elem)=> elem.PlayersInfo.Player2ID === Player2ID) === undefined
+          && Player1ID !== '' && Player2ID !== '')
           this.new_connect()
         for(let a = 0 ; a<GameObj.length; a++ )
         {

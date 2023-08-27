@@ -3,7 +3,7 @@ interface Achievevement{
 }
 
 
-const OneAchievevement = (props:Achievevement) => {
+const UserOneAchievement = (props:Achievevement) => {
     return (
        
         <div className={`sm:w-30 sm:h-30 md:w-30 md:h-30 lg:w-30 lg:h-30 p-0 rounded-full w-32 h-32  bg-gradient-to-br from-purple-600 to-indigo-800 transform transition-transform duration-300 hover:scale-105`}>
@@ -15,4 +15,4 @@ const OneAchievevement = (props:Achievevement) => {
           </div>
     );
 };
-export default OneAchievevement;
+export default UserOneAchievement;
