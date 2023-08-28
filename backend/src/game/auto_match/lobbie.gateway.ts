@@ -31,6 +31,7 @@ import { JoinPublicRoomLogic } from './Functions/JoinPublicRoom';
 import { JoinPrivateRoomLogic } from './Functions/JoinPivateRoom';
 import { GetRoomsLogic } from './Functions/GetRooms';
 import { ConectionClosedLogic, DisconnectLogic } from './Functions/Disconnect_ConnectionClosed';
+import { ValidationError } from 'class-validator';
   
   export let Rooms: RoomClass[] = [];
   export let Online: OnlineClass[] = [];
@@ -55,18 +56,51 @@ import { ConectionClosedLogic, DisconnectLogic } from './Functions/Disconnect_Co
     @SubscribeMessage('CreateRoom')
     handleCreateRoom(client: Socket, data: RoomSettingsEntity): void
     {
-      CreateRoomLogic(client,data);
+      try
+      {
+        CreateRoomLogic(client,data);
+      }
+      catch(error)
+      {
+        if (error instanceof ValidationError) {
+          client.emit('CreateRefused', 'Invalid data format');
+        } else {
+          client.emit('CreateRefused', 'Invalid data');
+        }
+      }
     }
 
     @SubscribeMessage('JoinPublicRoom')
     handleJoinPublicRoom(client: Socket, data: UserInfo): void
     {
-      JoinPublicRoomLogic(client,data);
+      try
+      {
+        JoinPublicRoomLogic(client,data);
+      }
+      catch(error)
+      {
+        if (error instanceof ValidationError) {
+          client.emit('JoinRefused', 'Invalid data format');
+        } else {
+          client.emit('JoinRefused', 'Invalid data');
+        }
+      }
     }
     @SubscribeMessage('JoinPrivateRoom')
     handleJoinPrivateRoom(client: Socket, data: UserInfo1): void 
     {
-      JoinPrivateRoomLogic(client,data);
+      try
+      {
+        JoinPrivateRoomLogic(client,data);
+      }
+      catch(error)
+      {
+        if (error instanceof ValidationError) {
+          client.emit('JoinRefused', 'Invalid data format');
+        } else {
+          client.emit('JoinRefused', 'Invalid data');
+        }
+      }
     }
 
     @SubscribeMessage('GetRooms')

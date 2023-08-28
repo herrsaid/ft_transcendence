@@ -21,12 +21,16 @@ export class RoomSettingsEntity {
   @IsNotEmpty()
   Points: number;
   @IsBoolean()
+  @IsNotEmpty()
   RoomMood: boolean;
   @IsString()
+  @IsNotEmpty()
   myusername: string | null;
   @IsString()
+  @IsNotEmpty()
   myimage: string | null;
   @IsString()
+  @IsNotEmpty()
   InputValue: string | null;
 }
 
@@ -54,29 +58,7 @@ export class UserInfo1 {
   myimage: string | null;
 }
 
-export class PingPongGamePlayEntity {
-  @IsNumber()
-  @IsNotEmpty()
-  ping1ypos: number;
-  @IsNumber()
-  @IsNotEmpty()
-  ballypos: number;
-  @IsNumber()
-  @IsNotEmpty()
-  ballxpos: number;
-  @IsNumber()
-  @IsNotEmpty()
-  rlt1: number;
-  @IsNumber()
-  @IsNotEmpty()
-  rlt2: number;
-  @IsString()
-  @IsNotEmpty()
-  ID?: string;
-  @IsObject()
-  // @IsNumber()
-  obj: RoomSettingsEntity;
-}
+
 
 @Entity({name: 'history'})
 export class History 
