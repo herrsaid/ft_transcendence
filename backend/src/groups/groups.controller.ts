@@ -28,4 +28,10 @@ export class GroupsController {
         const groups = await this.User.getGroups(param.id);
         return groups;
     }
+    @Get('messages')
+    async group_messages(@Query() params)
+    {
+        const group = await this.GroupService.findOne_messages(params.id);
+        return (group.messages);
+    }
 }
