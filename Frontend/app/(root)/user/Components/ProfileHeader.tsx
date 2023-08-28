@@ -27,7 +27,7 @@ const ProfileHeader = (props:props) => {
   let button_placeholder = 'request';
   let block_button = false;
   const [status, setstatus] = useState("")
-  const [statusbg, setstatusbg] = useState("")
+ 
   const [blockstatus, setBlockStatus] = useState(false)
  
 
@@ -41,6 +41,8 @@ const ProfileHeader = (props:props) => {
 
       if (res.status == 401)
           router.replace("/")
+     
+    
            
       if (!res.ok)
           throw new Error("failed to fetch users");
@@ -110,7 +112,7 @@ const ProfileHeader = (props:props) => {
           }).then((response) => response.json())
     }
 
-    console.log(data)
+    // console.log(data)
 
 
 
@@ -158,19 +160,18 @@ const ProfileHeader = (props:props) => {
             if (data.status === 'pending'){
                 deleteFriendRequest(data.id);
                 button_placeholder = 'Add Friend';
-                setstatusbg('bg-blue-500');
+                setstatus('Add Friend')
             }
             else if (data.status === 'not-sent')
             {
                 
                 send_request();
                 button_placeholder = 'cancel';
-                setstatusbg('bg-orange-500');
+                setstatus('cancel')
                 console.log("requested")
             }
             else if (data.status === 'waiting-for-current-user-response')
             {
-                console.log("enter")
                 handel_response_user(data.id, 'accepted');
                 button_placeholder = 'Unfriend';
                 console.log("accepted")
@@ -179,7 +180,7 @@ const ProfileHeader = (props:props) => {
             {
                 deleteFriendRequest(data.id);
                 button_placeholder = 'Add Friend';
-                setstatusbg('bg-blue-500');
+                setstatus('Add Friend')
                 console.log("unfriend")
             }
             else if (data.status === 'declined')
@@ -226,8 +227,8 @@ const ProfileHeader = (props:props) => {
 
     <div className="py-4">
     
-    <button className={data.status == 'pending' ? 'bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded-lg' : 'bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg'} onClick={handel_all_request}>{status ? status : button_placeholder}</button>
-        {data.status != 'not-sent' && <button className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 ml-4 rounded-lg" onClick={handel_block}>{blockstatus  || block_button ? 'unblock' : 'block'}</button>}  
+    <button className='bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg' onClick={handel_all_request}>{status?status:button_placeholder}</button>
+        {/* {data.status != 'not-sent' && <button className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 ml-4 rounded-lg" onClick={handel_block}>{blockstatus  || block_button ? 'unblock' : 'block'}</button>}   */}
     </div>
       
       

@@ -6,6 +6,7 @@ import { Avatar } from '@chakra-ui/react';
 
 import Cookies from 'js-cookie';
 import useSWR from "swr"
+import Link from 'next/link';
 
 
 export default function HomeStats() {
@@ -37,10 +38,13 @@ if (usercontext.user.is_profile_img_updated)
 if (!data)
 {
   return <div className="live-game-card playbanner rounded-lg shadow-md p-6 flex flex-col justify-between">
-  <div className="w-16 h-16 rounded-full overflow-hidden">
+ <Link href="/profile" className="text-blue-400 font-semibold mt-4">
+ <div className="w-16 h-16 rounded-full overflow-hidden">
 <Avatar size='md' name={usercontext.user.username} src={usercontext.user.is_profile_img_updated ? new_src_img : usercontext.user.profile_img} className="w-full h-full object-cover profile-img">
                   </Avatar>
 </div>
+        </Link>
+  
 <div className="">
 
 <div className="flex items-center justify-between">
@@ -61,8 +65,10 @@ const winRate = (data.totalwins / data.totalgames) * 100;
 
     <div className="live-game-card playbanner rounded-lg shadow-md p-6 flex flex-col justify-between">
         <div className="w-16 h-16 rounded-full overflow-hidden">
+        <Link href="/profile" className="text-blue-400 font-semibold mt-4">
     <Avatar size='md' name={usercontext.user.username} src={usercontext.user.is_profile_img_updated ? new_src_img : usercontext.user.profile_img} className="w-full h-full object-cover profile-img">
                         </Avatar>
+                        </Link>
     </div>
     <div className="">
     
