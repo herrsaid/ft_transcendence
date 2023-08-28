@@ -14,6 +14,7 @@ import StreamInfoContext,{StreamInfoType} from './Stream/StreamContext/StreamCon
 import { socket } from './Game/Online/Socket/auto_match_socket';
 import Notification from './Components/Notification/Notification';
 import GameDataContext,{ GameDataType } from './Game/Online/Play/GameClass/GameClass';
+import Links from './Components/Links/Links';
 
 const metadata = {
   title: 'PingPong',
@@ -83,6 +84,7 @@ fetchData
     
     <html lang="en">
       <body>
+      <Links/>
       <Providers>
       <UserContext.Provider value={{user, setUser}}>
         {/* {Cookies.get('access_token') != undefined && <Header/>} */}
