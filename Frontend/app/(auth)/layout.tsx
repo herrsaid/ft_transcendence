@@ -1,3 +1,4 @@
+import Links from '../(root)/Components/Links/Links'
 import './../(root)/globals.css'
 
 
@@ -18,6 +19,7 @@ export default function RootLayout({
     
     <html lang="en">
       <body>
+      <Links/>
               {children}
       </body>
     </html>
