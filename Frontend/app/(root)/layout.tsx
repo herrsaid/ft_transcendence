@@ -12,6 +12,7 @@ import useSWR from "swr"
 import StreamInfoContext,{StreamInfoType} from './Stream/StreamContext/StreamContext';
 import Notification from './Components/Notification/Notification';
 import GameDataContext,{ GameDataType } from './Game/Online/Play/GameClass/GameClass';
+import Links from './Components/Links/Links';
 
 const metadata = {
   title: 'PingPong',
@@ -81,29 +82,37 @@ fetchData
     
     <html lang="en">
       <body>
-            <Providers>
-                    <UserContext.Provider value={{user, setUser}}>
-                              <Header/>
-                              
-                              <div className='flex'>
-                                      <BottomNav/>
-                                    
-                                    <main className="flex-1">
-                                      
-                                            <GameInfoContext.Provider value={{ GameInfo,SetGameInfo }}>
-                                              <GameDataContext.Provider value={{ GameData,SetGameData}}>
-                                                <StreamInfoContext.Provider value={{ StreamInfo,SetStreamInfo }}>
-                                                  <Notification/>
-                                                  {children}
-                                                </StreamInfoContext.Provider>
-                                              </GameDataContext.Provider>
-                                            </GameInfoContext.Provider>
-                                    
-                                        </main>
-                              </div>
-                          
-                      </UserContext.Provider>
-            </Providers>
+      <Links/>
+      <Providers>
+      <UserContext.Provider value={{user, setUser}}>
+        {/* {Cookies.get('access_token') != undefined && <Header/>} */}
+        <Header/>
+        {/* {Cookies.get('access_token') != undefined && <BottomNav/>} */}
+        <div className='flex'>
+
+        
+        <BottomNav/>
+        {/* <div className='child'> */}
+              {/* {Cookies.get('access_token') != undefined && children} */}
+
+      
+      {/* </div> */}
+      <main className="flex-1">
+        {/* <div className='child'> */}
+        <GameInfoContext.Provider value={{ GameInfo,SetGameInfo }}>
+          <GameDataContext.Provider value={{ GameData,SetGameData}}>
+            <StreamInfoContext.Provider value={{ StreamInfo,SetStreamInfo }}>
+              <Notification/>
+              {children}
+            </StreamInfoContext.Provider>
+          </GameDataContext.Provider>
+        </GameInfoContext.Provider>
+        {/* </div> */}
+          </main>
+        </div>
+            
+        </UserContext.Provider>
+      </Providers>
       </body>
     </html>
   )
