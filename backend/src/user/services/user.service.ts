@@ -242,7 +242,6 @@ export class UserService {
             switchMap((receiver:User) => {
                 return this.hasRequestBeenSentOrRecieved(creator, receiver).pipe(
                     switchMap((hasRequestBeenSentOrRecieved:boolean) => {
-                        if (hasRequestBeenSentOrRecieved) return of({error:'You are Already block this account!'})
 
                         let friendRequest: FriendRequest_Interface = {
                             creator,
@@ -282,7 +281,7 @@ export class UserService {
             }),
 
             switchMap((friendRequest: FriendRequest_Interface) => {
-                if (friendRequest?.receiver.id === currentUser.id)
+                if (friendRequest?.receiver.id === currentUser.id && friendRequest?.status == "blocked")
                 {
                     return of({status: 'waiting-for-unblock', id:friendRequest?.id});
                 }

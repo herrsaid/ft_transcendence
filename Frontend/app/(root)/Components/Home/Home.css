@@ -98,17 +98,12 @@ background-blend-mode: multiply;
     background-position: center;
     background-size: cover;
     
-    /* background-color: grey;
-background-blend-mode: multiply; */
   }
 
   .bannerfind{
     background-image: url("../../../../public/terest.gif");
     background-position: center;
     background-size: cover;
-    
-    /* background-color: #3730a3;
-background-blend-mode: multiply; */
   }
 
 
