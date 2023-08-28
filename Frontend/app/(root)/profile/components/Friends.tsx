@@ -1,15 +1,12 @@
-'use client'
 import OneFriend from "./OneFriend";
 import Cookies from 'js-cookie';
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import useSWR from "swr"
 
 
         
 const Friends = () => {
     
-    const router = useRouter();
     let myFriends;
     
     const fetchFriends = async (url:string) => {
@@ -18,12 +15,6 @@ const Friends = () => {
             headers: {
                 Authorization: `Bearer ${Cookies.get('access_token')}`
              }});
-
-    if (res.status == 401)
-        router.replace("/login")
-             
-    if (!res.ok)
-        throw new Error("failed to fetch users");
     return res.json();
 }
 

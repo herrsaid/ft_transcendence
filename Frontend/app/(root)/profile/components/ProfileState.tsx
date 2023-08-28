@@ -1,12 +1,9 @@
-import { useRouter } from "next/navigation";
 import Cookies from 'js-cookie';
 import useSWR from "swr"
 
 
 const ProfileState = () => {
 
-  const router = useRouter();
-    
     
     const fetchFriends = async (url:string) => {
         const res = await fetch(url, {
@@ -14,12 +11,6 @@ const ProfileState = () => {
             headers: {
                 Authorization: `Bearer ${Cookies.get('access_token')}`
              }});
-
-    if (res.status == 401)
-        router.replace("/login")
-             
-    if (!res.ok)
-        throw new Error("failed to fetch users");
     return res.json();
 }
 

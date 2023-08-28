@@ -1,5 +1,4 @@
 'use client'
-
 import {useEffect, useState } from 'react';
 import Header from './Components/Header/Header'
 import BottomNav from './Components/BottomNav/BottomNav'
@@ -11,7 +10,6 @@ import UserContext from './UserContext';
 import GameInfoContext,{GameInfoType} from './Game/GameContext/GameContext';
 import useSWR from "swr"
 import StreamInfoContext,{StreamInfoType} from './Stream/StreamContext/StreamContext';
-import { socket } from './Game/Online/Socket/auto_match_socket';
 import Notification from './Components/Notification/Notification';
 import GameDataContext,{ GameDataType } from './Game/Online/Play/GameClass/GameClass';
 
@@ -50,27 +48,27 @@ export default function RootLayout({
 
   const fetchData = async (url:string) => {
     try{
-      const res = await fetch(url, {
-          method: 'GET',
-          headers: {
-              Authorization: `Bearer ${Cookies.get('access_token')}`
-           }});
-  
-          if (res.status == 401)
-              router.replace("/login")
-          const jsonData = await res.json();
-          setUser(jsonData);
-           
-          if (!res.ok)
-              throw new Error("failed to fetch data");
-          if (jsonData.is_profile_img_updated)
-              SetGameInfo({...GameInfo,myusername:jsonData.username,myimage:process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + jsonData.profile_img});
-          else
-              SetGameInfo({...GameInfo,myusername:jsonData.username,myimage:jsonData.profile_img});
-          return res.json();
+            const res = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${Cookies.get('access_token')}`
+                }});
+        
+                if (res.status == 401)
+                    router.replace("/login")
+                const jsonData = await res.json();
+                setUser(jsonData);
+                
+                if (!res.ok)
+                    throw new Error("failed to fetch data");
+                if (jsonData.is_profile_img_updated)
+                    SetGameInfo({...GameInfo,myusername:jsonData.username,myimage:process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + jsonData.profile_img});
+                else
+                    SetGameInfo({...GameInfo,myusername:jsonData.username,myimage:jsonData.profile_img});
+                return res.json();
     }
     catch{
-      throw new Error("failed to fetch data");
+         console.log("error");
     }
       }
 
@@ -83,36 +81,29 @@ fetchData
     
     <html lang="en">
       <body>
-      <Providers>
-      <UserContext.Provider value={{user, setUser}}>
-        {/* {Cookies.get('access_token') != undefined && <Header/>} */}
-        <Header/>
-        {/* {Cookies.get('access_token') != undefined && <BottomNav/>} */}
-        <div className='flex'>
-
-        
-        <BottomNav/>
-        {/* <div className='child'> */}
-              {/* {Cookies.get('access_token') != undefined && children} */}
-
-      
-      {/* </div> */}
-      <main className="flex-1">
-        {/* <div className='child'> */}
-        <GameInfoContext.Provider value={{ GameInfo,SetGameInfo }}>
-          <GameDataContext.Provider value={{ GameData,SetGameData}}>
-            <StreamInfoContext.Provider value={{ StreamInfo,SetStreamInfo }}>
-              <Notification/>
-              {children}
-            </StreamInfoContext.Provider>
-          </GameDataContext.Provider>
-        </GameInfoContext.Provider>
-        {/* </div> */}
-          </main>
-        </div>
-            
-        </UserContext.Provider>
-      </Providers>
+            <Providers>
+                    <UserContext.Provider value={{user, setUser}}>
+                              <Header/>
+                              
+                              <div className='flex'>
+                                      <BottomNav/>
+                                    
+                                    <main className="flex-1">
+                                      
+                                            <GameInfoContext.Provider value={{ GameInfo,SetGameInfo }}>
+                                              <GameDataContext.Provider value={{ GameData,SetGameData}}>
+                                                <StreamInfoContext.Provider value={{ StreamInfo,SetStreamInfo }}>
+                                                  <Notification/>
+                                                  {children}
+                                                </StreamInfoContext.Provider>
+                                              </GameDataContext.Provider>
+                                            </GameInfoContext.Provider>
+                                    
+                                        </main>
+                              </div>
+                          
+                      </UserContext.Provider>
+            </Providers>
       </body>
     </html>
   )

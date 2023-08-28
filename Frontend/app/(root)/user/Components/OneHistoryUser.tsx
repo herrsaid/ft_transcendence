@@ -1,7 +1,6 @@
 import { Avatar, AvatarBadge} from "@chakra-ui/react";
 import Link from "next/link";
 import Cookies from 'js-cookie';
-import { useRouter } from "next/navigation";
 import useSWR from "swr"
 
 interface history{
@@ -17,9 +16,6 @@ interface history{
 const OneHistoryUser = (props:history) => {
      
 
-
-
-    const router = useRouter();
     let new_src_img:string = '';
     
     const fetchFriends = async (url:string) => {
@@ -28,12 +24,6 @@ const OneHistoryUser = (props:history) => {
             headers: {
                 Authorization: `Bearer ${Cookies.get('access_token')}`
              }});
-
-    if (res.status == 401)
-        router.replace("/login")
-             
-    if (!res.ok)
-        throw new Error("failed to fetch users");
     return res.json();
 }
 

@@ -1,9 +1,6 @@
-import Link from "next/link";
 import ProfileAvatar from "./ProfileAvatar";
 import Cookies from 'js-cookie';
 import useSWR from "swr"
-
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import UserRank from "./UserRank";
 
@@ -22,8 +19,6 @@ import UserRank from "./UserRank";
 const ProfileHeader = (props:props) => {
 
 
-  const router = useRouter();
-    
   let button_placeholder = 'request';
   let block_button = false;
   const [status, setstatus] = useState("")
@@ -39,13 +34,6 @@ const ProfileHeader = (props:props) => {
               Authorization: `Bearer ${Cookies.get('access_token')}`
            }});
 
-      if (res.status == 401)
-          router.replace("/")
-     
-    
-           
-      if (!res.ok)
-          throw new Error("failed to fetch users");
       return res.json();
   }
 
@@ -112,7 +100,7 @@ const ProfileHeader = (props:props) => {
           }).then((response) => response.json())
     }
 
-    // console.log(data)
+    
 
 
 
@@ -140,8 +128,6 @@ const ProfileHeader = (props:props) => {
         {
             if (!block_button)
             {
-                console.log("-----------")
-                console.log(data.id)
                 blockFriend(data.id);
                 setBlockStatus(true);
             }
@@ -195,10 +181,6 @@ const ProfileHeader = (props:props) => {
 
 
 
-
-    let new_src_img;
-    if (props.avatar_updated)
-        new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + props.avatar;
     return (
         
         <div className="flex items-center justify-between mb-6 flex-wrap">

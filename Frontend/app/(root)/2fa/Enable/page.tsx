@@ -2,8 +2,6 @@
 import Cookies from 'js-cookie';
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from 'react';
-import useSWR from "swr"
-import fs from 'fs'
 import { Input, useToast } from '@chakra-ui/react';
 
 
@@ -34,9 +32,8 @@ export default  function TwoFactor()
               if (typeof reader.result === 'string') {
                 setQRCodeDataUrl(reader.result);
               } else {
-                console.error('Unexpected result type from FileReader.');
+                console.error('error.');
               }
-              // setQRCodeDataUrl(reader.result);
             };
             reader.readAsDataURL(blob);
           })

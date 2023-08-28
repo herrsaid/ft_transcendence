@@ -1,13 +1,11 @@
 'use client'
 import Cookies from 'js-cookie';
-import { useRouter } from "next/navigation";
 import useSWR from "swr"
 import OneFriend from '../profile/components/OneFriend';
 import SearchInput from '../Components/SearchInput/SearchInput';
 
 export default  function Users()
 {
-    const router = useRouter();
     let myFriends;
     
     const fetchFriends = async (url:string) => {
@@ -16,12 +14,6 @@ export default  function Users()
             headers: {
                 Authorization: `Bearer ${Cookies.get('access_token')}`
              }});
-
-    if (res.status == 401)
-        router.replace("/login")
-             
-    if (!res.ok)
-        throw new Error("failed to fetch users");
     return res.json();
 }
 
@@ -55,11 +47,11 @@ export default  function Users()
         </div>
         
 
-        {/* <ul className="divide-y divide-gray-300"> */}
+       
             
             {myFriends ? myFriends : "No friend!"}   
            
-        {/* </ul> */}
+       
     </div>
     );
 }
