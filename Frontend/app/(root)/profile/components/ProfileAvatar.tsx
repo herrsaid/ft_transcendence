@@ -1,7 +1,7 @@
 "use client"
 import "../profile.css"
 import Cookies from 'js-cookie';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Avatar, useToast } from '@chakra-ui/react'
 import UserContext from "../../UserContext";
 import { useContext } from "react";
@@ -23,12 +23,13 @@ const ProfileAvatar = (props:props) => {
     const toast = useToast()
     const router = useRouter();
 
-        const upload = async () => {
-   
-            var avatar = document.querySelector('input[type="file"]')
-
+        const upload = async (file:any) => {
+            if (!file)
+                return null;
+            
+            
             var data = new FormData()
-            data.append('file', avatar?.files[0])
+            data.append('file', file)
             data.append('user', 'hubot')
 
             
@@ -94,7 +95,7 @@ const ProfileAvatar = (props:props) => {
                 throw new Error("failed to fetch users");
             else
             {
-                setrealimg(URL.createObjectURL(avatar?.files[0]));
+                setrealimg(URL.createObjectURL(file));
                 setfirsttime(true);
                 
                 new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + props.img;
@@ -117,7 +118,12 @@ const ProfileAvatar = (props:props) => {
                         </Avatar>
                         
                             <form >
-                                <input type="file" id="avatar" name="file" onChange={upload}/>
+                                <input type="file" accept="image/*" id="avatar" name="file"  onChange={(e) => {
+     const selectedFile: File | undefined = e.target.files?.[0];
+    if (selectedFile) {
+      upload(selectedFile);
+    } 
+  }} />
                             </form>
                     </label>  
                 </div>

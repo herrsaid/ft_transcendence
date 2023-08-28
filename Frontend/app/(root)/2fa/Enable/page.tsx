@@ -2,8 +2,6 @@
 import Cookies from 'js-cookie';
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from 'react';
-import useSWR from "swr"
-import fs from 'fs'
 import { Input, useToast } from '@chakra-ui/react';
 
 
@@ -34,9 +32,8 @@ export default  function TwoFactor()
               if (typeof reader.result === 'string') {
                 setQRCodeDataUrl(reader.result);
               } else {
-                console.error('Unexpected result type from FileReader.');
+                console.error('error.');
               }
-              // setQRCodeDataUrl(reader.result);
             };
             reader.readAsDataURL(blob);
           })
@@ -68,6 +65,7 @@ export default  function TwoFactor()
         toast({
           title: 'Code Invalid.',
           description: "Wrong authentication code.",
+          position: 'top-right',
           status: 'error',
           duration: 2000,
           isClosable: true,
@@ -80,6 +78,7 @@ export default  function TwoFactor()
         toast({
           title: '2FA Enabed in this Account.',
           description: "We've Enabled 2FA in Your account.",
+          position: 'top-right',
           status: 'info',
           duration: 6000,
           isClosable: true,

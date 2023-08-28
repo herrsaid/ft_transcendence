@@ -29,11 +29,6 @@ const OneHistory = (props:history) => {
                 Authorization: `Bearer ${Cookies.get('access_token')}`
              }});
 
-    if (res.status == 401)
-        router.replace("/login")
-             
-    if (!res.ok)
-        throw new Error("failed to fetch users");
     return res.json();
 }
 

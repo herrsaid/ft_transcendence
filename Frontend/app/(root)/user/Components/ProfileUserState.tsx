@@ -1,4 +1,3 @@
-import { useRouter } from "next/navigation";
 import Cookies from 'js-cookie';
 import useSWR from "swr"
 
@@ -11,23 +10,12 @@ interface props{
 
 const ProfileUserState = (props:props) => {
     
-
-
-  const router = useRouter();
-    
-    
   const fetchFriends = async (url:string) => {
       const res = await fetch(url, {
           method: 'GET',
           headers: {
               Authorization: `Bearer ${Cookies.get('access_token')}`
            }});
-
-  if (res.status == 401)
-      router.replace("/login")
-           
-  if (!res.ok)
-      throw new Error("failed to fetch users");
   return res.json();
 }
 
@@ -40,7 +28,7 @@ const ProfileUserState = (props:props) => {
   if (!data)
     {
       return (<div className="text-center">
-      <div className="stats-bg bg-white rounded-lg shadow-lg p-4">
+      <div className="stats-bg rounded-lg shadow-lg p-4 mb-8">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         
   
@@ -82,7 +70,7 @@ const ProfileUserState = (props:props) => {
     return (
         <>
              <div className="text-center">
-    <div className="stats-bg bg-white rounded-lg shadow-lg p-4">
+    <div className="stats-bg rounded-lg shadow-lg p-4 mb-8">
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       
 
