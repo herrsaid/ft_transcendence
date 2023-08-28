@@ -102,6 +102,34 @@ export class UserController {
 
 
 
+    //block user
+
+
+    @UseGuards(AuthGuard)
+    @Post('friend-request/block/:receiverId')
+    blockUser(@Param('receiverId') receiverStringId:string, @Request() req)
+    {
+        const receiverId = parseInt(receiverStringId);
+        delete(req.user.iat)
+        delete(req.user.exp)
+        return this.userService.blockUser(receiverId, req.user);
+    }
+
+
+
+    @UseGuards(AuthGuard)
+    @Get('block/status/:receiverId')
+    getBlockStatus(@Param('receiverId') receiverStringId:string, @Request() req)
+    {
+        const receiverId = parseInt(receiverStringId);
+        delete(req.user.iat)
+        delete(req.user.exp)
+        return this.userService.getBlockStatus(receiverId, req.user);
+    }
+
+
+
+
 
     @UseGuards(AuthGuard)
     @Post('friend-request/send/:receiverId')
