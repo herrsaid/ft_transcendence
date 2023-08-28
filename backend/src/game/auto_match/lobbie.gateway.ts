@@ -23,7 +23,7 @@ import {
     RoomSettingsEntity,
     UserInfo,
     UserInfo1,
-  } from '../PingPong.Entity';
+  } from '../PingPong.dto';
 import { OnlineLogic } from './Functions/Online';
 import { RequestRefusedLogic } from './Functions/RequestRefused';
 import { CreateRoomLogic } from './Functions/CreateRoom';

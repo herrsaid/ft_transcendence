@@ -1,14 +1,14 @@
 import { Rooms } from "../lobbie.gateway";
 import { Socket } from 'socket.io';
 import { PlayerClass } from "../auto_match_class/PlayerClass";
-import { UserInfo, UserInfo1 } from "src/game/PingPong.Entity";
+import { UserInfo, UserInfo1 } from "src/game/PingPong.dto";
 import { RoomClass } from "../auto_match_class/RoomClass";
 
 
 export function JoinPrivateRoomLogic(client: Socket, data: UserInfo1): void 
     {
       let player_data:PlayerClass = new PlayerClass;
-      player_data.Player = data.Username;
+      player_data.Player = data.username;
       player_data.PlayerImg = data.myimage;
       player_data.PlayerId = client.id;
       player_data.PlayerSocket = client;

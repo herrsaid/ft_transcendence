@@ -14,7 +14,7 @@ const JoinPrivateRoom = (GameContext:GameContextType,InviterName:string,router: 
     let obj = 
     {
         target: InviterName,
-        Username: GameContext.GameInfo.myusername,
+        username: GameContext.GameInfo.myusername,
         myimage: GameContext.GameInfo.myimage,
     };
     socket.emit("JoinPrivateRoom",obj);

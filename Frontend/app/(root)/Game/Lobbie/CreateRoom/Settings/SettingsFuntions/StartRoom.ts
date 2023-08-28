@@ -24,12 +24,12 @@ export function StartRoom(router: any,toast:any,GameContext:GameContextType)
             socket.emit("RequestRefused",GameContext.GameInfo.enemmyusername);
         }
         socket.emit('CreateRoom',{
-            Speed: newGameInfo.Speed,
-            Points: newGameInfo.Points,
+            speed: newGameInfo.Speed,
+            points: newGameInfo.Points,
             myusername: GameContext.GameInfo.myusername,
             myimage: GameContext.GameInfo.myimage,
-            RoomMood: !!newGameInfo.RoomMood,
-            InputValue: input_value,
+            roomMood: !!newGameInfo.RoomMood,
+            inputValue: input_value,
         });
         socket.on("RequestRefused",()=>
         {

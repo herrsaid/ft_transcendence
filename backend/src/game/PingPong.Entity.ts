@@ -10,55 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-import {IsBoolean, IsNotEmpty, IsNumber, IsObject, IsString } from 'class-validator';
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-
-export class RoomSettingsEntity {
-  @IsNumber()
-  @IsNotEmpty()
-  Speed: number;
-  @IsNumber()
-  @IsNotEmpty()
-  Points: number;
-  @IsBoolean()
-  @IsNotEmpty()
-  RoomMood: boolean;
-  @IsString()
-  @IsNotEmpty()
-  myusername: string | null;
-  @IsString()
-  @IsNotEmpty()
-  myimage: string | null;
-  @IsString()
-  @IsNotEmpty()
-  InputValue: string | null;
-}
-
-export class UserInfo {
-  @IsNumber()
-  @IsNotEmpty()
-  RoomNumber: number;
-  @IsString()
-  @IsNotEmpty()
-  Username: string | null;
-  @IsString()
-  @IsNotEmpty()
-  myimage: string | null;
-}
-
-export class UserInfo1 {
-  @IsString()
-  @IsNotEmpty()
-  target: string;
-  @IsString()
-  @IsNotEmpty()
-  Username: string | null;
-  @IsString()
-  @IsNotEmpty()
-  myimage: string | null;
-}
-
-
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({name: 'history'})
 export class History 

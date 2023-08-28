@@ -1,6 +1,6 @@
 import { Rooms } from "../lobbie.gateway";
 import { Socket } from 'socket.io';
-import { UserInfo } from "src/game/PingPong.Entity";
+import { UserInfo } from "src/game/PingPong.dto";
 import { PlayerClass } from "../auto_match_class/PlayerClass";
 
 
@@ -10,38 +10,38 @@ export function JoinPublicRoomLogic(client: Socket, data: UserInfo): void {
     {
       if(Rooms[a].RoomMood != false)
         Public_Rooms++;
-      if(Public_Rooms == data.RoomNumber)
+      if(Public_Rooms == data.roomNumber)
       {
-        data.RoomNumber = a;
+        data.roomNumber = a;
         break;
       }
     }
-    if(Rooms[data.RoomNumber])
+    if(Rooms[data.roomNumber])
     {
       let player_data:PlayerClass = new PlayerClass;
-      if(data.Username === null)
+      if(data.username === null)
       {
         client.emit('JoinRefused','please (log-in/sign-in) to accept your join');
         return ;
       }
-      else if (data.Username === Rooms[data.RoomNumber].players[0].Player)
+      else if (data.username === Rooms[data.roomNumber].players[0].Player)
       {
         client.emit('JoinRefused',"You can't Join to yourself");
         return ;
       }
-      player_data.Player = data.Username;
+      player_data.Player = data.username;
       player_data.PlayerImg = data.myimage;
       player_data.PlayerId = client.id;
       player_data.PlayerSocket = client;
-      if(Rooms[data.RoomNumber].players.length < 2)
+      if(Rooms[data.roomNumber].players.length < 2)
       {
-        Rooms[data.RoomNumber].players.push(player_data);
+        Rooms[data.roomNumber].players.push(player_data);
         console.log("Push New Room");
-        Rooms[data.RoomNumber].players[0].PlayerSocket.emit(
-          'SendData',Rooms[data.RoomNumber].players[1].Player,Rooms[data.RoomNumber].players[1].PlayerImg,true);
-          Rooms[data.RoomNumber].players[1].PlayerSocket.emit(
-            'SendData',Rooms[data.RoomNumber].players[0].Player,Rooms[data.RoomNumber].players[0].PlayerImg,false);
-            client.emit('JoinAccepted',Rooms[data.RoomNumber].Speed,Rooms[data.RoomNumber].Points);
+        Rooms[data.roomNumber].players[0].PlayerSocket.emit(
+          'SendData',Rooms[data.roomNumber].players[1].Player,Rooms[data.roomNumber].players[1].PlayerImg,true);
+          Rooms[data.roomNumber].players[1].PlayerSocket.emit(
+            'SendData',Rooms[data.roomNumber].players[0].Player,Rooms[data.roomNumber].players[0].PlayerImg,false);
+            client.emit('JoinAccepted',Rooms[data.roomNumber].Speed,Rooms[data.roomNumber].Points);
       }
       else
       {
@@ -51,6 +51,6 @@ export function JoinPublicRoomLogic(client: Socket, data: UserInfo): void {
     }
         console.log(Rooms);
         console.log("Launch Public Room");
-        for(let a=0;a<Rooms[data.RoomNumber].players.length;a++)
-          Rooms[data.RoomNumber].players[a].PlayerSocket.emit('conection_closed');
+        for(let a=0;a<Rooms[data.roomNumber].players.length;a++)
+          Rooms[data.roomNumber].players[a].PlayerSocket.emit('conection_closed');
   }
