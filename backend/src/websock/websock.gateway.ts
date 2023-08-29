@@ -12,12 +12,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Messages } from 'Database/entity/Message.entity';
 import { MessageService } from 'src/message/message.service';
 import { UserService } from 'src/user/services/user.service';
+import { GroupsService } from 'Database/services/groups/groups.service';
 
 @WebSocketGateway(3030, {cors:{
   origin: '*',
   credentials: true}})
 export class WebsockGateway {
-  constructor(private readonly MessageService:MessageService, private readonly UserService:UserService, private jwtService: JwtService) {}
+  constructor(private readonly MessageService:MessageService, private readonly UserService:UserService, private jwtService: JwtService, private readonly GroupsService:GroupsService) {}
   @WebSocketServer()
   server: Server;
 
@@ -46,9 +47,9 @@ export class WebsockGateway {
     console.log(this.online);
   }
   @SubscribeMessage('message')
-  handleMessage(client: Socket, payload: any): string {
+  async handleMessage(client: Socket, payload: any){
     // private message
-    if (!payload.isGroup)
+    if (!payload.toGroup)
     {
       this.MessageService.create(payload);
       let dst = this.online.get(payload.dst);
@@ -59,7 +60,10 @@ export class WebsockGateway {
     // groups message
     else
     {
-      console.log('from to not connect',payload.dst);
+      const msg = await this.MessageService.create(payload);
+      const group = await this.GroupsService.findOne_messages(payload.dst);
+      group.messages.push(msg);
+      this.GroupsService.save(group);
       client.broadcast.to(payload.dst.toString()).emit('message',payload);
     }
     return 'Hello world!';

@@ -16,8 +16,23 @@ export default function Messages()
     const user = useContext(UserContext);
     const reciver = useContext(reciverContext);
     const [messages, setMessages] = useState<any>([]);
+    const [groupMessage, setGroupMessage] = useState<any>([])
     const [value, setValue] = useState('');
     const inputRef = useRef(null)
+    const [mptest, setMptest] = useState(new Map())
+    const groupMap = new Map();
+
+    // useEffect(()=>{
+    //     if(reciver.reciver.isgroup)
+    //     {
+    //         fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/messages?id=${reciver.reciver.id}`,{
+    //             method: 'GET', headers:{
+    //                 Authorization: `Bearer ${Cookies.get('access_token')}`
+    //             }
+    //         }).then((response) => response.json()).then(data => setGroupMessage(data))
+    //         groupMap.set(reciver.reciver.id, groupMessage.map((data:any) => {return (data)}))
+    //     }
+    // },[])
     useEffect(()=> {
         fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/messages?id=${1}`,{
             method: 'GET', headers:{
@@ -26,6 +41,7 @@ export default function Messages()
             }
         }).then((response) => response.json()).then(data => setMessages(data))
     }, [])
+    console.log('group messages', groupMap.get(reciver.reciver.id))
     useEffect(() => {
         socket.on('message', (data:any) =>{
             console.log(data)
@@ -35,9 +51,9 @@ export default function Messages()
     const send = (e:any)=>{
         e.preventDefault();
         if(!reciver.reciver.isgroup)
-            socket.emit('message', {src:user.user.id, dst:reciver.reciver.id, content:value})
+            socket.emit('message', {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:false})
         else
-            socket.emit('message', {src:user.user.id, dst:reciver.reciver.id, content:value, isGroup:true})
+            socket.emit('message', {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:true})
         setMessages((old:any) => [...old, {src:user.user.id, dst:reciver.reciver.id, content:value}]);
         setValue('')
     }

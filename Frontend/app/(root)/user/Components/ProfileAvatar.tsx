@@ -1,4 +1,3 @@
-"use client"
 import { Avatar, AvatarBadge} from "@chakra-ui/react";
 
 interface props{

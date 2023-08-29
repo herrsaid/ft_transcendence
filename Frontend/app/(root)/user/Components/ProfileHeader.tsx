@@ -1,10 +1,7 @@
-import Link from "next/link";
 import ProfileAvatar from "./ProfileAvatar";
 import Cookies from 'js-cookie';
 import useSWR from "swr"
-
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserRank from "./UserRank";
 
   interface props{
@@ -22,15 +19,49 @@ import UserRank from "./UserRank";
 const ProfileHeader = (props:props) => {
 
 
-  const router = useRouter();
-    
   let button_placeholder = 'request';
-  let block_button = false;
+  
   const [status, setstatus] = useState("")
  
   const [blockstatus, setBlockStatus] = useState(false)
+  const [blockString, setBlockString] = useState("Block")
  
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/block/status/${props.id}`, {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${Cookies.get('access_token')}`
+             }});
+        const jsonData = await response.json();
+        console.log(jsonData.status)
+        if (jsonData.status === 'blocked')
+        {
+            setBlockString('Unblock')
+            setBlockStatus(true);
+        }
+        else if (jsonData.status === 'waiting-for-unblock')
+        {
+            setBlockString('You Are Blocked')
+            setBlockStatus(true);
+        }
+            
+        else if (jsonData.status === 'not-sent')
+            setBlockString('Block')
+        else
+            setBlockString('Block')
+             
+        
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    }
 
+    fetchData();
+  }, []);
+
+  
 
   const fetchFriendStatus = async (url:string) => {
       const res = await fetch(url, {
@@ -39,13 +70,6 @@ const ProfileHeader = (props:props) => {
               Authorization: `Bearer ${Cookies.get('access_token')}`
            }});
 
-      if (res.status == 401)
-          router.replace("/")
-     
-    
-           
-      if (!res.ok)
-          throw new Error("failed to fetch users");
       return res.json();
   }
 
@@ -99,20 +123,19 @@ const ProfileHeader = (props:props) => {
           });
     }
 
-    const blockFriend = (friendRequestId:string) =>
+    const blockFriend = () =>
     {
-        fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/response/${friendRequestId}`, {
-            method: 'PUT',
+        fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/block/${props.id}`, {
+            method: 'POST',
             headers:{
-                Authorization: `Bearer ${Cookies.get('access_token')}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ status: 'blocked' })
+                Authorization: `Bearer ${Cookies.get('access_token')}`
+        }
             
           }).then((response) => response.json())
+          .then(data => console.log(data))
     }
 
-    // console.log(data)
+    
 
 
 
@@ -127,8 +150,6 @@ const ProfileHeader = (props:props) => {
         button_placeholder = 'unfriend';
     else if (data.status === 'declined')
         button_placeholder = 'Add Friend';
-    else if (data.status == 'blocked')
-        block_button = true;
 
 
 
@@ -138,18 +159,29 @@ const ProfileHeader = (props:props) => {
 
         const handel_block = () =>
         {
-            if (!block_button)
-            {
-                console.log("-----------")
-                console.log(data.id)
-                blockFriend(data.id);
+            if (blockString === 'Block' &&  data.status === 'not-sent'){
+                blockFriend();
+                setBlockString('Unblock')
                 setBlockStatus(true);
             }
-            else if (block_button)
+            else if (blockString === 'Unblock')
             {
                 deleteFriendRequest(data.id);
+                setBlockString('Block')
                 setBlockStatus(false);
             }
+            else if (blockString === 'waiting-for-unblock')
+            {
+                console.log('waiting-for-unblock')
+            }
+            else
+            {
+                deleteFriendRequest(data.id);
+                blockFriend();
+                setBlockString('Unblock')
+                setBlockStatus(true);
+            }
+
         }
 
 
@@ -195,10 +227,6 @@ const ProfileHeader = (props:props) => {
 
 
 
-
-    let new_src_img;
-    if (props.avatar_updated)
-        new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + props.avatar;
     return (
         
         <div className="flex items-center justify-between mb-6 flex-wrap">
@@ -226,9 +254,13 @@ const ProfileHeader = (props:props) => {
 
 
     <div className="py-4">
-    
-    <button className='bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg' onClick={handel_all_request}>{status?status:button_placeholder}</button>
-        {/* {data.status != 'not-sent' && <button className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 ml-4 rounded-lg" onClick={handel_block}>{blockstatus  || block_button ? 'unblock' : 'block'}</button>}   */}
+    {blockstatus == false &&  <button className='bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg' onClick={handel_all_request}>{status?status:button_placeholder}</button>
+}
+{blockString != 'You Are Blocked' &&   <button className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 ml-4 rounded-lg" onClick={handel_block}>{blockString}</button>  
+}
+
+{blockString == 'You Are Blocked' &&    <button className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 ml-4 rounded-lg cursor-help" >{blockString}</button>  
+}
     </div>
       
       

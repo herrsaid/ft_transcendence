@@ -1,9 +1,7 @@
 "use client"
 import Cookies from 'js-cookie';
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from 'react';
-import useSWR from "swr"
-import fs from 'fs'
+import { useState } from 'react';
 import { Input, useToast } from '@chakra-ui/react';
 
 

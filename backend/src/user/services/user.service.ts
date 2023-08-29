@@ -229,6 +229,76 @@ export class UserService {
         );
     }
 
+
+    //block user
+    blockUser(receiverId: number, creator: User)
+    {
+        
+        if (receiverId === creator.id)
+            return of({error: 'It is not possible to block yourself'});
+        
+        return this.findOneById(receiverId).pipe(
+
+            switchMap((receiver:User) => {
+                return this.hasRequestBeenSentOrRecieved(creator, receiver).pipe(
+                    switchMap((hasRequestBeenSentOrRecieved:boolean) => {
+
+                        let friendRequest: FriendRequest_Interface = {
+                            creator,
+                            receiver,
+                            status: 'blocked'
+                        }
+
+                        return from(this.FriendRequestRepo.save(friendRequest));
+                    })
+                );
+            }),
+        );
+        
+    }
+
+
+    //block status
+
+
+    getBlockStatus(receiverId:number, currentUser:User){
+        return this.findOneById(receiverId).pipe(
+            switchMap((receiver:User) => {
+                return from(this.FriendRequestRepo.findOne({
+                    where: [
+                        {
+                            creator: currentUser,
+                            receiver: receiver,
+                        },
+                        {
+                            creator: receiver,
+                            receiver: currentUser,
+                        },
+                    ],
+                    relations: ['creator','receiver']
+
+                }));
+            }),
+
+            switchMap((friendRequest: FriendRequest_Interface) => {
+                if (friendRequest?.receiver.id === currentUser.id && friendRequest?.status == "blocked")
+                {
+                    return of({status: 'waiting-for-unblock', id:friendRequest?.id});
+                }
+                return of({status: friendRequest?.status || 'not-sent', id: friendRequest?.id});
+            }),
+
+            );
+    }
+
+
+
+
+
+
+
+
+
     sendFriendRequest(receiverId: number, creator: User)
     {
         

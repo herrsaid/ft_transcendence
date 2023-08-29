@@ -22,6 +22,17 @@ export class GroupsService {
             throw new NotFoundException(); 
         }
     }
+    findOne_messages(groupId:number)
+    {
+        try
+        {
+            return this.Groups.findOne({where:{id:groupId},relations: ["messages"]})
+        }
+        catch(error){
+            throw new NotFoundException(); 
+        }
+    }
+    
     save(group:Groups)
     {
         this.Groups.save(group);

@@ -21,10 +21,6 @@ const ProfileInfo = (props:props) => {
         headers: {
             Authorization: `Bearer ${Cookies.get('access_token')}`
          }});
-
-        
-        if (!res.ok)
-            throw new Error("failed to fetch users");
         return res.json();
       }
 
@@ -44,7 +40,7 @@ let rankbg;
     else if (data.rank == 'bronze')
         rankbg = 'bg-gray-500';
     else if (data.rank == 'silver')
-        rankbg = 'bg-red-500';
+        rankbg = 'bg-indigo-500';
     else if(data.rank == 'gold')
         rankbg = 'bg-yellow-500';
     else if(data.rank == 'diamond')

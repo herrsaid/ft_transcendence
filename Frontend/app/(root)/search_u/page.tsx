@@ -1,12 +1,10 @@
 "use client"
 
 import { useSearchParams } from "next/navigation";
-
 import Cookies from 'js-cookie';
-
 import useSWR from "swr"
 import OneFriend from "../profile/components/OneFriend";
-import { Box, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
+import { Box, SkeletonCircle} from "@chakra-ui/react";
 
 
 const fetchUsers = async (url:string) => {
@@ -15,12 +13,6 @@ const fetchUsers = async (url:string) => {
             headers: {
                 Authorization: `Bearer ${Cookies.get('access_token')}`
              }});
-
-    // console.log(res)
-    if (!res.ok)
-    {
-        throw new Error("failed to fetch users");
-    }
     return res.json();
 }
 
@@ -38,18 +30,13 @@ export default function SearchPage()
     
     if (isLoading)
     {
-        return <div className="profile_container">
-            <div className="all_profile">
-            <div className="side_two">
-            <div className="side_two_info">
+        return <div className="container mx-auto px-2 py-10 pb-32">
+            
             <Box padding='6' boxShadow='md' bg='#39396f' borderRadius={25}>
                 
                     <SkeletonCircle size='10' />
                 
                 </Box>
-                </div>
-                </div>
-                </div>   
         </div>
     }
     

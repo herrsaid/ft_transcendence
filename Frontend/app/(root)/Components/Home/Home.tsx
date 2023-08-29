@@ -1,6 +1,4 @@
-import BannerHome from './Components/BannerHome'
 import './Home.css'
-import HomeStats from './Components/HomeStats'
 import LiveGames from './Components/LiveGames'
 
 export default function Home() {

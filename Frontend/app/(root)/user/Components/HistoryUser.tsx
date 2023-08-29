@@ -1,6 +1,5 @@
 import { Box } from "@chakra-ui/react";
 import Cookies from 'js-cookie';
-import { useRouter } from "next/navigation";
 import useSWR from "swr"
 import { SkeletonCircle, SkeletonText } from '@chakra-ui/react'
 import Link from "next/link";
@@ -15,10 +14,7 @@ interface props{
 
 const HistoryUser = (props:props) => {
 
-
-    const router = useRouter();
     let myHistory;
-    let new_src_img:string;
     
     const fetchFriends = async (url:string) => {
         const res = await fetch(url, {
@@ -26,12 +22,6 @@ const HistoryUser = (props:props) => {
             headers: {
                 Authorization: `Bearer ${Cookies.get('access_token')}`
              }});
-
-    if (res.status == 401)
-        router.replace("/login")
-             
-    if (!res.ok)
-        throw new Error("failed to fetch users");
     return res.json();
 }
 
