@@ -12,9 +12,13 @@ export function CreateRoomLogic(client: Socket, data: RoomSettings): void {
       client.emit('CreateRefused','please (log-in/sign-in) to accept your join');
       return ;
     }
-    if(Rooms.find((elem)=> elem.players[0].Player === data.myusername) !== undefined)
+    let Room = Rooms.find((elem)=> elem.players[0].Player === data.myusername)
+    if(Room !== undefined)
     {
-      client.emit('CreateRefused',"you can't Create two Rooms");
+      if(Room.players[0].PlayerSocket === client)
+        client.emit('CreateRefused',"You Can't Create Two Rooms");
+      else
+        client.emit('CreateRefused',"you can't create two rooms");
       return ;
     }
     if(GameObj.find((elem)=>

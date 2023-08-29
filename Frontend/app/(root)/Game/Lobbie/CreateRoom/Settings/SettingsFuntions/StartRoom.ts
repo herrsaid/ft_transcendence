@@ -48,7 +48,7 @@ export function StartRoom(router: any,toast:any,GameContext:GameContextType)
                 if(settings && loading)
                 {
                     if(message === "you can't Create two Rooms")
-                    settings.style.filter = "blur(0px)";
+                        settings.style.filter = "blur(0px)";
                     else
                     {
                         InGame.IL = false;
