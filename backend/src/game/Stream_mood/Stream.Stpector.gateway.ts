@@ -18,7 +18,7 @@ import {
   } from '@nestjs/websockets';
   import { Socket, Server } from 'socket.io';
   import { GameStreamAttribute } from '../game_brain/methods/Game_stream_attribute';
-  import { GameObj } from '../start_game/play.ball.gateway';
+  import { GameObj } from '../game_brain/logic/Brain';
 import { NewSpectator } from '../PingPong.dto';
   let none: Socket;
   @WebSocketGateway(1342, {

@@ -28,11 +28,7 @@ export default function RootLayout({
   const [user, setUser] = useState({});
   const [GameInfo,SetGameInfo] = useState<GameInfoType>( new GameInfoType());
   const [GameData,SetGameData] = useState<GameDataType>(new GameDataType());
-  const [StreamInfo,SetStreamInfo] = useState<StreamInfoType>(
-  {
-    Access:0,
-    RoomNumber:0
-  });
+  const [StreamInfo,SetStreamInfo] = useState<StreamInfoType>(new StreamInfoType());
   const router = useRouter();
 
   

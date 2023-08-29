@@ -19,7 +19,7 @@ import {
     ConnectedSocket,
   } from '@nestjs/websockets';
   import { Socket, Server } from 'socket.io';
-  import { GameObj } from './play.ball.gateway';
+  import { GameObj } from '../game_brain/logic/Brain';
 import { FirstConnection, PlayerPos } from '../PingPong.dto';
 import { WebSocketGateWayFilter } from '../PingPong.filter';
 import { UseFilters, UsePipes, ValidationPipe } from '@nestjs/common';

@@ -4,7 +4,7 @@ import { OnlineClass } from '../auto_match_class/OnlineClass';
 import { PlayerClass } from "../auto_match_class/PlayerClass";
 import { RoomSettings } from "src/game/PingPong.dto";
 import { RoomClass } from "../auto_match_class/RoomClass";
-import { GameObj } from "src/game/start_game/play.ball.gateway";
+import { GameObj } from "src/game/game_brain/logic/Brain";
 
 export function CreateRoomLogic(client: Socket, data: RoomSettings): void {
     if(data.myusername === null)

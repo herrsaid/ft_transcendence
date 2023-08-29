@@ -24,7 +24,7 @@ import { join } from 'path';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from 'src/auth/guard/constants';
 import { GameArchievement, GameUserInfo, History } from './PingPong.Entity';
-import { BallGateway } from './start_game/play.ball.gateway';
+import { BallLogic } from './game_brain/logic/Brain';
 import { ScheduleModule } from '@nestjs/schedule';
 import { GameInfoManager } from './data_manager/GameInfoManager';
 import { ArchievementManager } from './data_manager/ArchievementManager';
@@ -48,7 +48,7 @@ import { UserModule } from 'src/user/modules/user.module';
     PlayPlayer1Gateway,
     PlayPlayer2Gateway,
     GameLogic,
-    BallGateway,
+    BallLogic,
     GameStreamAttribute,
     PlaySpactatorGateway,
     HistoryManager,
