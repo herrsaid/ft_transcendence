@@ -2,11 +2,11 @@ import { Socket } from 'socket.io';
 import { Online, Rooms } from "../lobbie.gateway";
 import { OnlineClass } from '../auto_match_class/OnlineClass';
 import { PlayerClass } from "../auto_match_class/PlayerClass";
-import { RoomSettingsEntity } from "src/game/PingPong.dto";
+import { RoomSettings } from "src/game/PingPong.dto";
 import { RoomClass } from "../auto_match_class/RoomClass";
 import { GameObj } from "src/game/start_game/play.ball.gateway";
 
-export function CreateRoomLogic(client: Socket, data: RoomSettingsEntity): void {
+export function CreateRoomLogic(client: Socket, data: RoomSettings): void {
     if(data.myusername === null)
     {
       client.emit('CreateRefused','please (log-in/sign-in) to accept your join');

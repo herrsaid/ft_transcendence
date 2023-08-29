@@ -37,6 +37,7 @@ import { ArchievementManager } from './game/data_manager/ArchievementManager';
 import { GroupsController } from './groups/groups.controller';
 import Groups from 'Database/entity/Groups.entity';
 import { GroupsService } from 'Database/services/groups/groups.service';
+import { WebSocketGateWayFilter } from './game/PingPong.filter';
 
 @Module({
   imports: [GameModule, AuthModule, TypeOrmModule.forRoot(config),
@@ -68,7 +69,8 @@ import { GroupsService } from 'Database/services/groups/groups.service';
     HistoryManager,
     GameInfoManager,
     ArchievementManager,
-    GroupsService
+    GroupsService,
+    WebSocketGateWayFilter
   ],
 })
 export class AppModule {}

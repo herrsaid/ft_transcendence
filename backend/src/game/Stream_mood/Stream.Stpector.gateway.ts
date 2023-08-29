@@ -19,6 +19,7 @@ import {
   import { Socket, Server } from 'socket.io';
   import { GameStreamAttribute } from '../game_brain/methods/Game_stream_attribute';
   import { GameObj } from '../start_game/play.ball.gateway';
+import { NewSpectator } from '../PingPong.dto';
   let none: Socket;
   @WebSocketGateway(1342, {
     cors: { origin: '*', credentials: true },
@@ -31,7 +32,8 @@ import {
       client.emit("LoadStream",GameObj.length);
     }
     @SubscribeMessage('new_spectator')
-    handleNewSpectator(client: Socket,RoomNumber: number): void {
+    handleNewSpectator(client: Socket,data: NewSpectator): void {
+      const RoomNumber = data.RoomNumber;
       if(GameObj.length && GameObj[RoomNumber] !== undefined)
         GameObj[RoomNumber].StreamsInfo.push(new GameStreamAttribute);
       console.log('new_spectator at: ',RoomNumber,GameObj[RoomNumber].StreamsInfo.length );

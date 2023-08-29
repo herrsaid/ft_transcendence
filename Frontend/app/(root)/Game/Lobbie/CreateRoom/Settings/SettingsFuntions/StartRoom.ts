@@ -21,7 +21,7 @@ export function StartRoom(router: any,toast:any,GameContext:GameContextType)
         {
             notification.style.opacity = "0";
             notification.style.display = "none";
-            socket.emit("RequestRefused",GameContext.GameInfo.enemmyusername);
+            socket.emit("RequestRefused",{targrt:GameContext.GameInfo.enemmyusername});
         }
         socket.emit('CreateRoom',{
             speed: newGameInfo.Speed,
