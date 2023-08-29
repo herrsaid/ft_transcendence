@@ -13,7 +13,7 @@ async function bootstrap() {
     whitelist:true,
     forbidNonWhitelisted:true
   }));
-  app.useGlobalFilters(new WebSocketGateWayFilter());
+  // app.useGlobalFilters(new WebSocketGateWayFilter());
   app.enableCors({
     origin: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
