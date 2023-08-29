@@ -52,13 +52,15 @@ export default  function TwoFactor()
           duration: 3000,
           isClosable: true,
         })
-        router.replace("/profile");
+        router.replace("/");
       }
     }
     
    return(
     <>
-    <div className="container mx-auto items-center flex">
+    
+
+    <div className="container mx-auto items-center flex pt-60">
         
         <div className="items-center mx-auto">
         <h1 className="text-2xl font-semibold text-blue-500">2FA Check Code</h1>

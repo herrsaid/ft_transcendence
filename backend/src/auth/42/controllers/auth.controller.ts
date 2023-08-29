@@ -3,10 +3,12 @@ import { AuthGuard } from '@nestjs/passport';
 import { Request, Response } from 'express';
 import { AuthService } from '../services/auth.service';
 import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authservice: AuthService, private readonly configService: ConfigService) {}
+  constructor(private readonly authservice: AuthService, private readonly configService: ConfigService,
+    private readonly jwtService: JwtService) {}
 
 
   
@@ -24,7 +26,8 @@ export class AuthController {
 
     const access_token = this.authservice.loginIntra42(req);
     const token : string = access_token['access_token'];
-    
+    const decodedToken = this.jwtService.verify(token);
+
     res.cookie('access_token', token,{
       httpOnly: false,
             secure: false,
@@ -32,8 +35,15 @@ export class AuthController {
     });
 
     const front_url = this.configService.get<string>('FRONT_IP');
-    res.redirect(`${front_url}/`);
+    
 
-      return this.authservice.loginIntra42(req);
+    if (decodedToken.isTwoFactorAuthenticationEnabled)
+    {
+      res.redirect(`${front_url}/2fa/Authenticate`);
+    }
+    else
+    {
+      res.redirect(`${front_url}/`);
+    }
   }
 }

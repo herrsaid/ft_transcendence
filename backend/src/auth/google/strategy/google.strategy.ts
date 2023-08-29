@@ -27,7 +27,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google')
         if (user_check)
         {
 
-            const payload = {id : user_check.id, username: user_check.username, email : emails[0].value, twoFactorAuthenticationSecret:user_check.twoFactorAuthenticationSecret};
+            const payload = {id : user_check.id, username: user_check.username, email : emails[0].value, twoFactorAuthenticationSecret:user_check.twoFactorAuthenticationSecret, isTwoFactorAuthenticationEnabled:user_check.isTwoFactorAuthenticationEnabled};
         
             
             return {
@@ -45,7 +45,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google')
             const user_check = await this.UserService.findUserByEmail(emails[0].value);
             if (user_check)
             {
-                const payload = {id : user_check.id, username: user_check.username, email : emails[0].value , twoFactorAuthenticationSecret:user_check.twoFactorAuthenticationSecret};
+                const payload = {id : user_check.id, username: user_check.username, email : emails[0].value , twoFactorAuthenticationSecret:user_check.twoFactorAuthenticationSecret, isTwoFactorAuthenticationEnabled:user_check.isTwoFactorAuthenticationEnabled};
         
                 return {
                     access_token: await this.jwtService.signAsync(payload),
