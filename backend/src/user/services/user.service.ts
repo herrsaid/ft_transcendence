@@ -348,9 +348,13 @@ export class UserService {
             }),
 
             switchMap((friendRequest: FriendRequest_Interface) => {
-                if (friendRequest?.receiver.id === currentUser.id && friendRequest?.status != "accepted")
+                if (friendRequest?.receiver.id === currentUser.id && friendRequest?.status != "accepted" && friendRequest?.status != "blocked")
                 {
                     return of({status: 'waiting-for-current-user-response', id:friendRequest?.id});
+                }
+                else if (friendRequest?.receiver.id === currentUser.id && friendRequest?.status == "blocked")
+                {
+                    return of({status: 'waiting-for-unblock', id:friendRequest?.id});
                 }
                 return of({status: friendRequest?.status || 'not-sent', id: friendRequest?.id});
             }),
