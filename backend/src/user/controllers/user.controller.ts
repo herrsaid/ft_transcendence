@@ -12,6 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { HistoryManager } from 'src/game/data_manager/HistoryManager';
 import { GameInfoManager } from 'src/game/data_manager/GameInfoManager';
 import { ArchievementManager } from 'src/game/data_manager/ArchievementManager';
+import { JwtTwoFactorGuard } from 'src/twoFactorAuthentication/services/authentication.service';
 
 const v4id = uuidv4()
 
@@ -49,8 +50,9 @@ export class UserController {
     }
 
 
-
+    
     @UseGuards(AuthGuard)
+    @UseGuards(JwtTwoFactorGuard)
     @Get('me')
     profileInfo(@Req() req)
     {

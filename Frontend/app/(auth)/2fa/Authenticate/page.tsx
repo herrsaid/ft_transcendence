@@ -3,8 +3,7 @@ import Cookies from 'js-cookie';
 import { useRouter } from "next/navigation";
 import { useState } from 'react';
 import { Input, useToast } from '@chakra-ui/react';
-import { containerClasses } from '@mui/material';
-
+import {useEffect } from 'react';
 
 
 export default  function TwoFactor()
@@ -15,11 +14,25 @@ export default  function TwoFactor()
     const toast = useToast()
 
 
+    useEffect(() => {
+    
+      if (typeof window !== 'undefined') {
+        if (Cookies.get('access_token') == undefined)
+        {
+            router.replace("/login");
+        }
+        else if(Cookies.get('twofactortoken') != undefined)
+        {
+          router.back();
+        }
+      }
+      
+    }, []);
+    
+    
     const EnableTwoFactor = async (event:React.FormEvent) =>
     {
         event.preventDefault();
-
-        console.log("befor hhhhhhhhhh")
 
         const  res = await fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/2fa/authenticate`, {
           method: 'POST',
@@ -30,7 +43,7 @@ export default  function TwoFactor()
           body: JSON.stringify({ twoFactorAuthenticationCode: code })
       });
 
-      console.log("hhhhhhhhhhhhhhhhhhhhhhh")
+     
       
       if (res.status == 401)
       {
@@ -55,8 +68,9 @@ export default  function TwoFactor()
           duration: 3000,
           isClosable: true,
         })
-        Cookies.set('twofactortoken', `${Cookies.get('access_token')}`, { expires: 30 });
-        console.log("wssalt")
+
+        const dataobject = await res.json();
+        Cookies.set('twofactortoken', `${dataobject.twofactortoken}`, { expires: 30 });
         router.replace("/");
       }
     }
