@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import Groups from 'Database/entity/Groups.entity';
 import { groupDto } from './groupsDto';
 import { GroupsService } from 'Database/services/groups/groups.service';
@@ -9,8 +9,9 @@ import { group } from 'console';
 export class GroupsController {
     constructor(private readonly GroupService:GroupsService, private readonly User:UserService){}
     @Post('create')
-    create(@Body() Group){
-        this.GroupService.create_group(Group);
+    async create(@Body() Group){
+        const group = await this.GroupService.create_group(Group);
+        this.add({GroupId:group.id,UserId:Group.user})
         return 'created'
     }
     @Post('add')
@@ -33,5 +34,14 @@ export class GroupsController {
     {
         const group = await this.GroupService.findOne_messages(params.id);
         return (group.messages);
+    }
+    @Get('search')
+    async search(@Query() Param)
+    {
+        if (!Param.value)
+            return [];
+        const res = await this.GroupService.search(Param.value)
+        console.log(res, Param.value);
+        return res;
     }
 }

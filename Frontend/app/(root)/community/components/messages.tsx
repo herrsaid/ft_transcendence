@@ -42,17 +42,13 @@ export default function Messages()
         }).then((response) => response.json()).then(data => setMessages(data))
     }, [])
     useEffect(() => {
-        console.log('daeffectta',reciver.reciver.id, reciver.reciver.isgroup);
         socket.on('message', (data:any) =>{
-            console.log('data',reciver.reciver.id, reciver.reciver.isgroup);
             if(!reciver.reciver.isgroup)
             {
-                console.log('not group', reciver.reciver.id, reciver.reciver.isgroup);
                 setMessages((old:any) => [...old, {src:data.src, dst:data.dst,content:data.content}])
             }
             else
             {
-                console.log('group akhoya')
                 setGroupMessage((old:any) => [...old, {src:data.src, dst:data.dst,content:data.content}])
             }
             console.log(groupMessage);

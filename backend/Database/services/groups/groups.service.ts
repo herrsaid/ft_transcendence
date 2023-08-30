@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import Groups from 'Database/entity/Groups.entity';
 import { Messages } from 'Database/entity/Message.entity';
 import { Repository } from 'typeorm';
+import { Like } from "typeorm"
 
 @Injectable()
 export class GroupsService {
@@ -36,5 +37,11 @@ export class GroupsService {
     save(group:Groups)
     {
         this.Groups.save(group);
+    }
+    async search(value:string)
+    {
+        return this.Groups.findBy({
+             name: Like(`%${value}%`)
+        })
     }
 }

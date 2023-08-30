@@ -26,7 +26,7 @@ import UserContext from "../../UserContext";
             Authorization: `Bearer ${Cookies.get('access_token')}`,
             "Content-Type": "application/json"
         },
-        body: JSON.stringify({name:data.name})
+        body: JSON.stringify({name:data.name, user:user.user.id})
     })
     })
     useEffect(()=>{

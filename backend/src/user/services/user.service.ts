@@ -150,7 +150,6 @@ export class UserService {
         catch{
             throw new BadRequestException();
         }
-        
     }
 
 
@@ -165,7 +164,6 @@ export class UserService {
         catch{
             throw new BadRequestException();
         }
-        
     }
 
     async updateStatus(id:number, updateStatus: updateStatus)
