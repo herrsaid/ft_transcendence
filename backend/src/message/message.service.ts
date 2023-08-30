@@ -12,6 +12,8 @@ export class MessageService {
         return this.messageRepo.save(message);
     }
     getMessages(id:number): Promise<Messages[]> {
+        if (!id)
+            return;
         return this.messageRepo.find({
             where:[{src: id}, {dst: id}],
         })

@@ -34,7 +34,7 @@ export default function Messages()
         }
     },[])
     useEffect(()=> {
-        fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/messages?id=${1}`,{
+        fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/messages?id=${user.user.id}`,{
             method: 'GET', headers:{
                 
                 Authorization: `Bearer ${Cookies.get('access_token')}`
