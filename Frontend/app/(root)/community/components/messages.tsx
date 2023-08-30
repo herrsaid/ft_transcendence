@@ -30,10 +30,7 @@ export default function Messages()
                 method: 'GET', headers:{
                     Authorization: `Bearer ${Cookies.get('access_token')}`
                 }
-            }).then((response) => response.json()).then(data => {setGroupMessage(data);
-                groupMap.set(reciver.reciver.id, groupMessage.map((data:any) => {return (data)}))
-                setMptest(groupMap);
-            })
+            }).then((response) => response.json()).then(data => {setGroupMessage(data)})
         }
     },[])
     useEffect(()=> {
@@ -78,7 +75,7 @@ export default function Messages()
                                 return( <Message key={index} content={message.content} class="self-start rounded-lg bg-sky-900 p-2 mb-2"/>)
                         })
                     ):(
-                        messages.map((message:any, index:number) =>{
+                        groupMessage.map((message:any, index:number) =>{
                             if (message.src == user.user.id && message.dst == reciver.reciver.id)
                                 return( <Message key={index} content={message.content} class="self-end rounded-lg bg-sky-900 p-2 mb-2"/>)
                             else if (message.dst == reciver.reciver.id)
