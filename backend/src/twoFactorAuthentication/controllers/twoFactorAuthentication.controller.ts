@@ -98,9 +98,7 @@ import { AuthenticationService } from '../services/authentication.service';
  
     const accessTokenCookie = this.authenticationService.getCookieWithJwtAccessToken(request.user.id, true);
  
-    request.res.setHeader('Set-Cookie', [accessTokenCookie]);
- 
-    return request.user;
+    return {"twofactortoken":accessTokenCookie}
   }
     
   }

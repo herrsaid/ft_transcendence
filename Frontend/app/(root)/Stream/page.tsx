@@ -10,7 +10,7 @@ import { player1, player2 } from '../Game/Online/Socket/start_game_socket';
 import { socket } from '../Game/Online/Socket/auto_match_socket';
 
 
-let NewStreamInfo:StreamInfoType;
+let NewStreamInfo:StreamInfoType = new StreamInfoType;
 
 function SpectatorMood(Room: number, router: AppRouterInstance,StreamContext:StreamContextType)
 {
@@ -68,15 +68,11 @@ export default function Stream() {
         BottomNav.style.display = "block";
         LeftNav.style.display = "none";
     }
-    console.log('user re-enter stream page');
+    // console.log('user re-enter stream page');
     player1.emit('conection_closed');
     player2.emit('conection_closed');
     socket.emit('conection_closed');
-    NewStreamInfo =
-    {
-      Access:0,
-      RoomNumber:0
-    };
+    NewStreamInfo = new StreamInfoType;
     return()=>
     {
         if(BottomNav && LeftNav)

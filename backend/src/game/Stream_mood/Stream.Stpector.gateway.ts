@@ -36,7 +36,7 @@ import { NewSpectator } from '../PingPong.dto';
       const RoomNumber = data.RoomNumber;
       if(GameObj.length && GameObj[RoomNumber] !== undefined)
         GameObj[RoomNumber].StreamsInfo.push(new GameStreamAttribute);
-      console.log('new_spectator at: ',RoomNumber,GameObj[RoomNumber].StreamsInfo.length );
+      // console.log('new_spectator at: ',RoomNumber,GameObj[RoomNumber].StreamsInfo.length );
       if(GameObj.length
         && GameObj[RoomNumber] !== undefined
         && GameObj[RoomNumber].StreamsInfo[GameObj[RoomNumber].StreamsInfo.length - 1] !== undefined)

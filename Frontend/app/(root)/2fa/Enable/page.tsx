@@ -77,13 +77,15 @@ export default  function TwoFactor()
         setcode("")
         toast({
           title: '2FA Enabed in this Account.',
-          description: "We've Enabled 2FA in Your account.",
+          description: "We've Enabled 2FA in Your account. You need to Login Again For Security Reason!",
           position: 'top-right',
           status: 'info',
           duration: 6000,
           isClosable: true,
         })
-        router.replace("/profile");
+        document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        document.cookie = 'twofactortoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        router.replace("/login");
       }
     }
     

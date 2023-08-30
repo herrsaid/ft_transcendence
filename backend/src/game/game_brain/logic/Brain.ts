@@ -35,7 +35,7 @@ export let GameObj: data[] = [];
     first_connect()
     {
       GameObj.push(new data());
-      console.log("push first simulation "+'['+GameObj.length+']');
+      // console.log("push first simulation "+'['+GameObj.length+']');
       GameObj[0].RoomInfo.GameSpeed = speed1 | speed2;
       GameObj[0].RoomInfo.GamePoints= points1 | points2;
       GameObj[0].PlayersInfo.Player1UserName = myusername;
@@ -51,7 +51,7 @@ export let GameObj: data[] = [];
     new_connect()
     {
       GameObj.push(new data());
-      console.log("push new simulation "+'['+GameObj.length+']');
+      // console.log("push new simulation "+'['+GameObj.length+']');
       GameObj[GameObj.length - 1].RoomInfo.GameSpeed = speed1 | speed2;
       GameObj[GameObj.length - 1].RoomInfo.GamePoints= points1 | points2;
       GameObj[GameObj.length - 1].PlayersInfo.Player1UserName = myusername;
@@ -162,12 +162,12 @@ export let GameObj: data[] = [];
       GameObj[Room].PlayersInfo.Player1ID = '';
       GameObj[Room].PlayersInfo.Player2ID = '';
       // remove Object of this room
-      console.log('['+GameObj.length+']');
+      // console.log('['+GameObj.length+']');
       if(GameObj.length === 1 && GameObj[0].PlayersInfo.Player1ID === '' && GameObj[0].PlayersInfo.Player2ID === '')
         GameObj.pop();
       else if(GameObj.length > 1)
         GameObj = GameObj.filter((obj) => obj.PlayersInfo.Player1ID !== '' &&  obj.PlayersInfo.Player2ID !== '');
-      console.log('['+GameObj.length+']');
+      // console.log('['+GameObj.length+']');
     }
 
     send_data_to_players(Room:number)
@@ -198,7 +198,7 @@ export let GameObj: data[] = [];
         {
           if(!GameObj.length)
           {
-            console.log("break");
+            // console.log("break");
             break;
           }
             if(GameObj[a].RoomInfo.Sleep <= 0 && GameObj[a].RoomInfo.GameStatus === 1 && GameObj[a].RoomInfo.TimeOut > 0)

@@ -1,13 +1,15 @@
 import { Injectable } from '@nestjs/common';
-
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-
 import { UserService } from 'src/user/services/user.service';
 import { TokenPayload } from '../interfaces/tokenPayload.interface';
-import { PassportStrategy } from '@nestjs/passport';
-import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Request } from 'express'; 
+import {
+  CanActivate,
+  ExecutionContext,
+  UnauthorizedException,
+} from '@nestjs/common';
+
 
 @Injectable()
 export class AuthenticationService {
@@ -23,7 +25,7 @@ export class AuthenticationService {
       secret: this.configService.get('JWT_ACCESS_TOKEN_SECRET'),
       expiresIn: `${this.configService.get('JWT_ACCESS_TOKEN_EXPIRATION_TIME')}d`
     });
-    return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get('JWT_ACCESS_TOKEN_EXPIRATION_TIME')}`;
+    return `${token}`;
   }
  
 }
@@ -31,29 +33,69 @@ export class AuthenticationService {
 
 
 @Injectable()
-export class JwtTwoFactorStrategy extends PassportStrategy(
-  Strategy,
-  'jwt-two-factor'
-) {
-  constructor(
-    private readonly configService: ConfigService,
-    private readonly userService: UserService,
-  ) {
-    super({
-      jwtFromRequest: ExtractJwt.fromExtractors([(request: Request) => {
-        return request?.cookies?.Authentication;
-      }]),
-      secretOrKey: configService.get('JWT_ACCESS_TOKEN_SECRET')
-    });
-  }
- 
-  async validate(payload: TokenPayload) {
-    const user = await this.userService.findOne(payload.userId);
-    if (!user.isTwoFactorAuthenticationEnabled) {
-      return user;
+  export class JwtTwoFactorGuard implements CanActivate {
+    constructor(private jwtService: JwtService, private readonly userService: UserService,
+      private readonly configService: ConfigService) {}
+  
+    async canActivate(context: ExecutionContext): Promise<boolean> {
+      const request = context.switchToHttp().getRequest();
+      const token = this.extractTokenFromHeader(request);
+      const tokenone = this.extractTokenone(request);
+      
+      try {
+
+        const payloadone   = await this.jwtService.verifyAsync(
+          tokenone,
+          {
+            secret: this.configService.get('JWT_ACCESS_TOKEN_SECRET')
+          }
+        );
+        
+        const userone = await this.userService.findOne(payloadone.id);
+
+        if (!userone.isTwoFactorAuthenticationEnabled) {
+          return true;
+        }
+        else
+        {
+          const payload   = await this.jwtService.verifyAsync(
+            token,
+            {
+              secret: this.configService.get('JWT_ACCESS_TOKEN_SECRET')
+            }
+          );
+          const user = await this.userService.findOne(payload.id);
+          if (payload.isSecondFactorAuthenticated) {
+            return true;
+          }
+        }
+        
+      } catch {
+        throw new UnauthorizedException();
+      }
+      return true;
     }
-    if (payload.isSecondFactorAuthenticated) {
-      return user;
+  
+    private extractTokenFromHeader(request: Request): string | undefined {
+      try{
+        const stringtoken:string = request.headers.twofactortoken.toString();
+        const token = stringtoken;
+        return token ? token : undefined;
+      }
+      catch{
+        return undefined;
+      }
+      
+    }
+
+    private extractTokenone(request: Request): string | undefined {
+      try{
+        const [type, token] = request.headers.authorization?.split(' ') ?? [];
+        return type === 'Bearer' ? token : undefined;
+      }
+      catch{
+        return undefined;
+      }
+      
     }
   }
-}

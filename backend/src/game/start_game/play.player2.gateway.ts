@@ -40,8 +40,8 @@ import { UseFilters, UsePipes, ValidationPipe } from '@nestjs/common';
       points2 = data.points;
       enemyusername = data.myusername;
       enemyimage = data.myimage;
-      console.log(data);
-      console.log('Player2Arr_content: ', Player2ID);
+      // console.log(data);
+      // console.log('Player2Arr_content: ', Player2ID);
     }
     @SubscribeMessage('send_player2_data')
     handleSendUser2Data(@ConnectedSocket() client: Socket, @MessageBody() data: PlayerPos): void {
@@ -71,7 +71,7 @@ import { UseFilters, UsePipes, ValidationPipe } from '@nestjs/common';
         }
       }
       Player2ID = '';
-      console.log("player2 disconnectI");
+      // console.log("player2 disconnectI");
   }
   handleDisconnect(client: Socket): void {
       for(let a = 0 ; a<GameObj.length; a++ )
@@ -86,6 +86,6 @@ import { UseFilters, UsePipes, ValidationPipe } from '@nestjs/common';
         }
       }
       Player2ID = '';
-      console.log("player2 disconnectII");
+      // console.log("player2 disconnectII");
     }
 }

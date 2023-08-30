@@ -6,7 +6,7 @@ import { GameDataContextType, GameDataSetterType } from '../GameClass/GameClass'
 
 export function initialze_data(GameContext:GameContextType,GDC:GameDataContextType)
 {
-  console.log('user re-enter game page');
+  // console.log('user re-enter game page');
   socket.emit('conection_closed');
   GDC.GameData.GameWidth = 800;
   GDC.GameData.GameHeight = 400;

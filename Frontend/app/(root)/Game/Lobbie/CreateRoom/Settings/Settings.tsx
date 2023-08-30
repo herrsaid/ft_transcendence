@@ -37,7 +37,7 @@ const PingPongSettings = ({ router }: any) =>
             BottomNav.style.display = "block";
             LeftNav.style.display = "none";
         }
-        console.log('user re-enter createroom page');
+        // console.log('user re-enter createroom page');
         player1.emit('conection_closed');
         player2.emit('conection_closed');
         socket.emit('conection_closed');
@@ -62,7 +62,7 @@ const PingPongSettings = ({ router }: any) =>
                 BottomNav.style.display = "none";
                 LeftNav.style.display = "block";
             }
-            console.log("i'm leaving");
+            // console.log("i'm leaving");
             access = false;
             InGame.IL = false;
         };

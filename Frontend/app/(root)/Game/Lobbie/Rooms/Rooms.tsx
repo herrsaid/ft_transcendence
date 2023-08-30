@@ -26,7 +26,7 @@ let newGameInfo:GameInfoType;
 let access:boolean = false; 
 function JoinToRoom(Room: number, router: AppRouterInstance,GameContext:GameContextType)
 {
-  console.log("button-pressed");
+  // console.log("button-pressed");
   let roomNumber = Room+1;
   newGameInfo.myusername = GameContext.GameInfo.myusername;
   newGameInfo.myimage = GameContext.GameInfo.myimage;
@@ -54,11 +54,11 @@ function JoinToRoom(Room: number, router: AppRouterInstance,GameContext:GameCont
       router.replace(`/Game/Online/Play`);
     }
   });
-  socket.on('JoinRefused',(data: string)=>
-  {
-    if(access)
-      console.log(data);
-  });
+  // socket.on('JoinRefused',(data: string)=>
+  // {
+    // if(access)
+    //   console.log(data);
+  // });
 }
 async function  GetNumberOfRooms(router: AppRouterInstance,GameContext:GameContextType)
 {
@@ -106,7 +106,7 @@ export default function Rooms() {
       BottomNav.style.display = "block";
       LeftNav.style.display = "none";
     }
-    console.log('user re-enter rooms page');
+    // console.log('user re-enter rooms page');
     player1.emit('conection_closed');
     player2.emit('conection_closed');
     socket.emit('conection_closed');

@@ -1,22 +1,24 @@
 import OneAchievevement from "./OneAchievement";
 import Cookies from 'js-cookie';
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import useSWR from "swr"
         
 const Achievevements = () => {
 
-  
+  const router = useRouter();
   let myAchievevement;
   
   const Achievevement = async (url:string) => {
       const res = await fetch(url, {
           method: 'GET',
           headers: {
-              Authorization: `Bearer ${Cookies.get('access_token')}`
-           }});
+            Authorization: `Bearer ${Cookies.get('access_token')}`,
+        }});
 
   return res.json();
 }
+
 
 
   const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/archievements/me`,
@@ -24,12 +26,19 @@ const Achievevements = () => {
   );
 
 
-  if (data)
+  try
+  {
+    if (data)
     {
       myAchievevement = data.map((Achievevement:any) => {
             return <OneAchievevement name={Achievevement.archievement_name} key={Achievevement.key}/>
         });
     }
+  }
+  catch{
+    return null;
+  }
+  
 
 
   

@@ -49,15 +49,14 @@ export default function RootLayout({
             const res = await fetch(url, {
                 method: 'GET',
                 headers: {
-                    Authorization: `Bearer ${Cookies.get('access_token')}`
+                    Authorization: `Bearer ${Cookies.get('access_token')}`,
+                    twofactortoken: Cookies.get('twofactortoken')!,
                 }});
         
                 if (res.status == 401)
                     router.replace("/login")
                 const jsonData = await res.json();
                 setUser(jsonData);
-                if (jsonData.isTwoFactorAuthenticationEnabled && Cookies.get('twofactortoken') === undefined )
-                    router.replace("/2fa/Authenticate")
                 if (!res.ok)
                     throw new Error("failed to fetch data");
                 if (jsonData.is_profile_img_updated)

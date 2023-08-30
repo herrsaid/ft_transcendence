@@ -12,7 +12,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-import Game from './Game';
+import Game from './Component/Game';
 import { useRouter } from 'next/navigation'
 import './Game.css'
 const page = () => 

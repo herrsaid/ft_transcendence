@@ -14,14 +14,14 @@
 
 import { useEffect,useContext,useState } from "react";
 import UserContext from "@/app/(root)/UserContext";
-import { GetGameInfoContext, GameContextType } from '../../GameContext/GameContext';
+import { GetGameInfoContext, GameContextType } from '../../../GameContext/GameContext';
 import p5 from "p5";
-import './Game.css'
-import { GameClass } from './GameClass/GameClass';
-import { NewValue } from './GameFunctions/Initialise';
-import { Ball, LineCenter, Racket1, Racket2 } from './GameFunctions/GameDrawer';
-import { GameStatusChecker } from './GameFunctions/GameChecker';
-import { BallAnimation, Racket1Animation, Racket2Animation } from './GameFunctions/GameLogic';
+import '../Game.css'
+import { GameClass } from '../GameClass/GameClass';
+import { NewValue } from '../GameFunctions/Initialise';
+import { Ball, LineCenter, Racket1, Racket2 } from '../GameFunctions/GameDrawer';
+import { GameStatusChecker } from '../GameFunctions/GameChecker';
+import { BallAnimation, Racket1Animation, Racket2Animation } from '../GameFunctions/GameLogic';
 
 export let GameData:GameClass;
 
@@ -32,6 +32,7 @@ const Game = () => {
   const [reslt2, setReslt2] = useState(0);
   useEffect(() =>
   {
+    let test:p5;
     let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
     let LeftNav:HTMLElement| null = document.getElementById('LeftNav');
     if(BottomNav && LeftNav)
@@ -40,41 +41,44 @@ const Game = () => {
         LeftNav.style.display = "none";
     }
     GameData = new GameClass();
-    const sketch = (p5: p5) => {
-      p5.setup = () => {
-      };
-      
-      p5.draw = () => {
-        NewValue(p5);
-        p5.background("#090533");
-        Racket1(p5,GameData.Racket1Xpos,GameData.Racket1Ypos,GameData.Racket1Width,GameData.Racket1Height);
-        LineCenter(p5);
-        Racket2(p5,GameData.Racket2Xpos,GameData.Racket2Ypos,GameData.Racket2Width,GameData.Racket2Height);
-        Ball(p5,GameData.BallXpos,GameData.BallYpos,GameData.BallWidth,GameData.BallHeight);
-        if(!GameStatusChecker(p5,GameContext))
-          return;
-        for(let a=0;a<GameContext.GameInfo.Speed;a++)
-          BallAnimation(p5);
-        Racket1Animation(p5,GameContext);
-        Racket2Animation(p5,GameContext);
-        setReslt1(GameData.Result1Val);
-        setReslt2(GameData.Result2Val);
-      };
-      p5.keyReleased = () =>{
-        p5.key = '';
-      }
-      p5.keyPressed = () =>{
-        if(GameContext.GameInfo.pause_game && p5.key === 'p')
-        {
-          if(GameData.access)
-          GameData.access = false;
-          else
-            GameData.access = true;
+    import('p5').then((p5Module) => {
+      const p5 = p5Module.default;
+      const sketch = (p5: p5) => {
+        p5.setup = () => {
+        };
+        
+        p5.draw = () => {
+          NewValue(p5);
+          p5.background("#090533");
+          Racket1(p5,GameData.Racket1Xpos,GameData.Racket1Ypos,GameData.Racket1Width,GameData.Racket1Height);
+          LineCenter(p5);
+          Racket2(p5,GameData.Racket2Xpos,GameData.Racket2Ypos,GameData.Racket2Width,GameData.Racket2Height);
+          Ball(p5,GameData.BallXpos,GameData.BallYpos,GameData.BallWidth,GameData.BallHeight);
+          if(!GameStatusChecker(p5,GameContext))
+            return;
+          for(let a=0;a<GameContext.GameInfo.Speed;a++)
+            BallAnimation(p5);
+          Racket1Animation(p5,GameContext);
+          Racket2Animation(p5,GameContext);
+          setReslt1(GameData.Result1Val);
+          setReslt2(GameData.Result2Val);
+        };
+        p5.keyReleased = () =>{
+          p5.key = '';
         }
-      }
-    };
+        p5.keyPressed = () =>{
+          if(GameContext.GameInfo.pause_game && p5.key === 'p')
+          {
+            if(GameData.access)
+            GameData.access = false;
+            else
+              GameData.access = true;
+          }
+        }
+      };
 
-    const test:p5 = new p5(sketch);
+      test = new p5(sketch);
+    });
     return()=>
     {
       if(BottomNav && LeftNav)

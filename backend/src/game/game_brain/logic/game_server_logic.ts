@@ -18,33 +18,33 @@ export class GameLogic
     debug(data:data)
     {
         //display info on terminal for debuging
-        console.log("------------------------------------");
-        console.log("data.BallXpos: "+ data.BallInfo.BallXpos);
-        console.log("data.BallYpos: "+ data.BallInfo.BallYpos);
-        console.log("data.BallXdirection: "+ data.BallInfo.BallXdirection);
-        console.log("data.BallYdirection: "+ data.BallInfo.BallYdirection);
-        console.log("data.BallWidth: "+ data.BallInfo.BallWidth);
-        console.log("data.BallHeight: "+ data.BallInfo.BallHeight);
-        console.log("data.Racket1Height: "+ data.RacketsInfo.Racket1Height);
-        console.log("data.Racket1Ypos: "+ data.RacketsInfo.Racket1Ypos);
-        console.log("data.Racket1Width: "+ data.RacketsInfo.Racket1Width);
-        console.log("data.Racket1Xpos: "+ data.RacketsInfo.Racket1Xpos);
-        console.log("data.Racket2Height: "+ data.RacketsInfo.Racket2Height);
-        console.log("data.Racket2Ypos: "+ data.RacketsInfo.Racket2Ypos);
-        console.log("data.Racket2Width: "+ data.RacketsInfo.Racket2Width);
-        console.log("data.Racket1Xpos: "+ data.RacketsInfo.Racket2Xpos);
-        console.log("data.Player1ID: "+ data.PlayersInfo.Player1ID);
-        console.log("data.Player2ID: "+ data.PlayersInfo.Player2ID);
-        console.log("data.Player1ID: "+ data.PlayersInfo.Player1UserName);
-        console.log("data.Player2ID: "+ data.PlayersInfo.Player2UserName);
-        console.log("data.GameWidth "+ data.RoomInfo.GameWidth);
-        console.log("data.GameHeight "+ data.RoomInfo.GameHeight);
-        console.log("data.GameStatus "+ data.RoomInfo.GameStatus );
-        console.log("data.GameSpeed "+ data.RoomInfo.GameSpeed );
-        console.log("data.GamePoints "+ data.RoomInfo.GamePoints );
-        console.log("data.Alpha "+ data.RoomInfo.Alpha);
-        console.log("data.Sleep "+ data.RoomInfo.Sleep);
-        console.log("------------------------------------");
+        // console.log("------------------------------------");
+        // console.log("data.BallXpos: "+ data.BallInfo.BallXpos);
+        // console.log("data.BallYpos: "+ data.BallInfo.BallYpos);
+        // console.log("data.BallXdirection: "+ data.BallInfo.BallXdirection);
+        // console.log("data.BallYdirection: "+ data.BallInfo.BallYdirection);
+        // console.log("data.BallWidth: "+ data.BallInfo.BallWidth);
+        // console.log("data.BallHeight: "+ data.BallInfo.BallHeight);
+        // console.log("data.Racket1Height: "+ data.RacketsInfo.Racket1Height);
+        // console.log("data.Racket1Ypos: "+ data.RacketsInfo.Racket1Ypos);
+        // console.log("data.Racket1Width: "+ data.RacketsInfo.Racket1Width);
+        // console.log("data.Racket1Xpos: "+ data.RacketsInfo.Racket1Xpos);
+        // console.log("data.Racket2Height: "+ data.RacketsInfo.Racket2Height);
+        // console.log("data.Racket2Ypos: "+ data.RacketsInfo.Racket2Ypos);
+        // console.log("data.Racket2Width: "+ data.RacketsInfo.Racket2Width);
+        // console.log("data.Racket1Xpos: "+ data.RacketsInfo.Racket2Xpos);
+        // console.log("data.Player1ID: "+ data.PlayersInfo.Player1ID);
+        // console.log("data.Player2ID: "+ data.PlayersInfo.Player2ID);
+        // console.log("data.Player1ID: "+ data.PlayersInfo.Player1UserName);
+        // console.log("data.Player2ID: "+ data.PlayersInfo.Player2UserName);
+        // console.log("data.GameWidth "+ data.RoomInfo.GameWidth);
+        // console.log("data.GameHeight "+ data.RoomInfo.GameHeight);
+        // console.log("data.GameStatus "+ data.RoomInfo.GameStatus );
+        // console.log("data.GameSpeed "+ data.RoomInfo.GameSpeed );
+        // console.log("data.GamePoints "+ data.RoomInfo.GamePoints );
+        // console.log("data.Alpha "+ data.RoomInfo.Alpha);
+        // console.log("data.Sleep "+ data.RoomInfo.Sleep);
+        // console.log("------------------------------------");
     }
     CheckAlpha(data:data,BallYpos: number, RacketYpos: number, RacketHeight: number)
     {
