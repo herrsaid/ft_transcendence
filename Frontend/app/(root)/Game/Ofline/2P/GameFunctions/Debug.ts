@@ -1,4 +1,4 @@
-import { GameData } from "../Game";
+import { GameData } from "../Component/Game";
 
 
 
