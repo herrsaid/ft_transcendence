@@ -2,7 +2,7 @@ import Message from "./message";
 import Profile from "./profile";
 import { VscSend } from 'react-icons/vsc'
 import { socket } from "../../socket/socket";
-import { useEffect, useRef, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import Cookies from 'js-cookie';
 import UserContext from "../../UserContext";
 import reciverContext from "../reciverContext";
@@ -22,17 +22,20 @@ export default function Messages()
     const [mptest, setMptest] = useState(new Map())
     const groupMap = new Map();
 
-    // useEffect(()=>{
-    //     if(reciver.reciver.isgroup)
-    //     {
-    //         fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/messages?id=${reciver.reciver.id}`,{
-    //             method: 'GET', headers:{
-    //                 Authorization: `Bearer ${Cookies.get('access_token')}`
-    //             }
-    //         }).then((response) => response.json()).then(data => setGroupMessage(data))
-    //         groupMap.set(reciver.reciver.id, groupMessage.map((data:any) => {return (data)}))
-    //     }
-    // },[])
+    useEffect(()=>{
+        if(reciver.reciver.isgroup)
+        {
+            console.log('daba ah')
+            fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/messages?id=${reciver.reciver.id}`,{
+                method: 'GET', headers:{
+                    Authorization: `Bearer ${Cookies.get('access_token')}`
+                }
+            }).then((response) => response.json()).then(data => {setGroupMessage(data);
+                groupMap.set(reciver.reciver.id, groupMessage.map((data:any) => {return (data)}))
+                setMptest(groupMap);
+            })
+        }
+    },[])
     useEffect(()=> {
         fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/messages?id=${1}`,{
             method: 'GET', headers:{
@@ -41,7 +44,6 @@ export default function Messages()
             }
         }).then((response) => response.json()).then(data => setMessages(data))
     }, [])
-    console.log('group messages', groupMap.get(reciver.reciver.id))
     useEffect(() => {
         socket.on('message', (data:any) =>{
             console.log(data)
@@ -57,6 +59,9 @@ export default function Messages()
         setMessages((old:any) => [...old, {src:user.user.id, dst:reciver.reciver.id, content:value}]);
         setValue('')
     }
+    const [current, setCurrent] = useState([])
+    useEffect(()=>{setCurrent(mptest.get('3'));},[])
+    console.log('cuurrr',current)
     return(
         <div className="flex flex-col  justify-center relative  h-[100%]">
             <div>

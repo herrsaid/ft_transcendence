@@ -37,7 +37,6 @@ import UserContext from "../../UserContext";
         }
       }).then((response) => response.json()).then(data => setGroup(data))
     },[])
-    console.log(group)
     return (
         <div className="flex flex-col justify-between h-[100%]">
             <div >
