@@ -12,18 +12,18 @@ import { GameStatusChecker } from '../GameFunctions/GameChecker';
 import { InGame } from "@/app/(root)/Components/Notification/Notification";
 
 const Game = ({ router }: any) => {
-  let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
-  let LeftNav:HTMLElement| null = document.getElementById('LeftNav');
-  if(BottomNav && LeftNav)
-  {
-      BottomNav.style.display = "block";
-      LeftNav.style.display = "none";
-  }
   const GameContext = GetGameInfoContext();
   const GameDataContext = GetGameDataContext();
   const [reslt1, setReslt1] = useState(0);
   const [reslt2, setReslt2] = useState(0);
   useEffect(() => {
+    let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
+    let LeftNav:HTMLElement| null = document.getElementById('LeftNav');
+    if(BottomNav && LeftNav)
+    {
+        BottomNav.style.display = "block";
+        LeftNav.style.display = "none";
+    }
     GameDataContext.SetGameData(new GameDataType());
     console.log(GameContext.GameInfo.host,GameContext.GameInfo.Speed,GameContext.GameInfo.Points);
     initialze_data(GameContext,GameDataContext);
