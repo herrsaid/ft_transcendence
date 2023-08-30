@@ -37,51 +37,54 @@ const Game = () => {
         LeftNav.style.display = "none";
     }
     GameData = new GameClass();
-    const sketch = (p5: p5) => {
-      p5.setup = () => {
-      };
-      
-      p5.draw = () => {
-        NewValue(p5);
-        if(!GameStatusChecker(p5,GameContext))
-          return;
-          p5.background("#090533");
-        for(let a=0;a<GameContext.GameInfo.Speed;a++)
-          BallAnimation(p5);
-        Racket1Animation(p5,GameContext);
-        Racket2Animation(p5,GameContext);
-        LineCenter(p5);
-        setReslt1(GameData.Result1Val);
-        setReslt2(GameData.Result2Val);
-        Ball(p5,GameData.BallXpos,GameData.BallYpos,GameData.BallWidth,GameData.BallHeight);
-        Racket1(p5,GameData.Racket1Xpos,GameData.Racket1Ypos,GameData.Racket1Width,GameData.Racket1Height);
-        Racket2(p5,GameData.Racket2Xpos,GameData.Racket2Ypos,GameData.Racket2Width,GameData.Racket2Height);
-      };
-      p5.keyReleased = () =>{
-        p5.key = '';
-      }
-      p5.keyPressed = () =>{
-        if(GameContext.GameInfo.pause_game && p5.key === 'p')
-        {
-          if(GameData.access)
-          GameData.access = false;
-          else
-            GameData.access = true;
+    import('p5').then((p5Module) => {
+      const p5 = p5Module.default;
+      const sketch = (p5: p5) => {
+        p5.setup = () => {
+        };
+        
+        p5.draw = () => {
+          NewValue(p5);
+          if(!GameStatusChecker(p5,GameContext))
+            return;
+            p5.background("#090533");
+          for(let a=0;a<GameContext.GameInfo.Speed;a++)
+            BallAnimation(p5);
+          Racket1Animation(p5,GameContext);
+          Racket2Animation(p5,GameContext);
+          LineCenter(p5);
+          setReslt1(GameData.Result1Val);
+          setReslt2(GameData.Result2Val);
+          Ball(p5,GameData.BallXpos,GameData.BallYpos,GameData.BallWidth,GameData.BallHeight);
+          Racket1(p5,GameData.Racket1Xpos,GameData.Racket1Ypos,GameData.Racket1Width,GameData.Racket1Height);
+          Racket2(p5,GameData.Racket2Xpos,GameData.Racket2Ypos,GameData.Racket2Width,GameData.Racket2Height);
+        };
+        p5.keyReleased = () =>{
+          p5.key = '';
         }
-      }
-    };
+        p5.keyPressed = () =>{
+          if(GameContext.GameInfo.pause_game && p5.key === 'p')
+          {
+            if(GameData.access)
+            GameData.access = false;
+            else
+              GameData.access = true;
+          }
+        }
+      };
 
-    const test:p5 = new p5(sketch);
-    return()=>
-    {
-      if(BottomNav && LeftNav)
+      const test:p5 = new p5(sketch);
+      return()=>
       {
-          BottomNav.style.display = "none";
-          LeftNav.style.display = "block";
-      }
-      test.remove();
-      GameData = new GameClass();
-    };
+        if(BottomNav && LeftNav)
+        {
+            BottomNav.style.display = "none";
+            LeftNav.style.display = "block";
+        }
+        test.remove();
+        GameData = new GameClass();
+      };
+    });
   }, []);
   
   return (

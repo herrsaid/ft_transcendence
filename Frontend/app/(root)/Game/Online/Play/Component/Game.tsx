@@ -27,54 +27,57 @@ const Game = ({ router }: any) => {
     GameDataContext.SetGameData(new GameDataType());
     console.log(GameContext.GameInfo.host,GameContext.GameInfo.Speed,GameContext.GameInfo.Points);
     initialze_data(GameContext,GameDataContext);
-    const sketch = (p5: p5) => {
-      p5.setup = () => {
-      };
-      
-      p5.draw = () => {
-        NewValue(p5,GameDataContext);      
-        if(!first_conection(p5,GameContext,GameDataContext,router))
-          return ;
-        if(GameStatusChecker(p5,GameContext,GameDataContext))
-        {
-          if(document.getElementById('sketch-container') && typeof window !== "undefined")
-            p5.createCanvas(GameDataContext.GameData.GameWidth, GameDataContext.GameData.GameHeight)
-              .parent('sketch-container')
-              .position((window.innerWidth-GameDataContext.GameData.GameWidth)/2,GameDataContext.GameData.GameHeight/4,'absolute');
-            p5.background("#090533");
-          BallAnimation(GameContext,GameDataContext);
-          if (GameContext.GameInfo.host)
-            Racket1Animation(p5,GameDataContext);
+    import('p5').then((p5Module) => {
+      const p5 = p5Module.default;
+      const sketch = (p5: p5) => {
+        p5.setup = () => {
+        };
+        
+        p5.draw = () => {
+          NewValue(p5,GameDataContext);      
+          if(!first_conection(p5,GameContext,GameDataContext,router))
+            return ;
+          if(GameStatusChecker(p5,GameContext,GameDataContext))
+          {
+            if(document.getElementById('sketch-container') && typeof window !== "undefined")
+              p5.createCanvas(GameDataContext.GameData.GameWidth, GameDataContext.GameData.GameHeight)
+                .parent('sketch-container')
+                .position((window.innerWidth-GameDataContext.GameData.GameWidth)/2,GameDataContext.GameData.GameHeight/4,'absolute');
+              p5.background("#090533");
+            BallAnimation(GameContext,GameDataContext);
+            if (GameContext.GameInfo.host)
+              Racket1Animation(p5,GameDataContext);
+            else
+              Racket2Animation(p5,GameDataContext);
+            LineCenter(p5,GameDataContext);
+            setReslt1(GameDataContext.GameData.Result1Val);
+            setReslt2(GameDataContext.GameData.Result2Val);
+            Ball(p5,GameDataContext);
+            Racket1(p5,GameDataContext);
+            Racket2(p5,GameDataContext);
+          }
           else
-            Racket2Animation(p5,GameDataContext);
-          LineCenter(p5,GameDataContext);
-          setReslt1(GameDataContext.GameData.Result1Val);
-          setReslt2(GameDataContext.GameData.Result2Val);
-          Ball(p5,GameDataContext);
-          Racket1(p5,GameDataContext);
-          Racket2(p5,GameDataContext);
+            return;
+        };
+        p5.keyReleased = () =>{
+          p5.key = '';
         }
-        else
-          return;
       };
-      p5.keyReleased = () =>{
-        p5.key = '';
-      }
-    };
-    const test:p5 = new p5(sketch);
-    const interval:NodeJS.Timeout = setInterval(()=>{if(!InGame.IG){router.replace('/Game/Lobbie')}},3000);
-    return()=>
-    {
-      if(BottomNav && LeftNav)
+      const test:p5 = new p5(sketch);
+      const interval:NodeJS.Timeout = setInterval(()=>{if(!InGame.IG){router.replace('/Game/Lobbie')}},3000);
+      return()=>
       {
-          BottomNav.style.display = "none";
-          LeftNav.style.display = "block";
-      }
-      test.remove();
-      clearInterval(interval);
-      InGame.IG = false;
-      GameDataContext.SetGameData(new GameDataType);
-    };
+        if(BottomNav && LeftNav)
+        {
+            BottomNav.style.display = "none";
+            LeftNav.style.display = "block";
+        }
+        test.remove();
+        clearInterval(interval);
+        InGame.IG = false;
+        GameDataContext.SetGameData(new GameDataType);
+      };
+    });
   }, []);
 
   if(!GameContext.GameInfo.Access)
