@@ -17,6 +17,8 @@ const Game = ({ router }: any) => {
   const [reslt1, setReslt1] = useState(0);
   const [reslt2, setReslt2] = useState(0);
   useEffect(() => {
+    let test:p5;
+    let interval:NodeJS.Timer;
     let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
     let LeftNav:HTMLElement| null = document.getElementById('LeftNav');
     if(BottomNav && LeftNav)
@@ -63,21 +65,21 @@ const Game = ({ router }: any) => {
           p5.key = '';
         }
       };
-      const test:p5 = new p5(sketch);
-      const interval:NodeJS.Timeout = setInterval(()=>{if(!InGame.IG){router.replace('/Game/Lobbie')}},3000);
-      return()=>
-      {
-        if(BottomNav && LeftNav)
-        {
-            BottomNav.style.display = "none";
-            LeftNav.style.display = "block";
-        }
-        test.remove();
-        clearInterval(interval);
-        InGame.IG = false;
-        GameDataContext.SetGameData(new GameDataType);
-      };
+      test = new p5(sketch);
+      interval = setInterval(()=>{if(!InGame.IG){router.replace('/Game/Lobbie');}},3000);
     });
+    return()=>
+    {
+      if(BottomNav && LeftNav)
+      {
+        BottomNav.style.display = "none";
+        LeftNav.style.display = "block";
+      }
+      clearInterval(interval);
+      test.remove();
+      InGame.IG = false;
+      GameDataContext.SetGameData(new GameDataType);
+    };
   }, []);
 
   if(!GameContext.GameInfo.Access)

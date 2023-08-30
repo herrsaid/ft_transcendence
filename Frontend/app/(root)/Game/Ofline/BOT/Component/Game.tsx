@@ -32,6 +32,7 @@ const Game = () => {
   const [reslt2, setReslt2] = useState(0);
   useEffect(() =>
   {
+    let test:p5;
     let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
     let LeftNav:HTMLElement| null = document.getElementById('LeftNav');
     if(BottomNav && LeftNav)
@@ -76,18 +77,18 @@ const Game = () => {
         }
       };
 
-      const test:p5 = new p5(sketch);
-      return()=>
-      {
-        if(BottomNav && LeftNav)
-        {
-            BottomNav.style.display = "none";
-            LeftNav.style.display = "block";
-        }
-        test.remove();
-        GameData = new GameClass();
-      };
+      test = new p5(sketch);
     });
+    return()=>
+    {
+      if(BottomNav && LeftNav)
+      {
+          BottomNav.style.display = "none";
+          LeftNav.style.display = "block";
+      }
+      test.remove();
+      GameData = new GameClass();
+    };
   }, []);
 
   return (
