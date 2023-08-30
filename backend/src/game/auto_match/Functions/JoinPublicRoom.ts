@@ -36,7 +36,7 @@ export function JoinPublicRoomLogic(client: Socket, data: UserInfo): void {
       if(Rooms[data.roomNumber].players.length < 2)
       {
         Rooms[data.roomNumber].players.push(player_data);
-        console.log("Push New Room");
+        // console.log("Push New Room");
         Rooms[data.roomNumber].players[0].PlayerSocket.emit(
           'SendData',Rooms[data.roomNumber].players[1].Player,Rooms[data.roomNumber].players[1].PlayerImg,true);
           Rooms[data.roomNumber].players[1].PlayerSocket.emit(
@@ -49,8 +49,8 @@ export function JoinPublicRoomLogic(client: Socket, data: UserInfo): void {
         return ;
       }
     }
-        console.log(Rooms);
-        console.log("Launch Public Room");
+        // console.log(Rooms);
+        // console.log("Launch Public Room");
         for(let a=0;a<Rooms[data.roomNumber].players.length;a++)
           Rooms[data.roomNumber].players[a].PlayerSocket.emit('conection_closed');
   }

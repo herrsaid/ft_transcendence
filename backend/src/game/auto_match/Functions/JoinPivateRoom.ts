@@ -24,7 +24,7 @@ export function JoinPrivateRoomLogic(client: Socket, data: UserInfo1): void
       if(Room.players.length)
       {
         Room.players.push(player_data);
-        console.log("Push New Room");
+        // console.log("Puseh New Room");
         Room.players[0].PlayerSocket.emit(
           'SendData',Room.players[1].Player,Room.players[1].PlayerImg,true);
           Room.players[1].PlayerSocket.emit(
@@ -36,8 +36,8 @@ export function JoinPrivateRoomLogic(client: Socket, data: UserInfo1): void
         client.emit('JoinRefused','Room is full or already in match');
         return ;
       }
-      console.log(Rooms);
-      console.log("Launch Public Room");
+      // console.log(Rooms);
+      // console.log("Launch Public Room");
       for(let a=0;a<Room.players.length;a++)
         Room.players[a].PlayerSocket.emit('conection_closed');
     }

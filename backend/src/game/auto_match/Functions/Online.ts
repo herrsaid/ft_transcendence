@@ -13,12 +13,12 @@ export function OnlineLogic(client: Socket, username:string ): void
         if(elem === undefined)
         {
         Online.push(data);
-        console.log(`new player is online ${data.Player}`);
+        // console.log(`new player is online ${data.Player}`);
         }
         else if(elem.Player !== username)
         {
         elem.Player = username;
-        console.log(`update player usename to: ${data.Player}`);
+        // console.log(`update player usename to: ${data.Player}`);
         }
     }
 }

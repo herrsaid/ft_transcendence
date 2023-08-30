@@ -68,7 +68,7 @@ export default function Stream() {
         BottomNav.style.display = "block";
         LeftNav.style.display = "none";
     }
-    console.log('user re-enter stream page');
+    // console.log('user re-enter stream page');
     player1.emit('conection_closed');
     player2.emit('conection_closed');
     socket.emit('conection_closed');

@@ -25,7 +25,7 @@ const Game = ({ router }: any) => {
         LeftNav.style.display = "none";
     }
     GameDataContext.SetGameData(new GameDataType());
-    console.log(GameContext.GameInfo.host,GameContext.GameInfo.Speed,GameContext.GameInfo.Points);
+    // console.log(GameContext.GameInfo.host,GameContext.GameInfo.Speed,GameContext.GameInfo.Points);
     initialze_data(GameContext,GameDataContext);
     import('p5').then((p5Module) => {
       const p5 = p5Module.default;

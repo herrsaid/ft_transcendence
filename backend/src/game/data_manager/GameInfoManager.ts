@@ -38,7 +38,7 @@ export class GameInfoManager
         if(GameInfo.totalosses === 9)
             this.Archievement.NewArchievement(GameInfo.userid,'Lose9Times');
         ArchievementLength = (await (this.Archievement.GetAllUserArchievementByUsername(GameInfo.userid))).length;
-        console.log("ArchievementLength "+ ArchievementLength);
+        // console.log("ArchievementLength "+ ArchievementLength);
         if(ArchievementLength >= 4)
             this.Archievement.NewArchievement(GameInfo.userid,'Gain4Archievement');
         if(ArchievementLength >= 9)

@@ -39,12 +39,12 @@ export function CreateRoomLogic(client: Socket, data: RoomSettings): void {
       // if(check.players.find(elem => elem.PlayerId === client.id) !== undefined)
       //   return ;
       // else
-        console.log("Push New User");
+        // console.log("Push New User");
       check.players.push(player_data);
       check.players[0].PlayerSocket.emit('SendData',check.players[1].Player,check.players[1].PlayerImg,true);
       check.players[1].PlayerSocket.emit('SendData',check.players[0].Player,check.players[0].PlayerImg,false);
-      console.log(Rooms);
-      console.log("Launch Public Room");
+      // console.log(Rooms);
+      // console.log("Launch Public Room");
       return;
     }
     else if(data.roomMood !== false)
@@ -74,7 +74,7 @@ export function CreateRoomLogic(client: Socket, data: RoomSettings): void {
       if(test && test.Player !== data.myusername)
       {
         test.PlayerSocket.emit('SendRequest',obj);
-        console.log("Push New Room");
+        // console.log("Push New Room");
       }
       else
       {
@@ -82,5 +82,5 @@ export function CreateRoomLogic(client: Socket, data: RoomSettings): void {
         client.emit("RequestRefused");      
       }
     }
-    console.log(Rooms);
+    // console.log(Rooms);
   }

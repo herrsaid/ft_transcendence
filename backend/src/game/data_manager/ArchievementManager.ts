@@ -18,8 +18,8 @@ export class ArchievementManager
 
         if(!findold)
             await this.Archievement.save(archieve);
-        else
-            console.log('data match');
+        // else
+            // console.log('data match');
     }
 
     async GetAllUserArchievementByUsername(UserId:number):Promise<GameArchievement[]>

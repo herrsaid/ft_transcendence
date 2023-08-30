@@ -107,15 +107,15 @@ import { WebSocketGateWayFilter } from '../PingPong.filter';
     @SubscribeMessage('conection_closed')
     handleconection_closed(client: Socket): void {
       Rooms = ConectionClosedLogic(client);
-      console.log("Remove Old Room");
-      console.log(Rooms);
+      // console.log("Remove Old Room");
+      // console.log(Rooms);
       }
     handleDisconnect(client: Socket): void {
       let obj:{Rooms:RoomClass[],Online:OnlineClass[]} = {Rooms:[new RoomClass(),],Online:[new OnlineClass(),]};
       obj = DisconnectLogic(client);
       Rooms = obj.Rooms;
       Online = obj.Online;
-      console.log(Rooms);
+      // console.log(Rooms);
     }
   }
   

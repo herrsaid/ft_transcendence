@@ -17,7 +17,7 @@ export function GameStatusChecker(p5: p5,GameContext:GameContextType,GDC:GameDat
       {
         GDC.GameData.message = data;
         player1.emit('conection_closed');
-        console.log('conection_closed1');
+        // console.log('conection_closed1');
       }
     
     });
@@ -38,7 +38,7 @@ export function GameStatusChecker(p5: p5,GameContext:GameContextType,GDC:GameDat
       {  
         GDC.GameData.message = data;
         player2.emit('conection_closed');
-        console.log('conection_closed2');
+        // console.log('conection_closed2');
       }
     });
     if(GDC.GameData.message !== '')
