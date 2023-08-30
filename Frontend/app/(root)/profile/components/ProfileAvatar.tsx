@@ -59,8 +59,9 @@ const ProfileAvatar = (props:props) => {
                       try {
                         const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/me`,{
                           method: 'GET',
-                      headers: {
-                          Authorization: `Bearer ${Cookies.get('access_token')}`
+                          headers: {
+                            Authorization: `Bearer ${Cookies.get('access_token')}`,
+                            twofactortoken: Cookies.get('twofactortoken')!,
                        }
                         });
                         if (response.status == 401)

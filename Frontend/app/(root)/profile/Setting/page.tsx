@@ -79,8 +79,9 @@ export default  function Profile()
           try {
             const response = await fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/me`,{
               method: 'GET',
-          headers: {
-              Authorization: `Bearer ${Cookies.get('access_token')}`
+              headers: {
+                Authorization: `Bearer ${Cookies.get('access_token')}`,
+                twofactortoken: Cookies.get('twofactortoken')!,
            }
             });
             if (response.status == 401)
@@ -103,8 +104,7 @@ export default  function Profile()
           position:'top-right',
           isClosable: true,
         })
-        router.replace("/")
-        // router.replace("/profile");
+        router.replace("/profile");
       }
 
         
@@ -119,6 +119,10 @@ export default  function Profile()
       if (contexUser.user.isTwoFactorAuthenticationEnabled == false)
       {
         router.replace("/2fa/Enable")
+      }
+      else if (contexUser.user.isTwoFactorAuthenticationEnabled)
+      {
+        router.replace("/2fa/Disable")
       }
     }
 
