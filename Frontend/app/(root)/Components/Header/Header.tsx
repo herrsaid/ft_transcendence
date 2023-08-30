@@ -69,10 +69,10 @@ export default  function Header()
                         </Avatar>
       <div className="dropdown-menu" id="dropdownMenu" onClick={openMenu}>
       
-        <p className="link_drop"><Link href='/' >Home</Link></p>
-        <p className="link_drop"><Link href='/profile' >Profile</Link></p>
-        <p className="link_drop"><Link href='/Game/Lobbie'>Play</Link></p>
-        <p className="link_drop"><Link href='/community' >Chat</Link></p>
+      <Link href='/' ><p className="link_drop">Home</p></Link>
+      <Link href='/profile' ><p className="link_drop">Profile</p></Link>
+      <Link href='/Game/Lobbie'><p className="link_drop">Play</p></Link>
+      <Link href='/community' ><p className="link_drop">Chat</p></Link>
         <button onClick={logout}><h1 className="link_drop h1_link">Logout</h1></button>
       </div>
     </div>

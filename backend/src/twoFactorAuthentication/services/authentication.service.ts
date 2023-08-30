@@ -77,13 +77,25 @@ export class AuthenticationService {
     }
   
     private extractTokenFromHeader(request: Request): string | undefined {
-      const stringtoken:string = request.headers.twofactortoken.toString();
-      const token = stringtoken;
-      return token ? token : undefined;
+      try{
+        const stringtoken:string = request.headers.twofactortoken.toString();
+        const token = stringtoken;
+        return token ? token : undefined;
+      }
+      catch{
+        return undefined;
+      }
+      
     }
 
     private extractTokenone(request: Request): string | undefined {
-      const [type, token] = request.headers.authorization?.split(' ') ?? [];
-      return type === 'Bearer' ? token : undefined;
+      try{
+        const [type, token] = request.headers.authorization?.split(' ') ?? [];
+        return type === 'Bearer' ? token : undefined;
+      }
+      catch{
+        return undefined;
+      }
+      
     }
   }

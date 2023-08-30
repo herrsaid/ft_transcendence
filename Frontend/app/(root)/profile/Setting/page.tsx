@@ -103,7 +103,8 @@ export default  function Profile()
           position:'top-right',
           isClosable: true,
         })
-        router.replace("/profile");
+        router.replace("/")
+        // router.replace("/profile");
       }
 
         
