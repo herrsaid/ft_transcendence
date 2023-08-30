@@ -1,5 +1,5 @@
 import p5 from 'p5';
-import { GameData } from '../Game';
+import { GameData } from '../Component/Game';
 import { GameContextType } from '../../../GameContext/GameContext';
 
 

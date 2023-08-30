@@ -2,13 +2,13 @@
 
 import { useEffect,useState } from "react";
 import p5 from "p5";
-import './Game.css';
-import { GetGameInfoContext} from '../../GameContext/GameContext';
-import { GameDataType, GetGameDataContext } from './GameClass/GameClass';
-import { BallAnimation, Racket1Animation, Racket2Animation, first_conection } from './GameFunctions/GameLogic';
-import { Ball, LineCenter, Racket1, Racket2 } from './GameFunctions/GameDrawer';
-import { NewValue, initialze_data } from './GameFunctions/Initialise';
-import { GameStatusChecker } from './GameFunctions/GameChecker';
+import '../Game.css';
+import { GetGameInfoContext} from '../../../GameContext/GameContext';
+import { GameDataType, GetGameDataContext } from '../GameClass/GameClass';
+import { BallAnimation, Racket1Animation, Racket2Animation, first_conection } from '../GameFunctions/GameLogic';
+import { Ball, LineCenter, Racket1, Racket2 } from '../GameFunctions/GameDrawer';
+import { NewValue, initialze_data } from '../GameFunctions/Initialise';
+import { GameStatusChecker } from '../GameFunctions/GameChecker';
 import { InGame } from "@/app/(root)/Components/Notification/Notification";
 
 const Game = ({ router }: any) => {
