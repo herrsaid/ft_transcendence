@@ -3,11 +3,13 @@ import {AuthGuard} from "@nestjs/passport"
 import { Request, Response } from 'express';
 import { ConfigService } from '@nestjs/config';
 import { GoogleAuthService } from '../services/googleauth.service';
+import { JwtService } from '@nestjs/jwt';
 
 
 @Controller('auth')
 export class GoogleAuthController {
-  constructor(private readonly googleAuthService: GoogleAuthService, private readonly configService: ConfigService) {}
+  constructor(private readonly googleAuthService: GoogleAuthService, private readonly configService: ConfigService,
+    private readonly jwtService: JwtService) {}
 
   @Get('google')
   @UseGuards(AuthGuard('google'))
@@ -15,13 +17,16 @@ export class GoogleAuthController {
     
   }
 
+  
 
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
-  googleAuthRedirect(@Req() req:Request, @Res() res:Response)
+  googleAuthRedirect(@Req() req, @Res() res:Response)
   {
     const access_token = this.googleAuthService.googleLogin(req);
     const token : string = access_token['access_token'];
+    
+    const decodedToken = this.jwtService.verify(token);
    
     res.cookie('access_token', token,{
       httpOnly: false,
@@ -29,10 +34,16 @@ export class GoogleAuthController {
             expires: new Date(Date.now() + 1 * 24 * 600 * 10000),
     });
     const front_url = this.configService.get<string>('FRONT_IP');
-    // res.redirect(`${front_url}/user/friends`);
-    res.redirect('http://localhost:3000/');
-    // res.redirect('http://localhost:1337/user/friends');
-    return this.googleAuthService.googleLogin(req)
+
+    if (decodedToken.isTwoFactorAuthenticationEnabled)
+    {
+      res.redirect('http://localhost:3000/2fa/Authenticate');
+    }
+    else
+    {
+      res.redirect('http://localhost:3000/');
+    }
+    
   }
 
 }

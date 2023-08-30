@@ -27,12 +27,12 @@ let access:boolean = false;
 function JoinToRoom(Room: number, router: AppRouterInstance,GameContext:GameContextType)
 {
   console.log("button-pressed");
-  let RoomNumber = Room+1;
+  let roomNumber = Room+1;
   newGameInfo.myusername = GameContext.GameInfo.myusername;
   newGameInfo.myimage = GameContext.GameInfo.myimage;
-  let Username = newGameInfo.myusername;
+  let username = newGameInfo.myusername;
   let myimage = newGameInfo.myimage;
-  socket.emit('JoinPublicRoom',{RoomNumber,Username,myimage});
+  socket.emit('JoinPublicRoom',{roomNumber,username,myimage});
   socket.on('SendData', (username,playerimg,data) => {
     if(access)
     {

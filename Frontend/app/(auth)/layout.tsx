@@ -1,6 +1,6 @@
 import Links from '../(root)/Components/Links/Links'
 import './../(root)/globals.css'
-
+import { Providers } from "./providers";
 
 
 export const metadata = {
@@ -19,8 +19,10 @@ export default function RootLayout({
     
     <html lang="en">
       <body>
+      <Providers>
       <Links/>
               {children}
+              </Providers>
       </body>
     </html>
   )

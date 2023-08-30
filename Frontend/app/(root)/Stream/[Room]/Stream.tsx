@@ -3,7 +3,7 @@
 import p5 from "p5";
 import { useEffect,useState } from "react";
 import { GameDataType } from "./StreamClass/StreamClass";
-import { GetStreamInfoContext } from '../../Stream/StreamContext/StreamContext'
+import { GetStreamInfoContext, StreamContextType } from '../../Stream/StreamContext/StreamContext'
 import './Stream.css';
 import { GetPlayersData } from "./GameFunctions/GameLogic";
 import { NewValue, first_conection } from "./GameFunctions/Initialise";
@@ -21,7 +21,7 @@ const Game = ({ router }: any) => {
       BottomNav.style.display = "block";
       LeftNav.style.display = "none";
   }
-  const StreamContext = GetStreamInfoContext();
+  const StreamContext:StreamContextType = GetStreamInfoContext();
   const [reslt1, setReslt1] = useState(0);
   const [reslt2, setReslt2] = useState(0);
   useEffect(() => {
@@ -36,7 +36,7 @@ const Game = ({ router }: any) => {
       {
         first_conection(StreamContext);
         NewValue(p5);
-        GetPlayersData(router);
+        GetPlayersData(router,StreamContext);
         if(!StreamContext.StreamInfo.Access)
         {
           router.replace('/Stream');
@@ -74,19 +74,19 @@ const Game = ({ router }: any) => {
   return (
     <div className="relative flex mx-auto my-auto w-[100%] h-[100vh]">
       <div className=" relative flex h-[12.5vw] w-[50%] lg:h-[125px] lg:w-[500px] mx-auto">
-        <img className=" relative flex w-[25%] h-[100%] bg-center brightness-[0.75] rounded-tl-xl" src={StreamData.Player1Image!.toString()}/>
+        <img className=" relative flex w-[25%] h-[100%] bg-center brightness-[0.75] rounded-tl-xl" src={StreamContext.StreamInfo.Player1Image}/>
         {/* <img className=" relative flex w-[50%] h-[50%%] bg-center" src={myimage1!}/> */}
         <div className="absolute flex w-[60%] h-[100%] left-[20%] trapezoid z-10">
         </div>
         {/* <img className="relative flex w-[50%] h-[25vw] bg-center" src={enemmyimage1!}/> */}
-        <img className="relative flex left-[50%] w-[25%] h-[100%] bg-center brightness-[0.75] rounded-tr-xl" src={StreamData.Player2Image!}/>
+        <img className="relative flex left-[50%] w-[25%] h-[100%] bg-center brightness-[0.75] rounded-tr-xl" src={StreamContext.StreamInfo.Player2Image!}/>
       </div>
       <div  className=" absolute flex h-[12.5vw] w-[25%] lg:h-[125px] lg:w-[250px] left-[37.5%] lg:left-[43.3%] rounded-xl z-20">
-        <div className="relative my-auto px-[5%]  flex z-20 text-white text-[1.5vw] lg:text-[1vw]">{StreamData.Player1UserName!}</div>
+        <div className="relative my-auto px-[5%]  flex z-20 text-white text-[1.5vw] lg:text-[1vw]">{StreamContext.StreamInfo.Player1UserName!}</div>
         <div className="relative my-auto  flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">{reslt1}</div>
         <div className="relative my-auto mx-auto flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">-</div>
         <div className="relative my-auto   flex z-20 text-white text-[2.1vw] lg:text-[1.5vw]">{reslt2}</div>
-        <div className="relative my-auto px-[5%]  flex z-20 text-white text-[1.5vw] lg:text-[1vw]">{StreamData.Player2UserName!.toString()}</div>
+        <div className="relative my-auto px-[5%]  flex z-20 text-white text-[1.5vw] lg:text-[1vw]">{StreamContext.StreamInfo.Player2UserName}</div>
       </div>
       {/* <div className="relative flex h-[40vw] w-[60%] mx-auto"> */}
         <div id="sketch-container" className="absolute flex mx-auto my-auto w-[100%] h-[50vw]"></div>

@@ -23,10 +23,6 @@ export class GameDataType
     public message: string; 
     public Result1Val: number;
     public Result2Val: number;
-    public Player1UserName:string;
-    public Player2UserName:string;
-    public Player1Image:string;
-    public Player2Image:string;
     constructor ()
     {
         this.GameWidth = 800;
@@ -52,9 +48,5 @@ export class GameDataType
         this.message = ''; 
         this.Result1Val = 0;
         this.Result2Val = 0;
-        this.Player1UserName ="player I";
-        this.Player2UserName ="player II";
-        this.Player1Image ="/2.jpg";
-        this.Player2Image ="/3.jpg";
     }
 }

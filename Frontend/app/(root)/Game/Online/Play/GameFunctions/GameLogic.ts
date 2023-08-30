@@ -47,7 +47,7 @@ export function Racket1Animation(p5: p5,GDC:GameDataContextType)
     else if(p5.mouseY > (GDC.GameData.Racket1Ypos + GDC.GameData.Racket1Height))
       GDC.GameData.Racket1Ypos += GDC.GameData.GameSpeed;
   }
-  player1.emit('send_player1_data',ConvertClientData(((GDC.GameData.GameHeight - GDC.GameData.Racket1Height) - GDC.GameData.Racket1Ypos),0,GDC));
+  player1.emit('send_player1_data',{data: ConvertClientData(((GDC.GameData.GameHeight - GDC.GameData.Racket1Height) - GDC.GameData.Racket1Ypos),0,GDC)});
 	player1.on('send_player1_data',(data)=> 
   {
     if(GDC.GameData.access)
@@ -68,7 +68,7 @@ export function Racket2Animation(p5: p5,GDC:GameDataContextType)
     else if(p5.mouseY > (GDC.GameData.Racket1Ypos + GDC.GameData.Racket1Height))
       GDC.GameData.Racket1Ypos += GDC.GameData.GameSpeed;
   }
-  player2.emit('send_player2_data', ConvertClientData(GDC.GameData.Racket1Ypos,0,GDC));
+  player2.emit('send_player2_data', {data: ConvertClientData(GDC.GameData.Racket1Ypos,0,GDC)});
 	player2.on('send_player2_data',(data)=> 
   {
     if(GDC.GameData.access)
@@ -90,8 +90,8 @@ export function first_conection(p5:p5,GameContext:GameContextType,GDC:GameDataCo
     {
         player1.emit('first_conection',
         {
-          Speed: GameContext.GameInfo.Speed,
-          Points:GameContext.GameInfo.Points,
+          speed: GameContext.GameInfo.Speed,
+          points:GameContext.GameInfo.Points,
           myusername:GameContext.GameInfo.myusername,
           myimage:GameContext.GameInfo.myimage,
         });
@@ -100,8 +100,8 @@ export function first_conection(p5:p5,GameContext:GameContextType,GDC:GameDataCo
 		  {
         player2.emit('first_conection',
         {
-          Speed: GameContext.GameInfo.Speed,
-          Points:GameContext.GameInfo.Points,
+          speed: GameContext.GameInfo.Speed,
+          points:GameContext.GameInfo.Points,
           myusername:GameContext.GameInfo.myusername,
           myimage:GameContext.GameInfo.myimage,
         });

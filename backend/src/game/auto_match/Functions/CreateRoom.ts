@@ -2,19 +2,23 @@ import { Socket } from 'socket.io';
 import { Online, Rooms } from "../lobbie.gateway";
 import { OnlineClass } from '../auto_match_class/OnlineClass';
 import { PlayerClass } from "../auto_match_class/PlayerClass";
-import { RoomSettingsEntity } from "src/game/PingPong.Entity";
+import { RoomSettings } from "src/game/PingPong.dto";
 import { RoomClass } from "../auto_match_class/RoomClass";
-import { GameObj } from "src/game/start_game/play.ball.gateway";
+import { GameObj } from "src/game/game_brain/logic/Brain";
 
-export function CreateRoomLogic(client: Socket, data: RoomSettingsEntity): void {
+export function CreateRoomLogic(client: Socket, data: RoomSettings): void {
     if(data.myusername === null)
     {
       client.emit('CreateRefused','please (log-in/sign-in) to accept your join');
       return ;
     }
-    if(Rooms.find((elem)=> elem.players[0].Player === data.myusername) !== undefined)
+    let Room = Rooms.find((elem)=> elem.players[0].Player === data.myusername)
+    if(Room !== undefined)
     {
-      client.emit('CreateRefused',"you can't Create two Rooms");
+      if(Room.players[0].PlayerSocket === client)
+        client.emit('CreateRefused',"You Can't Create Two Rooms");
+      else
+        client.emit('CreateRefused',"you can't create two rooms");
       return ;
     }
     if(GameObj.find((elem)=>
@@ -29,8 +33,8 @@ export function CreateRoomLogic(client: Socket, data: RoomSettingsEntity): void 
     player_data.PlayerImg = data.myimage;
     player_data.PlayerId = client.id;
     player_data.PlayerSocket = client;
-    let check:RoomClass = Rooms.find(elem => elem.Points === data.Points && elem.Speed === data.Speed && elem.RoomMood == data.RoomMood);
-    if(check !== undefined && data.RoomMood !== false)
+    let check:RoomClass = Rooms.find(elem => elem.Points === data.points && elem.Speed === data.speed && elem.RoomMood == data.roomMood);
+    if(check !== undefined && data.roomMood !== false)
     {
       // if(check.players.find(elem => elem.PlayerId === client.id) !== undefined)
       //   return ;
@@ -43,24 +47,24 @@ export function CreateRoomLogic(client: Socket, data: RoomSettingsEntity): void 
       console.log("Launch Public Room");
       return;
     }
-    else if(data.RoomMood !== false)
+    else if(data.roomMood !== false)
     {
       let Room:RoomClass = new RoomClass;
       Room.players.push(player_data);
-      Room.Speed = data.Speed;
-      Room.Points = data.Points;
-      Room.RoomMood = data.RoomMood;
+      Room.Speed = data.speed;
+      Room.Points = data.points;
+      Room.RoomMood = data.roomMood;
       Rooms.push(Room);
     }
-    else if(data.RoomMood === false)
+    else if(data.roomMood === false)
     {
       let Room:RoomClass = new RoomClass;
       Room.players.push(player_data);
-      Room.Speed = data.Speed;
-      Room.Points = data.Points;
-      Room.RoomMood = data.RoomMood;
+      Room.Speed = data.speed;
+      Room.Points = data.points;
+      Room.RoomMood = data.roomMood;
       Rooms.push(Room);
-      let test:OnlineClass = Online.find(elem => elem.Player === data.InputValue);
+      let test:OnlineClass = Online.find(elem => elem.Player === data.inputValue);
       const obj= 
       {
         message: `invite from: ${player_data.Player}`,

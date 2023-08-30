@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import cookieParser from 'cookie-parser';
+import { WebSocketGateWayFilter } from './game/PingPong.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, { cors: true });
@@ -12,6 +13,7 @@ async function bootstrap() {
     whitelist:true,
     forbidNonWhitelisted:true
   }));
+  // app.useGlobalFilters(new WebSocketGateWayFilter());
   app.enableCors({
     origin: true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',

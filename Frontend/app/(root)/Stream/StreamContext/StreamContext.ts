@@ -3,10 +3,23 @@
 import {Dispatch,SetStateAction, createContext, useContext } from "react";
 
 export type StreamInfoStateType = Dispatch<SetStateAction<StreamInfoType>>;
-export interface StreamInfoType
+export class StreamInfoType
 {
-  Access: number,
-  RoomNumber:number,
+  public Access: number;
+  public RoomNumber:number;
+  public Player1UserName:string;
+  public Player2UserName:string;
+  public Player1Image:string;
+  public Player2Image:string;
+
+  constructor() {
+    this.Access = 0;
+    this.RoomNumber = 0;
+    this.Player1UserName = "player I";
+    this.Player2UserName = "player II";
+    this.Player1Image = "/2.jpg";
+    this.Player2Image = "/3.jpg";
+  }
 }
  export interface StreamContextType {
   StreamInfo: StreamInfoType;
@@ -14,10 +27,7 @@ export interface StreamInfoType
  }
 
 const Stream: StreamContextType = {
-    StreamInfo :{
-        Access:0,
-        RoomNumber:0,
-  },
+    StreamInfo : new StreamInfoType(),
   SetStreamInfo: () => {}
 };
 

@@ -15,15 +15,19 @@ import {
     WebSocketGateway,
     OnGatewayDisconnect,
     WebSocketServer,
+    MessageBody,
+    ConnectedSocket,
   } from '@nestjs/websockets';
   import { Socket } from 'socket.io';
   import { RoomClass } from './auto_match_class/RoomClass';
   import { OnlineClass } from './auto_match_class/OnlineClass';
   import {
-    RoomSettingsEntity,
+    OnlineDTO,
+    RequestRefusedDTO,
+    RoomSettings,
     UserInfo,
     UserInfo1,
-  } from '../PingPong.Entity';
+  } from '../PingPong.dto';
 import { OnlineLogic } from './Functions/Online';
 import { RequestRefusedLogic } from './Functions/RequestRefused';
 import { CreateRoomLogic } from './Functions/CreateRoom';
@@ -31,42 +35,68 @@ import { JoinPublicRoomLogic } from './Functions/JoinPublicRoom';
 import { JoinPrivateRoomLogic } from './Functions/JoinPivateRoom';
 import { GetRoomsLogic } from './Functions/GetRooms';
 import { ConectionClosedLogic, DisconnectLogic } from './Functions/Disconnect_ConnectionClosed';
+import { UseFilters, UsePipes, ValidationPipe } from '@nestjs/common';
+import { WebSocketGateWayFilter } from '../PingPong.filter';
   
   export let Rooms: RoomClass[] = [];
   export let Online: OnlineClass[] = [];
   @WebSocketGateway(1339, {
     cors: { origin: '*', credentials: true },
   })
+
+  @UseFilters(new WebSocketGateWayFilter())
+  @UsePipes(new ValidationPipe())
   export class PingPongGateway implements OnGatewayDisconnect {
     @WebSocketServer()
     
     @SubscribeMessage('Online')
-    handleOnline(client: Socket, username:string ): void
+    handleOnline(@ConnectedSocket() client: Socket, @MessageBody() data:OnlineDTO ): void
     {
-      OnlineLogic(client,username);
+      OnlineLogic(client,data.username);
     }
 
     @SubscribeMessage('RequestRefused')
-    handleRequestRefused(client: Socket,targrt:string): void
+    handleRequestRefused(@ConnectedSocket() client: Socket, @MessageBody() data:RequestRefusedDTO): void
     {
-      RequestRefusedLogic(targrt);
+      RequestRefusedLogic(data.targrt);
     }
 
     @SubscribeMessage('CreateRoom')
-    handleCreateRoom(client: Socket, data: RoomSettingsEntity): void
+    handleCreateRoom(@ConnectedSocket() client: Socket, @MessageBody() data: RoomSettings): void
     {
-      CreateRoomLogic(client,data);
+      try
+      {
+          CreateRoomLogic(client,data);
+      }
+      catch(error)
+      {
+          client.emit('CreateRefused', 'Invalid data');
+      }
     }
 
     @SubscribeMessage('JoinPublicRoom')
-    handleJoinPublicRoom(client: Socket, data: UserInfo): void
+    handleJoinPublicRoom(@ConnectedSocket() client: Socket, @MessageBody() data: UserInfo): void
     {
-      JoinPublicRoomLogic(client,data);
+      try
+      {
+          JoinPublicRoomLogic(client,data);
+      }
+      catch(error)
+      {
+          client.emit('JoinRefused', 'Invalid data');
+      }
     }
     @SubscribeMessage('JoinPrivateRoom')
-    handleJoinPrivateRoom(client: Socket, data: UserInfo1): void 
+    handleJoinPrivateRoom(@ConnectedSocket() client: Socket, @MessageBody() data: UserInfo1): void 
     {
-      JoinPrivateRoomLogic(client,data);
+      try
+      {
+          JoinPrivateRoomLogic(client,data);
+      }
+      catch(error)
+      {
+          client.emit('JoinRefused', 'Invalid data');
+      }
     }
 
     @SubscribeMessage('GetRooms')

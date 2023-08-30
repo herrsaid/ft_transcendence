@@ -21,15 +21,15 @@ export function StartRoom(router: any,toast:any,GameContext:GameContextType)
         {
             notification.style.opacity = "0";
             notification.style.display = "none";
-            socket.emit("RequestRefused",GameContext.GameInfo.enemmyusername);
+            socket.emit("RequestRefused",{targrt:GameContext.GameInfo.enemmyusername});
         }
         socket.emit('CreateRoom',{
-            Speed: newGameInfo.Speed,
-            Points: newGameInfo.Points,
+            speed: newGameInfo.Speed,
+            points: newGameInfo.Points,
             myusername: GameContext.GameInfo.myusername,
             myimage: GameContext.GameInfo.myimage,
-            RoomMood: !!newGameInfo.RoomMood,
-            InputValue: input_value,
+            roomMood: !!newGameInfo.RoomMood,
+            inputValue: input_value,
         });
         socket.on("RequestRefused",()=>
         {
@@ -48,7 +48,7 @@ export function StartRoom(router: any,toast:any,GameContext:GameContextType)
                 if(settings && loading)
                 {
                     if(message === "you can't Create two Rooms")
-                    settings.style.filter = "blur(0px)";
+                        settings.style.filter = "blur(0px)";
                     else
                     {
                         InGame.IL = false;

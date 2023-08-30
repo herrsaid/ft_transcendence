@@ -15,38 +15,45 @@ import {
     WebSocketGateway,
     OnGatewayDisconnect,
     WebSocketServer,
+    MessageBody,
+    ConnectedSocket,
   } from '@nestjs/websockets';
   import { Socket, Server } from 'socket.io';
-  import { GameObj } from './play.ball.gateway';
+  import { GameObj } from '../game_brain/logic/Brain';
+import { FirstConnection, PlayerPos } from '../PingPong.dto';
+import { WebSocketGateWayFilter } from '../PingPong.filter';
+import { UseFilters, UsePipes, ValidationPipe } from '@nestjs/common';
   export let Player2ID: string = '',speed2: number = 0,points2: number = 0,enemyusername:string = '',enemyimage:string = '';;
   let none: Socket;
   @WebSocketGateway(1341, {
     cors: { origin: '*', credentials: true },
   })
+  @UseFilters(new WebSocketGateWayFilter())
+  @UsePipes(new ValidationPipe())
   export class PlayPlayer2Gateway implements OnGatewayDisconnect {
     @WebSocketServer()
     server: Server;
     @SubscribeMessage('first_conection')
-    handleFirst_conct(client: Socket, data): void {
+    handleFirst_conct(@ConnectedSocket() client: Socket, @MessageBody() data:FirstConnection): void {
       Player2ID = client.id;
-      speed2 = data.Speed;
-      points2 = data.Points;
+      speed2 = data.speed;
+      points2 = data.points;
       enemyusername = data.myusername;
       enemyimage = data.myimage;
       console.log(data);
       console.log('Player2Arr_content: ', Player2ID);
     }
     @SubscribeMessage('send_player2_data')
-    handleSendUser2Data(client: Socket, data: number): void {
+    handleSendUser2Data(@ConnectedSocket() client: Socket, @MessageBody() data: PlayerPos): void {
         for(let a = 0 ; a<GameObj.length; a++ )
         {
           if(GameObj[a].PlayersInfo.Player2ID === client.id)
           {
             if(GameObj[a].PlayersInfo.Player2Client === undefined)
               GameObj[a].PlayersInfo.Player2Client = client;
-            GameObj[a].RacketsInfo.Racket1Ypos = data;
+            GameObj[a].RacketsInfo.Racket1Ypos = data.data;
             if(GameObj[a].PlayersInfo.Player1Client != undefined)
-              GameObj[a].PlayersInfo.Player1Client.emit('send_player1_data', data);
+              GameObj[a].PlayersInfo.Player1Client.emit('send_player1_data', data.data);
           }
         }
       }

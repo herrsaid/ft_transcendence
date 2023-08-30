@@ -14,7 +14,7 @@ const JoinPrivateRoom = (GameContext:GameContextType,InviterName:string,router: 
     let obj = 
     {
         target: InviterName,
-        Username: GameContext.GameInfo.myusername,
+        username: GameContext.GameInfo.myusername,
         myimage: GameContext.GameInfo.myimage,
     };
     socket.emit("JoinPrivateRoom",obj);
@@ -51,7 +51,7 @@ const Notification = () =>
     {
       let notification:HTMLElement| null = document.getElementById('notification');
       let content:HTMLElement| null = document.getElementById('content');
-      socket.emit("Online",GameContext.GameInfo.myusername);
+      socket.emit("Online",{username: GameContext.GameInfo.myusername});
       socket.on("SendRequest",(data)=>
       {
         if(notification && content)
@@ -67,12 +67,12 @@ const Notification = () =>
             notification.style.opacity = "0";
             notification.style.display = "none";
           }
-          socket.emit("RequestRefused",data.inviterusername);
+          socket.emit("RequestRefused",{targrt: data.inviterusername});
           Setaccess(false);
         }
         else if(InviterName !=  "" && InviterName != data.inviterusername)
         {
-          socket.emit("RequestRefused",InviterName);
+          socket.emit("RequestRefused",{targrt:InviterName});
         }
         else
         {
@@ -101,7 +101,7 @@ const Notification = () =>
           notification.style.opacity = "0";
           notification.style.display = "none";
           if(access && InviterName !=  "")
-            socket.emit("RequestRefused",InviterName);
+            socket.emit("RequestRefused",{targrt:InviterName});
         }
         SetInviterName("");
         Setaccess(false);

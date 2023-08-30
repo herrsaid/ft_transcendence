@@ -7,10 +7,10 @@ import { StreamContextType } from '../../StreamContext/StreamContext';
 export function first_conection(StreamContext:StreamContextType)
 {
   if(StreamData.first_conection_val === false)
-		{
-			StreamData.first_conection_val = true;
-      stream.emit("new_spectator",StreamContext.StreamInfo.RoomNumber);
-		}
+  {
+    StreamData.first_conection_val = true;
+    stream.emit("new_spectator",{RoomNumber: StreamContext.StreamInfo.RoomNumber});
+  }
 }
 
 export function NewValue(p5:p5)
