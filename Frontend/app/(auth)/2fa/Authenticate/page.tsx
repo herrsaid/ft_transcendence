@@ -3,6 +3,7 @@ import Cookies from 'js-cookie';
 import { useRouter } from "next/navigation";
 import { useState } from 'react';
 import { Input, useToast } from '@chakra-ui/react';
+import { containerClasses } from '@mui/material';
 
 
 
@@ -18,7 +19,7 @@ export default  function TwoFactor()
     {
         event.preventDefault();
 
-
+        console.log("befor hhhhhhhhhh")
 
         const  res = await fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/2fa/authenticate`, {
           method: 'POST',
@@ -28,6 +29,8 @@ export default  function TwoFactor()
               },
           body: JSON.stringify({ twoFactorAuthenticationCode: code })
       });
+
+      console.log("hhhhhhhhhhhhhhhhhhhhhhh")
       
       if (res.status == 401)
       {
@@ -52,6 +55,8 @@ export default  function TwoFactor()
           duration: 3000,
           isClosable: true,
         })
+        Cookies.set('twofactortoken', `${Cookies.get('access_token')}`, { expires: 30 });
+        console.log("wssalt")
         router.replace("/");
       }
     }

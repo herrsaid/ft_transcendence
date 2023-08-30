@@ -42,23 +42,38 @@ export default function Messages()
         }).then((response) => response.json()).then(data => setMessages(data))
     }, [])
     useEffect(() => {
+        console.log('daeffectta',reciver.reciver.id, reciver.reciver.isgroup);
         socket.on('message', (data:any) =>{
-            console.log(data)
-            setMessages((old:any) => [...old, {src:data.src, dst:data.dst,content:data.content}])
+            console.log('data',reciver.reciver.id, reciver.reciver.isgroup);
+            if(!reciver.reciver.isgroup)
+            {
+                console.log('not group', reciver.reciver.id, reciver.reciver.isgroup);
+                setMessages((old:any) => [...old, {src:data.src, dst:data.dst,content:data.content}])
+            }
+            else
+            {
+                console.log('group akhoya')
+                setGroupMessage((old:any) => [...old, {src:data.src, dst:data.dst,content:data.content}])
+            }
+            console.log(groupMessage);
         })
-    },[])
+    },[reciver.reciver.isgroup])
     const send = (e:any)=>{
         e.preventDefault();
         if(!reciver.reciver.isgroup)
+        {
             socket.emit('message', {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:false})
+            setMessages((old:any) => [...old, {src:user.user.id, dst:reciver.reciver.id, content:value}]);
+        }
         else
+        {
             socket.emit('message', {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:true})
-        setMessages((old:any) => [...old, {src:user.user.id, dst:reciver.reciver.id, content:value}]);
+            setGroupMessage((old:any) => [...old, {src:user.user.id, dst:reciver.reciver.id, content:value}]);
+        }
         setValue('')
     }
     const [current, setCurrent] = useState([])
     useEffect(()=>{setCurrent(mptest.get('3'));},[])
-    console.log('cuurrr',current)
     return(
         <div className="flex flex-col  justify-center relative  h-[100%]">
             <div>
@@ -75,7 +90,7 @@ export default function Messages()
                                 return( <Message key={index} content={message.content} class="self-start rounded-lg bg-sky-900 p-2 mb-2"/>)
                         })
                     ):(
-                        groupMessage.map((message:any, index:number) =>{
+                        groupMessage.map((message:any, index:number) => {
                             if (message.src == user.user.id && message.dst == reciver.reciver.id)
                                 return( <Message key={index} content={message.content} class="self-end rounded-lg bg-sky-900 p-2 mb-2"/>)
                             else if (message.dst == reciver.reciver.id)
