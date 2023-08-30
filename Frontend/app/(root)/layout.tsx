@@ -40,6 +40,7 @@ export default function RootLayout({
         router.replace('/login');
       }
     }
+    
   }, []);
 
 
@@ -55,7 +56,8 @@ export default function RootLayout({
                     router.replace("/login")
                 const jsonData = await res.json();
                 setUser(jsonData);
-                
+                if (jsonData.isTwoFactorAuthenticationEnabled && Cookies.get('twofactortoken') === undefined )
+                    router.replace("/2fa/Authenticate")
                 if (!res.ok)
                     throw new Error("failed to fetch data");
                 if (jsonData.is_profile_img_updated)
@@ -73,6 +75,7 @@ export default function RootLayout({
 const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/me`,
 fetchData
 );
+
 
   return (
     
