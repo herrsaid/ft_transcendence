@@ -45,12 +45,11 @@ const Notification = () =>
     const GDC:GameDataContextType = GetGameDataContext();
     const [InviterName,SetInviterName] = useState("");
     const [access,Setaccess] = useState(false);
-
     useEffect(()=>
     {
       let notification:HTMLElement| null = document.getElementById('notification');
       let content:HTMLElement| null = document.getElementById('content');
-      socket.emit("Online",{username: GameContext.GameInfo.myusername});
+        socket.emit("Online",{username: GameContext.GameInfo.myusername});
       socket.on("SendRequest",(data)=>
       {
         if(notification && content)
