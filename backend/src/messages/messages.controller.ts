@@ -11,6 +11,15 @@ export class MessagesController {
     @UseGuards(AuthGuard)
     @Get()
     messages(@Query('id') id: number){
-        return this.MessageService.getMessages(id)
+        if (isNaN(id))
+            return []
+        try{
+
+            return this.MessageService.getMessages(id)
+        }
+        catch(error)
+        {
+            return [];
+        }
     }
 }

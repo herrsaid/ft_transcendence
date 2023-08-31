@@ -27,7 +27,6 @@ export default function Messages()
     useEffect(()=>{
         if(reciver.reciver.isgroup)
         {
-            console.log('daba ah')
             fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/messages?id=${reciver.reciver.id}`,{
                 method: 'GET', headers:{
                     Authorization: `Bearer ${Cookies.get('access_token')}`
@@ -37,6 +36,7 @@ export default function Messages()
     },[reciver.reciver.isgroup])
     //fetch private messages
     useEffect(()=> {
+        console.log('user = ', user.user.id);
         fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/messages?id=${user.user.id}`,{
             method: 'GET', headers:{
                 
@@ -55,7 +55,6 @@ export default function Messages()
             {
                 setGroupMessage((old:any) => [...old, {src:data.src, dst:data.dst,content:data.content}])
             }
-            console.log(groupMessage);
         })
     },[reciver.reciver.isgroup])
     const send = (e:any)=>{
@@ -77,14 +76,15 @@ export default function Messages()
     }
     const [current, setCurrent] = useState([])
     useEffect(()=>{setCurrent(mptest.get('3'));},[])
+    console.log('messaagagdf', messages)
     if (reciver.reciver.id == undefined)
         return(<div className="sm:hidden"><Chats/></div>)
     return(
-        <div className="flex flex-col  justify-center relative  h-full">
-            <div>
+        <div className="flex flex-col relative  h-full">
+            <div className="rounded-lg drop-shadow-md">
                 <Profile/>
             </div>
-            <div className="flex flex-col h-[87%] p-3 overflow-auto">
+            <div className="flex flex-col h-[80%] p-3 overflow-auto">
                 {
                     (!reciver.reciver.isgroup && messages)?
                     (
