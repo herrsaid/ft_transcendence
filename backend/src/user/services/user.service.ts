@@ -166,11 +166,11 @@ export class UserService {
         }
     }
 
-    async updateStatus(id:number, updateStatus: updateStatus)
+    async updateStatus(username:string, updateStatus: updateStatus)
     {
         try
         {
-            const user = await this.userRepo.findOne({where:{id:id}});
+            const user = await this.userRepo.findOne({where:{username:username}});
             Object.assign(user, updateStatus);
             return await this.userRepo.save(user);
         }
