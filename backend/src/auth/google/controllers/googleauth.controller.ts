@@ -35,6 +35,10 @@ export class GoogleAuthController {
     });
     const front_url = this.configService.get<string>('FRONT_IP');
 
+    if (decodedToken.firstLogin)
+    {
+      res.redirect('http://localhost:3000/Setup');
+    }
     if (decodedToken.isTwoFactorAuthenticationEnabled)
     {
       res.redirect('http://localhost:3000/2fa/Authenticate');

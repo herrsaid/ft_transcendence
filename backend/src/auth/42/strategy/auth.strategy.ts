@@ -27,7 +27,11 @@ export class AuthStrategy extends PassportStrategy(Strategy, '42') {
         if (user_check)
         {
 
-            const payload = {id : user_check.id, username: user_check.username, email : emails[0].value, twoFactorAuthenticationSecret:user_check.twoFactorAuthenticationSecret, isTwoFactorAuthenticationEnabled:user_check.isTwoFactorAuthenticationEnabled};
+            const payload = {id : user_check.id, username: user_check.username,
+               email : emails[0].value, twoFactorAuthenticationSecret:user_check.twoFactorAuthenticationSecret,
+                isTwoFactorAuthenticationEnabled:user_check.isTwoFactorAuthenticationEnabled,
+                firstLogin:false
+              };
         
             
             return {
@@ -45,7 +49,12 @@ export class AuthStrategy extends PassportStrategy(Strategy, '42') {
           const user_check = await this.UserService.findUserByEmail(emails[0].value);
           if (user_check)
           {
-              const payload = {id : user_check.id, username: user_check.username, email : emails[0].value, twoFactorAuthenticationSecret:user_check.twoFactorAuthenticationSecret, isTwoFactorAuthenticationEnabled:user_check.isTwoFactorAuthenticationEnabled};
+              const payload = {id : user_check.id,
+                 username: user_check.username, email : emails[0].value,
+                  twoFactorAuthenticationSecret:user_check.twoFactorAuthenticationSecret,
+                   isTwoFactorAuthenticationEnabled:user_check.isTwoFactorAuthenticationEnabled,
+                   firstLogin:true
+                  };
       
               return {
                   access_token: await this.jwtService.signAsync(payload),

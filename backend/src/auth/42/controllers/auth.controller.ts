@@ -36,7 +36,10 @@ export class AuthController {
 
     const front_url = this.configService.get<string>('FRONT_IP');
     
-
+    if (decodedToken.firstLogin)
+    {
+      res.redirect(`${front_url}/Setup`);
+    }
     if (decodedToken.isTwoFactorAuthenticationEnabled)
     {
       res.redirect(`${front_url}/2fa/Authenticate`);
