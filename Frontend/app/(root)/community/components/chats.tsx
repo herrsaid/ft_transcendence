@@ -47,9 +47,9 @@ export default function Chats()
     return (
         <div className="flex flex-col h-full">
             <div className="text-center text-2xl pb-1">Chats</div>
-            <div className="flex justify-around border-b-2 border-gray-500 m-2">
-                <div onClick={friend_click} className="hover:bg-sky-900 w-1/2 text-center border-r-2 border-gray-500 cursor-pointer p-2">friends</div>
-                <div onClick={group_click} className="hover:bg-sky-900 w-1/2 text-center cursor-pointer p-2" >groups</div>
+            <div className="flex justify-around m-2">
+                <div onClick={friend_click} className="hover:bg-sky-500 w-1/2 text-center bg-sky-900 rounded-full cursor-pointer p-2 drop-shadow-md">friends</div>
+                <div onClick={group_click} className="hover:bg-sky-500 w-1/2 text-center bg-sky-900 rounded-full cursor-pointer p-2 drop-shadow-md" >groups</div>
             </div>
             <div className="self-center mt-2 mb-2 w-[90%] relative drop-shadow-md">
                 <form action="">
