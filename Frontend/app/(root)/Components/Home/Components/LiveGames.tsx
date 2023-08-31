@@ -17,8 +17,8 @@ export default function LiveGames() {
     <div className="live-game-card aibanner rounded-lg shadow-md p-6 ">
 
     <h1 className="text-2xl font-bold mb-4">Training With Bot</h1>
-      <p className="text-md mb-4">Enjoy Tranining with our ping pong Bot!</p>
-      <Link className=" forhover bg-gradient-to-br from-purple-600 to-indigo-800 font-semibold py-2 px-4 rounded-lg inline-block" href="/Game/Ofline/BOT">Get Started</Link>
+      
+      <Link className=" forhover bg-gradient-to-br from-purple-600 to-indigo-800 font-semibold py-2 px-4 rounded-lg inline-block mt-20" href="/Game/Ofline/BOT">Get Started</Link>
        
       </div>
 

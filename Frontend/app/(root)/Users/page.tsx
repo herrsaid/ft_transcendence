@@ -39,8 +39,9 @@ export default  function Users()
         })
     }
     return(
-
-        <div className="stats-bg max-w-md w-full p-6 rounded-lg shadow-md">
+        <div className="container mx-auto px-2 py-10 pb-32">
+        <div className="w-full p-6 rounded-lg shadow-md mx-auto items-center">
+            <div className="w-[300px] mx-auto items-center">
         <h1 className="text-2xl font-semibold mb-4">Find Friends</h1>
         <div className=' mb-6'>
         <SearchInput/>
@@ -51,7 +52,8 @@ export default  function Users()
             
             {myFriends ? myFriends : "No friend!"}   
            
-       
+            </div>
+    </div>
     </div>
     );
 }

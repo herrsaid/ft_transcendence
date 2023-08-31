@@ -21,7 +21,7 @@ export default  function User()
 
     if (usercontext.user.username == username)
     {
-        router.back()
+        router.push('/profile')
     }
     const fetchUserData = async (url:string) => {
         const res = await fetch(url, {

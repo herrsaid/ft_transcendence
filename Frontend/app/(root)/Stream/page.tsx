@@ -83,7 +83,7 @@ export default function Stream() {
     };
   },[]);
     return (
-      <div className="container mx-auto px-2 py-[250px] text-center items-center ">
+      <div className="container mx-auto px-2 py-[20px] text-center items-center ">
         <div className="mx-auto">
           <div id="Rooms" className="overflow-y-auto rounded-md p-6 h-[300px] mb-[40px] shadow-2xl" >
           </div>

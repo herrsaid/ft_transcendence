@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { GameArchievement, GameUserInfo } from '../PingPong.Entity'
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
@@ -162,7 +162,13 @@ export class GameInfoManager
 
     async GetGameInfoByUsername(UserId:number):Promise<GameUserInfo | null>
     {
-        return await this.GameUserInfo.findOne({ where: { userid:UserId } });
+        try
+        {
+            return await this.GameUserInfo.findOne({ where: { userid:UserId } });
+        }
+        catch{
+            throw new NotFoundException();
+        }
     }
 
     async GetRankByUserId(userid:number)
