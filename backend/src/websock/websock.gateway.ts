@@ -31,7 +31,7 @@ export class WebsockGateway {
       const payload = jwt.verify(token, 'complexkey3884-asgfgsd,s33003400mmdma-434-4das111!!!!!+++')
       this.online.set(payload.id, socket.id);
       console.log(this.online);
-      this.UserService.updateStatus(payload.id, {status:true})
+      // this.UserService.updateStatus(payload.id, {status:true})
       const groups = await this.UserService.getGroups(payload.id);
       for (let i = 0; i < groups.length; i++)
         socket.join(groups[i].id.toString())
@@ -43,7 +43,7 @@ export class WebsockGateway {
   handleDisconnect(socket: Socket)
   {
     console.log('disconnected ', socket.id)
-    this.UserService.updateStatus(this.online_users.find(obj => obj.socket_id == socket.id), {status:false})
+    // this.UserService.updateStatus(this.online_users.find(obj => obj.socket_id == socket.id), {status:false})
     console.log(this.online);
   }
   @SubscribeMessage('message')
