@@ -91,17 +91,17 @@ fetchData
         {/* {Cookies.get('access_token') != undefined && <Header/>} */}
         <Header/>
         {/* {Cookies.get('access_token') != undefined && <BottomNav/>} */}
-        <div className='flex'>
+        <div className='flex h-[90svh]'>
 
         
         <BottomNav/>
-        {/* <div className='child'> */}
+        <div className=''>
               {/* {Cookies.get('access_token') != undefined && children} */}
 
       
-      {/* </div> */}
+      </div>
       <main className="flex-1">
-        {/* <div className='child'> */}
+        <div className='h-full'>
         <GameInfoContext.Provider value={{ GameInfo,SetGameInfo }}>
           <GameDataContext.Provider value={{ GameData,SetGameData}}>
             <StreamInfoContext.Provider value={{ StreamInfo,SetStreamInfo }}>
@@ -110,7 +110,7 @@ fetchData
             </StreamInfoContext.Provider>
           </GameDataContext.Provider>
         </GameInfoContext.Provider>
-        {/* </div> */}
+        </div>
           </main>
         </div>
             

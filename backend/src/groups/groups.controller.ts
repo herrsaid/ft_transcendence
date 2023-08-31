@@ -44,4 +44,17 @@ export class GroupsController {
         console.log(res, Param.value);
         return res;
     }
+    @Get('join')
+    async join(@Query() param)
+    {
+        try{
+
+            this.add({GroupId:param.id, UserId:param.user});
+            return 'joinde'
+        }
+        catch(error)
+        {
+            return 'not joind'
+        }
+    }
 }

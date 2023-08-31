@@ -1,6 +1,34 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import Group from "./group";
+import {HiUserGroup} from 'react-icons/hi'
+import {MdOutlineGroupAdd} from 'react-icons/md'
+import Cookies from 'js-cookie';
+import UserContext from "../../UserContext";
 
+function Result(res:any)
+{
+    const user = useContext(UserContext);
+    const join = (e:any)=>{
+        e.preventDefault();
+        fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/join?id=${res.id}&user=${user.user.id}`, {
+            method: 'GET',
+            headers:{
+                Authorization: `Bearer ${Cookies.get('access_token')}`
+            }
+        })
+    }
+    return (
+        <div className="flex justify-between p-2 hover:bg-[#18184a] cursor-pointer p-2 rounded-lg">
+            <div className="flex">
+            <HiUserGroup size={30} />
+            {res.name}
+            </div>
+            <div className="p-1 rounded-full hover:bg-green-200">
+                <button onClick={join}><MdOutlineGroupAdd size={20} /></button>
+            </div>
+        </div>
+    )
+}
 
 export default function Search(props:any)
 {
@@ -11,7 +39,7 @@ export default function Search(props:any)
         <div className="flex flex-col">
             {
             (props.search != undefined)?(
-                props.search.map((data:any,index:number) => {return(<Group key={index} name={data.name} id={data.id}/>)})
+                props.search.map((data:any,index:number) => {return(<Result key={index} name={data.name} id={data.id}/>)})
             ):<>no groups</>
             }
         </div>
