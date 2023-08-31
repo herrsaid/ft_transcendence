@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { History } from '../PingPong.Entity'
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
@@ -41,11 +41,17 @@ export class HistoryManager
 
     async GetAllHistorysByUsername(MyUserId:number):Promise<History[]>
     {
+        try
+        {
+            return await this.History
+                .createQueryBuilder('history')
+                .where('history.myuserid = :MyUserId', { MyUserId })
+                .orderBy('history.key', 'DESC') 
+                .getMany();
+        }
+        catch{
+            throw new NotFoundException();
+        }
         
-        return await this.History
-        .createQueryBuilder('history')
-        .where('history.myuserid = :MyUserId', { MyUserId })
-        .orderBy('history.key', 'DESC') 
-        .getMany();
     }
 }

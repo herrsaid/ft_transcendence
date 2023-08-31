@@ -51,20 +51,21 @@ export default function SearchPage()
         
     return(
        <>
-       <div>
-       <div className="Friends">
-            
+       <div className="container mx-auto px-2 py-10 pb-32">
+       <div className="w-full p-6 rounded-lg shadow-md mx-auto items-center">
+       <div className="w-[300px] mx-auto items-center">
        {data.map((user:any) => {
-        return <OneFriend key={user.id} 
+        return <div  key={user.id} className='mb-2'><OneFriend 
         image={user.profile_img}  
         username={user.username} 
         status={user.status}
         id={user.id}
         avatar_updated={user.is_profile_img_updated}
-        />
+        /></div>
     })}
 </div>
-       </div>
+</div>
+</div> 
        </>
     );
 }

@@ -37,6 +37,7 @@ import { GetRoomsLogic } from './Functions/GetRooms';
 import { ConectionClosedLogic, DisconnectLogic } from './Functions/Disconnect_ConnectionClosed';
 import { UseFilters, UsePipes, ValidationPipe } from '@nestjs/common';
 import { WebSocketGateWayFilter } from '../PingPong.filter';
+import { UserService } from 'src/user/services/user.service';
   
   export let Rooms: RoomClass[] = [];
   export let Online: OnlineClass[] = [];
@@ -47,12 +48,16 @@ import { WebSocketGateWayFilter } from '../PingPong.filter';
   @UseFilters(new WebSocketGateWayFilter())
   @UsePipes(new ValidationPipe())
   export class PingPongGateway implements OnGatewayDisconnect {
+    constructor(private UserManager:UserService)
+    {
+      
+    };
     @WebSocketServer()
     
     @SubscribeMessage('Online')
-    handleOnline(@ConnectedSocket() client: Socket, @MessageBody() data:OnlineDTO ): void
+    async handleOnline(@ConnectedSocket() client: Socket, @MessageBody() data:OnlineDTO ): Promise<void>
     {
-      OnlineLogic(client,data.username);
+       await OnlineLogic(client,data.username,this.UserManager);
     }
 
     @SubscribeMessage('RequestRefused')
@@ -110,9 +115,9 @@ import { WebSocketGateWayFilter } from '../PingPong.filter';
       // console.log("Remove Old Room");
       // console.log(Rooms);
       }
-    handleDisconnect(client: Socket): void {
+    async handleDisconnect(client: Socket): Promise<void> {
       let obj:{Rooms:RoomClass[],Online:OnlineClass[]} = {Rooms:[new RoomClass(),],Online:[new OnlineClass(),]};
-      obj = DisconnectLogic(client);
+      obj =  await DisconnectLogic(client,this.UserManager);
       Rooms = obj.Rooms;
       Online = obj.Online;
       // console.log(Rooms);

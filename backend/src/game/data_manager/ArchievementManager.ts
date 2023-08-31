@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, NotFoundException } from "@nestjs/common";
 import { GameArchievement, History } from '../PingPong.Entity'
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
@@ -24,7 +24,14 @@ export class ArchievementManager
 
     async GetAllUserArchievementByUsername(UserId:number):Promise<GameArchievement[]>
     {
-        return await this.Archievement.findBy({userid:UserId});
+        try
+        {
+            return await this.Archievement.findBy({userid:UserId});
+        }
+        catch{
+            throw new NotFoundException();
+        }
+        
     }
     async GetUserArchievementBy(UserId:number,ArchievementName:string):Promise<GameArchievement | null>
     {

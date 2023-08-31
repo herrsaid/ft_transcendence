@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useContext } from 'react';
 import UserContext from '../../UserContext';
 import { Avatar } from '@chakra-ui/react';
+import SearchInput from '../SearchInput/SearchInput';
 
 
 
@@ -64,9 +65,13 @@ export default  function Header()
         
     
     </div>
+    
     <div className="relative">
+    <div className="flex items-center justify-between">
+    <div className='inline'><SearchInput/></div>
     <Avatar size='sm' name={contexUser.user.username} src={contexUser.user.is_profile_img_updated ? new_src_img : contexUser.user.profile_img} className="w-10 h-10 rounded-full cursor-pointer profile-img" onClick={toggleDropdown}>
                         </Avatar>
+                        </div>
       <div className="dropdown-menu" id="dropdownMenu" onClick={openMenu}>
       
       <Link href='/' ><p className="link_drop">Home</p></Link>
