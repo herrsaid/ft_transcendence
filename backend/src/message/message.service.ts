@@ -15,7 +15,7 @@ export class MessageService {
         if (!id)
             return;
         return this.messageRepo.find({
-            where:[{src: id}, {dst: id}],
+            where:[{src: id, toGroup:false}, {dst: id, toGroup:false},],
         })
     }
 }

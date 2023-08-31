@@ -14,16 +14,14 @@ export default function Community()
     const [active, setActive] = useState('message');
     
     return(
-        <div className="flex flex-col h-auto">
-        <div className="flex grow h-[87vh]">
+        <div className="flex h-full">
             <reciverContext.Provider value={{reciver, setReciver}}>
             <activeContext.Provider value={{active, setActive}}>
-            <div className="w-1/3 max-sm:hidden"> <Chats /> </div>
-            <div className="w-2/3 max-sm:w-full bg-[#363672] rounded-xl">{(active == 'message')?<Messages/>:(active == 'chats')?<Chats/>: <Info/>}</div>
-            <div className="w-1/3 max-md:hidden"><Info /></div>
+            <div className="w-1/3 h-full max-sm:hidden"> <Chats /> </div>
+            <div className="w-2/3 h-full max-sm:w-full bg-[#363672] rounded-xl">{(active == 'message')?<Messages/>:(active == 'chats')?<Chats/>: <Info/>}</div>
+            <div className="w-1/3 h-full max-md:hidden"><Info /></div>
             </activeContext.Provider>
             </reciverContext.Provider>
-        </div>
         </div>
     )
 }
