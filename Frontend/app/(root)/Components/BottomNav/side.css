@@ -1,5 +1,5 @@
 .sidebar {
-    width: 10px;
+    width: 45px;
     height: 320px;
     transition: width 0.2s;
     border-top-right-radius: 50%;
@@ -7,8 +7,9 @@
     background-color: transparent;
   }
   .sidebar-open {
-    width: 75px;
+    width: 65px;
     background-color: black/25;
+    padding: 0px 2px;
   }
 
   @keyframes slideInFromLeft {

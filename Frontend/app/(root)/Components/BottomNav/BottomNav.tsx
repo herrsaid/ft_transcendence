@@ -35,8 +35,8 @@ export default function BottomNav()
             </div>
         </nav>
 
-<aside  id="LeftNav" className=" text-white sidebar">
-  <div className="pl-2"><button
+<aside  id="LeftNav" className=" text-white  p-2 sidebar">
+  <div className=""><button
         id="toggleSidebar"
         className="block w-[30px] h-[30px] text-white rounded-full hover:text-gray-300 buttona bg-gradient-to-br from-purple-600 to-indigo-800"
 

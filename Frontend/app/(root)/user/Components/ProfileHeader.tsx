@@ -231,8 +231,7 @@ const ProfileHeader = (props:props) => {
       </div>
       <div className="ml-4">
       
-        <h1 className="text-3xl font-semibold text-purple-500">{props.username}</h1>
-        <p className="text-gray-600">{props.email}</p>
+        <h1 className="text-3xl font-semibold text-purple-500 mb-4">{props.username}</h1>
         <p className={`${`${props.isIngame ? 'block' : 'hidden'} text-purple-600 font-semibold my-[4px]`}`}>Player In Game...</p>
        
          
@@ -245,7 +244,7 @@ const ProfileHeader = (props:props) => {
 
 
 
-    <div className="py-4">
+    <div className="py-4 items-center grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4">
         
 
 

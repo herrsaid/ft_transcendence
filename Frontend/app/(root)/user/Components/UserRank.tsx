@@ -39,7 +39,7 @@ const UserRank = (props:props) => {
     else if(data.rank == 'legendary')
         rankbg = 'bg-emerald-500';
     return (
-        <div className={`rounded-md md:rounded-lg lg:rounded-lg ${rankbg} text-white py-1 px-2 text-sm font-semibold mr-4`}>
+        <div className={`rounded-md  ${rankbg} text-white py-2 px-4 text-md font-semibold mr-4 transform transition-transform duration-300 hover:scale-105`}>
         Rank: {data.rank}
       </div>
     )
