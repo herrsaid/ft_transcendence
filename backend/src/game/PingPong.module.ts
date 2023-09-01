@@ -10,6 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 import { Module } from '@nestjs/common';
 import { PingPongGateway } from './auto_match/lobbie.gateway';
 import { PlayPlayer1Gateway } from './start_game/play.player1.gateway';
@@ -22,7 +25,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from 'src/auth/guard/constants';
 import { GameArchievement, GameUserInfo, History } from './PingPong.Entity';
 import { BallLogic } from './game_brain/logic/Brain';
 import { ScheduleModule } from '@nestjs/schedule';
@@ -38,7 +40,7 @@ import { UserModule } from 'src/user/modules/user.module';
     }),
   
     TypeOrmModule.forFeature([History,GameUserInfo,GameArchievement]), JwtModule.register({
-    secret: jwtConstants.secret,
+    secret: process.env.JWT_ACCESS_TOKEN_SECRET,
     signOptions: { expiresIn: '30d' },
    
   }),],

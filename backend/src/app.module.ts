@@ -1,3 +1,6 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -15,10 +18,7 @@ import { UserService } from './user/services/user.service';
 import { UserController } from './user/controllers/user.controller';
 import { User } from './entities/user/user.entity';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from './auth/guard/constants';
 import { GameModule } from './game/PingPong.module';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
 import { FriendRequest } from './entities/friend/friend-request.entity';
 import { ConfigModule } from '@nestjs/config';
 import { TwoFactorAuthenticationController } from './twoFactorAuthentication/controllers/twoFactorAuthentication.controller';
@@ -48,7 +48,7 @@ import { WebSocketGateWayFilter } from './game/PingPong.filter';
   
     TypeOrmModule.forFeature([User,FriendRequest,Messages,History,GameUserInfo,GameArchievement,Groups]), JwtModule.register({
     global: true,
-    secret: jwtConstants.secret,
+    secret: process.env.JWT_ACCESS_TOKEN_SECRET,
     signOptions: { expiresIn: '30d' },
    
   }),],

@@ -1,3 +1,6 @@
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 import Groups from "Database/entity/Groups.entity";
 import { Messages } from "Database/entity/Message.entity";
 import { FriendRequest } from "src/entities/friend/friend-request.entity";
@@ -8,11 +11,11 @@ import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConne
 
 const config : PostgresConnectionOptions = {
     type: "postgres",
-    database: "testDB",
-    host: "localhost",
+    database: process.env.DATABASE_NAME,
+    host: process.env.DATABASE_HOST,
     port: 5432,
-    username: "postgres",
-    password: "postgres",
+    username: process.env.DATABASE_USERNAME,
+    password: process.env.DATABASE_PASSWORD,
     entities:[User,FriendRequest, Messages,History,GameUserInfo,GameArchievement,Groups],
     synchronize: true,
 };

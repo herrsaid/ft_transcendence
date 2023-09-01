@@ -222,16 +222,25 @@ export class UserController {
     }
 
 
+    
+
     @Get('profile-img/:path')
-    getProfileImage(@Param('path') path, @Res() res)
+    async getProfileImage(@Param('path') path, @Res() res)
     {
-        try
-        {
-            return res.sendFile(join(process.cwd(), 'uploadedFiles/avatars/' + path));
-        }
-        catch{
+        try {
+            const imagePath = join(process.cwd(), 'uploadedFiles/avatars/' + path);
+            
+            const fileExists = await this.userService.checkFileExists(imagePath);
+      
+            if (!fileExists) {
+              const defaultImagePath = join(process.cwd(), 'asset/default.png');
+              return res.sendFile(defaultImagePath);
+            }
+      
+            return res.sendFile(imagePath);
+          } catch (error) {
             throw new NotFoundException();
-        }
+          }
     }
 
 

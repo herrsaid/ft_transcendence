@@ -1,6 +1,6 @@
 import { Controller, Get , UseGuards, Req, Res} from '@nestjs/common';
 import {AuthGuard} from "@nestjs/passport"
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
 import { GoogleAuthService } from '../services/googleauth.service';
 import { JwtService } from '@nestjs/jwt';
@@ -33,7 +33,7 @@ export class GoogleAuthController {
             secure: false,
             expires: new Date(Date.now() + 1 * 24 * 600 * 10000),
     });
-    const front_url = this.configService.get<string>('FRONT_IP');
+    // const front_url = this.configService.get<string>('FRONT_IP');
 
     if (decodedToken.firstLogin)
     {

@@ -458,4 +458,15 @@ export class UserService {
             console.log('error')
         }
       }
+
+      async checkFileExists(path: string): Promise<boolean> {
+        
+        const fs = require('fs').promises;
+        try {
+          await fs.access(path);
+          return true;
+        } catch (error) {
+          return false;
+        }
+      }
 }

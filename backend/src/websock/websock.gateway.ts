@@ -1,15 +1,10 @@
-import { MessageBody, SubscribeMessage, WebSocketGateway, ConnectedSocket, WebSocketServer } from '@nestjs/websockets';
+import * as dotenv from 'dotenv';
+dotenv.config();
+
+import { SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io'
 import { JwtService } from '@nestjs/jwt';
-import { jwtConstants } from '../auth/guard/constants';
-import { subscribe } from 'diagnostics_channel';
-import { PassThrough } from 'stream';
-import { Index, Repository } from 'typeorm';
-import { MessagesService } from 'Database/services/messages/messages.service';
 const jwt = require('jsonwebtoken');
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Messages } from 'Database/entity/Message.entity';
 import { MessageService } from 'src/message/message.service';
 import { UserService } from 'src/user/services/user.service';
 import { GroupsService } from 'Database/services/groups/groups.service';
@@ -28,10 +23,9 @@ export class WebsockGateway {
   {
     try{
       const token = socket.handshake.headers.authorization;
-      const payload = jwt.verify(token, 'complexkey3884-asgfgsd,s33003400mmdma-434-4das111!!!!!+++')
+      const payload = jwt.verify(token, process.env.JWT_ACCESS_TOKEN_SECRET)
       this.online.set(payload.id, socket.id);
       console.log(this.online);
-      // this.UserService.updateStatus(payload.id, {status:true})
       const groups = await this.UserService.getGroups(payload.id);
       for (let i = 0; i < groups.length; i++)
         socket.join(groups[i].id.toString())
@@ -43,7 +37,6 @@ export class WebsockGateway {
   handleDisconnect(socket: Socket)
   {
     console.log('disconnected ', socket.id)
-    // this.UserService.updateStatus(this.online_users.find(obj => obj.socket_id == socket.id), {status:false})
     console.log(this.online);
   }
   @SubscribeMessage('message')
