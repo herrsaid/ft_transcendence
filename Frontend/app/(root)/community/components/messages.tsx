@@ -33,7 +33,7 @@ export default function Messages()
                 }
             }).then((response) => response.json()).then(data => {setGroupMessage(data)})
         }
-    },[reciver.reciver.isgroup])
+    },[reciver.reciver.isgroup, reciver.reciver.id])
     //fetch private messages
     useEffect(()=> {
         console.log('user = ', user.user.id);
@@ -81,7 +81,7 @@ export default function Messages()
         return(<div className="sm:hidden"><Chats/></div>)
     return(
         <div className="flex flex-col relative  h-full">
-            <div className="rounded-lg drop-shadow-md">
+            <div className="rounded-lg bg-[#363672] drop-shadow-md">
                 <Profile/>
             </div>
             <div className="flex flex-col h-[80%] p-3 overflow-auto">
@@ -97,7 +97,7 @@ export default function Messages()
                     ):(
                         groupMessage.map((message:any, index:number) => {
                             if (message.src == user.user.id && message.dst == reciver.reciver.id)
-                                return( <Message key={index} content={message.content} class="self-end rounded-lg bg-sky-900 p-2 mb-2"/>)
+                                return( <Message key={index} content={message.content} class="self-end rounded-lg bg-[#18184a] p-2 mb-2"/>)
                             else if (message.dst == reciver.reciver.id)
                                 return( <Message key={index} content={message.content} class="self-start rounded-lg bg-sky-900 p-2 mb-2"/>)
                         })
@@ -106,7 +106,7 @@ export default function Messages()
             </div>
             <div className="self-center w-[90%] absolute bottom-2">
                 <form onSubmit={send}>
-                    <input onChange={event => setValue(event.target.value)} value={value} ref={inputRef} className="focus:outline-none rounded-full bg-sky-900 p-1 pl-2 w-full" type="text" placeholder="Message..." />
+                    <input onChange={event => setValue(event.target.value)} value={value} ref={inputRef} className="focus:outline-none rounded-full bg-[#34346e] drop-shadow-md p-1 pl-2 w-full" type="text" placeholder="Message..." />
                     <button className="absolute top-2 right-2" type="submit"><VscSend /></button>
                 </form>
             </div>

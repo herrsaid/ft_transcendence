@@ -48,12 +48,12 @@ export default function Chats()
         <div className="flex flex-col h-full">
             <div className="text-center text-2xl pb-1">Chats</div>
             <div className="flex justify-around m-2">
-                <div onClick={friend_click} className="hover:bg-sky-500 w-1/2 text-center bg-sky-900 rounded-full cursor-pointer p-2 drop-shadow-md">friends</div>
-                <div onClick={group_click} className="hover:bg-sky-500 w-1/2 text-center bg-sky-900 rounded-full cursor-pointer p-2 drop-shadow-md" >groups</div>
+                <div onClick={friend_click} className="hover:bg-sky-900 w-1/2 text-center bg-[#363672] rounded-full cursor-pointer p-2 drop-shadow-md">friends</div>
+                <div onClick={group_click} className="hover:bg-sky-900 w-1/2 text-center bg-[#363672] rounded-full cursor-pointer p-2 drop-shadow-md" >groups</div>
             </div>
             <div className="self-center mt-2 mb-2 w-[90%] relative drop-shadow-md">
                 <form action="">
-                    <input onChange={searching} className="bg-sky-900 rounded-full pl-3 pr-2 p-1 focus:outline-none w-full" type="search" placeholder="search..."/>
+                    <input onChange={searching} className="bg-[#363672] rounded-full pl-3 pr-2 p-1 focus:outline-none w-full" type="search" placeholder="search..."/>
                     <button className="absolute right-2 top-1" type="submit"><BiSearchAlt size={21}/></button>
                     <div className="bg-sky-900 absolute w-full rounded-lg mt-1">
                         <Search search={search}/>
