@@ -50,11 +50,23 @@ export class GroupsController {
         try{
 
             this.add({GroupId:param.id, UserId:param.user});
-            return 'joinde'
+            return 'created'
         }
         catch(error)
         {
             return 'not joind'
+        }
+    }
+    @Get('members')
+    async members(@Query() param)
+    {
+        try{
+            const group = await this.GroupService.findOne(param.id);
+            return group.users;
+        }
+        catch(error)
+        {
+            console.log(error);
         }
     }
 }
