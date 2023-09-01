@@ -597,3 +597,9 @@ p.enligne{
     background-size: 400% 400%;
     
   }
+
+  .forhover:hover{
+    background: linear-gradient(-45deg, #C56CDD,#8731af);
+      background-size: 400% 400%;
+      transition: 0.4s;
+  }

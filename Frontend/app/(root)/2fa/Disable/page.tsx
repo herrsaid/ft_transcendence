@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useContext, useState } from 'react';
 import { Input, useToast } from '@chakra-ui/react';
 import UserContext from '../../UserContext';
+import '../../profile/profile.css'
 
 
 
@@ -16,7 +17,15 @@ export default  function TwoFactor()
 
     
 
-
+    
+    
+      if (typeof window !== 'undefined') {
+        if (user.user.isTwoFactorAuthenticationEnabled == false)
+        {
+          router.replace("/2fa/Enable")
+        }
+      }
+      
 
 
     const DisableTwoFactor = async (event:React.FormEvent) =>
@@ -86,7 +95,7 @@ export default  function TwoFactor()
     <div className="container mx-auto items-center flex">
         
         <div className="items-center mx-auto">
-        <h1 className="text-2xl font-semibold text-blue-500">Disable 2FA</h1>
+        <h1 className="text-2xl font-semibold text-purple-500 text-center">Disable 2FA</h1>
         <form  className="items-center mt-[50px]">
                 
                 
@@ -105,9 +114,9 @@ export default  function TwoFactor()
     
     />
 
-<div className="text-center mt-2">
+<div className="text-center mt-8">
       
-      <button  className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg" onClick={DisableTwoFactor}>Disable</button>
+      <button  className="stats-bgf forhover text-white py-2 px-4 rounded-lg" onClick={DisableTwoFactor}>Disable</button>
       
     </div>
     </div>

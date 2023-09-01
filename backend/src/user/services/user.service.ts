@@ -427,12 +427,20 @@ export class UserService {
 
 
       async deleteFriendRequest(id: number){
-        const FriendRequest = await this.FriendRequestRepo.findOne({where:{id:id}});
-        if (!FriendRequest) {
-          throw new NotFoundException(`FriendRequest with id ${id} not found`);
-        }
+        try
+        {
+            const FriendRequest = await this.FriendRequestRepo.findOne({where:{id:id}});
+            if (!FriendRequest) {
+                throw new NotFoundException(`FriendRequest with id ${id} not found`);
+            }
     
-        await this.FriendRequestRepo.remove(FriendRequest);
+            await this.FriendRequestRepo.remove(FriendRequest);
+        }
+        catch
+        {
+            throw new NotFoundException(`FriendRequest with id ${id} not found`);
+        }
+        
       }
 
 

@@ -35,6 +35,8 @@ const OneHistoryUser = (props:history) => {
 
     if (!data)
         return null;
+    if (data.username == undefined)
+        return null;
 
     if (data.is_profile_img_updated)
         new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + data.profile_img;

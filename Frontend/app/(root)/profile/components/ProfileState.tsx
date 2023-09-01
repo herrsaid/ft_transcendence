@@ -22,7 +22,7 @@ const ProfileState = () => {
     if (!data)
     {
       return (<div className="text-center">
-      <div className="stats-bg bg-white rounded-lg shadow-lg p-4">
+      <div className="stats-bg rounded-lg shadow-lg p-4">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         
   
@@ -65,7 +65,7 @@ const ProfileState = () => {
     return (
         <>
              <div className="text-center">
-    <div className="stats-bg bg-white rounded-lg shadow-lg p-4">
+    <div className="stats-bg rounded-lg shadow-lg p-4">
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       
 

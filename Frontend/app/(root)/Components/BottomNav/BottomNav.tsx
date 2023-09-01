@@ -35,15 +35,16 @@ export default function BottomNav()
             </div>
         </nav>
 
-<aside  id="LeftNav" className=" text-white p-4 sidebar">
-      <button
+<aside  id="LeftNav" className=" text-white sidebar">
+  <div className="pl-2"><button
         id="toggleSidebar"
-        className="block text-white hover:text-gray-300 buttona"
+        className="block w-[30px] h-[30px] text-white rounded-full hover:text-gray-300 buttona bg-gradient-to-br from-purple-600 to-indigo-800"
 
         onClick={toggleSide}
       >
         ☰
-      </button>
+      </button></div>
+      
       <nav className="hidden mt-4 navitem">
         <ul>
           

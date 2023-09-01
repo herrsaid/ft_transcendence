@@ -2,10 +2,10 @@
 
 import { GetPoints } from "../SettingsFuntions/Points";
 
-const Points = ({ router }: any) => 
+const Points = () => 
 {
     return(
-        <div className="relative flex h-[30px] top-[100px] md:top-[150px] lg:top-[175px]">
+        <div className="relative flex h-[30px] top-[100px] md:top-[150px] lg:top-[150px]">
             <p className="relative flex left-[10%] bottom-[5px] text-xl md:text-2xl lg:text-3xl font-semibold text-white-500">
                 Points :
             </p>
