@@ -1,10 +1,11 @@
 
-import {ImBlocked} from 'react-icons/im'
+import {ImBlocked, ImInfo} from 'react-icons/im'
 import { GoReport } from "react-icons/go";
 import { useContext } from 'react';
 import reciverContext from '../reciverContext';
 import {IoIosArrowBack} from 'react-icons/io'
 import activeContext from '../activeContext';
+import { Display } from '../Settings/SettingsFuntions/Display';
 export default function Info()
 {
     const reciver = useContext(reciverContext);
@@ -27,6 +28,12 @@ export default function Info()
             </div>
             <div className="self-center">
                 <div className="rounded-lg w-1/1 bg-sky-900">
+                    <div className="flex p-2 hover:bg-indigo-900 cursor-pointer" onClick={()=>{Display()}}>
+                        <div className='mt-1'>
+                            <ImInfo color='red'/>
+                        </div>
+                        <p className='text-red-500 ml-2 mt-'>Invite To Play</p>
+                    </div>
                     <div className="flex p-2 hover:bg-indigo-900 cursor-pointer">
                         <div className='mt-1'>
                             <ImBlocked color='red'/>
