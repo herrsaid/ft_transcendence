@@ -13,14 +13,14 @@
 
   @keyframes slideInFromLeft {
     0% {
-        scale: 1.2
+        scale: 1.1
     }
     100% {
         scale: 1;
     }
   }
   .buttona{
-    animation: slideInFromLeft 1s ease-in-out infinite; 
+    animation: slideInFromLeft 1s ease-in-out infinite;
 }
 
 .forhover:hover{

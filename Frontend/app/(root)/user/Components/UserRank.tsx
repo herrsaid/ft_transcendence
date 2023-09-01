@@ -25,7 +25,7 @@ const UserRank = (props:props) => {
     if (!data)
         return null;
     if (data.rank == 'beginner')
-        rankbg = 'bg-blue-500';
+        rankbg = 'bg-purple-500';
     else if (data.rank == 'bronze')
         rankbg = 'bg-gray-500';
     else if (data.rank == 'silver')

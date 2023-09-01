@@ -231,9 +231,9 @@ const ProfileHeader = (props:props) => {
       </div>
       <div className="ml-4">
       
-        <h1 className="text-3xl font-semibold text-blue-500">{props.username}</h1>
+        <h1 className="text-3xl font-semibold text-purple-500">{props.username}</h1>
         <p className="text-gray-600">{props.email}</p>
-        <p className={`${`${props.isIngame ? 'block' : 'hidden'} text-blue-600 font-semibold my-[4px]`}`}>Player In Game...</p>
+        <p className={`${`${props.isIngame ? 'block' : 'hidden'} text-purple-600 font-semibold my-[4px]`}`}>Player In Game...</p>
        
          
         <UserRank id={props.id}/>
@@ -250,12 +250,12 @@ const ProfileHeader = (props:props) => {
 
 
 
-    {(blockstatus == false && data.status !='blocked' && data.status != 'waiting-for-unblock') &&  <button className='bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg' onClick={handel_all_request}>{ status?status:button_placeholder}</button>
+    {(blockstatus == false && data.status !='blocked' && data.status != 'waiting-for-unblock') &&  <button className='stats-bgf forhover text-white py-2 px-4 rounded-lg' onClick={handel_all_request}>{ status?status:button_placeholder}</button>
 }
-{(data.status != 'waiting-for-unblock') &&  <button className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 ml-4 rounded-lg" onClick={handel_block}>{blockString}</button>  
+{(data.status != 'waiting-for-unblock') &&  <button className="bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 ml-4 rounded-lg" onClick={handel_block}>{blockString}</button>  
 }
 
-{(data.status == 'waiting-for-unblock') &&    <button className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 ml-4 rounded-lg cursor-help" >{'You Are Blocked'}</button>  
+{(data.status == 'waiting-for-unblock') &&    <button className="bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 ml-4 rounded-lg cursor-help" >{'You Are Blocked'}</button>  
 }
     </div>
       

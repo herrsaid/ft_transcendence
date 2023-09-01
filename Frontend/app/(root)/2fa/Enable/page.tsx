@@ -1,9 +1,10 @@
 "use client"
 import Cookies from 'js-cookie';
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Input, useToast } from '@chakra-ui/react';
-
+import UserContext from '../../UserContext';
+import "../../profile/profile.css"
 
 
 export default  function TwoFactor()
@@ -12,10 +13,16 @@ export default  function TwoFactor()
     const [qrCodeDataUrl, setQRCodeDataUrl] =  useState<string>("");;
     const [code, setcode] = useState("");
     const toast = useToast()
+    const user = useContext(UserContext);
 
-
+    if (typeof window !== 'undefined') {
+      if (user.user.isTwoFactorAuthenticationEnabled)
+      {
+        router.replace("/2fa/Disable")
+      }
+    }
     useEffect(() => {
-        
+      
         fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/2fa/generate`,{
             method: 'POST',
             headers: {
@@ -94,7 +101,7 @@ export default  function TwoFactor()
     <div className="container mx-auto items-center flex">
         
         <div className="items-center mx-auto">
-        <h1 className="text-2xl font-semibold text-blue-500">2FA Check Code</h1>
+        <h1 className="text-2xl font-semibold text-purple-500 text-center">Enable 2FA</h1>
         <form  className="items-center mt-[50px]">
                 
                 <img src={qrCodeDataUrl} />
@@ -113,9 +120,9 @@ export default  function TwoFactor()
     
     />
 
-<div className="text-center mt-2">
+<div className="text-center mt-8">
       
-      <button  className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg" onClick={EnableTwoFactor}>Send</button>
+      <button  className="stats-bgf forhover text-white py-2 px-4 rounded-lg" onClick={EnableTwoFactor}>Send</button>
       
     </div>
     </div>

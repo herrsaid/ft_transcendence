@@ -10,6 +10,7 @@ import HistoryUser from './Components/HistoryUser';
 import { useContext } from "react";
 import UserContext from '../UserContext';
 import UserAchievevements from './Components/UserAchievevements';
+import '../profile/profile.css'
 
 export default  function User()
 {

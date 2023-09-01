@@ -46,8 +46,8 @@ const UserAchievevements = (props:Achievevement) => {
                 <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4">
                 
                         
-                <div className="live-game-card bg-gradient-to-br from-indigo-600 to-indigo-800 rounded-lg shadow-md p-6 flex flex-col justify-between">
-                <div className="text-white text-lg font-semibold mb-4">Play Games Now</div>
+                <div className="live-game-card stats-bgf rounded-lg shadow-md p-6 flex flex-col justify-between">
+                
                 <p className="text-white">This User Dont have Any Achievevement Yet!</p>
                 <Link href="/Game/Lobbie" className="text-blue-400 font-semibold mt-4">
                 Play Now
@@ -67,7 +67,7 @@ const UserAchievevements = (props:Achievevement) => {
 
 
         <main className="container mx-auto py-8 pl-8">
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         
             {myAchievevement ? myAchievevement : "No Achievevement!"}
      

@@ -20,7 +20,7 @@ const ProfileAvatar = (props:props) => {
     return (
 
 
-        <div className="avatar_edit_real border-2 border-blue-500/100 rounded-full">
+        <div className="avatar_edit_real border-2 border-purple-500/100 rounded-full">
 
                 <Avatar size='xl' name='Segun Adebayo' src={props.avatar_updated ? new_src_img : props.img}>
                         <AvatarBadge boxSize='0.8em' bg={props.status ? 'green.500' : 'tomato'} borderColor='#18184a' />

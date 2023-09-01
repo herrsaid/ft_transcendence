@@ -37,8 +37,10 @@ const OneHistory = (props:history) => {
     fetchFriends
     );
 
-
+    
     if (!data)
+        return null;
+    if (data.username == undefined)
         return null;
 
     if (data.is_profile_img_updated)

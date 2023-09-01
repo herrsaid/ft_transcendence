@@ -112,7 +112,7 @@ const ProfileAvatar = (props:props) => {
 
     return (
 
-                <div className="avatar_edit_real border-2 border-blue-500/100 rounded-full">
+                <div className="avatar_edit_real border-2 border-purple-500/100 rounded-full">
 
                     <label className="cursor-pointer animate-pulse">
                     <Avatar size='xl' name={props.username} src={props.avatar_updated || first_time ? realimg ? realimg  : !props.avatar_updated ? props.img : new_src_img : props.img}>
