@@ -74,7 +74,7 @@ export function StartRoom(router: any,toast:any,GameContext:GameContextType)
             loading.style.opacity = "1";
             settings.style.animation = "Animation 3s infinite";
         }
-            socket.on('SendData', (username,playerimg,data) => {
+        socket.on('SendData', (username,playerimg,data) => {
             if(access)
             {
                 newGameInfo.enemmyusername = username;
@@ -85,18 +85,5 @@ export function StartRoom(router: any,toast:any,GameContext:GameContextType)
                 router.replace('/Game/Online/Play');
             }
         });
-    }
-    else
-    {
-        if(newGameInfo.other_tools === 1)
-        {
-            GameContext.SetGameInfo(newGameInfo);
-            router.replace('/Game/Ofline/2P');
-        }
-        else
-        {
-            GameContext.SetGameInfo(newGameInfo);
-            router.replace('/Game/Ofline/BOT');
-        }
     }
 }

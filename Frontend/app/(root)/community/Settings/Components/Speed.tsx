@@ -4,7 +4,7 @@
 import { GetSpeed } from '../SettingsFuntions/Speed';
 
 
-const Speed = ({ router }: any) => 
+const Speed = () => 
 {
     return(
         <div id="speed" className="relative flex h-[30px] top-[50px] md:top-[100px] lg:top-[100px]">
