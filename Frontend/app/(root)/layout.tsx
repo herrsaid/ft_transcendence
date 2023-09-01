@@ -97,8 +97,6 @@ fetchData
         <BottomNav/>
         <div className=''>
               {/* {Cookies.get('access_token') != undefined && children} */}
-
-      
       </div>
       <main className="flex-1">
         <div className='h-full'>

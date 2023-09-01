@@ -65,5 +65,5 @@ export class User{
     receivedFriendRequest: FriendRequest[];
     @ManyToMany(() => Groups, group => group.users)
     groups: Groups[]
-
+    
 }

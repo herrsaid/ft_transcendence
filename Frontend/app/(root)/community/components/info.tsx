@@ -6,11 +6,14 @@ import reciverContext from '../reciverContext';
 import {IoIosArrowBack} from 'react-icons/io'
 import activeContext from '../activeContext';
 import { Display } from '../Settings/SettingsFuntions/Display';
+import Groupinfo from './groupinfo';
 export default function Info()
 {
     const reciver = useContext(reciverContext);
     const active = useContext(activeContext);
     const back_click = ()=>{active.setActive('message')}
+    if (reciver.reciver.isgroup)
+        return (<Groupinfo/>)
     return (
         <div className="flex flex-col h-full justify-between">
             <div className="self-center text-2xl pb-3 flex justify-between"><div><button className='sm:hidden' onClick={back_click}><IoIosArrowBack/></button></div><h1>Info</h1> <div></div></div>
