@@ -6,6 +6,7 @@ import Messages from "./components/messages";
 import reciverContext from "./reciverContext";
 import activeContext from './activeContext'
 import UserContext from "../UserContext";
+import Settings from "./Settings/Components/SettingsComponent";
 
 
 
@@ -17,14 +18,17 @@ export default function Community()
     if (!user.user.id)
         return (<div></div>)
     return(
-        <div className="flex h-full">
-            <reciverContext.Provider value={{reciver, setReciver}}>
-            <activeContext.Provider value={{active, setActive}}>
-            <div className="w-1/3 h-full max-sm:hidden"> <Chats /> </div>
-            <div className="w-2/3 h-full max-sm:w-full bg-[#363672] rounded-lg">{(active == 'message')?<Messages/>:(active == 'chats')?<Chats/>: <Info/>}</div>
-            <div className="w-1/3 h-full max-md:hidden"><Info /></div>
-            </activeContext.Provider>
-            </reciverContext.Provider>
-        </div>
+        <>
+            <div id="ChatPart" className="flex h-full">
+                <reciverContext.Provider value={{reciver, setReciver}}>
+                <activeContext.Provider value={{active, setActive}}>
+                <div className="w-1/3 h-full max-sm:hidden"> <Chats /> </div>
+                <div className="w-2/3 h-full max-sm:w-full bg-[#363672] rounded-lg">{(active == 'message')?<Messages/>:(active == 'chats')?<Chats/>: <Info/>}</div>
+                <div className="w-1/3 h-full max-md:hidden"><Info /></div>
+                </activeContext.Provider>
+                </reciverContext.Provider>
+            </div>
+            <Settings/>
+        </>
     )
 }
