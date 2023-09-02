@@ -1,6 +1,6 @@
 import Friend from "./friends";
 import { BiSearchAlt } from 'react-icons/bi'
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Cookies from 'js-cookie';
 import Groups from "./groups";
 import Search from "./search";
@@ -10,6 +10,7 @@ export default function Chats()
     const [friends, setFriends] = useState([]);
     const [forg, setForg] = useState(true);
     const [search, setSearch] = useState([]);
+    const searchRef = useRef(null);
     const searching = (e:any) => {
         console.log(e.target.value)
         fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/search?value=${e.target.value}`, {
@@ -44,6 +45,9 @@ export default function Chats()
     })
     const friend_click = () =>{setForg(true)}
     const group_click = () =>{setForg(false)}
+    // useEffect(()=>{
+    //     document.addEventListener('click', (e) => {(!searchRef.current.contains(e.target))?setSearch([]):console.log('dd')}, true)
+    // })
     return (
         <div className="flex flex-col h-full">
             <div className="text-center text-2xl pb-1">Chats</div>
@@ -55,7 +59,7 @@ export default function Chats()
                 <form action="">
                     <input onChange={searching} className="bg-[#363672] rounded-full pl-3 pr-2 p-1 focus:outline-none w-full" type="search" placeholder="search..."/>
                     <button className="absolute right-2 top-1" type="submit"><BiSearchAlt size={21}/></button>
-                    <div className="bg-sky-900 absolute w-full rounded-lg mt-1">
+                    <div ref={searchRef} className="bg-sky-900 absolute w-full rounded-lg mt-1">
                         <Search search={search}/>
                     </div>
                 </form>

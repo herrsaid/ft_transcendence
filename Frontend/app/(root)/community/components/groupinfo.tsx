@@ -17,7 +17,7 @@ export default function Groupinfo()
                 Authorization: `Bearer ${Cookies.get('access_token')}`
             }
         }).then((response) => response.json()).then(data => setMembers(data));
-    },[])
+    },[reciver.reciver.id])
     console.log('mem = ', members)
     return (
         <div className="flex flex-col justify-center h-full">
@@ -38,7 +38,7 @@ export default function Groupinfo()
                 </div>
                 <div className='flex-grow  overflow-auto'>
                         {
-                            members.map((data, index) => 
+                            members.map((data:any, index) => 
                             {
                                 return (<Friend id={data.id} avatar={data.profile_img} username={data.username} key={index} />)
                             })

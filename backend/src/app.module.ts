@@ -38,6 +38,8 @@ import { GroupsController } from './groups/groups.controller';
 import Groups from 'Database/entity/Groups.entity';
 import { GroupsService } from 'Database/services/groups/groups.service';
 import { WebSocketGateWayFilter } from './game/PingPong.filter';
+import { Admins } from 'Database/entity/Admins.entity';
+import { AdminsService } from 'Database/services/admins/admins.service';
 
 @Module({
   imports: [GameModule, AuthModule, TypeOrmModule.forRoot(config),
@@ -46,7 +48,7 @@ import { WebSocketGateWayFilter } from './game/PingPong.filter';
    
     UserModule,
   
-    TypeOrmModule.forFeature([User,FriendRequest,Messages,History,GameUserInfo,GameArchievement,Groups]), JwtModule.register({
+    TypeOrmModule.forFeature([User,FriendRequest,Messages,History,GameUserInfo,GameArchievement,Groups,Admins]), JwtModule.register({
     global: true,
     secret: process.env.JWT_ACCESS_TOKEN_SECRET,
     signOptions: { expiresIn: '30d' },
@@ -70,7 +72,8 @@ import { WebSocketGateWayFilter } from './game/PingPong.filter';
     GameInfoManager,
     ArchievementManager,
     GroupsService,
-    WebSocketGateWayFilter
+    WebSocketGateWayFilter,
+    AdminsService
   ],
 })
 export class AppModule {}

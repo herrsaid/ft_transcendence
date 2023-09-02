@@ -1,6 +1,6 @@
 
 import { useContext } from 'react'
-import {HiUserGroup} from 'react-icons/hi'
+import {FaHashtag} from 'react-icons/fa'
 import reciverContext from '../reciverContext'
 import activeContext from '../activeContext';
 
@@ -13,8 +13,8 @@ export default function Group(props:any) {
     }
     return(
         <div onClick={group_click} className="flex hover:bg-sky-900 cursor-pointer">
-            <div>
-                <HiUserGroup size={30} />
+            <div className='p-1'>
+                <FaHashtag size={35} />
             </div>
             <div className='p-2'>
                 <h1>{props.name}</h1>

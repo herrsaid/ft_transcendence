@@ -4,10 +4,12 @@ import { groupDto } from './groupsDto';
 import { GroupsService } from 'Database/services/groups/groups.service';
 import { UserService } from 'src/user/services/user.service';
 import { group } from 'console';
+import { Admins } from 'Database/entity/Admins.entity';
+import { AdminsService } from 'Database/services/admins/admins.service';
 
 @Controller('groups')
 export class GroupsController {
-    constructor(private readonly GroupService:GroupsService, private readonly User:UserService){}
+    constructor(private readonly GroupService:GroupsService, private readonly User:UserService, private readonly Admins:AdminsService){}
     @Post('create')
     async create(@Body() Group){
         const group = await this.GroupService.create_group(Group);
@@ -67,6 +69,19 @@ export class GroupsController {
         catch(error)
         {
             console.log(error);
+        }
+    }
+    @Get('adminadd')
+    async adminadd(@Query() params)
+    {
+        try
+        {
+            this.GroupService.new_admin(params.id, params.user)
+            return 'created'
+        }
+        catch(error)
+        {
+            console.log('cant add to admins')
         }
     }
 }

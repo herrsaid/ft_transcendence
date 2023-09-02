@@ -1,6 +1,7 @@
 import { Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { FriendRequest } from "../friend/friend-request.entity";
 import Groups from "Database/entity/Groups.entity";
+import { Admins } from "Database/entity/Admins.entity";
 
 @Entity()
 export class User{
@@ -65,5 +66,6 @@ export class User{
     receivedFriendRequest: FriendRequest[];
     @ManyToMany(() => Groups, group => group.users)
     groups: Groups[]
-    
+    @ManyToMany(()=>Admins, (admin) => admin.admins)
+    admin:Admins[]
 }

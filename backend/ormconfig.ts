@@ -7,6 +7,7 @@ import { FriendRequest } from "src/entities/friend/friend-request.entity";
 import { User } from "src/entities/user/user.entity";
 import { GameArchievement, GameUserInfo, History } from "src/game/PingPong.Entity";
 import { PostgresConnectionOptions } from "typeorm/driver/postgres/PostgresConnectionOptions";
+import { Admins } from 'Database/entity/Admins.entity';
 
 
 const config : PostgresConnectionOptions = {
@@ -16,7 +17,7 @@ const config : PostgresConnectionOptions = {
     port: 5432,
     username: process.env.DATABASE_USERNAME,
     password: process.env.DATABASE_PASSWORD,
-    entities:[User,FriendRequest, Messages,History,GameUserInfo,GameArchievement,Groups],
+    entities:[User,FriendRequest, Messages,History,GameUserInfo,GameArchievement,Groups, Admins],
     synchronize: true,
 };
 
