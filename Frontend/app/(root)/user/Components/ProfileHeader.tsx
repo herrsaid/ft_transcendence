@@ -229,9 +229,11 @@ const ProfileHeader = (props:props) => {
        <ProfileAvatar img={props.avatar} username={props.username} avatar_updated={props.avatar_updated} id={props.id} status={props.status}/>
         
       </div>
+      
       <div className="ml-4">
       
-        <h1 className="text-3xl font-semibold text-purple-500 mb-4">{props.username}</h1>
+      <h1 className="text-2xl md:text-3xl lg:text-3xl font-semibold text-purple-500">{props.username}</h1>
+        <p className="text-gray-600 hidden sm:hidden md:inline lg:inline">{props.email}</p>
         <p className={`${`${props.isIngame ? 'block' : 'hidden'} text-purple-600 font-semibold my-[4px]`}`}>Player In Game...</p>
        
          
