@@ -101,14 +101,16 @@ background-blend-mode: multiply;
   }
 
   .bannerfind{
-    background-image: url("../../../../public/f.jpg");
+    /* background-image: url("../../../../public/f.jpg");
     background-position: center;
-    background-size: cover;
+    background-size: cover; */
+    background: linear-gradient(-45deg, #641d77,#18184a);
+    background-size: 400% 400%;
   }
 
 
   .forhover:hover{
-    background: linear-gradient(-45deg, #C56CDD,#8731af);
+    background: linear-gradient(-45deg, #7c2694,#8731af);
       background-size: 400% 400%;
       transition: 0.3s;
   }

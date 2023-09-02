@@ -62,11 +62,15 @@ let rankbg;
        <ProfileAvatar img={props.avatar} username={props.username} avatar_updated={props.avatar_updated}/>
         
       </div>
+
+      
+
+
       <div className="ml-4">
-        <h1 className="text-2xl md:text-3xl lg:text-3xl font-semibold text-purple-500 mb-4">{props.username}</h1>
-        
+      <h1 className="text-2xl md:text-3xl lg:text-3xl font-semibold text-purple-500">{props.username}</h1>
+        <p className="text-gray-600 hidden sm:hidden md:inline lg:inline">{props.email}</p>
          
-      <div className={`rounded-md  ${rankbg} text-white py-2 px-4 text-md font-semibold mr-4 transform transition-transform duration-300 hover:scale-105`}>
+      <div className={`rounded-md md:rounded-lg lg:rounded-lg ${rankbg} text-white py-1 px-2 text-sm font-semibold mr-4 transform transition-transform duration-300 hover:scale-105`}>
         Rank: {data.rank}
       </div>
       </div>

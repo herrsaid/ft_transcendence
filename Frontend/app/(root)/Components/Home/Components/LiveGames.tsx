@@ -16,7 +16,7 @@ export default function LiveGames() {
     <HomeStats/>
     <div className="live-game-card aibanner rounded-lg shadow-md p-6 ">
 
-    <h1 className="text-2xl font-bold mb-4">Training With Bot</h1>
+    <h1 className="text-xl font-semibold mb-4"> <span className=' text-purple-500'>Bot</span> Training</h1>
       
       <Link className=" forhover bg-gradient-to-br from-purple-600 to-indigo-800 font-semibold py-2 px-4 rounded-lg inline-block mt-20" href="/Game/Ofline/BOT">Get Started</Link>
        
@@ -39,9 +39,12 @@ export default function LiveGames() {
   
       
       <div className="live-game-card bannerfind rounded-lg shadow-md p-6  justify-between">
-        <div className="text-white text-lg font-semibold mb-4"></div>
+        
+        <h1 className="text-xl font-semibold ">Find <span className=' text-purple-500'>Friends</span></h1>
+
+        
         <p className="text-white"></p>
-        <Link className=" forhover bg-gradient-to-br from-purple-600 to-indigo-800 font-semibold mt-20 py-2 px-4 rounded-lg inline-block" href="/Users">Find Friends</Link>
+        <Link className=" forhover bg-gradient-to-br from-purple-600 to-indigo-800 font-semibold mt-16 py-2 px-4 rounded-lg inline-block" href="/Users">Find Friends</Link>
       </div>
 
 
