@@ -14,18 +14,20 @@ export class AdminsService {
     {
         try
         {
-            return this.Admins.findOne({where:{id:id}, relations:["users"]})
+            return this.Admins.findOne({where:{id:id}, relations:["admins"]})
         }
         catch(error)
         {
             throw NotFoundException;
         }
     }
-    async add(user:User, admins:Admins)
+    async add(user:User, admins_id:number)
     {
         try
         {
+            const admins = await this.findOne(admins_id);
             admins.admins.push(user);
+            this.Admins.save(admins)
         }
         catch(error)
         {

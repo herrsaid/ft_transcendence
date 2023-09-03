@@ -24,7 +24,7 @@ export class GroupsService {
     {
         try
         {
-            return this.Groups.findOne({where:{id:groupId},relations: ["users"]})
+            return this.Groups.findOne({where:{id:groupId},relations: ["users","admins"]})
         }
         catch(error){
             throw new NotFoundException(); 
@@ -57,12 +57,21 @@ export class GroupsService {
         {
             const group = await this.Groups.findOne({where:{id:group_id}, relations:['admins']});
             const user = await this.user.findOne(user_id);
-            //console.log(group.admins)
-            this.Admins.add(user, group.admins)
+            console.log(group.admins.id)
+            this.Admins.add(user, group.admins.id)
         }
         catch(error)
         {
             console.log('NotFoundException') 
         }
+    }
+    async admin_check(group_id:number, user_id:number)
+    {
+        const group = await this.findOne(group_id);
+        const admins = await this.Admins.findOne(group.admins.id)
+        if (admins.admins.find((data) => {return (data.id == user_id)}))
+            return true;
+        else
+            return false;
     }
 }
