@@ -18,7 +18,7 @@ function Result(res:any)
         })
     }
     return (
-        <div className="flex justify-between p-2 hover:bg-[#18184a] cursor-pointer p-2 rounded-lg">
+        <div className="flex justify-between hover:bg-[#18184a] cursor-pointer p-2 rounded-lg">
             <div className="flex">
             <HiUserGroup size={30} />
             {res.name}
@@ -32,7 +32,6 @@ function Result(res:any)
 
 export default function Search(props:any)
 {
-    console.log(props.search)
     if (!props.search)
         return(<>no groups</>)
     return (

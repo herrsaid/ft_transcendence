@@ -13,6 +13,7 @@ import Chats from "./chats";
 
 export default function Messages()
 {
+    const audio = new Audio('https://cdn.jsdelivr.net/npm/whatsapp-notification-sound@1.0.0/notification.mp3')
     const active = useContext(activeContext);
     const user = useContext(UserContext);
     const reciver = useContext(reciverContext);
@@ -47,7 +48,9 @@ export default function Messages()
     //listening to message even on the socket
     useEffect(() => {
         socket.on('message', (data:any) =>{
-            if(!reciver.reciver.isgroup)
+            audio.play();
+            console.log(data)
+            if(!data.toGroup)
             {
                 setMessages((old:any) => [...old, {src:data.src, dst:data.dst,content:data.content}])
             }
@@ -56,27 +59,27 @@ export default function Messages()
                 setGroupMessage((old:any) => [...old, {src:data.src, dst:data.dst,content:data.content}])
             }
         })
-    },[reciver.reciver.isgroup])
+    },[])
     const send = (e:any)=>{
         e.preventDefault();
+        var mydiv = document.getElementById('scrollable')
+        mydiv?.scrollTo({top:mydiv.scrollHeight, behavior: 'instant'})
         if (value != '')
         {
             if(!reciver.reciver.isgroup)
             {
                 socket.emit('message', {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:false})
-                setMessages((old:any) => [...old, {src:user.user.id, dst:reciver.reciver.id, content:value}]);
+                setMessages((old:any) => [...old, {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:false}]);
             }
             else
             {
                 socket.emit('message', {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:true})
-                setGroupMessage((old:any) => [...old, {src:user.user.id, dst:reciver.reciver.id, content:value}]);
+                setGroupMessage((old:any) => [...old, {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:true}]);
             }
             setValue('')
         }
     }
     const [current, setCurrent] = useState([])
-    useEffect(()=>{setCurrent(mptest.get('3'));},[])
-    console.log('messaagagdf', messages)
     if (reciver.reciver.id == undefined)
         return(<div className="sm:hidden"><Chats/></div>)
     return(
@@ -84,22 +87,22 @@ export default function Messages()
             <div className="rounded-lg bg-[#363672] drop-shadow-md">
                 <Profile/>
             </div>
-            <div className="flex flex-col h-[80%] p-3 overflow-auto">
+            <div id='scrollable' className="flex flex-col h-[80%] p-3 overflow-auto">
                 {
                     (!reciver.reciver.isgroup && messages)?
                     (
                         messages.map((message:any,index:number) => {
                             if(message.src == user.user.id && message.dst == reciver.reciver.id)
-                                return( <Message key={index} content={message.content} class="self-end rounded-lg bg-sky-900 p-2 mb-2"/>)
+                                return( <Message key={index} content={message.content} class="self-end rounded-lg  bg-[#34346e] drop-shadow-md p-2 mb-2"/>)
                             else if (message.src == reciver.reciver.id && message.dst == user.user.id)
-                                return( <Message key={index} content={message.content} class="self-start rounded-lg bg-sky-900 p-2 mb-2"/>)
+                                return( <Message key={index} content={message.content} class="self-start rounded-lg bg-[#7d32d9] drop-shadow-md p-2 mb-2"/>)
                         })
                     ):(
                         groupMessage.map((message:any, index:number) => {
                             if (message.src == user.user.id && message.dst == reciver.reciver.id)
-                                return( <Message key={index} content={message.content} class="self-end rounded-lg bg-[#18184a] p-2 mb-2"/>)
+                                return( <Message key={index} content={message.content} class="self-end rounded-lg  bg-[#34346e] drop-shadow-md p-2 mb-2"/>)
                             else if (message.dst == reciver.reciver.id)
-                                return( <Message key={index} content={message.content} class="self-start rounded-lg bg-sky-900 p-2 mb-2"/>)
+                                return( <Message key={index} content={message.content} class="self-start rounded-lg bg-[#7d32d9] drop-shadow-md p-2 mb-2"/>)
                         })
                     )
                 }

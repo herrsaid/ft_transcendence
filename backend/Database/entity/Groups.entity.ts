@@ -9,6 +9,8 @@ export default class Groups{
     @PrimaryGeneratedColumn()
     id: number;
     @Column()
+    members:number = 1
+    @Column()
     name:string
     @ManyToMany(() => User, (user) => user.groups)
     @JoinTable()

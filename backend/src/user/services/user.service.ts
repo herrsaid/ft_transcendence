@@ -451,7 +451,7 @@ export class UserService {
       async getGroups(id:number)
       {
         try{
-            const groups = await this.userRepo.findOne({where:{id:id},relations: ['groups']})
+            const groups = await this.userRepo.findOne({where:{id:id},relations: ['groups', 'admin']})
             return(groups.groups)
         }
         catch(error){

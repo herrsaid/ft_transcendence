@@ -74,4 +74,10 @@ export class GroupsService {
         else
             return false;
     }
+    async get_amdins(id:number)
+    {
+        const group = await this.findOne(id);
+        const admins = await this.Admins.findAdmins(group.admins.id);
+        return admins;
+    }
 }

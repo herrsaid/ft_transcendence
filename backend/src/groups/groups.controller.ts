@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
 import Groups from 'Database/entity/Groups.entity';
 import { groupDto } from './groupsDto';
 import { GroupsService } from 'Database/services/groups/groups.service';
@@ -8,6 +8,7 @@ import { Admins } from 'Database/entity/Admins.entity';
 import { AdminsService } from 'Database/services/admins/admins.service';
 import { AuthGuard } from 'src/auth/guard/auth.guard';
 import { AdminGuard } from './admin/admin.guard';
+import { request } from 'http';
 
 @Controller('groups')
 export class GroupsController {
@@ -25,12 +26,13 @@ export class GroupsController {
         const user = await this.User.findOne(Group.UserId);
         const group = await this.GroupService.findOne(Group.GroupId)
         group.users.push(user);
+        group.members += 1;
         this.GroupService.save(group)
         return 'added'
     }
     @UseGuards(AuthGuard)
     @Get('mygroups')
-    async mygroups(@Query() param:any)
+    async mygroups(@Req() request, @Query() param:any)
     {
         const groups = await this.User.getGroups(param.id);
         return groups;
@@ -96,10 +98,24 @@ export class GroupsController {
     @UseGuards(AuthGuard)
     @UseGuards(AdminGuard)
     @Get('remove')
-    async remove(@Query() params)
+    async remove(@Req() request, @Query() params)
     {
         const group = await this.GroupService.findOne(params.id);
+        group.members -= 1;
         group.users.splice(group.users.findIndex((data) => {return data.id == params.toremove}, 1));
         this.GroupService.save(group);
+    }
+    @UseGuards(AuthGuard)
+    @Get('leave')
+    async leave(@Req() request, @Query() params)
+    {
+        const user = request['user'].id;
+        const group = await this.GroupService.findOne(params.id);
+        group.members -= 1;
+        const users = group.users;
+        users.splice(users.findIndex((data) => {return data.id == user}, 1));
+        group.users = users;
+        this.GroupService.save(group);
+        return 'created'
     }
 }

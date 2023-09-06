@@ -16,8 +16,15 @@ export class WebsockGateway {
   constructor(private readonly MessageService:MessageService, private readonly UserService:UserService, private jwtService: JwtService, private readonly GroupsService:GroupsService) {}
   @WebSocketServer()
   server: Server;
-
-  online_users = [];
+  getkey = (map, value) => 
+  {
+    for(let [key, val] of map.entries())
+    {
+      if (val === value)
+        return key
+    }
+    return null;
+  }
   online = new Map()
   async handleConnection(socket: Socket)
   {
@@ -37,6 +44,8 @@ export class WebsockGateway {
   handleDisconnect(socket: Socket)
   {
     console.log('disconnected ', socket.id)
+    console.log(this.getkey(this.online, socket.id), 'hada khrej')
+    this.online.delete(this.getkey(this.online, socket.id))
     console.log(this.online);
   }
   @SubscribeMessage('message')
@@ -46,7 +55,6 @@ export class WebsockGateway {
     {
       this.MessageService.create(payload);
       let dst = this.online.get(payload.dst);
-      console.log(dst)
       if(dst)
         client.broadcast.to(dst).emit('message', payload)
     }

@@ -4,6 +4,7 @@ import reciverContext from '../reciverContext'
 import Cookies from 'js-cookie';
 import UserContext from '../../UserContext';
 import Friend from './friends';
+import Groupmember from './groupmember';
 export default function Groupinfo()
 {
     const reciver = useContext(reciverContext);
@@ -19,6 +20,16 @@ export default function Groupinfo()
         }).then((response) => response.json()).then(data => setMembers(data));
     },[reciver.reciver.id])
     console.log('mem = ', members)
+    const leave = () => {
+        fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/leave?id=${reciver.reciver.id}`,
+        {
+            method: 'GET',
+            headers:{
+                Authorization: `Bearer ${Cookies.get('access_token')}`
+            }
+        })
+        reciver.setReciver({})
+    }
     return (
         <div className="flex flex-col justify-center h-full">
             <div className="flex flex-col  h-[40%] w-[90%] self-center mb-1 rounded-lg bg-[#363672] justify-center">
@@ -34,18 +45,18 @@ export default function Groupinfo()
             </div>
             <div className="flex flex-col h-[50%] w-[90%] justify-between self-center rounded-lg bg-[#363672]">
                 <div className='self-center'>
-                        <h1 className='italic font-bold'>members</h1>
+                        <h1 className='font-bold'>members</h1>
                 </div>
                 <div className='flex-grow  overflow-auto'>
                         {
                             members.map((data:any, index) => 
                             {
-                                return (<Friend id={data.id} avatar={data.profile_img} username={data.username} key={index} />)
+                                return (<Groupmember id={data.id} avatar={data.profile_img} username={data.username} key={index} />)
                             })
                         }
                 </div>
                 <div className='self-center'>
-                    <button className='bg-red-600 hover:bg-red-500 p-2 mb-1 rounded-xl'>Leave</button>
+                    <button onClick={leave} className='bg-red-600 hover:bg-red-500 p-2 mb-1 rounded-xl'>Leave</button>
                 </div>
             </div>
         </div>
