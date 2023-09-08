@@ -38,8 +38,8 @@ import { GroupsController } from './groups/groups.controller';
 import Groups from 'Database/entity/Groups.entity';
 import { GroupsService } from 'Database/services/groups/groups.service';
 import { WebSocketGateWayFilter } from './game/PingPong.filter';
-import { Admins } from 'Database/entity/Admins.entity';
-import { AdminsService } from 'Database/services/admins/admins.service';
+import GroupUsers from 'Database/entity/GroupUsers.entity';
+import { GroupusersService } from 'Database/services/groupusers/groupusers.service';
 
 @Module({
   imports: [GameModule, AuthModule, TypeOrmModule.forRoot(config),
@@ -48,7 +48,7 @@ import { AdminsService } from 'Database/services/admins/admins.service';
    
     UserModule,
   
-    TypeOrmModule.forFeature([User,FriendRequest,Messages,History,GameUserInfo,GameArchievement,Groups,Admins]), JwtModule.register({
+    TypeOrmModule.forFeature([User,FriendRequest,Messages,History,GameUserInfo,GameArchievement,Groups,GroupUsers]), JwtModule.register({
     global: true,
     secret: process.env.JWT_ACCESS_TOKEN_SECRET,
     signOptions: { expiresIn: '30d' },
@@ -73,7 +73,7 @@ import { AdminsService } from 'Database/services/admins/admins.service';
     ArchievementManager,
     GroupsService,
     WebSocketGateWayFilter,
-    AdminsService
+    GroupusersService
   ],
 })
 export class AppModule {}

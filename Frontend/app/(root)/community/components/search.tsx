@@ -4,6 +4,7 @@ import {HiUserGroup} from 'react-icons/hi'
 import {MdOutlineGroupAdd} from 'react-icons/md'
 import Cookies from 'js-cookie';
 import UserContext from "../../UserContext";
+import { socket } from "../../socket/socket";
 
 function Result(res:any)
 {
@@ -16,6 +17,7 @@ function Result(res:any)
                 Authorization: `Bearer ${Cookies.get('access_token')}`
             }
         })
+        socket.emit('joinroom',{id:res.id})
     }
     return (
         <div className="flex justify-between hover:bg-[#18184a] cursor-pointer p-2 rounded-lg">

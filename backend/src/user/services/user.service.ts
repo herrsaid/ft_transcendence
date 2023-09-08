@@ -442,23 +442,16 @@ export class UserService {
         }
         
       }
-
+      async myGroups(id:number)
+      {
+        const user = await this.userRepo.findOne({where:{id:id}, relations:{groupusers:true}, select:{id :true}});
+        console.log(user.groupusers[0].id)
+      }
 
       getCookieForLogOut()
       {
         return `access_token=; HttpOnly; Path=/; Max-Age=0`;
       }
-      async getGroups(id:number)
-      {
-        try{
-            const groups = await this.userRepo.findOne({where:{id:id},relations: ['groups', 'admin']})
-            return(groups.groups)
-        }
-        catch(error){
-            console.log('error')
-        }
-      }
-
       async checkFileExists(path: string): Promise<boolean> {
         
         const fs = require('fs').promises;
@@ -469,4 +462,5 @@ export class UserService {
           return false;
         }
       }
+
 }

@@ -5,26 +5,31 @@ import { Messages } from 'Database/entity/Message.entity';
 import { UserService } from 'src/user/services/user.service';
 import { Repository } from 'typeorm';
 import { Like } from "typeorm"
-import { AdminsService } from '../admins/admins.service';
-import { group } from 'console';
-import { Admins } from 'Database/entity/Admins.entity';
+import { GroupusersService } from '../groupusers/groupusers.service';
+import GroupUsers from 'Database/entity/GroupUsers.entity';
+
 
 @Injectable()
 export class GroupsService {
-    constructor(@InjectRepository(Groups) private Groups: Repository<Groups>, private readonly user:UserService, private readonly Admins:AdminsService){}
-    async create_group(group_info: Partial<Groups>)
+    constructor(@InjectRepository(Groups) private Groups: Repository<Groups>,
+    private readonly user:UserService, private readonly Members:GroupusersService){}
+    async create_group(group_info: Groups, id:number)
     {
         const info = this.Groups.create(group_info);
-        const adm = new Admins()
-        this.Admins.save(adm);
-        info.admins = adm;
+        const user = await this.user.findOne(id);
+        const members = new GroupUsers;
+        members.role = "owner";
+        members.user = user;
+        const m = await this.Members.create(members);
+        console.log(m)
+        info.members = [m];
         return this.Groups.save(info);
     }
     findOne(groupId:number)
     {
         try
         {
-            return this.Groups.findOne({where:{id:groupId},relations: ["users","admins"]})
+            return this.Groups.findOne({where:{id:groupId},relations: ["members"]})
         }
         catch(error){
             throw new NotFoundException(); 
@@ -50,34 +55,5 @@ export class GroupsService {
         return this.Groups.findBy({
              name: Like(`%${value}%`)
         })
-    }
-    async new_admin(group_id:number, user_id:number)
-    {
-        try
-        {
-            const group = await this.Groups.findOne({where:{id:group_id}, relations:['admins']});
-            const user = await this.user.findOne(user_id);
-            console.log(group.admins.id)
-            this.Admins.add(user, group.admins.id)
-        }
-        catch(error)
-        {
-            console.log('NotFoundException') 
-        }
-    }
-    async admin_check(group_id:number, user_id:number)
-    {
-        const group = await this.findOne(group_id);
-        const admins = await this.Admins.findOne(group.admins.id)
-        if (admins.admins.find((data) => {return (data.id == user_id)}))
-            return true;
-        else
-            return false;
-    }
-    async get_amdins(id:number)
-    {
-        const group = await this.findOne(id);
-        const admins = await this.Admins.findAdmins(group.admins.id);
-        return admins;
     }
 }

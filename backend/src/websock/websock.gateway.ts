@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken');
 import { MessageService } from 'src/message/message.service';
 import { UserService } from 'src/user/services/user.service';
 import { GroupsService } from 'Database/services/groups/groups.service';
+import { subscribe } from 'diagnostics_channel';
 
 @WebSocketGateway(3030, {cors:{
   origin: '*',
@@ -33,9 +34,9 @@ export class WebsockGateway {
       const payload = jwt.verify(token, process.env.JWT_ACCESS_TOKEN_SECRET)
       this.online.set(payload.id, socket.id);
       console.log(this.online);
-      const groups = await this.UserService.getGroups(payload.id);
-      for (let i = 0; i < groups.length; i++)
-        socket.join(groups[i].id.toString())
+      // const groups = await this.UserService.getGroups(payload.id);
+      // for (let i = 0; i < groups.length; i++)
+      //   socket.join(groups[i].id.toString())
     }catch(error){
       console.log('l9lawi ladkhlti')
       socket.disconnect(); 
@@ -68,5 +69,10 @@ export class WebsockGateway {
       client.broadcast.to(payload.dst.toString()).emit('message',payload);
     }
     return 'Hello world!';
+  }
+  @SubscribeMessage('joinroom')
+  async handleJoinRoom(client: Socket, payload:any)
+  {
+    client.join(payload.id.toString());
   }
 }

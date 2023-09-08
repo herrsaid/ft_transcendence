@@ -1,23 +1,18 @@
 
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn, ManyToMany, JoinTable, OneToOne, Admin } from "typeorm";
 import { Messages } from "./Message.entity";
-import { User } from "src/entities/user/user.entity";
-import { Admins } from "./Admins.entity";
+import GroupUsers from "./GroupUsers.entity";
 
 @Entity()
 export default class Groups{
     @PrimaryGeneratedColumn()
     id: number;
     @Column()
-    members:number = 1
+    size:number = 0
     @Column()
     name:string
-    @ManyToMany(() => User, (user) => user.groups)
-    @JoinTable()
-    users: User[];
     @OneToMany(() => Messages, (messages) => messages.group)
     messages: Messages[]
-    @OneToOne(() => Admins)
-    @JoinColumn()
-    admins:Admins
+    @OneToMany(() => GroupUsers, (group) => group.group)
+    members:GroupUsers[]
 }
