@@ -125,7 +125,7 @@ export default  function Setup()
            
             <div className="items-center mx-auto">
                 
-            <h1 className="text-2xl font-semibold text-blue-500">Account Setup</h1>
+            <h1 className="text-2xl font-semibold text-purple-500 text-center">Account Setup</h1>
             <div className='mx-auto py-12'>
             <div className="flex items-center pl-8">
                 <div className="relative">
@@ -159,9 +159,9 @@ export default  function Setup()
   value={username_updated}
   
   />
-  <div className="text-right mt-10">
+  <div className="text-center mt-10">
     
-    <button  className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg" onClick={onUpdate_Username}>Save</button>
+    <button  className="stats-bgf forhover text-white py-2 px-4 rounded-lg" onClick={onUpdate_Username}>Save</button>
     
   </div>
           </div>
