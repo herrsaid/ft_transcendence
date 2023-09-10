@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import GroupUsers from 'Database/entity/GroupUsers.entity';
+import { group } from 'console';
 
 @Injectable()
 export class GroupusersService {
@@ -30,5 +31,14 @@ export class GroupusersService {
                 return (data.group)
         })
         return (mygorup);
+    }
+    async findMembers(id:number)
+    {
+        const groupusers = await this.GroupUsers.find({relations: ["group", "user"]})
+        const members = groupusers.map((data) => {
+            if (data.group.id == id)
+                return data;
+        })
+        return members;
     }
 }

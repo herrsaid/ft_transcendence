@@ -68,6 +68,19 @@ export class GroupsController {
             const group = await this.GroupService.findOne_messages(params.id);
             return (group.messages);
         }
+        @UseGuards(AuthGuard)
+        @Get('members')
+        async members(@Query() param)
+        {
+            try{
+                const members = await this.groupusers.findMembers(param.id);
+                return members;
+            }
+            catch(error)
+            {
+                console.log(error);
+            }
+        }
     // @Post('create')
     // async create(@Body() Group){
     //     const group = await this.GroupService.create_group(Group);
