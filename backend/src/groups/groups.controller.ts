@@ -13,7 +13,8 @@ import GroupUsers from 'Database/entity/GroupUsers.entity';
 @Controller('groups')
 export class GroupsController {
     constructor(private readonly GroupService:GroupsService, private readonly User:UserService,
-        private readonly GroupUsersService:GroupusersService){}
+        private readonly GroupUsersService:GroupusersService,
+        private readonly groupusers:GroupusersService){}
         @UseGuards(AuthGuard)
         @Post('create')
         async create(@Req() request, @Body() Group)
@@ -35,7 +36,6 @@ export class GroupsController {
                 member.group = group;
                 const m = await this.GroupUsersService.create(member);
                 group.members.push(m);
-                console.log(group.members);
                 return 'created'
             }
             catch(error)
@@ -58,9 +58,15 @@ export class GroupsController {
         async myGroups(@Req() request, @Query() params)
         {
             const user_id = request['user'].id;
-            
-            // const groups = await this.User.myGroups(user_id);
-            // console.log(groups);
+            const usergroup = await this.groupusers.findGroup(user_id);
+            return(usergroup)
+        }
+        @UseGuards(AuthGuard)
+        @Get('messages')
+        async group_messages(@Query() params)
+        {
+            const group = await this.GroupService.findOne_messages(params.id);
+            return (group.messages);
         }
     // @Post('create')
     // async create(@Body() Group){

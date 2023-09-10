@@ -14,8 +14,7 @@ export class GroupusersService {
     {
         try
         {
-            const groupusers = await this.GroupUsers.findOne({where:{id:id}})
-            console.log(groupusers)
+            const groupusers = await this.GroupUsers.findOne({where:{id:id}, relations: ["group", "user"]})
             return groupusers;
         }
         catch(error)
@@ -25,6 +24,11 @@ export class GroupusersService {
     }
     async findGroup(id:number)
     {
-
+        const groupusers = await this.GroupUsers.find({relations: ["group", "user"]})
+        const mygorup = groupusers.map((data)=>{
+            if (data.user.id == id)
+                return (data.group)
+        })
+        return (mygorup);
     }
 }
