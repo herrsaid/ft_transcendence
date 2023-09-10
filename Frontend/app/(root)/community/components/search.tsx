@@ -1,5 +1,4 @@
 import { useContext, useState } from "react";
-import Group from "./group";
 import {HiUserGroup} from 'react-icons/hi'
 import {MdOutlineGroupAdd} from 'react-icons/md'
 import Cookies from 'js-cookie';

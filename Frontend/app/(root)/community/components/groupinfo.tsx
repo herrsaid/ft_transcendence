@@ -19,7 +19,6 @@ export default function Groupinfo()
             }
         }).then((response) => response.json()).then(data => setMembers(data));
     },[reciver.reciver.id])
-    console.log('mem = ', members)
     const leave = () => {
         fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/leave?id=${reciver.reciver.id}`,
         {
@@ -51,7 +50,7 @@ export default function Groupinfo()
                         {
                             members.map((data:any, index) => 
                             {
-                                return (<Groupmember id={data.id} avatar={data.profile_img} username={data.username} key={index} />)
+                                return (<Groupmember data={data} key={index} />)
                             })
                         }
                 </div>

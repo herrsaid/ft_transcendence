@@ -35,8 +35,7 @@ export class GroupusersService {
     async findMembers(id:number)
     {
         const groupusers = await this.GroupUsers.find({relations: ["group", "user"]})
-        const members = groupusers.map((data) => {
-            if (data.group.id == id)
+        const members = groupusers.filter(data => data.group.id == id).map((data) => {
                 return data;
         })
         return members;
