@@ -30,7 +30,7 @@ const PublicMood = (Obj:GroopObj, SetObj:GroopSet)=>
         password1.style.display = "none";
     }
     NewObj.RoomType = 1;
-    SetObj(NewObj)
+    SetObj(NewObj);
 }
 
 const PrivateMood = (Obj:GroopObj, SetObj:GroopSet)=>
@@ -48,7 +48,7 @@ const PrivateMood = (Obj:GroopObj, SetObj:GroopSet)=>
         password1.style.display = "block";
     }
     NewObj.RoomType = 2;
-    SetObj(NewObj)
+    SetObj(NewObj);
 }
 
 const protectedMood = (Obj:GroopObj, SetObj:GroopSet)=>
@@ -66,20 +66,21 @@ const protectedMood = (Obj:GroopObj, SetObj:GroopSet)=>
         password1.style.display = "block";
     }
     NewObj.RoomType = 3;
-    SetObj(NewObj)
+    SetObj(NewObj);
 }
 
 const CreateGroupRoom = (Obj:GroopObj)=>
 {
     const Username1: any = document.getElementById("Username1");
     const password1: any = document.getElementById("password1");
-    let Username1_value:String = '',password1_value:String = ''; 
+    const NewObj:GroopObj = Obj;
     if (Username1 && password1)
     {
-        Username1_value = Username1.value;
+        NewObj.UserName = Username1.value;
         //check if you need to hash your passwrd
-        password1_value = password1.value;
+        NewObj.Password = password1.value;
     }
+    console.log(NewObj);
     //do your logic here
 }
 
