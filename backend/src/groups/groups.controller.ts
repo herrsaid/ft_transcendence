@@ -29,14 +29,17 @@ export class GroupsController {
             const user_id = request['user'].id;
             try
             {
-                const group = await this.GroupService.findOne(params.id);
-                const user = await this.User.findOne(user_id);
-                const member = new GroupUsers();
-                member.user = user;
-                member.group = group;
-                const m = await this.GroupUsersService.create(member);
-                group.members.push(m);
-                return 'created'
+                if (await this.GroupUsersService.isUserInGroup(user_id, params.id) == false)
+                {
+                    const group = await this.GroupService.findOne(params.id);
+                    const user = await this.User.findOne(user_id);
+                    const member = new GroupUsers();
+                    member.user = user;
+                    member.group = group;
+                    const m = await this.GroupUsersService.create(member);
+                    group.members.push(m);
+                    return 'created'
+                }
             }
             catch(error)
             {
@@ -101,6 +104,20 @@ export class GroupsController {
             }
             else 
                 return 'not deleted';
+        }
+        @UseGuards(AuthGuard)
+        @Get('mute')
+        async mute(@Req() request, @Query() parmas)
+        {
+            const user_id = request['user'].id;
+            if((await this.GroupUsersService.is_admin(user_id, parmas.id)) != "user"
+                && (await this.GroupUsersService.is_admin(parmas.tomute, parmas.id)) != "owner")
+            {
+                this.GroupUsersService.mute(parmas.id, parmas.tomute)
+                return 'muted'
+            }
+            else 
+                return 'not muted';
         }
     // @Post('create')
     // async create(@Body() Group){

@@ -9,12 +9,16 @@ import { MessageService } from 'src/message/message.service';
 import { UserService } from 'src/user/services/user.service';
 import { GroupsService } from 'Database/services/groups/groups.service';
 import { subscribe } from 'diagnostics_channel';
+import { GroupusersService } from 'Database/services/groupusers/groupusers.service';
 
 @WebSocketGateway(3030, {cors:{
   origin: '*',
   credentials: true}})
 export class WebsockGateway {
-  constructor(private readonly MessageService:MessageService, private readonly UserService:UserService, private jwtService: JwtService, private readonly GroupsService:GroupsService) {}
+  constructor(private readonly MessageService:MessageService, private readonly UserService:UserService,
+     private jwtService: JwtService,
+      private readonly GroupsService:GroupsService,
+      private readonly UserGroupService:GroupusersService) {}
   @WebSocketServer()
   server: Server;
   getkey = (map, value) => 
@@ -35,8 +39,9 @@ export class WebsockGateway {
       this.online.set(payload.id, socket.id);
       console.log(this.online);
       // const groups = await this.UserService.getGroups(payload.id);
-      // for (let i = 0; i < groups.length; i++)
-      //   socket.join(groups[i].id.toString())
+      const groups = await this.UserGroupService.findGroup(payload.id)
+      for (let i = 0; i < groups.length; i++)
+        socket.join(groups[i].id.toString())
     }catch(error){
       console.log('l9lawi ladkhlti')
       socket.disconnect(); 
@@ -54,19 +59,22 @@ export class WebsockGateway {
     // private message
     if (!payload.toGroup)
     {
-      this.MessageService.create(payload);
-      let dst = this.online.get(payload.dst);
-      if(dst)
-        client.broadcast.to(dst).emit('message', payload)
+        this.MessageService.create(payload);
+        let dst = this.online.get(payload.dst);
+        if(dst)
+          client.broadcast.to(dst).emit('message', payload)
     }
     // groups message
     else
     {
-      const msg = await this.MessageService.create(payload);
-      const group = await this.GroupsService.findOne_messages(payload.dst);
-      group.messages.push(msg);
-      this.GroupsService.save(group);
-      client.broadcast.to(payload.dst.toString()).emit('message',payload);
+      if (await this.UserGroupService.isAbleToSend(payload.src, payload.dst) == true)
+      {
+        const msg = await this.MessageService.create(payload);
+        const group = await this.GroupsService.findOne_messages(payload.dst);
+        group.messages.push(msg);
+        this.GroupsService.save(group);
+        client.broadcast.to(payload.dst.toString()).emit('message',payload);
+      }
     }
     return 'Hello world!';
   }

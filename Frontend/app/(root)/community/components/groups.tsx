@@ -3,6 +3,7 @@ import Group from "./group";
 import Cookies from 'js-cookie';
 import {useForm, SubmitHandler, FormProvider} from 'react-hook-form'
 import UserContext from "../../UserContext";
+import useSWR from "swr";
   
   export default function Groups()
   {
@@ -19,19 +20,28 @@ import UserContext from "../../UserContext";
         body: JSON.stringify({name:data.name, user:user.user.id})
     })
     })
-    useEffect(()=>{
-      fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/mygroups?id=${user.user.id}`,{
-        method: 'GET',
-        headers:{
-          Authorization: `Bearer ${Cookies.get('access_token')}`,
-        }
-      }).then((response) => response.json()).then(data => setGroup(data))
-    },[])
+    const fetcher = (args:string) => fetch(args,{
+      method: 'GET',
+      headers:{
+        Authorization: `Bearer ${Cookies.get('access_token')}`,
+      }
+    }).then((response) => response.json())
+    const {data,isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/mygroups?id=${user.user.id}`, fetcher);
+    // useEffect(()=>{
+    //   fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/mygroups?id=${user.user.id}`,{
+    //     method: 'GET',
+    //     headers:{
+    //       Authorization: `Bearer ${Cookies.get('access_token')}`,
+    //     }
+    //   }).then((response) => response.json()).then(data => setGroup(data))
+    // },[])
+    if (isLoading)
+      return (<>is lading</>)
     return (
         <div className="flex flex-col justify-between h-[100%]">
             <div >
               {
-                group.map((data:any, index) => {return(<Group key={index} group={data}/>)})
+                data.map((data:any, index:number) => {return(<Group key={index} group={data}/>)})
               }
             </div>
             <div className="self-center fixed bottom-4">
