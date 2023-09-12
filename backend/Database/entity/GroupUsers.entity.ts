@@ -14,4 +14,6 @@ export default class GroupUsers
     user:User;
     @ManyToOne(()=> Groups, (member) => member.members)
     group:Groups
+    @Column()
+    status:string = "able"
 }

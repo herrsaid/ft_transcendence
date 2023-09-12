@@ -1,13 +1,4 @@
 import { useEffect, useState, useContext } from "react";
-import {
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
-    ModalCloseButton,
-  } from '@chakra-ui/react'
 import Group from "./group";
 import Cookies from 'js-cookie';
 import {useForm, SubmitHandler, FormProvider} from 'react-hook-form'
@@ -40,7 +31,7 @@ import UserContext from "../../UserContext";
         <div className="flex flex-col justify-between h-[100%]">
             <div >
               {
-                group.map((data:any, index) => {return(<Group key={index} name={data.name} id={data.id}/>)})
+                group.map((data:any, index) => {return(<Group key={index} group={data}/>)})
               }
             </div>
             <div className="self-center fixed bottom-4">

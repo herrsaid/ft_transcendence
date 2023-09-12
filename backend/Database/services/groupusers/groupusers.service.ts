@@ -26,8 +26,8 @@ export class GroupusersService {
     async findGroup(id:number)
     {
         const groupusers = await this.GroupUsers.find({relations: ["group", "user"]})
-        const mygorup = groupusers.map((data)=>{
-            if (data.user.id == id)
+        const mygorup = groupusers.filter((data) => {return (data.user.id == id)}).map((data)=>{
+                data.group.role = data.role;
                 return (data.group)
         })
         return (mygorup);
@@ -39,5 +39,17 @@ export class GroupusersService {
                 return data;
         })
         return members;
+    }
+    async remove(user_id, group_id)
+    {
+        const groupusers = await this.GroupUsers.find({relations: ["group", "user"]})
+        const spes = groupusers.find(data => (data.group.id == group_id && data.user.id == user_id));
+        this.GroupUsers.delete({id:spes.id});
+    }
+    async is_admin(user_id:number, group_id:number)
+    {
+        const groupusers = await this.GroupUsers.find({relations: ["group", "user"]})
+        const spes = groupusers.find(data => (data.group.id == group_id && data.user.id == user_id));
+        return (spes.role);
     }
 }

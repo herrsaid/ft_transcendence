@@ -55,7 +55,7 @@ export default function Groupinfo()
                         }
                 </div>
                 <div className='self-center'>
-                    <button onClick={leave} className='bg-red-600 hover:bg-red-500 p-2 mb-1 rounded-xl'>Leave</button>
+                    <button onClick={leave} className='bg-red-600 hover:bg-red-500 p-2 mb-1 rounded-full'>Leave</button>
                 </div>
             </div>
         </div>

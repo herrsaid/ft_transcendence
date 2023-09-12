@@ -81,6 +81,27 @@ export class GroupsController {
                 console.log(error);
             }
         }
+        @UseGuards(AuthGuard)
+        @Get('leave')
+        async leave(@Req() request, @Query() params)
+        {
+            const user_id = request['user'].id;
+            this.GroupUsersService.remove(user_id, params.id)
+        }
+        @UseGuards(AuthGuard)
+        @Get('ban')
+        async ban(@Req() request, @Query() parmas)
+        {
+            const user_id = request['user'].id;
+            if((await this.GroupUsersService.is_admin(user_id, parmas.id)) != "user"
+                && (await this.GroupUsersService.is_admin(parmas.toremove, parmas.id)) != "owner")
+            {
+                this.GroupUsersService.remove(parmas.toremove, parmas.id)
+                return 'deleted'
+            }
+            else 
+                return 'not deleted';
+        }
     // @Post('create')
     // async create(@Body() Group){
     //     const group = await this.GroupService.create_group(Group);

@@ -4,11 +4,11 @@ import {FaHashtag} from 'react-icons/fa'
 import reciverContext from '../reciverContext'
 import activeContext from '../activeContext';
 
-export default function Group(props:any) {
+export default function Group({group}:any) {
     const reciver = useContext(reciverContext);
     const active = useContext(activeContext);
     const group_click = () =>{
-        reciver.setReciver({isgroup:true, id:props.id, name:props.name});
+        reciver.setReciver({isgroup:true, id:group.id, name:group.name,me:group.role});
         active.setActive('message');
     }
     return(
@@ -17,7 +17,7 @@ export default function Group(props:any) {
                 <FaHashtag size={35} />
             </div>
             <div className='p-2'>
-                <h1>{props.name}</h1>
+                <h1>{group.name}</h1>
             </div>
         </div>
     )
