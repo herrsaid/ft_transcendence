@@ -63,7 +63,7 @@ export default function Messages()
     const send = (e:any)=>{
         e.preventDefault();
         var mydiv = document.getElementById('scrollable')
-        mydiv?.scrollTo({top:mydiv.scrollHeight, behavior: 'instant'})
+        // mydiv?.scrollTo({top:mydiv.scrollHeight, behavior: 'instant'})
         if (value != '')
         {
             if(!reciver.reciver.isgroup)

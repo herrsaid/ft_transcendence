@@ -83,11 +83,17 @@ export class UserController {
     @Get(':username')
     async findOneByUsername(@Param('username') username:string)
     {
-        const user = await this.userService.findOneByUsername(username);
+        try{
+            const user = await this.userService.findOneByUsername(username);
         
-        if (!user)
-            throw new NotFoundException();
-        return user;
+            if (!user)
+                throw new NotFoundException();
+            return user;
+        }
+        catch{
+            throw new UnauthorizedException();
+        }
+        
     }
 
 
@@ -95,11 +101,16 @@ export class UserController {
     @Get('id/:userId')
     async findUserById(@Param('userId') userStringId:string)
     {
-        const userId = parseInt(userStringId);
-        const user = await this.userService.findOne(userId);
-        if (!user)
-            throw new NotFoundException();
-        return user;
+        try{
+            const userId = parseInt(userStringId);
+            const user = await this.userService.findOne(userId);
+            if (!user)
+                throw new NotFoundException();
+            return user;
+        }
+        catch{
+            throw new UnauthorizedException();
+        }
     }
 
 
@@ -111,10 +122,16 @@ export class UserController {
     @Post('friend-request/block/:receiverId')
     blockUser(@Param('receiverId') receiverStringId:string, @Request() req)
     {
-        const receiverId = parseInt(receiverStringId);
-        delete(req.user.iat)
-        delete(req.user.exp)
-        return this.userService.blockUser(receiverId, req.user);
+        try{
+            const receiverId = parseInt(receiverStringId);
+            delete(req.user.iat)
+            delete(req.user.exp)
+            return this.userService.blockUser(receiverId, req.user);
+        }
+        catch{
+            throw new UnauthorizedException();
+        }
+        
     }
 
 
@@ -123,10 +140,15 @@ export class UserController {
     @Get('block/status/:receiverId')
     getBlockStatus(@Param('receiverId') receiverStringId:string, @Request() req)
     {
-        const receiverId = parseInt(receiverStringId);
-        delete(req.user.iat)
-        delete(req.user.exp)
-        return this.userService.getBlockStatus(receiverId, req.user);
+        try{
+            const receiverId = parseInt(receiverStringId);
+            delete(req.user.iat)
+            delete(req.user.exp)
+            return this.userService.getBlockStatus(receiverId, req.user);
+        }
+        catch{
+            throw new UnauthorizedException();
+        }
     }
 
 
@@ -137,10 +159,15 @@ export class UserController {
     @Post('friend-request/send/:receiverId')
     sendFriendRequest(@Param('receiverId') receiverStringId:string, @Request() req)
     {
-        const receiverId = parseInt(receiverStringId);
-        delete(req.user.iat)
-        delete(req.user.exp)
-        return this.userService.sendFriendRequest(receiverId, req.user);
+        try{
+            const receiverId = parseInt(receiverStringId);
+            delete(req.user.iat)
+            delete(req.user.exp)
+            return this.userService.sendFriendRequest(receiverId, req.user);
+        }
+        catch{
+            throw new UnauthorizedException();
+        }
     }
 
 
@@ -148,10 +175,15 @@ export class UserController {
     @Get('friend-request/status/:receiverId')
     getFriendRequestStatus(@Param('receiverId') receiverStringId:string, @Request() req)
     {
-        const receiverId = parseInt(receiverStringId);
-        delete(req.user.iat)
-        delete(req.user.exp)
-        return this.userService.getFriendRequestStatus(receiverId, req.user);
+        try{
+            const receiverId = parseInt(receiverStringId);
+            delete(req.user.iat)
+            delete(req.user.exp)
+            return this.userService.getFriendRequestStatus(receiverId, req.user);
+        }
+        catch{
+            throw new UnauthorizedException();
+        }
     }
 
 
@@ -160,16 +192,26 @@ export class UserController {
     @Put('friend-request/response/:friendRequestId')
     respondToFriendRequest(@Param('friendRequestId') friendRequestStringId:string, @Body() statusResponse: FriendRequestStatus)
     {
-        const friendRequestId = parseInt(friendRequestStringId);
-        return this.userService.respondToFriendRequest(friendRequestId, statusResponse.status);
+        try{
+            const friendRequestId = parseInt(friendRequestStringId);
+            return this.userService.respondToFriendRequest(friendRequestId, statusResponse.status);
+        }
+        catch{
+            throw new UnauthorizedException();
+        }
     }
 
     @UseGuards(AuthGuard)
     @Get('friend-request/remove/:friendRequestId')
     removeFriendRequest(@Param('friendRequestId') friendRequestStringId:string)
     {
-        const friendRequestId = parseInt(friendRequestStringId);
-        return this.userService.deleteFriendRequest(friendRequestId);
+        try{
+            const friendRequestId = parseInt(friendRequestStringId);
+            return this.userService.deleteFriendRequest(friendRequestId);
+        }
+        catch{
+            throw new UnauthorizedException();
+        }
     }
 
     
@@ -178,7 +220,12 @@ export class UserController {
     @Get('friend-request/me/received-requests')
     getFriendRequest(@Request() req)
     {
-        return this.userService.getFriendRequest(req.user);
+        try{
+            return this.userService.getFriendRequest(req.user);
+        }
+        catch{
+            throw new UnauthorizedException();
+        }
     }
 
 
@@ -187,7 +234,12 @@ export class UserController {
     @Get('friends/me')
     getMyFriends(@Request() req)
     {
-        return this.userService.getAllMyFriends(req.user);
+        try{
+            return this.userService.getAllMyFriends(req.user);
+        }
+        catch{
+            throw new UnauthorizedException();
+        }
     }
 
 
@@ -262,13 +314,25 @@ export class UserController {
     @Get(':id')
     findOne(@Param('id') id:number)
     {
-        return this.userService.findOne(id);
+        try
+        {
+            return this.userService.findOne(id);
+        }
+        catch{
+            throw new BadRequestException();
+        }
     }
 
     @Post()
     create(@Body() CreateUserDto: CreateUserDto)
     {
-        return this.userService.create(CreateUserDto);
+        try
+        {
+            return this.userService.create(CreateUserDto);
+        }
+        catch{
+            throw new BadRequestException();
+        }
     }
 
 
@@ -278,14 +342,28 @@ export class UserController {
     @Get('history/me')
     getMyHistoryMatch(@Request() req)
     {
-        return this.HistoryManager.GetAllHistorysByUsername(req.user.id);
+        try
+        {
+            return this.HistoryManager.GetAllHistorysByUsername(req.user.id);
+        }
+        catch{
+            throw new BadRequestException();
+        }
+        
     }
 
     @UseGuards(AuthGuard)
     @Get('history/match/:id')
     getHistoryUserMatch(@Param('id') id:number)
     {
-        return this.HistoryManager.GetAllHistorysByUsername(id);
+        try
+        {
+            return this.HistoryManager.GetAllHistorysByUsername(id);
+        }
+        catch{
+            throw new BadRequestException();
+        }
+        
     }
 
 
@@ -294,7 +372,14 @@ export class UserController {
     @Get('stats/me')
     getMyStats(@Request() req)
     {
-        return this.GameInfoManager.GetGameInfoByUsername(req.user.id);
+        try
+        {
+            return this.GameInfoManager.GetGameInfoByUsername(req.user.id);
+        }
+        catch{
+            throw new BadRequestException();
+        }
+        
     }
 
 
@@ -302,7 +387,14 @@ export class UserController {
     @Get('stats/match/:id')
     getStatsUser(@Param('id') id:number)
     {
-        return this.GameInfoManager.GetGameInfoByUsername(id);
+        try
+        {
+            return this.GameInfoManager.GetGameInfoByUsername(id);
+        }
+        catch{
+            throw new BadRequestException();
+        }
+       
     }
 
 
@@ -311,7 +403,14 @@ export class UserController {
     @Get('rank/me')
     async getMyRank(@Request() req)
     {
-        return await this.GameInfoManager.GetRankByUserId(req.user.id);
+        try
+        {
+            return await this.GameInfoManager.GetRankByUserId(req.user.id);
+        }
+        catch{
+            throw new BadRequestException();
+        }
+        
     }
 
 
@@ -319,7 +418,14 @@ export class UserController {
     @Get('rank/player/:id')
     getRankUser(@Param('id') id:number)
     {
-        return this.GameInfoManager.GetRankByUserId(id);
+        try
+        {
+            return this.GameInfoManager.GetRankByUserId(id);
+        }
+        catch{
+            throw new BadRequestException();
+        }
+        
     }
 
 
@@ -328,7 +434,14 @@ export class UserController {
     @Get('archievements/me')
     getMyArchievements(@Request() req)
     {
-        return this.ArchievementManager.GetAllUserArchievementByUsername(req.user.id);
+        try
+        {
+            return this.ArchievementManager.GetAllUserArchievementByUsername(req.user.id);
+        }
+        catch{
+            throw new BadRequestException();
+        }
+        
     }
 
 
@@ -336,7 +449,14 @@ export class UserController {
     @Get('archievements/player/:id')
     getArchievementsUser(@Param('id') id:number)
     {
-        return this.ArchievementManager.GetAllUserArchievementByUsername(id);
+        try
+        {
+            return this.ArchievementManager.GetAllUserArchievementByUsername(id);
+        }
+        catch{
+            throw new BadRequestException();
+        }
+        
     }
     
 

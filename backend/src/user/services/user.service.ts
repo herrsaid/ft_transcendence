@@ -409,7 +409,9 @@ export class UserService {
 
 
     async getAllMyFriends(currentUser: User): Promise<User[]> {
-        const users = await this.userRepo
+        try
+        {
+            const users = await this.userRepo
           .createQueryBuilder('user')
           .leftJoin(
             FriendRequest,
@@ -421,7 +423,11 @@ export class UserService {
           .andWhere('(friendRequest.creatorId = :currentUserId OR friendRequest.receiverId = :currentUserId)', { currentUserId: currentUser.id })
           .getMany();
     
-        return users;
+            return users;
+        }
+        catch{
+            throw new BadRequestException();
+        }
       }
 
 
