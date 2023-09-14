@@ -1,5 +1,5 @@
 "use client"
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Chats from "./components/chats";
 import Info from "./components/info";
 import Messages from "./components/messages";
@@ -15,6 +15,25 @@ export default function Community()
     const [reciver, setReciver] = useState({});
     const [active, setActive] = useState('message');
     const user = useContext(UserContext)
+
+    useEffect(()=>
+    {
+        let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
+        let LeftNav:HTMLElement| null = document.getElementById('LeftNav');
+        if(BottomNav && LeftNav)
+        {
+            BottomNav.style.display = "none";
+            LeftNav.style.display = "block";
+        }
+        return()=>
+        {
+            if(BottomNav && LeftNav)
+            {
+                BottomNav.style.display = "block";
+                LeftNav.style.display = "none";
+            }
+        }
+    },[]);
     if (!user.user.id)
         return (<div></div>)
     return(
