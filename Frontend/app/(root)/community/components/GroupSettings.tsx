@@ -2,6 +2,7 @@
 
 import { Dispatch, SetStateAction, useState } from "react";
 import "../Settings/Settings.css"
+import Cookies from 'js-cookie';
 
 type GroopSet = Dispatch<SetStateAction<{
     RoomType: number;
@@ -82,6 +83,13 @@ const CreateGroupRoom = (Obj:GroopObj)=>
     }
     console.log(NewObj);
     //do your logic here
+    fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/create`,{
+        method: 'POST', headers:{
+            Authorization: `Bearer ${Cookies.get('access_token')}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({name:NewObj.UserName})
+    })
 }
 
 const GroupSettings = () => 
