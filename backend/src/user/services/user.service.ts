@@ -200,9 +200,9 @@ export class UserService {
     {
         try
         {
+            this.update_is_profile_img_updated(id, {"is_profile_img_updated" : true})
             const user = await this.userRepo.findOne({where:{id:id}});
             Object.assign(user, updateAvatar);
-            this.update_is_profile_img_updated(id, {"is_profile_img_updated" : true})
             return await this.userRepo.save(user);
         }
         catch
