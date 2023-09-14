@@ -4,6 +4,7 @@ import Cookies from 'js-cookie';
 import {useForm, SubmitHandler, FormProvider} from 'react-hook-form'
 import UserContext from "../../UserContext";
 import useSWR from "swr";
+import GroupSettings from "./GroupSettings";
   
   export default function Groups()
   {
@@ -45,8 +46,9 @@ import useSWR from "swr";
               }
             </div>
             <div className="self-center fixed bottom-4">
-                <button className="bg-green-600 rounded-lg p-1" onClick={()=>alert('will created soon')}>New Group</button>
+                <button className="bg-green-600 rounded-lg p-1" onClick={()=>setIsOpen(true)}>New Group</button>
             </div >
+            {isOpen && <GroupSettings></GroupSettings>}
         </div>
     )
 }
