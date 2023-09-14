@@ -67,6 +67,8 @@ const ProfileAvatar = (props:props) => {
                         if (response.status == 401)
                             router.replace("/login")
                         const jsonData = await response.json();
+                        console.log("=====================")
+                        console.log(jsonData)
                         user.setUser(jsonData);
             
                         

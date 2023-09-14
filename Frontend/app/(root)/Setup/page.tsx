@@ -11,6 +11,7 @@ import { useRouter } from 'next/navigation';
 import { useContext } from 'react';
 import UserContext from '../UserContext';
 import { ProfileAvatar } from '../profile';
+import Link from 'next/link';
 
 
 
@@ -162,6 +163,9 @@ export default  function Setup()
   <div className="text-center mt-10">
     
     <button  className="stats-bgf forhover text-white py-2 px-4 rounded-lg" onClick={onUpdate_Username}>Save</button>
+    <Link href='/'>
+    <button  className="stats-bgf forhover text-white py-2 px-4 rounded-lg ml-4" >Skip</button>
+    </Link>
     
   </div>
           </div>
