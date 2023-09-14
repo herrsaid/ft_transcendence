@@ -21,7 +21,6 @@ export class GroupsService {
         members.role = "owner";
         members.user = user;
         const m = await this.Members.create(members);
-        console.log(m)
         info.members = [m];
         return this.Groups.save(info);
     }

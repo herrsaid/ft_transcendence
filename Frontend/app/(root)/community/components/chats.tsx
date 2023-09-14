@@ -45,9 +45,9 @@ export default function Chats()
     })
     const friend_click = () =>{setForg(true)}
     const group_click = () =>{setForg(false)}
-    // useEffect(()=>{
-    //     document.addEventListener('click', (e) => {(!searchRef.current.contains(e.target))?setSearch([]):console.log('dd')}, true)
-    // })
+    useEffect(()=>{
+        document.addEventListener('click', (e) => {((searchRef.current)&&(!searchRef.current.contains(e.target)))?setSearch([]):console.log('dd')}, true)
+    },[])
     return (
         <div className="flex flex-col h-full">
             <div className="text-center text-2xl pb-1">Chats</div>

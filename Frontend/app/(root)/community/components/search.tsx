@@ -1,12 +1,13 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import {HiUserGroup} from 'react-icons/hi'
 import {MdOutlineGroupAdd} from 'react-icons/md'
 import Cookies from 'js-cookie';
 import UserContext from "../../UserContext";
 import { socket } from "../../socket/socket";
 
-function Result(res:any)
+function Result({res}:any)
 {
+    console.log(res)
     const user = useContext(UserContext);
     const join = (e:any)=>{
         e.preventDefault();
@@ -24,7 +25,7 @@ function Result(res:any)
             <HiUserGroup size={30} />
             {res.name}
             </div>
-            <div className="p-1 rounded-full hover:bg-green-200">
+            <div className="p-1 rounded-full hover:bg-green-500">
                 <button onClick={join}><MdOutlineGroupAdd size={20} /></button>
             </div>
         </div>
@@ -39,7 +40,7 @@ export default function Search(props:any)
         <div className="flex flex-col">
             {
             (props.search != undefined)?(
-                props.search.map((data:any,index:number) => {return(<Result key={index} name={data.name} id={data.id}/>)})
+                props.search.map((data:any,index:number) => {return(<Result key={index} res={data}/>)})
             ):<>no groups</>
             }
         </div>

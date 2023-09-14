@@ -8,6 +8,10 @@ export default class Groups{
     @PrimaryGeneratedColumn()
     id: number;
     @Column()
+    type:string = "public"
+    @Column()
+    password:string = null;
+    @Column()
     size:number = 0
     @Column()
     name:string

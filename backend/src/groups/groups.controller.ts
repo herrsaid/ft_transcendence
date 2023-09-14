@@ -1,12 +1,8 @@
 import { Body, Controller, Get, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
 import Groups from 'Database/entity/Groups.entity';
-import { groupDto } from './groupsDto';
 import { GroupsService } from 'Database/services/groups/groups.service';
 import { UserService } from 'src/user/services/user.service';
-import { group } from 'console';
 import { AuthGuard } from 'src/auth/guard/auth.guard';
-import { AdminGuard } from './admin/admin.guard';
-import { request } from 'http';
 import { GroupusersService } from 'Database/services/groupusers/groupusers.service';
 import GroupUsers from 'Database/entity/GroupUsers.entity';
 
@@ -19,6 +15,7 @@ export class GroupsController {
         @Post('create')
         async create(@Req() request, @Body() Group)
         {
+            console.log(Group)
             const user_id = request['user'];
             const group  = this.GroupService.create_group(Group, user_id.id);
         }
