@@ -20,7 +20,7 @@ export default function BottomNav()
     return(
         <>
         {/* //this the old bottomnavbar */}
-        <nav id="BottomNav" className="hidden fixed bottom-2 lg:bottom-2 w-full overflow-hidden z-50">
+        <nav id="BottomNav" className="block fixed bottom-2 lg:bottom-2 w-full overflow-hidden z-50">
             <div className="container mx-auto">
                 <div className="w-full h-[60px] bg-black/20 backdrop-blur rounded-full max-w-[460px] mx-auto 
                 px-5 flex justify-between text-2xl text-white/50 items-center
@@ -35,7 +35,7 @@ export default function BottomNav()
             </div>
         </nav>
 
-<aside  id="LeftNav" className=" text-white  p-2 sidebar">
+<aside  id="LeftNav" className=" text-white  p-2 sidebar hidden">
   <div className=""><button
         id="toggleSidebar"
         className="block w-[30px] h-[30px] text-white rounded-full hover:text-gray-300 buttona bg-gradient-to-br from-purple-600 to-indigo-800"
