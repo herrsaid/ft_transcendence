@@ -9,7 +9,7 @@ import reciverContext from "../reciverContext";
 import { useContext } from "react";
 import activeContext from "../activeContext";
 import Chats from "./chats";
-
+import GroupMsg from "./groupmsg";
 
 export default function Messages()
 {
@@ -33,6 +33,14 @@ export default function Messages()
                     Authorization: `Bearer ${Cookies.get('access_token')}`
                 }
             }).then((response) => response.json()).then(data => {setGroupMessage(data)})
+            fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/members?id=${reciver.reciver.id}`,
+            {
+                method: 'GET',
+                headers:{
+                    Authorization: `Bearer ${Cookies.get('access_token')}`
+                }
+            }).then((response) => response.json()).then(data => reciver.setReciver({...reciver.reciver,members:data}));
+            console.log('rec', reciver.reciver.members)
         }
     },[reciver.reciver.isgroup, reciver.reciver.id])
     //fetch private messages
@@ -100,7 +108,8 @@ export default function Messages()
                     ):(
                         groupMessage.map((message:any, index:number) => {
                             if (message.src == user.user.id && message.dst == reciver.reciver.id)
-                                return( <Message key={index} content={message.content} class="self-end rounded-lg  bg-[#34346e] drop-shadow-md p-2 mb-2"/>)
+                                return (<GroupMsg content={{class:"self-end rounded-lg  bg-[#34346e] drop-shadow-md p-2 mb-2", content:message.content, member:message.src}} />)
+                                // return( <Message key={index} content={message.content} class="self-end rounded-lg  bg-[#34346e] drop-shadow-md p-2 mb-2"/>)
                             else if (message.dst == reciver.reciver.id)
                                 return( <Message key={index} content={message.content} class="self-start rounded-lg bg-[#7d32d9] drop-shadow-md p-2 mb-2"/>)
                         })

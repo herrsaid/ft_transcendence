@@ -48,7 +48,7 @@ export default function Groupinfo()
                 </div>
                 <div className='flex-grow  overflow-auto'>
                         {
-                            members.map((data:any, index) => 
+                            reciver.reciver.members.map((data:any, index:number) => 
                             {
                                 return (<Groupmember data={data} key={index} />)
                             })
