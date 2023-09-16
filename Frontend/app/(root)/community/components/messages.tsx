@@ -100,9 +100,9 @@ export default function Messages()
                     (
                         messages.map((message:any,index:number) => {
                             if(message.src == user.user.id && message.dst == reciver.reciver.id)
-                                return( <Message key={index} content={message.content} class="self-end rounded-lg  bg-[#34346e] drop-shadow-md p-2 mb-2"/>)
+                                return( <Message key={index} content={message.content} class="self-end max-w-[300px] rounded-lg  bg-[#34346e] drop-shadow-md p-2 mb-2"/>)
                             else if (message.src == reciver.reciver.id && message.dst == user.user.id)
-                                return( <Message key={index} content={message.content} class="self-start rounded-lg bg-[#7d32d9] drop-shadow-md p-2 mb-2"/>)
+                                return( <Message key={index} content={message.content} class="self-start max-w-[300px] rounded-lg bg-[#7d32d9] drop-shadow-md p-2 mb-2"/>)
                         })
                     ):(
                         groupMessage.map((message:any, index:number) => {
