@@ -6,15 +6,34 @@ export default function GroupMsg({content}:any)
 {
     
     const reciver = useContext(reciverContext);
-    const user = reciver.reciver.members.find((data:any) => (data.user.id == content.member)).user
-    return(
-        <div className={content.class}>
-            <div>
-                <img className="h-12 w-12 rounded-full" src={user.profile_img} alt="" />
+    const user = reciver.reciver.members.find((data:any) => (data.user.id == content.member))
+    if(user == undefined)
+        return(<>fetching data... plase wait</>)
+    if (content.class == 'me')
+    {
+        return(
+            <div className="flex self-end ml-1">
+                <div className="bg-[#34346e]  drop-shadow-md m-2 p-2 rounded-md max-w-[300px]">
+                    {content.content}
+                </div>
+                <div>
+                    <img className="h-8 w-8 rounded-full" src={user.user.profile_img} alt="" />
+                </div>
             </div>
-            <div>
-                {content.content}
+        )
+    }
+    else
+    {
+        return(
+            <div className="flex self-start ml-1 ">
+                <div>
+                    <img className="h-8 w-8 rounded-full" src={user.user.profile_img} alt="" />
+                </div>
+                <div className="bg-[#7d32d9]  drop-shadow-md m-2 p-2 rounded-md max-w-[300px]">
+                    {content.content}
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
+            
 }

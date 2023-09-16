@@ -52,7 +52,7 @@ export class GroupusersService {
         const spes = groupusers.find(data => (data.group.id == group_id && data.user.id == user_id));
         return (spes.role);
     }
-    async mute(group_id:number,to_mute:number)
+    async mute(group_id:number,to_mute:number, time:number)
     {
         const groupusers = await this.GroupUsers.find({relations: ["group", "user"]});
         const spes = groupusers.find((data)=> data.group.id == group_id && data.user.id == to_mute);
@@ -61,7 +61,7 @@ export class GroupusersService {
         setTimeout(() => {
             spes.status = "able"
             this.GroupUsers.save(spes);
-        }, (60000));
+        }, (time*60*1000));
     }
     async isAbleToSend(user_id:number,group_id:number)
     {
