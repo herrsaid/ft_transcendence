@@ -29,6 +29,17 @@ export default function Groupmember({data}:any)
         setClick(!click);
         setKick(!kick);
     }
+    const handleban = ()=>{
+        fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/ban?id=${reciver.reciver.id}&toban=${data.user.id}`,
+        {
+            method: 'GET',
+            headers:{
+                Authorization: `Bearer ${Cookies.get('access_token')}`
+            }
+        })
+        setClick(!click);
+        setKick(!kick);
+    }
     const submitmute = (e:any)=>{
         e.preventDefault();
         const time = document.getElementById('time');
@@ -66,7 +77,7 @@ export default function Groupmember({data}:any)
                         </form>
                         </div>}
                     <button onClick={handlekick} className='hover:bg-[#363672] w-full flex m-1'>kick</button>
-                    <button className='hover:bg-[#363672] w-full flex m-1'>ban</button>
+                    <button onClick={handleban} className='hover:bg-[#363672] w-full flex m-1'>ban</button>
                 </div>
                 }
             </div>

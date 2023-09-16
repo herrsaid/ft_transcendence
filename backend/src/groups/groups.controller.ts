@@ -5,6 +5,7 @@ import { UserService } from 'src/user/services/user.service';
 import { AuthGuard } from 'src/auth/guard/auth.guard';
 import { GroupusersService } from 'Database/services/groupusers/groupusers.service';
 import GroupUsers from 'Database/entity/GroupUsers.entity';
+import { request } from 'http';
 
 @Controller('groups')
 export class GroupsController {
@@ -90,7 +91,7 @@ export class GroupsController {
         }
         @UseGuards(AuthGuard)
         @Get('kick')
-        async ban(@Req() request, @Query() parmas)
+        async kick(@Req() request, @Query() parmas)
         {
             const user_id = request['user'].id;
             if((await this.GroupUsersService.is_admin(user_id, parmas.id)) != "user"
@@ -115,5 +116,19 @@ export class GroupsController {
             }
             else 
                 return 'not muted';
+        }
+        @UseGuards(AuthGuard)
+        @Get('ban')
+        async ban(@Req() request, @Query() params)
+        {
+            const user_id = request['user'].id;
+            if((await this.GroupUsersService.is_admin(user_id, params.id)) != "user"
+                && (await this.GroupUsersService.is_admin(params.toban, params.id)) != "owner")
+            {
+                this.GroupUsersService.ban(params.id, params.toban)
+                return 'baned'
+            }
+            else 
+                return 'not baned';
         }
 }

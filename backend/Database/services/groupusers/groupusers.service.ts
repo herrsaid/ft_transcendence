@@ -26,7 +26,7 @@ export class GroupusersService {
     async findGroup(id:number)
     {
         const groupusers = await this.GroupUsers.find({relations: ["group", "user"]})
-        const mygorup = groupusers.filter((data) => {return (data.user.id == id)}).map((data)=>{
+        const mygorup = groupusers.filter((data) => {return (data.user.id == id && data.status != "baned")}).map((data)=>{
                 data.group.role = data.role;
                 return (data.group)
         })
@@ -63,6 +63,15 @@ export class GroupusersService {
             this.GroupUsers.save(spes);
         }, (time*60*1000));
     }
+
+    async ban(group_id:number, to_ban:number)
+    {
+        const groupusers = await this.GroupUsers.find({relations: ["group", "user"]});
+        const spes = groupusers.find((data)=> data.group.id == group_id && data.user.id == to_ban);
+        spes.status = "baned"
+        this.GroupUsers.save(spes);
+    }
+
     async isAbleToSend(user_id:number,group_id:number)
     {
         const groupusers = await this.GroupUsers.find({relations: ["group", "user"]})
