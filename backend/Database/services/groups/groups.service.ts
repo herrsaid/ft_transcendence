@@ -49,10 +49,16 @@ export class GroupsService {
     {
         this.Groups.save(group);
     }
-    async search(value:string)
+    async search(value:string) 
     {
         return this.Groups.findBy({
              name: Like(`%${value}%`)
         })
+    }
+    async getPassword(group_id:number)
+    {
+        const group = await this.Groups.findOne({where:{id:group_id}})
+        if (group.type == 'private')
+            return group.password;
     }
 }

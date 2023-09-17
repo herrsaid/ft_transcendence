@@ -5,7 +5,8 @@ import { UserService } from 'src/user/services/user.service';
 import { AuthGuard } from 'src/auth/guard/auth.guard';
 import { GroupusersService } from 'Database/services/groupusers/groupusers.service';
 import GroupUsers from 'Database/entity/GroupUsers.entity';
-import {hashPassword} from '../hash/hash'
+import {hashPassword, compare} from '../hash/hash'
+import { request } from 'http';
 
 @Controller('groups')
 export class GroupsController {
@@ -45,15 +46,38 @@ export class GroupsController {
                 console.log('error')
             }
         }
-          @UseGuards(AuthGuard)
-            @Get('search')
-            async search(@Query() Param)
+        @UseGuards(AuthGuard)
+        @Post('protectedjoin')
+        async protectedjoin(@Req() request,@Body() info)
+        {
+            const user_id = request['user'].id;
+            if (await this.GroupUsersService.isUserInGroup(user_id, info.id) == false)
             {
-                if (!Param.value)
-                    return [];
-                const res = await this.GroupService.search(Param.value)
-                console.log(res, Param.value);
-                return res;
+                const hashpasswd = await this.GroupService.getPassword(info.id);
+                if (await compare(info.password, hashpasswd))
+                {
+                    const group = await this.GroupService.findOne(info.id);
+                    const user = await this.User.findOne(user_id);
+                    const member = new GroupUsers();
+                    member.user = user;
+                    member.group = group;
+                    const m = await this.GroupUsersService.create(member);
+                    group.members.push(m);
+                    return 201;
+                }
+                return 403;
+            }
+            return 201;
+        }
+        @UseGuards(AuthGuard)
+        @Get('search')
+        async search(@Query() Param)
+        {
+            if (!Param.value)
+                return [];
+            const res = await this.GroupService.search(Param.value)
+            console.log(res, Param.value);
+            return res;
         }
         @UseGuards(AuthGuard)
         @Get('mygroups')

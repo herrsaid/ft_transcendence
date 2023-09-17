@@ -79,7 +79,6 @@ export class GroupusersService {
         console.log(spes);
         if (spes.status == 'able')
         {
-            console.log('yes its able')
             return (true);
         }
         return false;

@@ -22,8 +22,25 @@ function Result({res}:any)
             socket.emit('joinroom',{id:res.id})
         }
         else
-        {
             setpassword(true)
+    }
+    const joinprotected = (e:any)=>{
+        e.preventDefault();
+        const passowrd = document.getElementById('passwd');
+        if (passowrd)
+        {
+            const obj = {id:res.id, password:passowrd.value}
+            fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/protectedjoin`, {
+                method: 'POST',
+                headers:{
+                    Authorization: `Bearer ${Cookies.get('access_token')}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(obj)
+            }).then(data => {
+                if (data.status == 201)
+                    setpassword(false)
+            })
         }
     }
     return (
@@ -42,7 +59,7 @@ function Result({res}:any)
                         <input id="passwd" className="rounded-full bg-[#18184a] p-1" type="password" placeholder="password"/>
                     </div>
                     <div className="self-center">
-                        <input className="rounded-sm bg-blue-600 px-1 m-2" type="button" value="join" />
+                        <input onClick={joinprotected} className="rounded-sm bg-blue-600 px-1 m-2" type="button" value="join" />
                     </div>
                 </div>
             }
