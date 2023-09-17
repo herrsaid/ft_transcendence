@@ -5,7 +5,7 @@ import { UserService } from 'src/user/services/user.service';
 import { AuthGuard } from 'src/auth/guard/auth.guard';
 import { GroupusersService } from 'Database/services/groupusers/groupusers.service';
 import GroupUsers from 'Database/entity/GroupUsers.entity';
-import { request } from 'http';
+import {hashPassword} from '../hash/hash'
 
 @Controller('groups')
 export class GroupsController {
@@ -16,8 +16,9 @@ export class GroupsController {
         @Post('create')
         async create(@Req() request, @Body() Group)
         {
-            console.log(Group)
             const user_id = request['user'];
+            if (Group.type == 'private')
+                Group.password = await hashPassword(Group.password);
             const group  = this.GroupService.create_group(Group, user_id.id);
         }
         @UseGuards(AuthGuard)

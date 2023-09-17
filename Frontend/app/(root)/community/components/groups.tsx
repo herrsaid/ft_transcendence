@@ -38,8 +38,6 @@ import reciverContext from "../reciverContext";
         }
       }).then((response) => response.json()).then(data => setGroup(data))
     },[reciver.reciver.id])
-    // if (isLoading)
-    //   return (<>is lading</>)
     return (
         <div className="flex flex-col justify-between h-[100%]">
             <div >

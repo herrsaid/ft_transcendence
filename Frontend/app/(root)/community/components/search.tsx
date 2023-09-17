@@ -7,17 +7,24 @@ import { socket } from "../../socket/socket";
 
 function Result({res}:any)
 {
-    console.log(res)
+    const [password, setpassword] = useState(false);
     const user = useContext(UserContext);
     const join = (e:any)=>{
         e.preventDefault();
-        fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/join?id=${res.id}&user=${user.user.id}`, {
-            method: 'GET',
-            headers:{
-                Authorization: `Bearer ${Cookies.get('access_token')}`
-            }
-        })
-        socket.emit('joinroom',{id:res.id})
+        if (res.type == "public")
+        {
+            fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/join?id=${res.id}&user=${user.user.id}`, {
+                method: 'GET',
+                headers:{
+                    Authorization: `Bearer ${Cookies.get('access_token')}`
+                }
+            })
+            socket.emit('joinroom',{id:res.id})
+        }
+        else
+        {
+            setpassword(true)
+        }
     }
     return (
         <div className="flex justify-between hover:bg-[#18184a] cursor-pointer p-2 rounded-lg">
@@ -28,6 +35,17 @@ function Result({res}:any)
             <div className="p-1 rounded-full hover:bg-green-500">
                 <button onClick={join}><MdOutlineGroupAdd size={20} /></button>
             </div>
+            { password &&
+                <div className="h-96 w-96 absolute bg-[#363672] rounded-md flex flex-col justify-center">
+                    <div className="self-center m-2"><h1 className="font-bold ">Password neaded:</h1></div>
+                    <div  className="self-center m-2">
+                        <input id="passwd" className="rounded-full bg-[#18184a] p-1" type="password" placeholder="password"/>
+                    </div>
+                    <div className="self-center">
+                        <input className="rounded-sm bg-blue-600 px-1 m-2" type="button" value="join" />
+                    </div>
+                </div>
+            }
         </div>
     )
 }
@@ -42,7 +60,7 @@ export default function Search(props:any)
             (props.search != undefined)?(
                 props.search.map((data:any,index:number) => {return(<Result key={index} res={data}/>)})
             ):<>no groups</>
-            }
+            }  
         </div>
     )
 }
