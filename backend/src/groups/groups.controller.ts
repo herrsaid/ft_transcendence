@@ -8,11 +8,14 @@ import GroupUsers from 'Database/entity/GroupUsers.entity';
 import {hashPassword, compare} from '../hash/hash'
 import { request } from 'http';
 
+import { EventEmitter2 } from '@nestjs/event-emitter';
+
 @Controller('groups')
 export class GroupsController {
     constructor(private readonly GroupService:GroupsService, private readonly User:UserService,
         private readonly GroupUsersService:GroupusersService,
-        private readonly groupusers:GroupusersService){}
+        private readonly groupusers:GroupusersService,
+        private eventEmitter: EventEmitter2){}
         @UseGuards(AuthGuard)
         @Post('create')
         async create(@Req() request, @Body() Group)
@@ -155,5 +158,12 @@ export class GroupsController {
             }
             else 
                 return 'not baned';
+        }
+        @UseGuards(AuthGuard)
+        @Get('test')
+        async test()
+        {
+            this.eventEmitter.emit('test', {test:'test'})
+            return "test";
         }
 }

@@ -10,6 +10,7 @@ import { UserService } from 'src/user/services/user.service';
 import { GroupsService } from 'Database/services/groups/groups.service';
 import { subscribe } from 'diagnostics_channel';
 import { GroupusersService } from 'Database/services/groupusers/groupusers.service';
+import { OnEvent } from '@nestjs/event-emitter';
 
 @WebSocketGateway(3030, {cors:{
   origin: '*',
@@ -77,6 +78,17 @@ export class WebsockGateway {
       }
     }
     return 'Hello world!';
+  }
+  @SubscribeMessage('status')
+  async hadlestatus()
+  {
+
+  }
+  @OnEvent('test')
+  async handle(client: Socket)
+  {
+    console.log('zabi')
+    this.server.emit('status', "{test:'tesat'}")
   }
   @SubscribeMessage('joinroom')
   async handleJoinRoom(client: Socket, payload:any)

@@ -40,12 +40,12 @@ import { GroupsService } from 'Database/services/groups/groups.service';
 import { WebSocketGateWayFilter } from './game/PingPong.filter';
 import GroupUsers from 'Database/entity/GroupUsers.entity';
 import { GroupusersService } from 'Database/services/groupusers/groupusers.service';
-
+import { EventEmitterModule } from '@nestjs/event-emitter';
 @Module({
   imports: [GameModule, AuthModule, TypeOrmModule.forRoot(config),
 
     ConfigModule.forRoot({isGlobal: true }),
-   
+    EventEmitterModule.forRoot(),
     UserModule,
   
     TypeOrmModule.forFeature([User,FriendRequest,Messages,History,GameUserInfo,GameArchievement,Groups,GroupUsers]), JwtModule.register({
