@@ -81,14 +81,13 @@ export class WebsockGateway {
   }
   @SubscribeMessage('status')
   async hadlestatus()
+  {}
+  @OnEvent('status')
+  async handle(payload)
   {
-
-  }
-  @OnEvent('test')
-  async handle(client: Socket)
-  {
-    console.log('zabi')
-    this.server.emit('status', "{test:'tesat'}")
+    // let dst = this.online.get(payload.id);
+    // if (dst)
+    this.server.emit('status', payload)
   }
   @SubscribeMessage('joinroom')
   async handleJoinRoom(client: Socket, payload:any)

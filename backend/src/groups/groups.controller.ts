@@ -161,9 +161,9 @@ export class GroupsController {
         }
         @UseGuards(AuthGuard)
         @Get('test')
-        async test()
+        async test(@Req() request, @Query() params)
         {
-            this.eventEmitter.emit('test', {test:'test'})
+            this.eventEmitter.emit('status', {id:params.id, action:"mute"})
             return "test";
         }
 }

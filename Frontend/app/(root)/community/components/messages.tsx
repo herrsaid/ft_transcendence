@@ -21,9 +21,27 @@ export default function Messages()
     const [groupMessage, setGroupMessage] = useState<any>([])
     const [value, setValue] = useState('');
     const inputRef = useRef(null)
-    const [mptest, setMptest] = useState(new Map())
-    const groupMap = new Map();
+    const [muted, setMuted] = useState<any>([])
 
+    useEffect(()=>{
+       socket.on('status', (data) =>{
+        if(data.action == "mute")
+        {
+            setMuted((old:any) => [...old, data.id])
+        }
+       }) 
+    },[])
+    useEffect(()=>{
+            const msginput = document.getElementById('message');
+            if (reciver.reciver.id)
+            {
+                if (muted.find((data:any)=> (reciver.reciver.id == data)) && reciver.reciver.isgroup)
+                    msginput.disabled = true;
+                else
+                    msginput.disabled = false;
+            }
+
+    },[reciver.reciver.id,muted])
     //fetch group messages
     useEffect(()=>{
         if(reciver.reciver.isgroup)
@@ -116,7 +134,7 @@ export default function Messages()
             </div>
             <div className="self-center w-[90%] absolute bottom-2">
                 <form onSubmit={send}>
-                    <input onChange={event => setValue(event.target.value)} value={value} ref={inputRef} className="focus:outline-none rounded-full bg-[#34346e] drop-shadow-md p-1 pl-2 w-full" type="text" placeholder="Message..." />
+                    <input id="message" onChange={event => setValue(event.target.value)} value={value} ref={inputRef} className="focus:outline-none rounded-full bg-[#34346e] drop-shadow-md p-1 pl-2 w-full" type="text" placeholder="Message..." />
                     <button className="absolute top-2 right-2" type="submit"><VscSend /></button>
                 </form>
             </div>
