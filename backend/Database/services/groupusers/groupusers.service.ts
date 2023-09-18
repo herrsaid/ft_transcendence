@@ -1,11 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { InjectRepository } from '@nestjs/typeorm';
 import GroupUsers from 'Database/entity/GroupUsers.entity';
 import { group } from 'console';
 
 @Injectable()
 export class GroupusersService {
-    constructor(@InjectRepository(GroupUsers) private GroupUsers){}
+    constructor(@InjectRepository(GroupUsers) private GroupUsers,
+    private eventEmitter:EventEmitter2){}
     async create(groupuser:GroupUsers)
     {
         const groupuser_info = this.GroupUsers.create(groupuser);
@@ -58,9 +60,11 @@ export class GroupusersService {
         const spes = groupusers.find((data)=> data.group.id == group_id && data.user.id == to_mute);
         spes.status = "muted";
         this.GroupUsers.save(spes);
+        this.eventEmitter.emit('status', {id:group_id, action:"mute", user:to_mute})
         setTimeout(() => {
             spes.status = "able"
             this.GroupUsers.save(spes);
+            this.eventEmitter.emit('status', {id:group_id, action:"unmute", user:to_mute})
         }, (time*60*1000));
     }
 
