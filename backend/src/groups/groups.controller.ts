@@ -126,6 +126,7 @@ export class GroupsController {
                 && (await this.GroupUsersService.is_admin(parmas.toremove, parmas.id)) != "owner")
             {
                 this.GroupUsersService.remove(parmas.toremove, parmas.id)
+                this.eventEmitter.emit('status', {id:user_id, action:"out"})
                 return 'deleted'
             }
             else 
@@ -163,7 +164,6 @@ export class GroupsController {
         @Get('test')
         async test(@Req() request, @Query() params)
         {
-            this.eventEmitter.emit('status', {id:params.id, action:"mute"})
             return "test";
         }
 }

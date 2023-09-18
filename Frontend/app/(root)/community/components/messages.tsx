@@ -25,10 +25,16 @@ export default function Messages()
 
     useEffect(()=>{
        socket.on('status', (data) =>{
-        if(data.action == "mute")
+        if(data.action == "mute" && data.user == user.user.id)
         {
             setMuted((old:any) => [...old, data.id])
         }
+        if(data.action == "unmute" && data.user == user.user.id)
+        {
+            setMuted(muted.slice(1, muted.findIndex((ev:any) => (ev.id == data.id))))
+        }
+        if(data.action == "out" && data.user == user.user.id)
+            reciver.setReciver({});
        }) 
     },[])
     useEffect(()=>{
