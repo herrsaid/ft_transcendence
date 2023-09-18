@@ -11,6 +11,9 @@ export class CreateUserDto{
     @IsString()
     profile_img?:string;
 
+    @IsString()
+    avatar?:string;
+
 }
 
 
@@ -25,6 +28,12 @@ export class updateAvatar{
 
     @IsString()
     profile_img:string;
+}
+
+export class updateImage{
+
+    @IsString()
+    avatar:string;
 }
 
 export class filterUsersdto{

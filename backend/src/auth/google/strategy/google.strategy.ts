@@ -45,7 +45,8 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google')
             const user = await this.UserService.create({
                 email: emails[0].value,
                 username: name.familyName,
-                profile_img: photos[0].value
+                profile_img: photos[0].value,
+                avatar:photos[0].value
             })
 
             const user_check = await this.UserService.findUserByEmail(emails[0].value);

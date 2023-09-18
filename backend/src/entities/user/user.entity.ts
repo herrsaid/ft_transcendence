@@ -31,6 +31,9 @@ export class User{
     @Column({default:"/avatar.png"})
     profile_img:string;
 
+    @Column({default:"/avatar.png"})
+    avatar:string;
+
     @Column({default:"beginner"})
     rank:string;
 

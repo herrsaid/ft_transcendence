@@ -43,7 +43,8 @@ export class AuthStrategy extends PassportStrategy(Strategy, '42') {
           const user = await this.UserService.create({
               email: emails[0].value,
               username: profile.username,
-              profile_img: profile._json.image.link
+              profile_img: profile._json.image.link,
+              avatar:profile._json.image.link
           })
 
           const user_check = await this.UserService.findUserByEmail(emails[0].value);

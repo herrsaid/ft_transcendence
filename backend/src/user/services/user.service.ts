@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { CreateUserDto, filterUsersdto, updateAvatar, updateAvatar_bol, updateGameStatus, updateStatus, updateUsername } from '../dto/createUserDto';
+import { CreateUserDto, filterUsersdto, updateAvatar, updateAvatar_bol, updateGameStatus, updateImage, updateStatus, updateUsername } from '../dto/createUserDto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user/user.entity';
 import { Not, Repository } from 'typeorm';
@@ -7,6 +7,7 @@ import { Observable, from, of, switchMap } from 'rxjs';
 import { FriendRequest } from 'src/entities/friend/friend-request.entity';
 import { FriendRequest_Interface, FriendRequest_Status } from 'src/entities/friend/interfaces/friend-request.interface';
 import { group } from 'console';
+import { join } from 'path';
 
 @Injectable()
 export class UserService {
@@ -203,6 +204,24 @@ export class UserService {
             this.update_is_profile_img_updated(id, {"is_profile_img_updated" : true})
             const user = await this.userRepo.findOne({where:{id:id}});
             Object.assign(user, updateAvatar);
+            return await this.userRepo.save(user);
+        }
+        catch
+        {
+            throw new BadRequestException();
+        }        
+    }
+
+
+
+
+
+    async updateImage(id:number, updateImage: updateImage)
+    {
+        try
+        {
+            const user = await this.userRepo.findOne({where:{id:id}});
+            Object.assign(user, updateImage);
             return await this.userRepo.save(user);
         }
         catch
