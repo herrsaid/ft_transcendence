@@ -272,7 +272,7 @@ export class UserController {
         
         {
             //10.14.6.2:1337/user/profile-img/Jenkinsb6dba706-f664-44a3-bc19-69f1429d1cf3.jpg
-            const imagePath = join(process.cwd(), 'uploadedFiles/avatars/' + file.filename);
+            const imagePath = ('/uploadedFiles/avatars/' + file.filename);
             const full_path = process.env.IP + ":1337" + imagePath;
         this.userService.updateImage(req.user.id, {"avatar": full_path})
         return this.userService.updateAvatar(req.user.id, {"profile_img" : file.filename});
