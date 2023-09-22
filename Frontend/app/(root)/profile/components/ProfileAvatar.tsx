@@ -7,17 +7,12 @@ import UserContext from "../../UserContext";
 import { useContext } from "react";
 import { useRouter } from "next/navigation";
 
-interface props{
-    img:string,
-    username:string,
-    avatar_updated:boolean
-}
 
 
 
-const ProfileAvatar = (props:props) => {
+
+const ProfileAvatar = () => {
     const user = useContext(UserContext);
-    let new_src_img;
     const [realimg, setrealimg] = useState("");
     const [first_time, setfirsttime] = useState(false)
     const toast = useToast()
@@ -67,8 +62,6 @@ const ProfileAvatar = (props:props) => {
                         if (response.status == 401)
                             router.replace("/login")
                         const jsonData = await response.json();
-                        console.log("=====================")
-                        console.log(jsonData)
                         user.setUser(jsonData);
             
                         
@@ -100,15 +93,10 @@ const ProfileAvatar = (props:props) => {
             {
                 setrealimg(URL.createObjectURL(file));
                 setfirsttime(true);
-                
-                new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + props.img;
             }
                 
             };
 
-
-            if (props.avatar_updated)
-                new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + props.img;
                 
 
 
@@ -117,7 +105,7 @@ const ProfileAvatar = (props:props) => {
                 <div className="avatar_edit_real border-2 border-purple-500/100 rounded-full">
 
                     <label className="cursor-pointer animate-pulse">
-                    <Avatar size='xl' name={props.username} src={props.avatar_updated || first_time ? realimg ? realimg  : !props.avatar_updated ? props.img : new_src_img : props.img}>
+                    <Avatar size='xl' name={user.user.username} src={user.user.is_profile_img_updated || first_time ? realimg ? realimg  : !user.user.is_profile_img_updated ? user.user.avatar : user.user.avatar : user.user.avatar}>
                         </Avatar>
                         
                             <form >

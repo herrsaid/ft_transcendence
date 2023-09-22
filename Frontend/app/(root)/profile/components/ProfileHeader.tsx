@@ -4,11 +4,9 @@ import Cookies from 'js-cookie';
 import useSWR from "swr"
 
   interface props{
-    avatar:string,
     email:string,
     username:string,
     rank:string,
-    avatar_updated:boolean
   }
 
 
@@ -29,7 +27,6 @@ const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/rank/m
 fetchData
 );
 
-let new_src_img;
 let rankbg;
      
       if (!data)
@@ -50,8 +47,6 @@ let rankbg;
     else if(data.rank == 'legendary')
         rankbg = 'bg-emerald-500';
     
-    if (props.avatar_updated)
-        new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + props.avatar;
     return (
         
         <div className="flex items-center justify-between mb-6 flex-wrap">
@@ -59,7 +54,7 @@ let rankbg;
      
       <div className="relative">
        
-       <ProfileAvatar img={props.avatar} username={props.username} avatar_updated={props.avatar_updated}/>
+       <ProfileAvatar />
         
       </div>
 

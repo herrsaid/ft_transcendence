@@ -9,7 +9,6 @@ import UserRank from "./UserRank";
     email:string,
     username:string,
     rank:string,
-    avatar_updated:boolean,
     id:number,
     status:boolean,
     isIngame:boolean
@@ -226,7 +225,7 @@ const ProfileHeader = (props:props) => {
      
       <div className="relative">
        
-       <ProfileAvatar img={props.avatar} username={props.username} avatar_updated={props.avatar_updated} id={props.id} status={props.status}/>
+       <ProfileAvatar img={props.avatar} username={props.username}  id={props.id} status={props.status}/>
         
       </div>
       

@@ -2,7 +2,7 @@
 import './Header.css'
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useContext } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import UserContext from '../../UserContext';
 import { Avatar } from '@chakra-ui/react';
 import SearchInput from '../SearchInput/SearchInput';
@@ -17,7 +17,11 @@ export default  function Header()
     const router = useRouter();
     const contexUser = useContext(UserContext);
     let new_src_img;
+    const dorpRef = useRef(null);
 
+    useEffect(()=>{
+      document.addEventListener('click', (e) => {((dorpRef.current)&&(!dorpRef.current.contains(e.target)))?removeDropdown():console.log('dd')}, true)
+  },[])
     const logout = async ()  => {
       
       document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
@@ -34,6 +38,12 @@ export default  function Header()
         const dropdownMenu = document.getElementById('dropdownMenu');
         dropdownMenu?.classList.toggle('active');
       }
+
+
+      function removeDropdown() {
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        dropdownMenu?.classList.remove('active');
+      }
   
      
 
@@ -45,12 +55,6 @@ export default  function Header()
           dropdownMenu?.classList.remove('active');
         }
       }
-      
-
-
-
-    
-    
     if (contexUser.user.is_profile_img_updated)
         new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + contexUser.user.profile_img;
     
@@ -72,7 +76,7 @@ export default  function Header()
     <Avatar size='sm' name={contexUser.user.username} src={contexUser.user.is_profile_img_updated ? new_src_img : contexUser.user.profile_img} className="w-10 h-10 rounded-full cursor-pointer profile-img" onClick={toggleDropdown}>
                         </Avatar>
                         </div>
-      <div className="dropdown-menu" id="dropdownMenu" onClick={openMenu}>
+      <div ref={dorpRef} className="dropdown-menu" id="dropdownMenu" onClick={openMenu}>
       
       <Link href='/' ><p className="link_drop">Home</p></Link>
       <Link href='/profile' ><p className="link_drop">Profile</p></Link>
