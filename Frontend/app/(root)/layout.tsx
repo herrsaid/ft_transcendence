@@ -12,7 +12,6 @@ import useSWR from "swr"
 import StreamInfoContext,{StreamInfoType} from './Stream/StreamContext/StreamContext';
 import Notification from './Components/Notification/Notification';
 import GameDataContext,{ GameDataType } from './Game/Online/Play/GameClass/GameClass';
-import Links from './Components/Links/Links';
 
 const metadata = {
   title: 'PingPong',
@@ -54,7 +53,12 @@ export default function RootLayout({
                 }});
         
                 if (res.status == 401)
-                    router.replace("/login")
+                {
+                  document.cookie = 'access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+                  document.cookie = 'twofactortoken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+                  router.replace("/login")
+                }
+                    
                 const jsonData = await res.json();
                 setUser(jsonData);
                 if (!res.ok)
@@ -81,23 +85,15 @@ fetchData
     <html lang="en">
       <body>
         
-      {/* 
-      had l3ibba saraha jat m3ay9a chwiya f site kaml wkat7ssab bih bhala zad t9al
-      kyban liya mn a7ssan ndiroha ghir f login page hatji mzna rah drtha hhh
-      lmohim li ban likoum ila bghito trj3oha hhh
-      <Links/> */}
+      
       <Providers>
       <UserContext.Provider value={{user, setUser}}>
-        {/* {Cookies.get('access_token') != undefined && <Header/>} */}
         <Header/>
-        {/* {Cookies.get('access_token') != undefined && <BottomNav/>} */}
         <div className='flex h-[90svh]'>
 
         
         <BottomNav/>
-        <div className=''>
-              {/* {Cookies.get('access_token') != undefined && children} */}
-      </div>
+      
       <main className="flex-1">
         <div className='h-full'>
         <GameInfoContext.Provider value={{ GameInfo,SetGameInfo }}>

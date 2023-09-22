@@ -131,7 +131,7 @@ export default  function Setup()
             <div className="flex items-center pl-8">
                 <div className="relative">
        
-                <ProfileAvatar img={contexUser.user.profile_img} username={contexUser.user.username} avatar_updated={contexUser.user.is_profile_img_updated}/>
+                <ProfileAvatar />
         
       </div>
       </div>
