@@ -14,10 +14,12 @@ export default function Info()
     const reciver = useContext(reciverContext);
     const active = useContext(activeContext);
     const back_click = ()=>{active.setActive('message')}
+    if(!reciver.reciver.id)
+        return (null)
     if (reciver.reciver.isgroup)
         return (<Groupinfo/>)
     return (
-        <div className="flex flex-col h-full  justify-sart">
+        <div className="flex flex-col h-full justify-sart">
             <div className='flex flex-col self-center rounded-lg bg-[#363672] w-[90%] h-[50%] justify-start' >
                 <div className='mb-5 flex'>
                     <div onClick={back_click} className='p-3 sm:hidden hover:bg-[#7d32d9] '><BiArrowBack></BiArrowBack></div>

@@ -76,7 +76,7 @@ export default function Messages()
             }
         }).then((response) => response.json()).then(data => setMessages(data))
     }, [])
-    //listening to message even on the socket
+    //listening to message event on the socket
     useEffect(() => {
         socket.on('message', (data:any) =>{
             audio.play();

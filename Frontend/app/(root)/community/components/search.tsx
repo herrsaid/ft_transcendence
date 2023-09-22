@@ -4,11 +4,15 @@ import {MdOutlineGroupAdd} from 'react-icons/md'
 import Cookies from 'js-cookie';
 import UserContext from "../../UserContext";
 import { socket } from "../../socket/socket";
+import { useToast } from "@chakra-ui/react";
+import reciverContext from "../reciverContext";
 
 function Result({res}:any)
 {
     const [password, setpassword] = useState(false);
     const user = useContext(UserContext);
+    const reciver = useContext(reciverContext);
+    const toast = useToast()
     const join = (e:any)=>{
         e.preventDefault();
         if (res.type == "public")
@@ -20,27 +24,50 @@ function Result({res}:any)
                 }
             })
             socket.emit('joinroom',{id:res.id})
+            reciver.setReciver({...res, isGroup:true});
         }
         else
             setpassword(true)
     }
-    const joinprotected = (e:any)=>{
+    const joinprotected = async (e:any)=>{
         e.preventDefault();
         const passowrd = document.getElementById('passwd');
         if (passowrd)
         {
             const obj = {id:res.id, password:passowrd.value}
-            fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/protectedjoin`, {
+            const respond = await fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/protectedjoin`, {
                 method: 'POST',
                 headers:{
                     Authorization: `Bearer ${Cookies.get('access_token')}`,
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(obj)
-            }).then(data => {
-                if (data.status == 201)
-                    setpassword(false)
             })
+            if (respond.status == 201)
+            {
+                setpassword(false)
+                toast({
+                    title: 'Joined',
+                    description: "thanks for joining",
+                    position: 'top-right',
+                    status: 'info',
+                    duration: 6000,
+                    isClosable: true,
+                  })
+                  socket.emit('joinroom',{id:res.id})
+                  reciver.setReciver({...res, isGroup:true});
+            }
+            else
+            {
+                toast({
+                    title: 'error',
+                    description: "Wrong password",
+                    position: 'top-right',
+                    status: 'error',
+                    duration: 6000,
+                    isClosable: true,
+                  })
+            }
         }
     }
     return (

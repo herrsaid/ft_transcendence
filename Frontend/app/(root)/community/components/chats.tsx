@@ -18,7 +18,6 @@ export default function Chats()
             headers:{
                 Authorization: `Bearer ${Cookies.get('access_token')}`
             }
-            
         }).then((response) => response.json())
         .then(data => setSearch(data))
     }
@@ -41,7 +40,7 @@ export default function Chats()
         {
             new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + frnd.profile_img;
         }
-        return (<Friend key={index} id={frnd.id} avatar={frnd.is_profile_img_updated ? new_src_img : frnd.profile_img} username={frnd.username} />)
+        return (<Friend key={index} user={frnd} />)
     })
     const friend_click = () =>{setForg(true)}
     const group_click = () =>{setForg(false)}

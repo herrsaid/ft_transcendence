@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, ForbiddenException, Get, Param, Post, Query, Req, UnauthorizedException, UseGuards } from '@nestjs/common';
 import Groups from 'Database/entity/Groups.entity';
 import { GroupsService } from 'Database/services/groups/groups.service';
 import { UserService } from 'src/user/services/user.service';
@@ -7,7 +7,6 @@ import { GroupusersService } from 'Database/services/groupusers/groupusers.servi
 import GroupUsers from 'Database/entity/GroupUsers.entity';
 import {hashPassword, compare} from '../hash/hash'
 import { request } from 'http';
-
 import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Controller('groups')
@@ -53,24 +52,30 @@ export class GroupsController {
         @Post('protectedjoin')
         async protectedjoin(@Req() request,@Body() info)
         {
-            const user_id = request['user'].id;
-            if (await this.GroupUsersService.isUserInGroup(user_id, info.id) == false)
-            {
-                const hashpasswd = await this.GroupService.getPassword(info.id);
-                if (await compare(info.password, hashpasswd))
+            try{
+
+                const user_id = request['user'].id;
+                if (await this.GroupUsersService.isUserInGroup(user_id, info.id) == false)
                 {
-                    const group = await this.GroupService.findOne(info.id);
-                    const user = await this.User.findOne(user_id);
-                    const member = new GroupUsers();
-                    member.user = user;
-                    member.group = group;
-                    const m = await this.GroupUsersService.create(member);
-                    group.members.push(m);
-                    return 201;
+                    const hashpasswd = await this.GroupService.getPassword(info.id);
+                    if (await compare(info.password, hashpasswd))
+                    {
+                        const group = await this.GroupService.findOne(info.id);
+                        const user = await this.User.findOne(user_id);
+                        const member = new GroupUsers();
+                        member.user = user;
+                        member.group = group;
+                        const m = await this.GroupUsersService.create(member);
+                        group.members.push(m);
+                            return  201;
+                    }
+                    throw new UnauthorizedException();
                 }
-                return 403;
             }
-            return 201;
+            catch(error)
+            {
+                throw new UnauthorizedException();
+            }
         }
         @UseGuards(AuthGuard)
         @Get('search')
@@ -126,7 +131,7 @@ export class GroupsController {
                 && (await this.GroupUsersService.is_admin(parmas.toremove, parmas.id)) != "owner")
             {
                 this.GroupUsersService.remove(parmas.toremove, parmas.id)
-                this.eventEmitter.emit('status', {id:user_id, action:"out"})
+                this.eventEmitter.emit('status', {user:parmas.toremove, action:"out"})
                 return 'deleted'
             }
             else 
@@ -159,11 +164,5 @@ export class GroupsController {
             }
             else 
                 return 'not baned';
-        }
-        @UseGuards(AuthGuard)
-        @Get('test')
-        async test(@Req() request, @Query() params)
-        {
-            return "test";
         }
 }

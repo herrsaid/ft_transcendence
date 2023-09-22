@@ -55,6 +55,8 @@ export default function Groupmember({data}:any)
             setClick(!click);
         }
     }
+    if (data.user.id == user.user.id)
+        return(<></>)
     if(kick)
         return(<></>)
     return(

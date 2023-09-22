@@ -12,24 +12,7 @@ import reciverContext from "../reciverContext";
     const [isOpen, setIsOpen] = useState(false);
     const [group, setGroup] = useState([]);
     const user = useContext(UserContext);
-    const hrf = useForm()
     const reciver = useContext(reciverContext);
-    const onSubmit = hrf.handleSubmit(data =>{
-      fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/create`,{
-        method: 'POST', headers:{
-            Authorization: `Bearer ${Cookies.get('access_token')}`,
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({name:data.name, user:user.user.id})
-    })
-    })
-    // const fetcher = (args:string) => fetch(args,{
-    //   method: 'GET',
-    //   headers:{
-    //     Authorization: `Bearer ${Cookies.get('access_token')}`,
-    //   }
-    // }).then((response) => response.json())
-    // const {data,isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/mygroups?id=${user.user.id}`, fetcher);
     useEffect(()=>{
       fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/mygroups?id=${user.user.id}`,{
         method: 'GET',
