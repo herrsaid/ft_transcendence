@@ -92,7 +92,6 @@ export default function Messages()
             {
                 setGroupMessage((old:any) => [...old, {src:data.src, dst:data.dst,content:data.content}])
             }
-            scrollToBottom('scrollable');
         })
     },[])
     const send = (e:any)=>{
@@ -112,7 +111,6 @@ export default function Messages()
                 setGroupMessage((old:any) => [...old, {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:true}]);
             }
             setValue('')
-            scrollToBottom('scrollable');
         }
     }
     if (reciver.reciver.id == undefined)
