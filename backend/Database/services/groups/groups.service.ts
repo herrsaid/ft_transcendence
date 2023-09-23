@@ -16,6 +16,7 @@ export class GroupsService {
     async create_group(group_info: Groups, id:number)
     {
         const info = this.Groups.create(group_info);
+        info.size = 1;
         const user = await this.user.findOne(id);
         const members = new GroupUsers;
         members.role = "owner";

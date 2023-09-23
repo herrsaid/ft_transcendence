@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { InjectRepository } from '@nestjs/typeorm';
 import GroupUsers from 'Database/entity/GroupUsers.entity';
-import { group } from 'console';
+import { GroupsService } from '../groups/groups.service';
 
 @Injectable()
 export class GroupusersService {
@@ -42,11 +42,14 @@ export class GroupusersService {
         })
         return members;
     }
-    async remove(user_id, group_id)
+    async remove(user_id:number, group_id:number)
     {
         const groupusers = await this.GroupUsers.find({relations: ["group", "user"]})
+        // const group = await this.GroupsService.findOne(group_id);
         const spes = groupusers.find(data => (data.group.id == group_id && data.user.id == user_id));
         this.GroupUsers.delete({id:spes.id});
+        // group.size = group.size - 1;
+        // this.GroupsService.save(group);
     }
     async is_admin(user_id:number, group_id:number)
     {

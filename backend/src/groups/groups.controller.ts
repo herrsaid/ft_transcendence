@@ -40,6 +40,8 @@ export class GroupsController {
                     member.group = group;
                     const m = await this.GroupUsersService.create(member);
                     group.members.push(m);
+                    group.size = group.size + 1;
+                    this.GroupService.save(group);
                     return 'created'
                 }
             }

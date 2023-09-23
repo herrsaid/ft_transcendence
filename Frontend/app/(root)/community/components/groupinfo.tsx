@@ -39,7 +39,7 @@ export default function Groupinfo()
                     {reciver.reciver.name}
                 </div>
                 <div className="self-center">
-                    1337 member
+                    {reciver.reciver.size} member
                 </div>
             </div>
             <div className="flex flex-col h-[50%] w-[90%] justify-between self-center rounded-lg bg-[#363672]">
