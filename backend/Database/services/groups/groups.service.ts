@@ -53,7 +53,8 @@ export class GroupsService {
     async search(value:string) 
     {
         return this.Groups.findBy({
-             name: Like(`%${value}%`)
+             name: Like(`%${value}%`),
+             type: "public" || "protected"
         })
     }
     async getPassword(group_id:number)

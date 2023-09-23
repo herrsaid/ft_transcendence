@@ -31,7 +31,7 @@ function Result({res}:any)
     }
     const joinprotected = async (e:any)=>{
         e.preventDefault();
-        const passowrd = document.getElementById('passwd');
+        const passowrd:any = document.getElementById('passwd');
         if (passowrd)
         {
             const obj = {id:res.id, password:passowrd.value}

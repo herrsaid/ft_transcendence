@@ -17,7 +17,7 @@ export default  function Header()
     const router = useRouter();
     const contexUser = useContext(UserContext);
     let new_src_img;
-    const dorpRef = useRef(null);
+    const dorpRef = useRef<any>(null);
 
     useEffect(()=>{
       document.addEventListener('click', (e) => {((dorpRef.current)&&(!dorpRef.current.contains(e.target)))?removeDropdown():console.log('dd')}, true)

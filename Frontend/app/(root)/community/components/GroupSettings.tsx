@@ -74,7 +74,7 @@ const GroupSettings = () =>
                  <div className=" flex-col w-full justify-center">
                     <Input id="Username1" placeholder="name..." _placeholder={{ opacity: 1, color: 'gray.500' }} className="focus:outline-none" variant='flushed'/>
                      {/* <input id="Username1"  className="" type='text' placeholder="name..."></input> */}
-                     {(Obj.type == "private")&&<Input id="password1" placeholder="password..." _placeholder={{ opacity: 1, color: 'gray.500' }} type="password" className="focus:outline-none" variant='flushed'/>}
+                     {(Obj.type == "protected")&&<Input id="password1" placeholder="password..." _placeholder={{ opacity: 1, color: 'gray.500' }} type="password" className="focus:outline-none" variant='flushed'/>}
                  </div>
             </div>
 

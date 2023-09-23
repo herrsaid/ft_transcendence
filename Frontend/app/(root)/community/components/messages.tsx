@@ -22,7 +22,10 @@ export default function Messages()
     const [value, setValue] = useState('');
     const inputRef = useRef(null)
     const [muted, setMuted] = useState<any>([])
-
+    const scrollToBottom = (id:string) => {
+        const element:any = document.getElementById(id);
+      element.scrollTop = element.scrollHeight;
+   }
     useEffect(()=>{
        socket.on('status', (data) =>{
         if(data.action == "mute" && data.user == user.user.id)
@@ -38,7 +41,7 @@ export default function Messages()
        }) 
     },[])
     useEffect(()=>{
-            const msginput = document.getElementById('message');
+            const msginput:any = document.getElementById('message');
             if (reciver.reciver.id)
             {
                 if (muted.find((data:any)=> (reciver.reciver.id == data)) && reciver.reciver.isgroup)
@@ -89,11 +92,12 @@ export default function Messages()
             {
                 setGroupMessage((old:any) => [...old, {src:data.src, dst:data.dst,content:data.content}])
             }
+            scrollToBottom('scrollable');
         })
     },[])
     const send = (e:any)=>{
         e.preventDefault();
-        var mydiv = document.getElementById('scrollable')
+        // var mydiv = document.getElementById('scrollable')
         // mydiv?.scrollTo({top:mydiv.scrollHeight, behavior: 'instant'})
         if (value != '')
         {
@@ -108,9 +112,9 @@ export default function Messages()
                 setGroupMessage((old:any) => [...old, {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:true}]);
             }
             setValue('')
+            scrollToBottom('scrollable');
         }
     }
-    const [current, setCurrent] = useState([])
     if (reciver.reciver.id == undefined)
         return(<div className="sm:hidden"><Chats/></div>)
     return(
@@ -131,9 +135,10 @@ export default function Messages()
                     ):(
                         groupMessage.map((message:any, index:number) => {
                             if (message.src == user.user.id && message.dst == reciver.reciver.id)
-                                return (<GroupMsg key={index} content={{class:"me", content:message.content, member:message.src}} />)
+                            return (<GroupMsg key={index} content={{class:"me", content:message.content, member:message.src}} />)
                             else if (message.dst == reciver.reciver.id)
-                                return(<GroupMsg key={index} content={{class:"you", content:message.content, member:message.src}} />)
+                            return(<GroupMsg key={index} content={{class:"you", content:message.content, member:message.src}} />)
+                            scrollToBottom('scrollable');
                         })
                     )
                 }

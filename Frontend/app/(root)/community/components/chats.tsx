@@ -10,7 +10,7 @@ export default function Chats()
     const [friends, setFriends] = useState([]);
     const [forg, setForg] = useState(true);
     const [search, setSearch] = useState([]);
-    const searchRef = useRef(null);
+    const searchRef = useRef<any>(null);
     const searching = (e:any) => {
         console.log(e.target.value)
         fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/search?value=${e.target.value}`, {

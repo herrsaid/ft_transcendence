@@ -42,7 +42,7 @@ export default function Groupmember({data}:any)
     }
     const submitmute = (e:any)=>{
         e.preventDefault();
-        const time = document.getElementById('time');
+        const time:any = document.getElementById('time');
         if (time)
         {
             fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/mute?id=${reciver.reciver.id}&tomute=${data.user.id}&time=${time.value}`,

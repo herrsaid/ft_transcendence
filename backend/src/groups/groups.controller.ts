@@ -20,7 +20,7 @@ export class GroupsController {
         async create(@Req() request, @Body() Group)
         {
             const user_id = request['user'];
-            if (Group.type == 'private')
+            if (Group.type == 'protected')
                 Group.password = await hashPassword(Group.password);
             const group  = this.GroupService.create_group(Group, user_id.id);
         }
@@ -86,7 +86,6 @@ export class GroupsController {
             if (!Param.value)
                 return [];
             const res = await this.GroupService.search(Param.value)
-            console.log(res, Param.value);
             return res;
         }
         @UseGuards(AuthGuard)
