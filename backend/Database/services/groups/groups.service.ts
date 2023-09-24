@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { Like } from "typeorm"
 import { GroupusersService } from '../groupusers/groupusers.service';
 import GroupUsers from 'Database/entity/GroupUsers.entity';
+import { type } from 'os';
 
 
 @Injectable()
@@ -50,17 +51,24 @@ export class GroupsService {
     {
         this.Groups.save(group);
     }
-    async search(value:string) 
+    // async search(value:string) 
+    // {
+    //     return this.Groups.findBy({
+    //          name: Like(`%${value}%`),
+             
+    //     })
+    // }
+    async search(value:string)
     {
-        return this.Groups.findBy({
-             name: Like(`%${value}%`),
-             type: "public" || "protected"
-        })
+        return this.Groups.find({where:[
+            {name: Like(`%${value}%`), type: 'public'},
+            {name: Like(`%${value}%`), type: 'protected'}
+    ]})
     }
     async getPassword(group_id:number)
     {
         const group = await this.Groups.findOne({where:{id:group_id}})
-        if (group.type == 'private')
+        if (group.type == 'protected')
             return group.password;
     }
 }

@@ -82,40 +82,8 @@ const GroupSettings = () =>
       
       <button  id="Create1" className="stats-bg forhover text-white py-2 px-4 rounded-lg" onClick={()=> {CreateGroupRoom(Obj, setIsCreated);}}>Create</button>
       
-    </div>
-            
+    </div> 
         </div>
-        // <div className=" absolute top-[10%] left-1/2 transform -translate-x-1/2 my-auto z-[100]">
-        //     <div className="container mx-auto px-2 py-[20px] text-center items-center pb-40"></div>
-        //     <div className="bgtet h-[400px]  w-[400px] md:w-[500px] lg:w-[600px] rounded-lg shadow-2xl ">
-        //         <p className="mx-auto text-center pt-5 text-xl md:text-2xl lg:text-3xl font-semibold text-white-500">Create New Room</p>
-        //         <div className="relative flex top-[25px] w-[100%] h-[30px]">
-        //             <p className="relative flex left-[10%] text-xl  font-semibold text-white-500">Room Type:</p>
-        //         </div>
-        //         <div className="relative flex top-[50px] w-[100%] h-[30px] justify-center">
-        //             <div className="p-1">
-        //                 <input name="radio" onClick={()=>SetObj({type:"public", name:Obj.name, password:Obj.password})} type="radio" id="public" />
-        //                 <label htmlFor="public">public</label>
-        //             </div >
-        //             <div className="p-1">
-        //                 <input name="radio" onClick={()=>SetObj({type:"private", name:Obj.name, password:Obj.password})} type="radio" id="private" />
-        //                 <label htmlFor="private">private</label>
-        //             </div>
-        //             <div className="p-1">
-        //                 <input name="radio" onClick={()=>SetObj({type:"protected", name:Obj.name, password:Obj.password})} type="radio" id="protected" />
-        //                 <label htmlFor="protected">protected</label>
-        //             </div>
-        //         </div>
-        //         <form>
-        //             <input id="Username1"  className="relative h-[30px] left-1/2 transform -translate-x-1/2 top-[75px] rounded-md shadow-2xl bg-indigo-500" type='text' placeholder="name..."></input>
-        //         </form>
-        //         <form>
-        //             {(Obj.type == "private")&&<input id="password1" className="relative h-[30px] left-1/2 transform -translate-x-1/2 top-[100px] rounded-md shadow-2xl bg-indigo-500" type='text' placeholder="password..."></input>}
-        //         </form>
-        //         <button onClick={()=> {CreateGroupRoom(Obj, setIsCreated);}} id="Create1" className="relative w-[125px] h-[40px] top-[150px] left-[calc(50%-62.5px)] text-xl md:text-2xl lg:text-3xl font-semibold text-white-500 bg-blue-500 hover:bg-blue-700 rounded-md shadow-2xl">Create</button>
-        //         <button className=" relative bg-blue-700 p-2 rounded-md w-[125px] h-[40px] top-[150px] left-[200px]">cancel</button>
-        //     </div>
-        // </div>
     );
 }
 

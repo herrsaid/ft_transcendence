@@ -79,6 +79,15 @@ export class GroupusersService {
         this.GroupUsers.save(spes);
     }
 
+
+    async new(group_id:number, newadmin:number)
+    {
+        const groupusers = await this.GroupUsers.find({relations: ["group", "user"]});
+        const spes = groupusers.find((data)=> data.group.id == group_id && data.user.id == newadmin);
+        spes.role = "admin"
+        this.GroupUsers.save(spes);
+    }
+
     async isAbleToSend(user_id:number,group_id:number)
     {
         const groupusers = await this.GroupUsers.find({relations: ["group", "user"]})

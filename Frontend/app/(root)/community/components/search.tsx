@@ -4,7 +4,7 @@ import {MdOutlineGroupAdd} from 'react-icons/md'
 import Cookies from 'js-cookie';
 import UserContext from "../../UserContext";
 import { socket } from "../../socket/socket";
-import { useToast } from "@chakra-ui/react";
+import { Button, Input, useToast } from "@chakra-ui/react";
 import reciverContext from "../reciverContext";
 
 function Result({res}:any)
@@ -24,14 +24,14 @@ function Result({res}:any)
                 }
             })
             socket.emit('joinroom',{id:res.id})
-            reciver.setReciver({...res, isGroup:true});
+            reciver.setReciver({...reciver.reciver, re:Math.random()});
         }
         else
             setpassword(true)
-    }
-    const joinprotected = async (e:any)=>{
+        }
+        const joinprotected = async (e:any)=>{
         e.preventDefault();
-        const passowrd:any = document.getElementById('passwd');
+        const passowrd:any = document.getElementById('passwd')
         if (passowrd)
         {
             const obj = {id:res.id, password:passowrd.value}
@@ -55,7 +55,7 @@ function Result({res}:any)
                     isClosable: true,
                   })
                   socket.emit('joinroom',{id:res.id})
-                  reciver.setReciver({...res, isGroup:true});
+                  reciver.setReciver({...reciver.reciver, re:Math.random()});
             }
             else
             {
@@ -80,13 +80,21 @@ function Result({res}:any)
                 <button onClick={join}><MdOutlineGroupAdd size={20} /></button>
             </div>
             { password &&
-                <div className="h-96 w-96 absolute bg-[#363672] rounded-md flex flex-col justify-center">
-                    <div className="self-center m-2"><h1 className="font-bold ">Password neaded:</h1></div>
-                    <div  className="self-center m-2">
-                        <input id="passwd" className="rounded-full bg-[#18184a] p-1" type="password" placeholder="password"/>
+                // <div className="flex absolute transform translate-x-[-50%] translate-y-[-50%] top-[50%] left-[50%]">
+                //     <form onSubmit={joinprotected}>
+                //         <input id="passwd" className="rounded-full bg-[#18184a] p-1" type="password" placeholder="password"/>
+                //         <button className="rounded-full bg-blue-500 " onClick={joinprotected} type="submit">Join</button>
+                //     </form>
+                // </div>
+                <div className="absolute transform translate-x-[-50%] translate-y-[-50%] top-[50%] left-[50%] bg-[#363672] rounded-md flex flex-col justify-center">
+                    <div className="self-center m-2"><h1 className="font-bold ">Enter Password:</h1></div>
+                    <div  className="self-center m-2 w-[200px]">
+                        {/* <input id="passwd" className="rounded-full bg-[#18184a] p-1" type="password" placeholder="password"/> */}
+                        <Input id="passwd" placeholder="Password" type="password" _placeholder={{ opacity: 1, color: 'gray.500' }} className="focus:outline-none " variant='flushed'/>
                     </div>
                     <div className="self-center">
-                        <input onClick={joinprotected} className="rounded-sm bg-blue-600 px-1 m-2" type="button" value="join" />
+                        <Button onClick={joinprotected} colorScheme='blue'>Join</Button>
+                        {/* <input onClick={joinprotected} className="rounded-sm bg-blue-600 px-1 m-2" type="button" value="join" /> */}
                     </div>
                 </div>
             }

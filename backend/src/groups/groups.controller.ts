@@ -1,4 +1,4 @@
-import { Body, Controller, ForbiddenException, Get, Param, Post, Query, Req, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { Body, Controller, ForbiddenException, Get, NotAcceptableException, Param, Post, Query, Req, UnauthorizedException, UseGuards } from '@nestjs/common';
 import Groups from 'Database/entity/Groups.entity';
 import { GroupsService } from 'Database/services/groups/groups.service';
 import { UserService } from 'src/user/services/user.service';
@@ -69,7 +69,6 @@ export class GroupsController {
                         member.group = group;
                         const m = await this.GroupUsersService.create(member);
                         group.members.push(m);
-                            return  201;
                     }
                     throw new UnauthorizedException();
                 }
@@ -161,9 +160,21 @@ export class GroupsController {
                 && (await this.GroupUsersService.is_admin(params.toban, params.id)) != "owner")
             {
                 this.GroupUsersService.ban(params.id, params.toban)
-                return 'baned'
             }
             else 
-                return 'not baned';
+                throw NotAcceptableException;
+        }
+        @UseGuards(AuthGuard)
+        @Get('newadmin')
+        async newadmin(@Req() request, @Query() params)
+        {
+            const user_id = request['user'].id;
+            if((await this.GroupUsersService.is_admin(user_id, params.id)) != "user"
+                && (await this.GroupUsersService.is_admin(params.new, params.id)) != "owner")
+            {
+                this.GroupUsersService.new(params.id, params.new)
+            }
+            else 
+                throw NotAcceptableException;
         }
 }
