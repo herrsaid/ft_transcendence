@@ -2,7 +2,7 @@ import Message from "./message";
 import Profile from "./profile";
 import { VscSend } from 'react-icons/vsc'
 import { socket } from "../../socket/socket";
-import { use, useEffect, useRef, useState } from "react";
+import {useEffect, useRef, useState } from "react";
 import Cookies from 'js-cookie';
 import UserContext from "../../UserContext";
 import reciverContext from "../reciverContext";
@@ -23,8 +23,10 @@ export default function Messages()
     const inputRef = useRef(null)
     const [muted, setMuted] = useState<any>([])
     const scrollToBottom = (id:string) => {
-        const element:any = document.getElementById(id);
-      element.scrollTop = element.scrollHeight;
+        if(document)
+            var element:any = document.getElementById(id);
+        if(element)
+            element.scrollTop = element.scrollHeight;
    }
     useEffect(()=>{
        socket.on('status', (data) =>{
@@ -40,6 +42,11 @@ export default function Messages()
             reciver.setReciver({});
        }) 
     },[])
+    useEffect(()=> {
+        
+        scrollToBottom('scrollable');
+
+    },[messages])
     useEffect(()=>{
             const msginput:any = document.getElementById('message');
             if (reciver.reciver.id)
@@ -96,8 +103,6 @@ export default function Messages()
     },[])
     const send = (e:any)=>{
         e.preventDefault();
-        // var mydiv = document.getElementById('scrollable')
-        // mydiv?.scrollTo({top:mydiv.scrollHeight, behavior: 'instant'})
         if (value != '')
         {
             if(!reciver.reciver.isgroup)
@@ -136,7 +141,6 @@ export default function Messages()
                             return (<GroupMsg key={index} content={{class:"me", content:message.content, member:message.src}} />)
                             else if (message.dst == reciver.reciver.id)
                             return(<GroupMsg key={index} content={{class:"you", content:message.content, member:message.src}} />)
-                            scrollToBottom('scrollable');
                         })
                     )
                 }

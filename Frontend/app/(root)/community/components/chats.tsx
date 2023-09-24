@@ -33,13 +33,8 @@ export default function Chats()
         .then(data => setFriends(data))  
     },[]);
 
-    let new_src_img:string;
     const newArray = friends.map((frnd:any, index)=>
     {
-        if (frnd.is_profile_img_updated)
-        {
-            new_src_img = process.env.NEXT_PUBLIC_BACK_IP + "/user/profile-img/" + frnd.profile_img;
-        }
         return (<Friend key={index} user={frnd} />)
     })
     const friend_click = () =>{setForg(true)}
