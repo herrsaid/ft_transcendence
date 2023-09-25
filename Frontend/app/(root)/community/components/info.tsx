@@ -1,13 +1,14 @@
 
 import {ImBlocked, ImInfo} from 'react-icons/im'
 import { GoReport } from "react-icons/go";
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import reciverContext from '../reciverContext';
 import {IoIosArrowBack} from 'react-icons/io'
 import activeContext from '../activeContext';
 import { Display } from '../Settings/SettingsFuntions/Display';
 import Groupinfo from './groupinfo';
 import {BiArrowBack} from 'react-icons/bi'
+import Settings from '../Settings/Components/SettingsComponent';
 
 export default function Info()
 {
@@ -32,9 +33,10 @@ export default function Info()
                 </div>
             </div>
             <div className='flex justify-between w-[90%] self-center p-1'>
-                <div className='bg-[#363672] p-1 rounded-full w-1/2 flex justify-center hover:bg-[#7d32d9] mr-1'><button className='text-green-500'>invite</button></div>
+                <div onClick={()=>{Display();}} className='bg-[#363672] p-1 rounded-full w-1/2 flex justify-center hover:bg-[#7d32d9] mr-1'><button className='text-green-500'>invite</button></div>
                 <div className='bg-[#363672] p-1 rounded-full w-1/2 flex justify-center hover:bg-[#7d32d9]'><button className='text-red-500' >block</button></div>
             </div>
+            <Settings/>
         </div>
     )
 }

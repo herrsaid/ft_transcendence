@@ -10,17 +10,20 @@ import { GameInfoType, GetGameInfoContext } from "@/app/(root)/Game/GameContext/
 import { InGame } from "@/app/(root)/Components/Notification/Notification";
 
 import { player1, player2 } from "@/app/(root)/Game/Online/Socket/start_game_socket";
-import { useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { socket } from "@/app/(root)/Game/Online/Socket/auto_match_socket";
 import { Back } from '../SettingsFuntions/Back';
 import Invite from './Invite';
+import reciverContext from "../../reciverContext";
 
 export let newGameInfo:GameInfoType;
 export let access:boolean = false; 
 
 const Settings = () => 
 {
+    const reciver = useContext(reciverContext);
+    const [username, setUsername] = useState(reciver.reciver.username);
     const GameContext = GetGameInfoContext();
     const router = useRouter();
     const toast = useToast();
@@ -53,8 +56,8 @@ const Settings = () =>
                     </p>
                     <Speed/>
                     <Points/>
-                    <Form/>
-                    <Invite router={router} toast={toast} GameContext={GameContext}/>
+                    {/* <Form/> */}
+                    <Invite router={router} toast={toast} GameContext={GameContext} username={username}/>
                 </div>
             </div>
             <Loading/>

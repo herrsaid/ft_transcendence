@@ -5,7 +5,7 @@ export function Display()
     const ChatPart = document.getElementById("ChatPart");
     if(GameInviter && ChatPart)
     {
-        ChatPart.style.filter = "blur(15px)"
+        // ChatPart.style.filter = "blur(15px)"
         GameInviter.style.display = "block";
         GameInviter.style.opacity = "1";
     }

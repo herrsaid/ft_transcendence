@@ -3,15 +3,15 @@ import { InGame } from '@/app/(root)/Components/Notification/Notification';
 import { GameContextType } from '../../../Game/GameContext/GameContext';
 import { socket } from '@/app/(root)/Game/Online/Socket/auto_match_socket';
 
-export function StartRoom(router: any,toast:any,GameContext:GameContextType)
+export function StartRoom(router: any,toast:any,GameContext:GameContextType,username1:any)
 {
     const notification:HTMLElement| null = document.getElementById('notification');
     const settings = document.getElementById("Settings");
     const loading = document.getElementById("wifi-loader");
-    const input_elem:any = document.getElementById("input_val");
-    let input_value:String = ''; 
-    if (input_elem)
-        input_value = input_elem.value;
+    // const input_elem:any = document.getElementById("input_val");
+    // let input_value:String = ''; 
+    // if (input_elem)
+    //     input_value = input_elem.value;
     newGameInfo.myusername = GameContext.GameInfo.myusername;
     newGameInfo.myimage = GameContext.GameInfo.myimage;
     if(newGameInfo.Online === 1)
@@ -29,7 +29,7 @@ export function StartRoom(router: any,toast:any,GameContext:GameContextType)
             myusername: GameContext.GameInfo.myusername,
             myimage: GameContext.GameInfo.myimage,
             roomMood: !!newGameInfo.RoomMood,
-            inputValue: input_value,
+            inputValue: username1,
         });
         socket.on("RequestRefused",()=>
         {

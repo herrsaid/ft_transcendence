@@ -47,7 +47,6 @@ export default function Community()
                 </activeContext.Provider>
                 </reciverContext.Provider>
             </div>
-            <Settings/>
         </>
     )
 }
