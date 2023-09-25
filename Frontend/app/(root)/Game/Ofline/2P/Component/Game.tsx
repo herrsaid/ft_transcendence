@@ -32,7 +32,6 @@ const Game = () => {
     let test:p5;
     let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
     let LeftNav:HTMLElement| null = document.getElementById('LeftNav');
-    document.body.style.overflow = "hidden";
     if(BottomNav && LeftNav)
     {
         BottomNav.style.display = "block";
@@ -62,13 +61,16 @@ const Game = () => {
           setReslt2(GameData.Result2Val);
         };
         p5.keyReleased = () =>{
+          document.body.style.overflow = "scroll";
           p5.key = '';
         }
-        p5.keyPressed = () =>{
-          if(GameContext.GameInfo.pause_game && p5.key === 'p')
+        p5.keyPressed = () =>{  
+          if (p5.key == 'ArrowUp' || p5.key == 'ArrowDown')
+            document.body.style.overflow = "hidden";
+          if (GameContext.GameInfo.pause_game && p5.key === 'p')
           {
-            if(GameData.access)
-            GameData.access = false;
+            if (GameData.access)
+              GameData.access = false;
             else
               GameData.access = true;
           }

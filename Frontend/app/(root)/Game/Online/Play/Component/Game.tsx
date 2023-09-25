@@ -23,7 +23,6 @@ const Game = ({ router }: any) => {
     let interval:NodeJS.Timer;
     let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
     let LeftNav:HTMLElement| null = document.getElementById('LeftNav');
-    document.body.style.overflow = "hidden";
     if(BottomNav && LeftNav)
     {
         BottomNav.style.display = "block";
@@ -64,7 +63,14 @@ const Game = ({ router }: any) => {
           else
             return;
         };
-        p5.keyReleased = () =>{
+        p5.keyPressed = () =>
+        {  
+          if (p5.key == 'ArrowUp' || p5.key == 'ArrowDown')
+            document.body.style.overflow = "hidden";
+        }
+        p5.keyReleased = () =>
+        {
+          document.body.style.overflow = "scroll";
           p5.key = '';
         }
       };
