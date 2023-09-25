@@ -33,7 +33,7 @@ export class GameRommAttribute{
         this.GameStatus = 0;
         this.GamePoints = 0;
         this.Alpha = 1;
-        this.Sleep = 100;
+        this.Sleep = 1000;
         this.TimeOut = 90000;
     }
 }

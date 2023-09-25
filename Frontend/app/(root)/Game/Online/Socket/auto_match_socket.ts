@@ -1,4 +1,7 @@
 import { io } from 'socket.io-client';
-export const socket = io('http://10.14.8.6:1339', {extraHeaders:{
+
+const url:string = process.env.NEXT_PUBLIC_IP + ":1339";
+
+export const socket = io(url, {extraHeaders:{
         'Access-Control-Allow-Origin': "*"
     }});

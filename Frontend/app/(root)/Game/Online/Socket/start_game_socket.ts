@@ -1,7 +1,11 @@
 import { io } from 'socket.io-client';
-export const player1 = io('http://10.14.8.6:1340', {extraHeaders:{
+
+const url1:string = process.env.NEXT_PUBLIC_IP + ":1340";
+const url2:string = process.env.NEXT_PUBLIC_IP + ":1341";
+
+export const player1 = io(url1, {extraHeaders:{
         'Access-Control-Allow-Origin': "*"
     }});
-export const player2 = io('http://10.14.8.6:1341', {extraHeaders:{
+export const player2 = io(url2, {extraHeaders:{
         'Access-Control-Allow-Origin': "*"
     }});

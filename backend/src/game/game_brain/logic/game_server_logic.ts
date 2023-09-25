@@ -91,7 +91,7 @@ export class GameLogic
                 if(++data.PlayersInfo.Result1Val >= data.RoomInfo.GamePoints)
                     data.RoomInfo.GameStatus = 0;
                 data.BallInfo.BallXpos = Math.floor(data.RoomInfo.GameWidth/2);
-                data.RoomInfo.Sleep = 100;
+                data.RoomInfo.Sleep = 3000;
             }
         }
         //if ballYpos in the same Rakect2Ypos enter enter this condition
@@ -116,7 +116,7 @@ export class GameLogic
                 if(++data.PlayersInfo.Result2Val >= data.RoomInfo.GamePoints)
                     data.RoomInfo.GameStatus = 0;
                 data.BallInfo.BallXpos = Math.floor(data.RoomInfo.GameWidth/2);
-                data.RoomInfo.Sleep = 100;
+                data.RoomInfo.Sleep = 3000;
             }
         }
          //if ballYpos in the same Rakect1Ypos enter enter this condition
