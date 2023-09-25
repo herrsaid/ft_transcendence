@@ -52,7 +52,6 @@ export default function Chats()
             <div className="self-center mt-2 mb-2 w-[90%] relative drop-shadow-md">
                 <form action="">
                     <input onChange={searching} className="bg-[#363672] rounded-full pl-3 pr-2 p-1 focus:outline-none w-full" type="search" placeholder="search..."/>
-                    <button className="absolute right-2 top-1" type="submit"><BiSearchAlt size={21}/></button>
                     <div ref={searchRef} className="bg-sky-900 absolute w-full rounded-lg mt-1">
                         <Search search={search}/>
                     </div>

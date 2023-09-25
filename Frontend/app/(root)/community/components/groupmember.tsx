@@ -64,7 +64,7 @@ export default function Groupmember({data}:any)
     return(
         <div className=" p-1 w-full flex justify-between hover:bg-sky-800">
             <div className="flex ">
-                <img className="w-10 h-10 rounded-full" src={data.user.profile_img} alt="No image" />
+                <img className="w-10 h-10 rounded-full" src={data.user.avatar} alt="No image" />
                 <h1 className="p-1">{data.user.username}</h1>
             </div>
             <div className='p-2'>
