@@ -25,7 +25,7 @@ const Settings = () =>
     const router = useRouter();
     const toast = useToast();
     useEffect(() => {
-        Back()
+        Back();
         player1.emit('conection_closed');
         player2.emit('conection_closed');
         socket.emit('conection_closed');

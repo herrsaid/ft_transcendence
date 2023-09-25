@@ -10,6 +10,8 @@ import { Ball, LineCenter, Racket1, Racket2 } from '../GameFunctions/GameDrawer'
 import { NewValue, initialze_data } from '../GameFunctions/Initialise';
 import { GameStatusChecker } from '../GameFunctions/GameChecker';
 import { InGame } from "@/app/(root)/Components/Notification/Notification";
+import { socket } from "../../Socket/auto_match_socket";
+import { player1, player2 } from "../../Socket/start_game_socket";
 
 const Game = ({ router }: any) => {
   const GameContext = GetGameInfoContext();
@@ -21,6 +23,7 @@ const Game = ({ router }: any) => {
     let interval:NodeJS.Timer;
     let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
     let LeftNav:HTMLElement| null = document.getElementById('LeftNav');
+    document.body.style.overflow = "hidden";
     if(BottomNav && LeftNav)
     {
         BottomNav.style.display = "block";
@@ -75,10 +78,14 @@ const Game = ({ router }: any) => {
         BottomNav.style.display = "none";
         LeftNav.style.display = "block";
       }
+      document.body.style.overflow = "scroll";
       clearInterval(interval);
       test.remove();
       InGame.IG = false;
       GameDataContext.SetGameData(new GameDataType);
+      player1.emit('conection_closed');
+      player2.emit('conection_closed');
+      socket.emit('conection_closed');
     };
   }, []);
 

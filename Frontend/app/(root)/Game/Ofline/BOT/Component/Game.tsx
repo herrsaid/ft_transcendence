@@ -35,6 +35,7 @@ const Game = () => {
     let test:p5;
     let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
     let LeftNav:HTMLElement| null = document.getElementById('LeftNav');
+    document.body.style.overflow = "hidden";
     if(BottomNav && LeftNav)
     {
         BottomNav.style.display = "block";
@@ -86,6 +87,7 @@ const Game = () => {
           BottomNav.style.display = "none";
           LeftNav.style.display = "block";
       }
+      document.body.style.overflow = "scroll";
       test.remove();
       GameData = new GameClass();
     };

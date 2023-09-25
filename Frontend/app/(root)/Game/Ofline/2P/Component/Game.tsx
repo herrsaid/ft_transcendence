@@ -32,6 +32,7 @@ const Game = () => {
     let test:p5;
     let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
     let LeftNav:HTMLElement| null = document.getElementById('LeftNav');
+    document.body.style.overflow = "hidden";
     if(BottomNav && LeftNav)
     {
         BottomNav.style.display = "block";
@@ -46,19 +47,19 @@ const Game = () => {
         
         p5.draw = () => {
           NewValue(p5);
+          p5.background("#090533");
+          Racket1(p5,GameData.Racket1Xpos,GameData.Racket1Ypos,GameData.Racket1Width,GameData.Racket1Height);
+          LineCenter(p5);
+          Racket2(p5,GameData.Racket2Xpos,GameData.Racket2Ypos,GameData.Racket2Width,GameData.Racket2Height);
+          Ball(p5,GameData.BallXpos,GameData.BallYpos,GameData.BallWidth,GameData.BallHeight);
           if(!GameStatusChecker(p5,GameContext))
             return;
-            p5.background("#090533");
           for(let a=0;a<GameContext.GameInfo.Speed;a++)
             BallAnimation(p5);
           Racket1Animation(p5,GameContext);
           Racket2Animation(p5,GameContext);
-          LineCenter(p5);
           setReslt1(GameData.Result1Val);
           setReslt2(GameData.Result2Val);
-          Ball(p5,GameData.BallXpos,GameData.BallYpos,GameData.BallWidth,GameData.BallHeight);
-          Racket1(p5,GameData.Racket1Xpos,GameData.Racket1Ypos,GameData.Racket1Width,GameData.Racket1Height);
-          Racket2(p5,GameData.Racket2Xpos,GameData.Racket2Ypos,GameData.Racket2Width,GameData.Racket2Height);
         };
         p5.keyReleased = () =>{
           p5.key = '';
@@ -83,6 +84,7 @@ const Game = () => {
           BottomNav.style.display = "none";
           LeftNav.style.display = "block";
       }
+      document.body.style.overflow = "scroll";
       test.remove();
       GameData = new GameClass();
     };
