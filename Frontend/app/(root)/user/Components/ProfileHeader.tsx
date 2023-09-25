@@ -129,8 +129,8 @@ const ProfileHeader = (props:props) => {
                 Authorization: `Bearer ${Cookies.get('access_token')}`
         }
             
-          }).then((response) => response.json())
-          .then(data => console.log(data))
+        }).then((response) => response.json())
+        .then(data => console.log(data))
     }
 
     

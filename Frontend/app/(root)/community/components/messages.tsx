@@ -10,6 +10,7 @@ import { useContext } from "react";
 import activeContext from "../activeContext";
 import Chats from "./chats";
 import GroupMsg from "./groupmsg";
+import useSWR from "swr";
 
 export default function Messages()
 {
@@ -22,12 +23,28 @@ export default function Messages()
     const [value, setValue] = useState('');
     const inputRef = useRef(null)
     const [muted, setMuted] = useState<any>([])
+    const [status, setStatus] = useState('blocked')
     const scrollToBottom = (id:string) => {
         if(document)
             var element:any = document.getElementById(id);
         if(element)
             element.scrollTop = element.scrollHeight;
    }
+   const fetchData = async (url:string) => {
+    try{
+            const res = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${Cookies.get('access_token')}`,
+                    twofactortoken: Cookies.get('twofactortoken')!,
+                }});
+                return res.json();
+    }
+    catch{
+         console.log("error");
+    }
+    }
+    const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/status/${reciver.reciver.id}`, fetchData)
     useEffect(()=>{
        socket.on('status', (data) =>{
         if(data.action == "mute" && data.user == user.user.id)
@@ -118,6 +135,8 @@ export default function Messages()
             setValue('')
         }
     }
+    if (data)
+        console.log('data------',data.status);
     if (reciver.reciver.id == undefined)
         return(<div className="sm:hidden"><Chats/></div>)
     return(

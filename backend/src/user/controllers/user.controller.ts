@@ -172,7 +172,6 @@ export class UserController {
         }
     }
 
-
     @UseGuards(AuthGuard)
     @Get('friend-request/status/:receiverId')
     getFriendRequestStatus(@Param('receiverId') receiverStringId:string, @Request() req)

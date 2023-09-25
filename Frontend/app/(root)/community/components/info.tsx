@@ -3,7 +3,7 @@ import {ImBlocked, ImInfo} from 'react-icons/im'
 import { GoReport } from "react-icons/go";
 import { useContext, useState } from 'react';
 import reciverContext from '../reciverContext';
-import {IoIosArrowBack} from 'react-icons/io'
+import Cookies from 'js-cookie';
 import activeContext from '../activeContext';
 import { Display } from '../Settings/SettingsFuntions/Display';
 import Groupinfo from './groupinfo';
@@ -15,6 +15,17 @@ export default function Info()
     const reciver = useContext(reciverContext);
     const active = useContext(activeContext);
     const back_click = ()=>{active.setActive('message')}
+    const block = () => 
+    {
+        fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/block/${reciver.reciver.id}`, {
+            method: 'POST',
+            headers:{
+                Authorization: `Bearer ${Cookies.get('access_token')}`
+        }
+            
+          }).then((response) => response.json())
+          .then(data => console.log(data))
+    }
     if(!reciver.reciver.id)
         return (null)
     if (reciver.reciver.isgroup)
@@ -34,7 +45,7 @@ export default function Info()
             </div>
             <div className='flex justify-between w-[90%] self-center p-1'>
                 <div onClick={()=>{Display();}} className='bg-[#363672] p-1 rounded-full w-1/2 flex justify-center hover:bg-[#7d32d9] mr-1'><button className='text-green-500'>invite</button></div>
-                <div className='bg-[#363672] p-1 rounded-full w-1/2 flex justify-center hover:bg-[#7d32d9]'><button className='text-red-500' >block</button></div>
+                <div onClick={block} className='bg-[#363672] p-1 rounded-full w-1/2 flex justify-center hover:bg-[#7d32d9]'><button className='text-red-500' >block</button></div>
             </div>
             <Settings/>
         </div>

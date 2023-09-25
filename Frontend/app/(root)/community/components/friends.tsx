@@ -10,8 +10,8 @@ export default function Friend({user}:any)
     const click = ()=>{reciver.setReciver(user); active.setActive('message')};
     return(
         <div onClick={click} className="flex hover:bg-[#7d32d9] cursor-pointer">
-            <div className="w-10 m-2">
-                <img className="rounded-full" src={user.avatar} alt="friend" />
+            <div className="w-10 h-10 m-2">
+                <img className="w-10 h-10 rounded-full" src={user.avatar} alt="friend" />
             </div>
             <div className="ml-3 mt-4">
                 <p>{user.username}</p>
