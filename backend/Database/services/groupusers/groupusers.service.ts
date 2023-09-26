@@ -47,6 +47,7 @@ export class GroupusersService {
         const groupusers = await this.GroupUsers.find({relations: ["group", "user"]})
         // const group = await this.GroupsService.findOne(group_id);
         const spes = groupusers.find(data => (data.group.id == group_id && data.user.id == user_id));
+        // check to leaver is owner if set another owner
         this.GroupUsers.delete({id:spes.id});
         // group.size = group.size - 1;
         // this.GroupsService.save(group);
