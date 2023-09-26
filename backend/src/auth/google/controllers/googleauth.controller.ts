@@ -35,19 +35,19 @@ export class GoogleAuthController {
               secure: false,
               expires: new Date(Date.now() + 1 * 24 * 600 * 10000),
       });
-      // const front_url = this.configService.get<string>('FRONT_IP');
+      const front_url = this.configService.get<string>('IP') + ":3000";
 
       if (decodedToken.firstLogin)
       {
-        res.redirect('http://localhost:3000/Setup');
+        res.redirect(`${front_url}/Setup`);
       }
       if (decodedToken.isTwoFactorAuthenticationEnabled)
       {
-        res.redirect('http://localhost:3000/2fa/Authenticate');
+        res.redirect(`${front_url}/2fa/Authenticate`);
       }
       else
       {
-        res.redirect('http://localhost:3000/');
+        res.redirect(`${front_url}/`);
       }
       }
       catch{

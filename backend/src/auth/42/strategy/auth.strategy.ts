@@ -1,5 +1,5 @@
 import { PassportStrategy } from '@nestjs/passport';
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { Strategy } from 'passport-42';
 import { UserService } from 'src/user/services/user.service';
 import { JwtService } from '@nestjs/jwt';
@@ -18,49 +18,55 @@ export class AuthStrategy extends PassportStrategy(Strategy, '42') {
   }
 
   async validate(accessToken: string, refreshToken: string, profile: any): Promise<any> {
-    
-
-    const {name, emails, photos} = profile
-
-        const user_check = await this.UserService.findUserByEmail(emails[0].value);
-        
-        if (user_check)
-        {
-
-            const payload = {id : user_check.id, username: user_check.username,
-               email : emails[0].value, twoFactorAuthenticationSecret:user_check.twoFactorAuthenticationSecret,
-                isTwoFactorAuthenticationEnabled:user_check.isTwoFactorAuthenticationEnabled,
-                firstLogin:false
-              };
-        
-            
-            return {
-                access_token: await this.jwtService.signAsync(payload),
-            };
-
-        }
-        else{
-          const user = await this.UserService.create({
-              email: emails[0].value,
-              username: profile.username,
-              profile_img: profile._json.image.link,
-              avatar:profile._json.image.link
-          })
-
+    try
+    {
+      const {name, emails, photos} = profile
+  
           const user_check = await this.UserService.findUserByEmail(emails[0].value);
+          
           if (user_check)
           {
-              const payload = {id : user_check.id,
-                 username: user_check.username, email : emails[0].value,
-                  twoFactorAuthenticationSecret:user_check.twoFactorAuthenticationSecret,
-                   isTwoFactorAuthenticationEnabled:user_check.isTwoFactorAuthenticationEnabled,
-                   firstLogin:true
-                  };
-      
+  
+              const payload = {id : user_check.id, username: user_check.username,
+                 email : emails[0].value, twoFactorAuthenticationSecret:user_check.twoFactorAuthenticationSecret,
+                  isTwoFactorAuthenticationEnabled:user_check.isTwoFactorAuthenticationEnabled,
+                  firstLogin:false
+                };
+          
+              
               return {
                   access_token: await this.jwtService.signAsync(payload),
               };
+  
           }
-      }
+          else{
+            const user = await this.UserService.create({
+                email: emails[0].value,
+                username: profile.username,
+                profile_img: profile._json.image.link,
+                avatar:profile._json.image.link
+            })
+  
+            const user_check = await this.UserService.findUserByEmail(emails[0].value);
+            if (user_check)
+            {
+                const payload = {id : user_check.id,
+                   username: user_check.username, email : emails[0].value,
+                    twoFactorAuthenticationSecret:user_check.twoFactorAuthenticationSecret,
+                     isTwoFactorAuthenticationEnabled:user_check.isTwoFactorAuthenticationEnabled,
+                     firstLogin:true
+                    };
+        
+                return {
+                    access_token: await this.jwtService.signAsync(payload),
+                };
+            }
+        }
+
+    }
+    catch{
+      throw new BadRequestException();
+    }
+
   }
 }

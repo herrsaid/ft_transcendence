@@ -1,13 +1,12 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { CreateUserDto, filterUsersdto, updateAvatar, updateAvatar_bol, updateGameStatus, updateImage, updateStatus, updateUsername } from '../dto/createUserDto';
+import { CreateUserDto, updateAvatar, updateAvatar_bol, updateGameStatus, updateImage, updateStatus, updateUsername } from '../dto/createUserDto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user/user.entity';
 import { Not, Repository } from 'typeorm';
 import { Observable, from, of, switchMap } from 'rxjs';
 import { FriendRequest } from 'src/entities/friend/friend-request.entity';
 import { FriendRequest_Interface, FriendRequest_Status } from 'src/entities/friend/interfaces/friend-request.interface';
-import { group } from 'console';
-import { join } from 'path';
+
 
 @Injectable()
 export class UserService {
@@ -233,44 +232,57 @@ export class UserService {
 
     hasRequestBeenSentOrRecieved(creator:User, receiver:User)
     {
-        return from(this.FriendRequestRepo.findOne({
-            where: [
-                {creator, receiver},
-                {creator: receiver, receiver: creator},
-            ]
-        })).pipe(
-            switchMap((friendRequest: FriendRequest_Interface) => {
-                if (!friendRequest) return of(false);
-                return of(true);
-            })
-        );
+        try
+        {
+            return from(this.FriendRequestRepo.findOne({
+                where: [
+                    {creator, receiver},
+                    {creator: receiver, receiver: creator},
+                ]
+            })).pipe(
+                switchMap((friendRequest: FriendRequest_Interface) => {
+                    if (!friendRequest) return of(false);
+                    return of(true);
+                })
+            );
+
+        }
+        catch{
+            throw new BadRequestException();
+        }
     }
 
 
     //block user
     blockUser(receiverId: number, creator: User)
     {
-        
-        if (receiverId === creator.id)
-            return of({error: 'It is not possible to block yourself'});
-        
-        return this.findOneById(receiverId).pipe(
+        try
+        {
+            if (receiverId === creator.id)
+                return of({error: 'It is not possible to block yourself'});
+            
+            return this.findOneById(receiverId).pipe(
+    
+                switchMap((receiver:User) => {
+                    return this.hasRequestBeenSentOrRecieved(creator, receiver).pipe(
+                        switchMap((hasRequestBeenSentOrRecieved:boolean) => {
+    
+                            let friendRequest: FriendRequest_Interface = {
+                                creator,
+                                receiver,
+                                status: 'blocked'
+                            }
+    
+                            return from(this.FriendRequestRepo.save(friendRequest));
+                        })
+                    );
+                }),
+            );
 
-            switchMap((receiver:User) => {
-                return this.hasRequestBeenSentOrRecieved(creator, receiver).pipe(
-                    switchMap((hasRequestBeenSentOrRecieved:boolean) => {
-
-                        let friendRequest: FriendRequest_Interface = {
-                            creator,
-                            receiver,
-                            status: 'blocked'
-                        }
-
-                        return from(this.FriendRequestRepo.save(friendRequest));
-                    })
-                );
-            }),
-        );
+        }
+        catch{
+            throw new BadRequestException();
+        }
         
     }
 
@@ -279,33 +291,40 @@ export class UserService {
 
 
     getBlockStatus(receiverId:number, currentUser:User){
-        return this.findOneById(receiverId).pipe(
-            switchMap((receiver:User) => {
-                return from(this.FriendRequestRepo.findOne({
-                    where: [
-                        {
-                            creator: currentUser,
-                            receiver: receiver,
-                        },
-                        {
-                            creator: receiver,
-                            receiver: currentUser,
-                        },
-                    ],
-                    relations: ['creator','receiver']
+        try
+        {
+            return this.findOneById(receiverId).pipe(
+                switchMap((receiver:User) => {
+                    return from(this.FriendRequestRepo.findOne({
+                        where: [
+                            {
+                                creator: currentUser,
+                                receiver: receiver,
+                            },
+                            {
+                                creator: receiver,
+                                receiver: currentUser,
+                            },
+                        ],
+                        relations: ['creator','receiver']
+    
+                    }));
+                }),
+    
+                switchMap((friendRequest: FriendRequest_Interface) => {
+                    if (friendRequest?.receiver.id === currentUser.id && friendRequest?.status == "blocked")
+                    {
+                        return of({status: 'waiting-for-unblock', id:friendRequest?.id});
+                    }
+                    return of({status: friendRequest?.status || 'not-sent', id: friendRequest?.id});
+                }),
+    
+                );
 
-                }));
-            }),
-
-            switchMap((friendRequest: FriendRequest_Interface) => {
-                if (friendRequest?.receiver.id === currentUser.id && friendRequest?.status == "blocked")
-                {
-                    return of({status: 'waiting-for-unblock', id:friendRequest?.id});
-                }
-                return of({status: friendRequest?.status || 'not-sent', id: friendRequest?.id});
-            }),
-
-            );
+        }
+        catch{
+            throw new BadRequestException();
+        }
     }
 
 
@@ -318,86 +337,111 @@ export class UserService {
 
     sendFriendRequest(receiverId: number, creator: User)
     {
-        
-        if (receiverId === creator.id)
-            return of({error: 'It is not possible to add yourself'});
-        
-        return this.findOneById(receiverId).pipe(
+        try
+        {
+            if (receiverId === creator.id)
+                return of({error: 'It is not possible to add yourself'});
+            
+            return this.findOneById(receiverId).pipe(
+    
+                switchMap((receiver:User) => {
+                    return this.hasRequestBeenSentOrRecieved(creator, receiver).pipe(
+                        switchMap((hasRequestBeenSentOrRecieved:boolean) => {
+                            if (hasRequestBeenSentOrRecieved) return of({error:'A Friend request has already been sent of received to your account!'})
+    
+                            let friendRequest: FriendRequest_Interface = {
+                                creator,
+                                receiver,
+                                status: 'pending'
+                            }
+                        
+                            return from(this.FriendRequestRepo.save(friendRequest));
+                        })
+                    );
+                }),
+            );
 
-            switchMap((receiver:User) => {
-                return this.hasRequestBeenSentOrRecieved(creator, receiver).pipe(
-                    switchMap((hasRequestBeenSentOrRecieved:boolean) => {
-                        if (hasRequestBeenSentOrRecieved) return of({error:'A Friend request has already been sent of received to your account!'})
-
-                        let friendRequest: FriendRequest_Interface = {
-                            creator,
-                            receiver,
-                            status: 'pending'
-                        }
-                        // console.log(friendRequest)
-
-                        return from(this.FriendRequestRepo.save(friendRequest));
-                    })
-                );
-            }),
-        );
+        }
+        catch{
+            throw new BadRequestException();
+        }
         
     }
 
 
     getFriendRequestStatus(receiverId:number, currentUser:User){
-        return this.findOneById(receiverId).pipe(
-            switchMap((receiver:User) => {
-                return from(this.FriendRequestRepo.findOne({
-                    where: [
-                        {
-                            creator: currentUser,
-                            receiver: receiver,
-                        },
-                        {
-                            creator: receiver,
-                            receiver: currentUser,
-                        },
-                    ],
-                    relations: ['creator','receiver']
+        try
+        {
+            return this.findOneById(receiverId).pipe(
+                switchMap((receiver:User) => {
+                    return from(this.FriendRequestRepo.findOne({
+                        where: [
+                            {
+                                creator: currentUser,
+                                receiver: receiver,
+                            },
+                            {
+                                creator: receiver,
+                                receiver: currentUser,
+                            },
+                        ],
+                        relations: ['creator','receiver']
+    
+                    }));
+                }),
+    
+                switchMap((friendRequest: FriendRequest_Interface) => {
+                    if (friendRequest?.receiver.id === currentUser.id && friendRequest?.status != "accepted" && friendRequest?.status != "blocked")
+                    {
+                        return of({status: 'waiting-for-current-user-response', id:friendRequest?.id});
+                    }
+                    else if (friendRequest?.receiver.id === currentUser.id && friendRequest?.status == "blocked")
+                    {
+                        return of({status: 'waiting-for-unblock', id:friendRequest?.id});
+                    }
+                    return of({status: friendRequest?.status || 'not-sent', id: friendRequest?.id});
+                }),
+    
+                );
 
-                }));
-            }),
-
-            switchMap((friendRequest: FriendRequest_Interface) => {
-                if (friendRequest?.receiver.id === currentUser.id && friendRequest?.status != "accepted" && friendRequest?.status != "blocked")
-                {
-                    return of({status: 'waiting-for-current-user-response', id:friendRequest?.id});
-                }
-                else if (friendRequest?.receiver.id === currentUser.id && friendRequest?.status == "blocked")
-                {
-                    return of({status: 'waiting-for-unblock', id:friendRequest?.id});
-                }
-                return of({status: friendRequest?.status || 'not-sent', id: friendRequest?.id});
-            }),
-
-            );
+        }
+        catch{
+            throw new BadRequestException();
+        }
     }
 
 
 
     getFriendRequestUserById(friendRequestId:number)
     {
-        return from(this.FriendRequestRepo.findOne({
-            where: [{id: friendRequestId}]
-        }))
+        try{
+
+            return from(this.FriendRequestRepo.findOne({
+                where: [{id: friendRequestId}]
+            }))
+        }
+        catch{
+            throw new BadRequestException();
+        }
     }
 
     respondToFriendRequest(friendRequestId:number, statusResponse: FriendRequest_Status)
     {
-        return this.getFriendRequestUserById(friendRequestId).pipe(
-            switchMap((friendRequest: FriendRequest_Interface) => {
-                return from(this.FriendRequestRepo.save({
-                    ...friendRequest,
-                    status: statusResponse,
-                }))
-            }),
-        );
+        try
+        {
+            return this.getFriendRequestUserById(friendRequestId).pipe(
+                switchMap((friendRequest: FriendRequest_Interface) => {
+                    return from(this.FriendRequestRepo.save({
+                        ...friendRequest,
+                        status: statusResponse,
+                    }))
+                }),
+            );
+
+        }
+        catch{
+            throw new BadRequestException();
+        }
     }
 
 
@@ -405,9 +449,16 @@ export class UserService {
 
     getFriendRequest(currentUser:User)
     {
-        return from(this.FriendRequestRepo.find({
-            where :[{receiver:currentUser}]
-        }))
+        try
+        {
+            return from(this.FriendRequestRepo.find({
+                where :[{receiver:currentUser}]
+            }))
+
+        }
+        catch{
+            throw new BadRequestException();
+        }
     }
 
 
@@ -469,8 +520,14 @@ export class UserService {
       }
       async myGroups(id:number)
       {
-        const user = await this.userRepo.findOne({where:{id:id}, relations:{groupusers:true}, select:{id :true}});
-        console.log(user.groupusers[0].id)
+        try
+        {
+            const user = await this.userRepo.findOne({where:{id:id}, relations:{groupusers:true}, select:{id :true}});
+            console.log(user.groupusers[0].id)
+        }
+        catch{
+            throw new BadRequestException();
+        }
       }
 
       getCookieForLogOut()
@@ -478,13 +535,18 @@ export class UserService {
         return `access_token=; HttpOnly; Path=/; Max-Age=0`;
       }
       async checkFileExists(path: string): Promise<boolean> {
-        
-        const fs = require('fs').promises;
-        try {
-          await fs.access(path);
-          return true;
-        } catch (error) {
-          return false;
+        try{
+            const fs = require('fs').promises;
+            try {
+              await fs.access(path);
+              return true;
+            } catch (error) {
+              return false;
+            }
+
+        }
+        catch{
+            throw new BadRequestException();
         }
       }
 
