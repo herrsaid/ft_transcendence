@@ -474,10 +474,8 @@ export class UserController {
                   secure: false,
                   path: "/",
                   maxAge: 0,
-                //   expires: new Date(Date.now() + 1 * 24 * 600 * 10000),
                  
           });
-    //   response.setHeader('Set-Cookie', this.userService.getCookieForLogOut());
       return response.sendStatus(200);
     }
    
