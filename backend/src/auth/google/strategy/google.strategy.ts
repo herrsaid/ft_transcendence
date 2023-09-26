@@ -1,6 +1,6 @@
 import {PassportStrategy} from "@nestjs/passport";
 import { Strategy, VerifyCallback } from "passport-google-oauth20"
-import { Injectable, Res } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { UserService } from "../../../user/services/user.service";
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from "@nestjs/config";
@@ -13,59 +13,65 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google')
         super({
             clientID: configService.get<string>('CLIENT_ID'),
             clientSecret: configService.get<string>('CLIENT_SECRET'),
-            callbackURL: "http://localhost:1337/auth/google/callback",
+            callbackURL: configService.get<string>('GOOGLE_CALL_BACK'),
             scope: ['email', 'profile']
         });
     }
 
     async validate(accessToken: string, refreshToken: string, profile: any, done: VerifyCallback): Promise<any>{
+       try
+       {
+           const {name, emails, photos} = profile
+   
+           const user_check = await this.UserService.findUserByEmail(emails[0].value);
            
-        const {name, emails, photos} = profile
+           if (user_check)
+           {
+   
+               const payload = {id : user_check.id,
+                    username: user_check.username,
+                     email : emails[0].value, 
+                     twoFactorAuthenticationSecret:user_check.twoFactorAuthenticationSecret,
+                      isTwoFactorAuthenticationEnabled:user_check.isTwoFactorAuthenticationEnabled,
+                      firstLogin:false
+                   };
+           
+               
+               return {
+                   access_token: await this.jwtService.signAsync(payload),
+               };
+   
+           }
+           else{
+               const user = await this.UserService.create({
+                   email: emails[0].value,
+                   username: name.familyName,
+                   profile_img: photos[0].value,
+                   avatar:photos[0].value
+               })
+   
+               const user_check = await this.UserService.findUserByEmail(emails[0].value);
+               if (user_check)
+               {
+                   const payload = {id : user_check.id,
+                        username: user_check.username,
+                         email : emails[0].value , 
+                         twoFactorAuthenticationSecret:user_check.twoFactorAuthenticationSecret,
+                          isTwoFactorAuthenticationEnabled:user_check.isTwoFactorAuthenticationEnabled,
+                          firstLogin:true
+                       };
+                          
+           
+                   return {
+                       access_token: await this.jwtService.signAsync(payload),
+                   };
+               }
+           }
 
-        const user_check = await this.UserService.findUserByEmail(emails[0].value);
-        
-        if (user_check)
-        {
-
-            const payload = {id : user_check.id,
-                 username: user_check.username,
-                  email : emails[0].value, 
-                  twoFactorAuthenticationSecret:user_check.twoFactorAuthenticationSecret,
-                   isTwoFactorAuthenticationEnabled:user_check.isTwoFactorAuthenticationEnabled,
-                   firstLogin:false
-                };
-        
-            
-            return {
-                access_token: await this.jwtService.signAsync(payload),
-            };
-
-        }
-        else{
-            const user = await this.UserService.create({
-                email: emails[0].value,
-                username: name.familyName,
-                profile_img: photos[0].value,
-                avatar:photos[0].value
-            })
-
-            const user_check = await this.UserService.findUserByEmail(emails[0].value);
-            if (user_check)
-            {
-                const payload = {id : user_check.id,
-                     username: user_check.username,
-                      email : emails[0].value , 
-                      twoFactorAuthenticationSecret:user_check.twoFactorAuthenticationSecret,
-                       isTwoFactorAuthenticationEnabled:user_check.isTwoFactorAuthenticationEnabled,
-                       firstLogin:true
-                    };
-                       
-        
-                return {
-                    access_token: await this.jwtService.signAsync(payload),
-                };
-            }
-        }
+       }
+       catch{
+            throw new BadRequestException();
+       }    
         
     }
 
