@@ -49,11 +49,11 @@ export default function Info()
     {
         if (data)
         {
+            console.log('datatatatt', data)
             fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/remove/${data.id}`, {
                 method: 'GET',
                 headers:{
-                    Authorization: `Bearer ${Cookies.get('access_token')}`,
-                    'Content-Type': 'application/json'
+                    Authorization: `Bearer ${Cookies.get('access_token')}`
             }}).then((response) => response.json()).then(data => setStatus(data.status))
         }
     }
