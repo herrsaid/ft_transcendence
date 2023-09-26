@@ -144,10 +144,11 @@ export class UserController {
     {
         try{
             const receiverId = parseInt(receiverStringId);
+            if (!isNaN(receiverId))
+                return this.userService.getBlockStatus(receiverId, req.user);
             delete(req.user.iat)
             delete(req.user.exp)
-            return this.userService.getBlockStatus(receiverId, req.user);
-        }
+    }
         catch{
             throw new UnauthorizedException();
         }
@@ -178,9 +179,10 @@ export class UserController {
     {
         try{
             const receiverId = parseInt(receiverStringId);
+            if (!isNaN(receiverId))
+                return this.userService.getFriendRequestStatus(receiverId, req.user);
             delete(req.user.iat)
             delete(req.user.exp)
-            return this.userService.getFriendRequestStatus(receiverId, req.user);
         }
         catch{
             throw new UnauthorizedException();
