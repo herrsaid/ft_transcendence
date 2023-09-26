@@ -36,7 +36,8 @@ export default function Info()
     const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/block/status/${reciver.reciver.id}`, fetchData)
     const block = () => 
     {
-        setStatusBtn(<Button onClick={Unblock} colorScheme='red'>Unblock</Button>)
+        // setStatusBtn(<Button onClick={Unblock} colorScheme='red'>Unblock</Button>)
+        console.log('tblock')
         fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/block/${reciver.reciver.id}`, {
             method: 'POST',
             headers:{
@@ -50,7 +51,7 @@ export default function Info()
     {
         if (data)
         {
-            setStatusBtn(<Button onClick={block} colorScheme='red'>Block</Button>)
+            // setStatusBtn(<Button onClick={block} colorScheme='red'>Block</Button>)
             console.log('datatatatt', status)
             fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/remove/${data.id}`, {
                 method: 'GET',
@@ -63,16 +64,14 @@ export default function Info()
         if (data)
         {
             setStatus(data.status)
-            console.log('wal9lawiiiiiiii ', data.status)
             if (status != 'blocked')
             {
                 setStatusBtn(<Button onClick={block} colorScheme='red'>Block</Button>)
-                console.log('ana t7a9a89tdlkfjlaksdjf ', statusBtn)
             }
-            else (status == "blocked")
+            else if (status == "blocked")
                 setStatusBtn(<Button onClick={Unblock} colorScheme='red'>Unblock</Button>)
         }
-    }, [data])
+    }, [data, status])
     if (data)
         console.log('data------',data.status, status);
     if(!reciver.reciver.id)
