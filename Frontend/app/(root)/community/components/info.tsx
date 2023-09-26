@@ -1,7 +1,7 @@
 
 import {ImBlocked, ImInfo} from 'react-icons/im'
 import { GoReport } from "react-icons/go";
-import { use, useContext, useState } from 'react';
+import { use, useContext, useEffect, useState } from 'react';
 import reciverContext from '../reciverContext';
 import Cookies from 'js-cookie';
 import activeContext from '../activeContext';
@@ -18,14 +18,14 @@ export default function Info()
     const reciver = useContext(reciverContext);
     const active = useContext(activeContext);
     const [status, setStatus] = useState('');
+    const [statusBtn, setStatusBtn] = useState<any>();
     const back_click = ()=>{active.setActive('message')}
     const fetchData = async (url:string) => {
         try{
                 const res = await fetch(url, {
                     method: 'GET',
                     headers: {
-                        Authorization: `Bearer ${Cookies.get('access_token')}`,
-                        twofactortoken: Cookies.get('twofactortoken')!,
+                        Authorization: `Bearer ${Cookies.get('access_token')}`
                     }});
                     return res.json();
         }
@@ -36,6 +36,7 @@ export default function Info()
     const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/block/status/${reciver.reciver.id}`, fetchData)
     const block = () => 
     {
+        setStatusBtn(<Button onClick={Unblock} colorScheme='red'>Unblock</Button>)
         fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/block/${reciver.reciver.id}`, {
             method: 'POST',
             headers:{
@@ -49,16 +50,31 @@ export default function Info()
     {
         if (data)
         {
-            console.log('datatatatt', data)
+            setStatusBtn(<Button onClick={block} colorScheme='red'>Block</Button>)
+            console.log('datatatatt', status)
             fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/remove/${data.id}`, {
                 method: 'GET',
                 headers:{
                     Authorization: `Bearer ${Cookies.get('access_token')}`
-            }}).then((response) => response.json()).then(data => setStatus(data.status))
+            }})
         }
     }
+    useEffect(()=>{
+        if (data)
+        {
+            setStatus(data.status)
+            console.log('wal9lawiiiiiiii ', data.status)
+            if (status != 'blocked')
+            {
+                setStatusBtn(<Button onClick={block} colorScheme='red'>Block</Button>)
+                console.log('ana t7a9a89tdlkfjlaksdjf ', statusBtn)
+            }
+            else (status == "blocked")
+                setStatusBtn(<Button onClick={Unblock} colorScheme='red'>Unblock</Button>)
+        }
+    }, [data])
     if (data)
-        console.log('data------',data.status);
+        console.log('data------',data.status, status);
     if(!reciver.reciver.id)
         return (null)
     if (reciver.reciver.isgroup)
@@ -79,7 +95,9 @@ export default function Info()
             {
                 ( data && data.status != 'waiting-for-unblock') && <div className='flex justify-between w-[90%] self-center p-1'>
                 {
-                    (data && (status != "blocked"))?<Button onClick={block} colorScheme='red'>Block</Button>:<Button onClick={Unblock} colorScheme='red'>Unblock</Button>
+                    statusBtn
+                    // ((status != "blocked") &&<Button onClick={block} colorScheme='red'>Block</Button>)||
+                    // ((status == "blocked" ) && <Button onClick={Unblock} colorScheme='red'>Unblock</Button>)
                 }
                 <Button onClick={Display} colorScheme='whatsapp'>invite</Button>
             </div>
