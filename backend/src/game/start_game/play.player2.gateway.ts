@@ -35,30 +35,43 @@ import { UseFilters, UsePipes, ValidationPipe } from '@nestjs/common';
     server: Server;
     @SubscribeMessage('first_conection')
     handleFirst_conct(@ConnectedSocket() client: Socket, @MessageBody() data:FirstConnection): void {
-      Player2ID = client.id;
-      speed2 = data.speed;
-      points2 = data.points;
-      enemyusername = data.myusername;
-      enemyimage = data.myimage;
-      // console.log(data);
-      // console.log('Player2Arr_content: ', Player2ID);
+      try{
+        Player2ID = client.id;
+        speed2 = data.speed;
+        points2 = data.points;
+        enemyusername = data.myusername;
+        enemyimage = data.myimage;
+      }
+      catch(error)
+      {
+        console.log("error");
+      }
     }
     @SubscribeMessage('send_player2_data')
     handleSendUser2Data(@ConnectedSocket() client: Socket, @MessageBody() data: PlayerPos): void {
-        for(let a = 0 ; a<GameObj.length; a++ )
+        try
         {
-          if(GameObj[a].PlayersInfo.Player2ID === client.id)
+          for(let a = 0 ; a<GameObj.length; a++ )
           {
-            if(GameObj[a].PlayersInfo.Player2Client === undefined)
-              GameObj[a].PlayersInfo.Player2Client = client;
-            GameObj[a].RacketsInfo.Racket1Ypos = data.data;
-            if(GameObj[a].PlayersInfo.Player1Client != undefined)
-              GameObj[a].PlayersInfo.Player1Client.emit('send_player1_data', data.data);
+            if(GameObj[a].PlayersInfo.Player2ID === client.id)
+            {
+              if(GameObj[a].PlayersInfo.Player2Client === undefined)
+                GameObj[a].PlayersInfo.Player2Client = client;
+              GameObj[a].RacketsInfo.Racket1Ypos = data.data;
+              if(GameObj[a].PlayersInfo.Player1Client != undefined)
+                GameObj[a].PlayersInfo.Player1Client.emit('send_player1_data', data.data);
+            }
           }
+        }
+        catch(error)
+        {
+          console.log("error");
         }
       }
 	@SubscribeMessage('conection_closed')
 	handleconection_closed(client: Socket): void {
+    try
+    {
       for(let a = 0 ; a<GameObj.length; a++ )
       {
         if(GameObj[a].PlayersInfo.Player2ID === client.id && GameObj[a].PlayersInfo.Player2Client === client)
@@ -71,9 +84,15 @@ import { UseFilters, UsePipes, ValidationPipe } from '@nestjs/common';
         }
       }
       Player2ID = '';
-      // console.log("player2 disconnectI");
+    }
+    catch(error)
+    {
+      console.log("error");
+    }
   }
   handleDisconnect(client: Socket): void {
+    try
+    {
       for(let a = 0 ; a<GameObj.length; a++ )
       {
         if(GameObj[a].PlayersInfo.Player2ID === client.id && GameObj[a].PlayersInfo.Player2Client === client)
@@ -86,6 +105,10 @@ import { UseFilters, UsePipes, ValidationPipe } from '@nestjs/common';
         }
       }
       Player2ID = '';
-      // console.log("player2 disconnectII");
+    }
+    catch(error)
+    {
+      console.log("error");
+    }
     }
 }

@@ -57,13 +57,27 @@ import { UserService } from 'src/user/services/user.service';
     @SubscribeMessage('Online')
     async handleOnline(@ConnectedSocket() client: Socket, @MessageBody() data:OnlineDTO ): Promise<void>
     {
-       await OnlineLogic(client,data.username,this.UserManager);
+      try
+      {
+        await OnlineLogic(client,data.username,this.UserManager);
+      }
+      catch(error)
+      {
+        console.log("error");
+      }
     }
 
     @SubscribeMessage('RequestRefused')
     handleRequestRefused(@ConnectedSocket() client: Socket, @MessageBody() data:RequestRefusedDTO): void
     {
-      RequestRefusedLogic(data.targrt);
+      try
+      {
+        RequestRefusedLogic(data.targrt);
+      }
+      catch(error)
+      {
+        console.log("error");
+      }
     }
 
     @SubscribeMessage('CreateRoom')
@@ -107,19 +121,40 @@ import { UserService } from 'src/user/services/user.service';
     @SubscribeMessage('GetRooms')
     handleGetRooms(client: Socket): void
     {
-      GetRoomsLogic(client);
+      try
+      {
+        GetRoomsLogic(client);
+      }
+      catch(error)
+      {
+        console.log("error");
+      }
     }
     @SubscribeMessage('conection_closed')
     handleconection_closed(client: Socket): void {
-      Rooms = ConectionClosedLogic(client);
+      try
+      {
+        Rooms = ConectionClosedLogic(client);
+      }
+      catch(error)
+      {
+        console.log("error");
+      }
       // console.log("Remove Old Room");
       // console.log(Rooms);
       }
     async handleDisconnect(client: Socket): Promise<void> {
-      let obj:{Rooms:RoomClass[],Online:OnlineClass[]} = {Rooms:[new RoomClass(),],Online:[new OnlineClass(),]};
-      obj =  await DisconnectLogic(client,this.UserManager);
-      Rooms = obj.Rooms;
-      Online = obj.Online;
+      try
+      {
+        let obj:{Rooms:RoomClass[],Online:OnlineClass[]} = {Rooms:[new RoomClass(),],Online:[new OnlineClass(),]};
+        obj =  await DisconnectLogic(client,this.UserManager);
+        Rooms = obj.Rooms;
+        Online = obj.Online;
+      }
+      catch(error)
+      {
+        console.log("error");
+      }
       // console.log(Rooms);
     }
   }
