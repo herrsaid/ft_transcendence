@@ -50,6 +50,16 @@ services:
       - 8080:8080
     networks:
       - my_net
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - nextjs-app
+    networks:
+      - my_net
   
 networks:
     my_net:
