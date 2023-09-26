@@ -244,7 +244,7 @@ const ProfileHeader = (props:props) => {
 
 
 
-    <div className="py-4 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4">
+    <div className=" text-right py-4 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4">
         
 
 
