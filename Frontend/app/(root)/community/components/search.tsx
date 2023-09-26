@@ -24,7 +24,7 @@ function Result({res}:any)
                 }
             })
             socket.emit('joinroom',{id:res.id})
-            reciver.setReciver({...reciver.reciver, re:Math.random()});
+            reciver.setReciver({...reciver.reciver, action:Math.random()})
         }
         else
             setpassword(true)
@@ -55,7 +55,7 @@ function Result({res}:any)
                     isClosable: true,
                   })
                   socket.emit('joinroom',{id:res.id})
-                  reciver.setReciver({...reciver.reciver, re:Math.random()});
+                  reciver.setReciver({...reciver.reciver, action:Math.random()})
             }
             else
             {

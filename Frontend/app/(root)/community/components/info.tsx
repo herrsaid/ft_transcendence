@@ -36,7 +36,7 @@ export default function Info()
     const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/block/status/${reciver.reciver.id}`, fetchData)
     const block = () => 
     {
-        // setStatusBtn(<Button onClick={Unblock} colorScheme='red'>Unblock</Button>)
+        setStatusBtn(<Button onClick={Unblock} colorScheme='red'>Unblock</Button>)
         console.log('tblock')
         fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/block/${reciver.reciver.id}`, {
             method: 'POST',
@@ -51,8 +51,7 @@ export default function Info()
     {
         if (data)
         {
-            // setStatusBtn(<Button onClick={block} colorScheme='red'>Block</Button>)
-            console.log('datatatatt', status)
+            setStatusBtn(<Button onClick={block} colorScheme='red'>Block</Button>)
             fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/remove/${data.id}`, {
                 method: 'GET',
                 headers:{
@@ -72,8 +71,6 @@ export default function Info()
                 setStatusBtn(<Button onClick={Unblock} colorScheme='red'>Unblock</Button>)
         }
     }, [data, status])
-    if (data)
-        console.log('data------',data.status, status);
     if(!reciver.reciver.id)
         return (null)
     if (reciver.reciver.isgroup)
@@ -93,11 +90,7 @@ export default function Info()
             </div>
             {
                 ( data && data.status != 'waiting-for-unblock') && <div className='flex justify-between w-[90%] self-center p-1'>
-                {
-                    statusBtn
-                    // ((status != "blocked") &&<Button onClick={block} colorScheme='red'>Block</Button>)||
-                    // ((status == "blocked" ) && <Button onClick={Unblock} colorScheme='red'>Unblock</Button>)
-                }
+                {statusBtn}
                 <Button onClick={Display} colorScheme='whatsapp'>invite</Button>
             </div>
             }

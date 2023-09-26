@@ -20,7 +20,7 @@ import reciverContext from "../reciverContext";
           Authorization: `Bearer ${Cookies.get('access_token')}`,
         }
       }).then((response) => response.json()).then(data => setGroup(data))
-    },[reciver.reciver.id])
+    },[reciver.reciver.id, reciver.reciver.action])
     return (
         <div className="flex flex-col justify-between h-[100%]">
             <div >

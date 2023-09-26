@@ -1,10 +1,12 @@
 'use client'
 
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 import "../Settings/Settings.css"
 import Cookies from 'js-cookie';
 import { Input } from "@chakra-ui/react";
 import {AiFillCloseCircle} from 'react-icons/ai'
+import reciverContext from "../reciverContext";
+import { socket } from "../../socket/socket";
 // type GroopSet = Dispatch<SetStateAction<{
 //     type: string;
 //     name: string;
@@ -17,36 +19,38 @@ type GroopObj = {
     password: string;
 }
 
-const CreateGroupRoom = (Obj:GroopObj, setIsCreated:any)=>
-{
-    const name: any = document.getElementById("Username1");
-    const password: any = document.getElementById("password1");
-    const NewObj:GroopObj = Obj;
-    if (name)
-    {
-        NewObj.name = name.value;
-        //check if you need to hash your passwrd
-        if(password)
-            NewObj.password = password.value;
-    }
-    console.log(NewObj);
-    //do your logic here
-    fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/create`,{
-        method: 'POST', headers:{
-            Authorization: `Bearer ${Cookies.get('access_token')}`,
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(Obj)
-    })
-    setIsCreated(true)
-}
 
 const GroupSettings = () => 
 {
     const [isCreated, setIsCreated] = useState(false);
     const [Obj, SetObj] = useState({type:"public",name:"",password:""});
+    const reciver = useContext(reciverContext);
+    const CreateGroupRoom = (Obj:GroopObj, setIsCreated:any)=>
+    {
+        const name: any = document.getElementById("Username1");
+        const password: any = document.getElementById("password1");
+        const NewObj:GroopObj = Obj;
+        if (name != '')
+        {
+            NewObj.name = name.value;
+            //check if you need to hash your passwrd
+            if(password)
+                NewObj.password = password.value;
+        }
+        //do your logic here
+        fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/create`,{
+            method: 'POST', headers:{
+                Authorization: `Bearer ${Cookies.get('access_token')}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(Obj)
+        })
+        reciver.setReciver({...reciver.reciver, action:Math.random()})
+        // socket.emit('joinroom',{id:res.id})
+        setIsCreated(true)
+    }
     if (isCreated)
-        return (<></>)
+        return (null)
     return(
         <div className="absolute transform translate-x-[-50%] 
         translate-y-[-50%] top-[50%] left-[50%] flex-col 
