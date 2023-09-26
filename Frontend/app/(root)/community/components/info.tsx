@@ -1,7 +1,7 @@
 
 import {ImBlocked, ImInfo} from 'react-icons/im'
 import { GoReport } from "react-icons/go";
-import { useContext, useState } from 'react';
+import { use, useContext, useState } from 'react';
 import reciverContext from '../reciverContext';
 import Cookies from 'js-cookie';
 import activeContext from '../activeContext';
@@ -9,12 +9,31 @@ import { Display } from '../Settings/SettingsFuntions/Display';
 import Groupinfo from './groupinfo';
 import {BiArrowBack} from 'react-icons/bi'
 import Settings from '../Settings/Components/SettingsComponent';
+import useSWR from 'swr';
+import { Button } from '@chakra-ui/react';
+
 
 export default function Info()
 {
     const reciver = useContext(reciverContext);
     const active = useContext(activeContext);
+    const [status, setStatus] = useState('');
     const back_click = ()=>{active.setActive('message')}
+    const fetchData = async (url:string) => {
+        try{
+                const res = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${Cookies.get('access_token')}`,
+                        twofactortoken: Cookies.get('twofactortoken')!,
+                    }});
+                    return res.json();
+        }
+        catch{
+             console.log("error");
+        }
+        }
+    const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/status/${reciver.reciver.id}`, fetchData)
     const block = () => 
     {
         fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/block/${reciver.reciver.id}`, {
@@ -24,8 +43,22 @@ export default function Info()
         }
             
           }).then((response) => response.json())
-          .then(data => console.log(data))
+          .then(data => setStatus(data.status))
     }
+    const Unblock = () => 
+    {
+        if (data)
+        {
+            fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/remove/${data.id}`, {
+                method: 'GET',
+                headers:{
+                    Authorization: `Bearer ${Cookies.get('access_token')}`,
+                    'Content-Type': 'application/json'
+            }}).then((response) => response.json()).then(data => setStatus(data.status))
+        }
+    }
+    if (data)
+        console.log('data------',data.status);
     if(!reciver.reciver.id)
         return (null)
     if (reciver.reciver.isgroup)
@@ -43,10 +76,20 @@ export default function Info()
                     <h1>{reciver.reciver.username}</h1>
                 </div>
             </div>
-            <div className='flex justify-between w-[90%] self-center p-1'>
-                <div onClick={()=>{Display();}} className='bg-[#363672] p-1 rounded-full w-1/2 flex justify-center hover:bg-[#7d32d9] mr-1'><button className='text-green-500'>invite</button></div>
-                <div onClick={block} className='bg-[#363672] p-1 rounded-full w-1/2 flex justify-center hover:bg-[#7d32d9]'><button className='text-red-500' >block</button></div>
+            {
+                ( data && data.status != 'waiting-for-unblock') && <div className='flex justify-between w-[90%] self-center p-1'>
+                {
+                    (data && (status != "blocked"))?<Button onClick={block} colorScheme='red'>Block</Button>:<Button onClick={Unblock} colorScheme='red'>Unblock</Button>
+                }
+                <Button onClick={Display} colorScheme='whatsapp'>invite</Button>
             </div>
+            }
+            {
+                (data && data.status == 'waiting-for-unblock') && <div className='flex justify-between w-[90%] self-center p-1'>
+                    <h1>You Are Blocked</h1>
+                </div>
+
+            }
             <Settings/>
         </div>
     )

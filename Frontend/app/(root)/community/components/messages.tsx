@@ -124,19 +124,23 @@ export default function Messages()
         {
             if(!reciver.reciver.isgroup)
             {
-                socket.emit('message', {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:false})
-                setMessages((old:any) => [...old, {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:false}]);
+                if (data)
+                {
+                    if(data.status != "blocked")
+                    {
+                        socket.emit('message', {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:false})
+                        setMessages((old:any) => [...old, {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:false}]);
+                    }
+                }
             }
             else
             {
-                socket.emit('message', {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:true})
-                setGroupMessage((old:any) => [...old, {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:true}]);
+                        socket.emit('message', {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:true})
+                        setGroupMessage((old:any) => [...old, {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:true}]);
             }
             setValue('')
         }
-    }
-    if (data)
-        console.log('data------',data.status);
+    }   
     if (reciver.reciver.id == undefined)
         return(<div className="sm:hidden"><Chats/></div>)
     return(
