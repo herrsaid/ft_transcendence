@@ -266,7 +266,8 @@ export class UserService {
                 switchMap((receiver:User) => {
                     return this.hasRequestBeenSentOrRecieved(creator, receiver).pipe(
                         switchMap((hasRequestBeenSentOrRecieved:boolean) => {
-    
+                    if (hasRequestBeenSentOrRecieved) return of({error:'already blocked!'})
+
                             let friendRequest: FriendRequest_Interface = {
                                 creator,
                                 receiver,

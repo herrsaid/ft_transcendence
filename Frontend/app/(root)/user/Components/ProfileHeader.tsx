@@ -173,7 +173,6 @@ const ProfileHeader = (props:props) => {
             {
                 setBlockString('You Are Blocked')
                 setBlockStatus(true);
-                console.log('waiting-for-unblock')
             }
             else
             {
@@ -189,12 +188,12 @@ const ProfileHeader = (props:props) => {
         const handel_all_request = () =>
         {
     
-            if (data.status === 'pending'){
+            if (data.status === 'pending' || status == 'Cancel'){
                 deleteFriendRequest(data.id);
                 button_placeholder = 'Add Friend';
                 setstatus('Add Friend')
             }
-            else if (data.status === 'not-sent')
+            else if (data.status === 'not-sent' || status == 'Add Friend')
             {
                 
                 send_request();
@@ -207,7 +206,7 @@ const ProfileHeader = (props:props) => {
                 button_placeholder = 'Unfriend';
                 setstatus('Unfriend')
             }
-            else if (data.status === 'accepted')
+            else if (data.status === 'accepted' || status == 'Unfriend')
             {
                 deleteFriendRequest(data.id);
                 button_placeholder = 'Add Friend';
@@ -231,7 +230,7 @@ const ProfileHeader = (props:props) => {
       
       <div className="ml-4">
       
-      <h1 className="text-2xl md:text-3xl lg:text-3xl font-semibold text-purple-500">{props.username}</h1>
+      <h1 className=" text-2xl md:text-3xl lg:text-3xl font-semibold text-purple-500">{props.username}</h1>
         <p className="text-gray-600 hidden sm:hidden md:inline lg:inline">{props.email}</p>
         <p className={`${`${props.isIngame ? 'block' : 'hidden'} text-purple-600 font-semibold my-[4px]`}`}>Player In Game...</p>
        
@@ -245,7 +244,7 @@ const ProfileHeader = (props:props) => {
 
 
 
-    <div className="py-4 items-center grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4">
+    <div className="py-4 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4">
         
 
 

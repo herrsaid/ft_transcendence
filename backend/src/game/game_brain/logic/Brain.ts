@@ -188,43 +188,50 @@ export let GameObj: data[] = [];
     @Interval(16)
     handleSendBallPos()
     {
-      if(GameObj.length)
+      try
       {
-        if(GameObj.find((elem)=> elem.PlayersInfo.Player1ID === Player1ID) === undefined
-          && GameObj.find((elem)=> elem.PlayersInfo.Player2ID === Player2ID) === undefined
-          && Player1ID !== '' && Player2ID !== '')
-          this.new_connect()
-        for(let a = 0 ; a<GameObj.length; a++ )
+        if(GameObj.length)
         {
-          if(!GameObj.length)
+          if(GameObj.find((elem)=> elem.PlayersInfo.Player1ID === Player1ID) === undefined
+            && GameObj.find((elem)=> elem.PlayersInfo.Player2ID === Player2ID) === undefined
+            && Player1ID !== '' && Player2ID !== '')
+            this.new_connect()
+          for(let a = 0 ; a<GameObj.length; a++ )
           {
-            // console.log("break");
-            break;
+            if(!GameObj.length)
+            {
+              // console.log("break");
+              break;
+            }
+              if(GameObj[a].RoomInfo.Sleep <= 0 && GameObj[a].RoomInfo.GameStatus === 1 && GameObj[a].RoomInfo.TimeOut > 0)
+            {
+              //call function that contains Game logic
+              let gamespeed = GameObj[a].RoomInfo.GameSpeed;
+              for(let loop=0;loop<gamespeed;loop++)
+                GameObj[a].Logic.Head(GameObj[a]);
+              // for calc time of match default is 1m:30s
+                GameObj[a].RoomInfo.TimeOut -= 16;
+                // console.log("TimeOut: " + GameObj[a].RoomInfo.TimeOut);
+              //call function that send room data to all players on this room
+              this.send_data_to_players(a)
+              //call function that send room data to all spectators on this room
+              this.send_data_to_spectator(a);
+            }
+            // call function that decreases sleep value
+            else if(GameObj[a].RoomInfo.Sleep > 0)
+                GameObj[a].RoomInfo.Sleep = GameObj[a].RoomInfo.Sleep - 16;
+            //call funbnsction that end_simulation
+            else
+              this.end_simulation(a--);
           }
-            if(GameObj[a].RoomInfo.Sleep <= 0 && GameObj[a].RoomInfo.GameStatus === 1 && GameObj[a].RoomInfo.TimeOut > 0)
-          {
-            //call function that contains Game logic
-            let gamespeed = GameObj[a].RoomInfo.GameSpeed;
-            for(let loop=0;loop<gamespeed;loop++)
-              GameObj[a].Logic.Head(GameObj[a]);
-            // for calc time of match default is 1m:30s
-              GameObj[a].RoomInfo.TimeOut -= 16;
-              // console.log("TimeOut: " + GameObj[a].RoomInfo.TimeOut);
-            //call function that send room data to all players on this room
-            this.send_data_to_players(a)
-            //call function that send room data to all spectators on this room
-            this.send_data_to_spectator(a);
-          }
-          // call function that decreases sleep value
-          else if(GameObj[a].RoomInfo.Sleep > 0)
-              GameObj[a].RoomInfo.Sleep = GameObj[a].RoomInfo.Sleep - 16;
-          //call funbnsction that end_simulation
-          else
-            this.end_simulation(a--);
         }
+        else if(Player1ID !== '' && Player2ID !== '')
+          this.first_connect();
       }
-      else if(Player1ID !== '' && Player2ID !== '')
-        this.first_connect();
+      catch(error)
+      {
+        console.log("error");
+      }
     }
   }
   
