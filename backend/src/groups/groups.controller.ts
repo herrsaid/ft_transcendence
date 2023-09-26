@@ -1,4 +1,4 @@
-import { Body, Controller, ForbiddenException, Get, NotAcceptableException, Param, Post, Query, Req, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { Body, Controller, ForbiddenException, Get, NotAcceptableException, NotFoundException, Param, Post, Query, Req, UnauthorizedException, UseGuards } from '@nestjs/common';
 import Groups from 'Database/entity/Groups.entity';
 import { GroupsService } from 'Database/services/groups/groups.service';
 import { UserService } from 'src/user/services/user.service';
@@ -8,6 +8,7 @@ import GroupUsers from 'Database/entity/GroupUsers.entity';
 import {hashPassword, compare} from '../hash/hash'
 import { request } from 'http';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import { GridFSBucket } from 'typeorm';
 
 @Controller('groups')
 export class GroupsController {
@@ -47,7 +48,7 @@ export class GroupsController {
             }
             catch(error)
             {
-                console.log('error')
+                throw NotFoundException;
             }
         }
         @UseGuards(AuthGuard)

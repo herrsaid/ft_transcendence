@@ -7,13 +7,14 @@ import { Repository } from 'typeorm';
 import { Like } from "typeorm"
 import { GroupusersService } from '../groupusers/groupusers.service';
 import GroupUsers from 'Database/entity/GroupUsers.entity';
-import { type } from 'os';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 
 @Injectable()
 export class GroupsService {
     constructor(@InjectRepository(Groups) private Groups: Repository<Groups>,
-    private readonly user:UserService, private readonly Members:GroupusersService){}
+    private readonly user:UserService, private readonly Members:GroupusersService
+    ,private readonly eventEmitter:EventEmitter2){}
     async create_group(group_info: Groups, id:number)
     {
         const info = this.Groups.create(group_info);
@@ -24,7 +25,8 @@ export class GroupsService {
         members.user = user;
         const m = await this.Members.create(members);
         info.members = [m];
-        return this.Groups.save(info);
+        this.Groups.save(info);
+        this.eventEmitter.emit('roomjoin',user.id);
     }
     findOne(groupId:number)
     {

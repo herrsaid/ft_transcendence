@@ -42,6 +42,17 @@ export default function Groupmember({data}:any)
         setClick(!click);
         setKick(!kick);
     }
+    const addAdmin = ()=>{
+        fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/newadmin?id=${reciver.reciver.id}&new=${data.user.id}`,
+        {
+            method: 'GET',
+            headers:{
+                Authorization: `Bearer ${Cookies.get('access_token')}`
+            }
+        })
+        setClick(!click);
+        setKick(!kick);
+    }
     const submitmute = (e:any)=>{
         e.preventDefault();
         const time:any = document.getElementById('time');
@@ -85,6 +96,7 @@ export default function Groupmember({data}:any)
                                 <div className='flex flex-col'>
                                     <Button className='m-1' onClick={handlekick} colorScheme='red' variant='outline'>Kick</Button>
                                     <Button className='m-1' onClick={handleban} colorScheme='red' variant='outline'>Ban</Button>
+                                    <Button className='m-1' onClick={addAdmin} colorScheme='green' variant='outline'>Add as Admin</Button>
                                 </div>
                             </div>
                         }

@@ -22,6 +22,7 @@ export class WebsockGateway {
       private readonly UserGroupService:GroupusersService) {}
   @WebSocketServer()
   server: Server;
+  socket: Socket;
   getkey = (map, value) => 
   {
     for(let [key, val] of map.entries())
@@ -85,9 +86,17 @@ export class WebsockGateway {
   @OnEvent('status')
   async handle(payload)
   {
-    // let dst = this.online.get(payload.id);
-    // if (dst)
     this.server.emit('status', payload)
+  }
+  @OnEvent('roomjoin')
+  async handlejoin(payload)
+  {
+    const groups = await this.UserGroupService.findGroup(payload.id)
+      for (let i = 0; i < groups.length; i++)
+      {
+        this.server.emit('roomjoin', {id:payload.id})
+      }
+        // this.socket.join(groups[i].id.toString())
   }
   @SubscribeMessage('joinroom')
   async handleJoinRoom(client: Socket, payload:any)
