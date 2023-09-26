@@ -23,7 +23,7 @@ export default function Messages()
     const [value, setValue] = useState('');
     const inputRef = useRef(null)
     const [muted, setMuted] = useState<any>([])
-    const [status, setStatus] = useState('blocked')
+    const [status, setStatus] = useState('')
     const scrollToBottom = (id:string) => {
         if(document)
             var element:any = document.getElementById(id);
@@ -38,13 +38,17 @@ export default function Messages()
                     Authorization: `Bearer ${Cookies.get('access_token')}`,
                     twofactortoken: Cookies.get('twofactortoken')!,
                 }});
-                return res.json();
+            return res.json();
     }
     catch{
          console.log("error");
     }
     }
     const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/status/${reciver.reciver.id}`, fetchData)
+    useEffect(()=>{
+        if(data)
+            setStatus(data.status)
+    }, [data])
     useEffect(()=>{
        socket.on('status', (data) =>{
         if(data.action == "mute" && data.user == user.user.id)
@@ -126,7 +130,8 @@ export default function Messages()
             {
                 if (data)
                 {
-                    if(data.status != "blocked")
+                    console.log('status', status)
+                    if((status != "blocked") && (status != "waiting-for-unblock"))
                     {
                         socket.emit('message', {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:false})
                         setMessages((old:any) => [...old, {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:false}]);
@@ -140,7 +145,7 @@ export default function Messages()
             }
             setValue('')
         }
-    }   
+    }  
     if (reciver.reciver.id == undefined)
         return(<div className="sm:hidden"><Chats/></div>)
     return(
