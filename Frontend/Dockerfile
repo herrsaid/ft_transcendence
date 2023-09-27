@@ -1,24 +1,28 @@
-FROM node:latest
+FROM node:latest AS builder
 
-WORKDIR /usr/src/app
+WORKDIR /app
+
 
 COPY package*.json ./
+
 RUN npm install
 
 COPY . .
 
-EXPOSE 3000
- 
 RUN npm run build
 
-# FROM nginx:alpine
-
-# COPY --from=0 /usr/src/app/out /usr/share/nginx/html
-
-# EXPOSE 80
+FROM node:latest
 
 
-# CMD ["nginx", "-g", "daemon off;"]
+WORKDIR /app
 
-CMD [ "npm", "run", "dev" ]
+COPY --from=builder /app/node_modules /app/node_modules
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+
+
+EXPOSE 3000
+
+
+CMD ["npx", "next", "start"]
 
