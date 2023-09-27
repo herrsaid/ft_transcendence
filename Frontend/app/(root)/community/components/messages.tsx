@@ -24,10 +24,14 @@ export default function Messages()
     const [groupMessage, setGroupMessage] = useState<any>([])
     const [value, setValue] = useState('');
     const inputRef = useRef(null)
-    const [muted, setMuted] = useState<any>([])
     const toast = useToast()
-    const userStatus = async () => {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/status?id=${reciver.reciver.id}`,
+    const userStatus = async (which:string) => {
+        var url:string = '';
+        if (which == 'user')
+            url = `${process.env.NEXT_PUBLIC_BACK_IP}/user/block/status/${reciver.reciver.id}`;
+        else if (which == 'group')
+            url = `${process.env.NEXT_PUBLIC_BACK_IP}/groups/status?id=${reciver.reciver.id}`
+        const res = await fetch(url,
             {
                 method: 'GET',
                 headers:{
@@ -42,52 +46,27 @@ export default function Messages()
         if(element)
             element.scrollTop = element.scrollHeight;
    }
-   const fetchData = async (url:string) => {
-    try{
-            const res = await fetch(url, {
-                method: 'GET',
-                headers: {
-                    Authorization: `Bearer ${Cookies.get('access_token')}`,
-                    twofactortoken: Cookies.get('twofactortoken')!,
-                }});
-            return res.json();
-    }
-    catch{
-         console.log("error");
-    }
-    }
-    const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/status/${reciver.reciver.id}`, fetchData)
     useEffect(()=>{
        socket.on('status', (data) =>{
-        if(data.action == "mute" && data.user == user.user.id)
-        {
-            setMuted((old:any) => [...old, data.id])
-        }
-        if(data.action == "unmute" && data.user == user.user.id)
-        {
-            setMuted(muted.slice(1, muted.findIndex((ev:any) => (ev.id == data.id))))
-        }
         if(data.action == "out" && data.user == user.user.id)
             reciver.setReciver({});
        }) 
     },[])
     useEffect(()=> {
-        
         scrollToBottom('scrollable');
+    },[messages, groupMessage])
+    // useEffect(()=>{
+    //         const msginput:any = document.getElementById('message');
+    //         if (reciver.reciver.id)
+    //         {
+    //             if (muted.find((data:any)=> (reciver.reciver.id == data)) && reciver.reciver.isgroup)
+    //                 msginput.disabled = true;
+    //             else
+    //                 msginput.disabled = false;
+    //         }
 
-    },[messages])
-    useEffect(()=>{
-            const msginput:any = document.getElementById('message');
-            if (reciver.reciver.id)
-            {
-                if (muted.find((data:any)=> (reciver.reciver.id == data)) && reciver.reciver.isgroup)
-                    msginput.disabled = true;
-                else
-                    msginput.disabled = false;
-            }
-
-    },[reciver.reciver.id,muted])
-    //fetch group messages
+    // },[reciver.reciver.id,muted])
+    // fetch group messages
     useEffect(()=>{
         if(reciver.reciver.isgroup)
         {
@@ -119,14 +98,19 @@ export default function Messages()
     useEffect(() => {
         socket.on('message', (data:any) =>{
             audio.play();
-            console.log(data)
             if(!data.toGroup)
             {
-                setMessages((old:any) => [...old, {src:data.src, dst:data.dst,content:data.content}])
+                // const id = data.id
+                // if (!messages.find((data:any) => (data.id == id)))
+                // setMessages((old:any) => [...old, {src:data.src, dst:data.dst,content:data.content}])
+                setMessages((old:any) => [...old, data])
             }
             else
             {
-                setGroupMessage((old:any) => [...old, {src:data.src, dst:data.dst,content:data.content}])
+                // const id = data.id
+                // if (!messages.find((data:any) => (data.id == id)))
+                // setGroupMessage((old:any) => [...old, {src:data.src, dst:data.dst,content:data.content}])
+                setGroupMessage((old:any) => [...old, data])
             }
         })
     },[])
@@ -136,12 +120,29 @@ export default function Messages()
         {
             if(!reciver.reciver.isgroup)
             {
-                socket.emit('message', {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:false})
-                setMessages((old:any) => [...old, {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:false}]);
+                const userstate =  userStatus('user')
+                userstate.then(data => {
+                    if (data.status != 'blocked' && data.status != 'waiting-for-unblock')
+                    {
+                        socket.emit('message', {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:false})
+                        setMessages((old:any) => [...old, {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:false}]);
+                    }
+                    else
+                    {
+                        toast({
+                            title: 'error',
+                            description: "Can't Send Message",
+                            position: 'top-right',
+                            status: 'error',
+                            duration: 6000,
+                            isClosable: true,
+                          })
+                    }
+                })
             }
             else
             {
-                const groupstatus =  userStatus()
+                const groupstatus =  userStatus('group')
                 groupstatus.then(data => {
                     if (data.status == "able")
                     {
@@ -187,7 +188,7 @@ export default function Messages()
                             if (message.src == user.user.id && message.dst == reciver.reciver.id)
                             return (<GroupMsg key={index} content={{class:"me", content:message.content, member:message.src}} />)
                             else if (message.dst == reciver.reciver.id)
-                            return(<GroupMsg key={index} content={{class:"you", content:message.content, member:message.src}} />)
+                            return(<GroupMsg key={index} content={{...message, class:"you", member:message.src}} />)
                         })
                     )
                 }
