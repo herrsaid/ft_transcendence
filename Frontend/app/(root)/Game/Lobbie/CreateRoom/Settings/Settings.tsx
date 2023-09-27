@@ -32,40 +32,44 @@ const PingPongSettings = ({ router }: any) =>
     useEffect(() => {
         let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
         let LeftNav:HTMLElement| null = document.getElementById('LeftNav');
-        if(BottomNav && LeftNav)
+        try
         {
-            BottomNav.style.display = "block";
-            LeftNav.style.display = "none";
-        }
-        // console.log('user re-enter createroom page');
-        player1.emit('conection_closed');
-        player2.emit('conection_closed');
-        socket.emit('conection_closed');
-        newGameInfo = {
-            Points: 10,
-            Speed: 4,
-            pause_game: 1,
-            RoomMood: 1,
-            other_tools: 0,
-            host: false,
-            Online: 1,
-            Access:0,
-            myusername: "Player I",
-            enemmyusername: "Player II",
-            myimage: "/2.jpg",
-            enemmyimage: "/3.jpg",
-          };
-          access = true;
-          return()=>{
             if(BottomNav && LeftNav)
             {
-                BottomNav.style.display = "none";
-                LeftNav.style.display = "block";
+                BottomNav.style.display = "block";
+                LeftNav.style.display = "none";
             }
-            // console.log("i'm leaving");
-            access = false;
-            InGame.IL = false;
-        };
+            // console.log('user re-enter createroom page');
+            player1.emit('conection_closed');
+            player2.emit('conection_closed');
+            socket.emit('conection_closed');
+            newGameInfo = {
+                Points: 10,
+                Speed: 4,
+                pause_game: 1,
+                RoomMood: 1,
+                other_tools: 0,
+                host: false,
+                Online: 1,
+                Access:0,
+                myusername: "Player I",
+                enemmyusername: "Player II",
+                myimage: "/2.jpg",
+                enemmyimage: "/3.jpg",
+              };
+              access = true;
+        }
+        catch{}
+        return()=>{
+        if(BottomNav && LeftNav)
+        {
+            BottomNav.style.display = "none";
+            LeftNav.style.display = "block";
+        }
+        // console.log("i'm leaving");
+        access = false;
+        InGame.IL = false;
+    };
       }, []);
       
     if(!contexUser.user.username || !contexUser.user.profile_img)
