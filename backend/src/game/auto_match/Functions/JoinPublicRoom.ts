@@ -2,7 +2,7 @@ import { Rooms } from "../lobbie.gateway";
 import { Socket } from 'socket.io';
 import { UserInfo } from "src/game/PingPong.dto";
 import { PlayerClass } from "../auto_match_class/PlayerClass";
-
+import { GameObj } from "src/game/game_brain/logic/Brain";
 
 export function JoinPublicRoomLogic(client: Socket, data: UserInfo): void {
     let Public_Rooms= 0;
@@ -27,6 +27,16 @@ export function JoinPublicRoomLogic(client: Socket, data: UserInfo): void {
       else if (data.username === Rooms[data.roomNumber].players[0].Player)
       {
         client.emit('JoinRefused',"You can't Join to yourself");
+        return ;
+      }
+      else if (Rooms.find((elem) => elem.players[0].Player === data.username))
+      {
+        client.emit('JoinRefused',"You can't Join to another room");
+        return ;
+      }
+      else if (GameObj.find((elem) => elem.PlayersInfo.Player1UserName === data.username || elem.PlayersInfo.Player2UserName === data.username ))
+      {
+        client.emit('JoinRefused',"you are already in game");
         return ;
       }
       player_data.Player = data.username;
