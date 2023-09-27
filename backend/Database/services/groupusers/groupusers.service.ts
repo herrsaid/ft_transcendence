@@ -57,7 +57,9 @@ export class GroupusersService {
             this.GroupUsers.delete({id:spes.id});
         }
         else
+        {
             this.GroupUsers.delete({id:spes.id});
+        }
         // this.GroupUsers.delete({id:spes.id});
         // group.size = group.size - 1;
         // this.GroupsService.save(group);
@@ -117,5 +119,18 @@ export class GroupusersService {
         if (spes)
             return true
         return false;
+    }
+    async status(user_id:number, group_id:number)
+    {
+        try{
+
+            const groupusers = await this.GroupUsers.find({relations: ["group", "user"]})
+            const spes = groupusers.find((data) => (data.group.id == group_id && data.user.id == user_id));
+            return spes.status;
+        }
+        catch
+        {
+            throw new NotFoundException();
+        }
     }
 }

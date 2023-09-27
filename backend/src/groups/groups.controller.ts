@@ -131,8 +131,8 @@ export class GroupsController {
             if((await this.GroupUsersService.is_admin(user_id, parmas.id)) != "user"
                 && (await this.GroupUsersService.is_admin(parmas.toremove, parmas.id)) != "owner")
             {
-                this.GroupUsersService.remove(parmas.toremove, parmas.id)
                 this.eventEmitter.emit('status', {user:parmas.toremove, action:"out"})
+                this.GroupUsersService.remove(parmas.toremove, parmas.id)
                 return 'deleted'
             }
             else 
@@ -160,6 +160,7 @@ export class GroupsController {
             if((await this.GroupUsersService.is_admin(user_id, params.id)) != "user"
                 && (await this.GroupUsersService.is_admin(params.toban, params.id)) != "owner")
             {
+                this.eventEmitter.emit('status', {user:params.to_ban, action:"out"})
                 this.GroupUsersService.ban(params.id, params.toban)
             }
             else 
@@ -177,5 +178,18 @@ export class GroupsController {
             }
             else 
                 throw new UnauthorizedException();
+        }
+        @UseGuards(AuthGuard)
+        @Get('status')
+        async status(@Req() request, @Query() params)
+        {
+            const user_id = request['user'].id;
+            try {
+                const status = await this.GroupUsersService.status(user_id, params.id)
+                console.log('iam here', status)
+                return status;
+            } catch {
+                throw new UnauthorizedException();
+            }
         }
 }
