@@ -24,6 +24,9 @@ export default function Messages()
     const inputRef = useRef(null)
     const [muted, setMuted] = useState<any>([])
     const [status, setStatus] = useState('')
+    const userStatus = async () => {
+        
+    }
     const scrollToBottom = (id:string) => {
         if(document)
             var element:any = document.getElementById(id);
