@@ -23,10 +23,11 @@ export class UserService {
     {
         try
         {
-            return this.userRepo.createQueryBuilder(alias);
+            if (alias)
+                return this.userRepo.createQueryBuilder(alias);
         }
         catch{
-            throw new NotFoundException(); 
+            console.log("not found");
         }
         
     }
@@ -40,7 +41,7 @@ export class UserService {
         }
         catch
         {
-            throw new BadRequestException(); 
+            console.log("error");
         }
         
     }
@@ -49,12 +50,15 @@ export class UserService {
     async turnOnTwoFactorAuthentication(userId: number) {
         try
         {
-            return this.userRepo.update(userId, {
-                isTwoFactorAuthenticationEnabled: true
-              });
+            if (userId)
+            {
+                return this.userRepo.update(userId, {
+                    isTwoFactorAuthenticationEnabled: true
+                  });
+            }
         }
         catch{
-            throw new BadRequestException(); 
+            console.log("error") 
         }
         
     }
@@ -63,12 +67,15 @@ export class UserService {
     async turnOffTwoFactorAuthentication(userId: number) {
         try
         {
-            return this.userRepo.update(userId, {
-                isTwoFactorAuthenticationEnabled: false
-              });
+            if (userId)
+            {
+                return this.userRepo.update(userId, {
+                    isTwoFactorAuthenticationEnabled: false
+                  });
+            }
         }
         catch{
-            throw new BadRequestException(); 
+            console.log("error") 
         }
         
     }
@@ -81,7 +88,7 @@ export class UserService {
         }
         catch
         {
-            throw new NotFoundException(); 
+            console.log('error')
         }
         
     }
@@ -95,7 +102,7 @@ export class UserService {
         }
         catch
         {
-            throw new NotFoundException(); 
+            console.log('error');
         }
         
     }
@@ -105,11 +112,12 @@ export class UserService {
     {
         try
         {
-            return await this.userRepo.findOne({where:{username:username}})
+            if (username)
+                return await this.userRepo.findOne({where:{username:username}})
         }
         catch
         {
-            throw new NotFoundException(); 
+            console.log('error');
         }
         
     }
@@ -123,7 +131,7 @@ export class UserService {
         }
         catch
         {
-            throw new NotFoundException();
+            console.log('error')
         }
         
     }
@@ -133,10 +141,11 @@ export class UserService {
     {
         try
         {
-            return await this.userRepo.findOne({where:{email:email}})
+            if (email)
+                return await this.userRepo.findOne({where:{email:email}})
         }
         catch{
-            throw new NotFoundException();
+            console.log("error")
         }
     }
 
@@ -145,10 +154,11 @@ export class UserService {
         try
         {
             const user = await this.userRepo.create(createUserDto);
-            return await this.userRepo.save(user);
+            if (user)
+                return await this.userRepo.save(user);
         }
         catch{
-            throw new BadRequestException();
+            console.log('error')
         }
     }
 
@@ -158,11 +168,14 @@ export class UserService {
         try
         {
             const user = await this.userRepo.findOne({where:{id:id}});
-            Object.assign(user, updateUsername);
-            return await this.userRepo.save(user);
+            if (user)
+            {
+                Object.assign(user, updateUsername);
+                return await this.userRepo.save(user); 
+            }
         }
         catch{
-            throw new BadRequestException();
+            console.log('error')
         }
     }
 
@@ -170,12 +183,19 @@ export class UserService {
     {
         try
         {
-            const user = await this.userRepo.findOne({where:{username:username}});
-            Object.assign(user, updateStatus);
-            return await this.userRepo.save(user);
+            if (username)
+            {
+                const user = await this.userRepo.findOne({where:{username:username}});
+                if (user)
+                {
+                    Object.assign(user, updateStatus);
+                    return await this.userRepo.save(user);
+                }
+
+            }
         }
         catch{
-            throw new BadRequestException();
+            console.log('error')
         }
         
     }
@@ -185,12 +205,19 @@ export class UserService {
     {
         try
         {
-            const user = await this.userRepo.findOne({where:{username:username}});
-            Object.assign(user, updateGameStatus);
-            return await this.userRepo.save(user);
+            if (username)
+            {
+                const user = await this.userRepo.findOne({where:{username:username}});
+                if (user)
+                {
+                    Object.assign(user, updateGameStatus);
+                    return await this.userRepo.save(user);
+                }
+
+            }
         }
         catch{
-            throw new BadRequestException();
+            console.log('error')
         }
         
     }
@@ -202,12 +229,15 @@ export class UserService {
         {
             this.update_is_profile_img_updated(id, {"is_profile_img_updated" : true})
             const user = await this.userRepo.findOne({where:{id:id}});
-            Object.assign(user, updateAvatar);
-            return await this.userRepo.save(user);
+            if (user)
+            {
+                Object.assign(user, updateAvatar);
+                return await this.userRepo.save(user);
+            }
         }
         catch
         {
-            throw new BadRequestException();
+            console.log('error')
         }        
     }
 
@@ -220,12 +250,15 @@ export class UserService {
         try
         {
             const user = await this.userRepo.findOne({where:{id:id}});
-            Object.assign(user, updateImage);
-            return await this.userRepo.save(user);
+            if (user)
+            {
+                Object.assign(user, updateImage);
+                return await this.userRepo.save(user);
+            }
         }
         catch
         {
-            throw new BadRequestException();
+            console.log('error')
         }        
     }
 
@@ -248,7 +281,7 @@ export class UserService {
 
         }
         catch{
-            throw new BadRequestException();
+            console.log('error')
         }
     }
 
@@ -282,7 +315,7 @@ export class UserService {
 
         }
         catch{
-            throw new BadRequestException();
+            console.log('error')
         }
         
     }
@@ -323,28 +356,15 @@ export class UserService {
                     }
                     return of({status: friendRequest?.status || 'not-sent', id: friendRequest?.id});
 
-
-
-
-
-                    // if (friendRequest?.receiver.id === currentUser.id && friendRequest?.status == "blocked")
-                    // {
-                    //     return of({status: 'waiting-for-unblock', id:friendRequest?.id});
-                    // }
-                    // return of({status: friendRequest?.status || 'not-sent', id: friendRequest?.id});
                 }),
     
                 );
 
         }
         catch{
-            throw new BadRequestException();
+            console.log('error')
         }
     }
-
-
-
-
 
 
 
@@ -378,7 +398,7 @@ export class UserService {
 
         }
         catch{
-            throw new BadRequestException();
+            console.log('error')
         }
         
     }
@@ -421,7 +441,7 @@ export class UserService {
 
         }
         catch{
-            throw new BadRequestException();
+           console.log('error')
         }
     }
 
@@ -436,7 +456,7 @@ export class UserService {
             }))
         }
         catch{
-            throw new BadRequestException();
+            console.log('error')
         }
     }
 
@@ -455,7 +475,7 @@ export class UserService {
 
         }
         catch{
-            throw new BadRequestException();
+            console.log('error')
         }
     }
 
@@ -466,13 +486,16 @@ export class UserService {
     {
         try
         {
-            return from(this.FriendRequestRepo.find({
-                where :[{receiver:currentUser}]
-            }))
+            if (currentUser)
+            {
+                return from(this.FriendRequestRepo.find({
+                    where :[{receiver:currentUser}]
+                }))
+            }
 
         }
         catch{
-            throw new BadRequestException();
+            console.log('error')
         }
     }
 
@@ -482,12 +505,15 @@ export class UserService {
         try
         {
             const user = await this.userRepo.findOne({where:{id:id}});
-            Object.assign(user, updateAvatar_bol);
-            return await this.userRepo.save(user);
+            if (user)
+            {
+                Object.assign(user, updateAvatar_bol);
+                return await this.userRepo.save(user);
+            }
         }
         catch
         {
-            throw new BadRequestException();
+            console.log('error')
         }
         
     }
@@ -511,7 +537,7 @@ export class UserService {
             return users;
         }
         catch{
-            throw new BadRequestException();
+            console.log('error')
         }
       }
 
@@ -522,14 +548,14 @@ export class UserService {
         {
             const FriendRequest = await this.FriendRequestRepo.findOne({where:{id:id}});
             if (!FriendRequest) {
-                throw new NotFoundException(`FriendRequest with id ${id} not found`);
+                console.log('FriendRequest with not found')
             }
     
             await this.FriendRequestRepo.remove(FriendRequest);
         }
         catch
         {
-            throw new NotFoundException(`FriendRequest with id ${id} not found`);
+            console.log('FriendRequest with not found')
         }
         
       }
@@ -538,10 +564,11 @@ export class UserService {
         try
         {
             const user = await this.userRepo.findOne({where:{id:id}, relations:{groupusers:true}, select:{id :true}});
-            console.log(user.groupusers[0].id)
+            if (user)
+                console.log(user.groupusers[0].id)
         }
         catch{
-            throw new BadRequestException();
+            console.log('error')
         }
       }
 
@@ -561,7 +588,7 @@ export class UserService {
 
         }
         catch{
-            throw new BadRequestException();
+            console.log('error in the file')
         }
       }
 
