@@ -19,7 +19,7 @@ export async function DisconnectLogic(client: Socket, UserManager:UserService): 
   let test = Online.find(elem => elem.PlayerSocket.id === client.id)
   if(test)
   {
-    console.log(`player ${test.Player} disconnect`);
+    // console.log(`player ${test.Player} disconnect`);
     await UserManager.updateStatus(test.Player,{status:false});
   }
   //   console.log(`Remove Old Room && player ${test.Player} disconnect`);

@@ -14,6 +14,7 @@ import { socket } from "../../Game/Online/Socket/auto_match_socket";
 export let StreamData:GameDataType = new GameDataType();
 
 const Game = ({ router }: any) => {
+  let test:p5;
   let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
   let LeftNav:HTMLElement| null = document.getElementById('LeftNav');
   if(BottomNav && LeftNav)
@@ -25,38 +26,42 @@ const Game = ({ router }: any) => {
   const [reslt1, setReslt1] = useState(0);
   const [reslt2, setReslt2] = useState(0);
   useEffect(() => {
-    player1.emit('conection_closed');
-    player2.emit('conection_closed');
-    socket.emit('conection_closed');
-    const sketch = (p5: p5) => {
-      p5.setup = () => {
-      };
-      
-      p5.draw = () => 
-      {
-        first_conection(StreamContext);
-        NewValue(p5);
-        GetPlayersData(router,StreamContext);
-        if(!StreamContext.StreamInfo.Access)
+    try
+    {
+      player1.emit('conection_closed');
+      player2.emit('conection_closed');
+      socket.emit('conection_closed');
+      const sketch = (p5: p5) => {
+        p5.setup = () => {
+        };
+        
+        p5.draw = () => 
         {
-          router.replace('/Stream');
-          return ;
+          first_conection(StreamContext);
+          NewValue(p5);
+          GetPlayersData(router,StreamContext);
+          if(!StreamContext.StreamInfo.Access)
+          {
+            router.replace('/Stream');
+            return ;
+          }
+          if(document.getElementById('sketch-container'))
+            p5.createCanvas(StreamData.GameWidth, StreamData.GameHeight)
+              .parent('sketch-container')
+              .position((window.innerWidth-StreamData.GameWidth)/2,StreamData.GameHeight/4,'absolute');
+          p5.background("#090533");
+          LineCenter(p5);
+          setReslt1(StreamData.Result1Val);
+          setReslt2(StreamData.Result2Val);
+          Ball(p5,StreamData.BallXpos,StreamData.BallYpos,StreamData.BallWidth,StreamData.BallHeight);
+          Racket1(p5,StreamData.Racket1Xpos,StreamData.Racket1Ypos,StreamData.Racket1Width,StreamData.Racket1Height);
+          Racket2(p5,StreamData.Racket2Xpos,StreamData.Racket2Ypos,StreamData.Racket2Width,StreamData.Racket2Height);
         }
-        if(document.getElementById('sketch-container'))
-          p5.createCanvas(StreamData.GameWidth, StreamData.GameHeight)
-            .parent('sketch-container')
-            .position((window.innerWidth-StreamData.GameWidth)/2,StreamData.GameHeight/4,'absolute');
-        p5.background("#090533");
-        LineCenter(p5);
-        setReslt1(StreamData.Result1Val);
-        setReslt2(StreamData.Result2Val);
-        Ball(p5,StreamData.BallXpos,StreamData.BallYpos,StreamData.BallWidth,StreamData.BallHeight);
-        Racket1(p5,StreamData.Racket1Xpos,StreamData.Racket1Ypos,StreamData.Racket1Width,StreamData.Racket1Height);
-        Racket2(p5,StreamData.Racket2Xpos,StreamData.Racket2Ypos,StreamData.Racket2Width,StreamData.Racket2Height);
-      }
-    };
-
-    const test:p5 = new p5(sketch);
+      };
+  
+      test = new p5(sketch);
+    }
+    catch{}
     return()=>
     {
       if(BottomNav && LeftNav)
