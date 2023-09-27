@@ -61,10 +61,10 @@ export class WebsockGateway {
     // private message
     if (!payload.toGroup)
     {
-        this.MessageService.create(payload);
+        const msg = await this.MessageService.create(payload);
         let dst = this.online.get(payload.dst);
         if(dst)
-          client.broadcast.to(dst).emit('message', payload)
+          client.broadcast.to(dst).emit('message', msg)
     }
     // groups message
     else
@@ -75,7 +75,7 @@ export class WebsockGateway {
         const group = await this.GroupsService.findOne_messages(payload.dst);
         group.messages.push(msg);
         this.GroupsService.save(group);
-        client.broadcast.to(payload.dst.toString()).emit('message',payload);
+        client.broadcast.to(payload.dst.toString()).emit('message',msg);
       }
     }
     return 'Hello world!';

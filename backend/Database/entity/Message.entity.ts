@@ -15,4 +15,6 @@ export class Messages{
     toGroup = false
     @ManyToOne(() => Groups, (group) => group.messages)
     group:Groups
+    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+    created_at:Date;
 }

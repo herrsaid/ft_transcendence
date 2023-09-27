@@ -90,8 +90,8 @@ export default function Groupmember({data}:any)
                         {action && 
                             <div>
                                 <form className='flex' onSubmit={submitmute}>
-                                <Input variant='outline' placeholder='Time' type="number"  min="1" max="5" />
-                                <Button colorScheme='whatsapp' type="submit">mute</Button>
+                                    <Input variant='outline' placeholder='Time' type="number"  min="1" max="5" />
+                                    <Button onClick={submitmute} colorScheme='whatsapp' type="submit">mute</Button>
                                 </form>
                                 <div className='flex flex-col'>
                                     <Button className='m-1' onClick={handlekick} colorScheme='red' variant='outline'>Kick</Button>

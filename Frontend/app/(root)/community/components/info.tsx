@@ -1,7 +1,7 @@
 
 import {ImBlocked, ImInfo} from 'react-icons/im'
 import { GoReport } from "react-icons/go";
-import { use, useContext, useEffect, useState } from 'react';
+import {useContext, useEffect, useState } from 'react';
 import reciverContext from '../reciverContext';
 import Cookies from 'js-cookie';
 import activeContext from '../activeContext';

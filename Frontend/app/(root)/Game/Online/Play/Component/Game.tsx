@@ -23,60 +23,64 @@ const Game = ({ router }: any) => {
     let interval:NodeJS.Timer;
     let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
     let LeftNav:HTMLElement| null = document.getElementById('LeftNav');
-    if(BottomNav && LeftNav)
+    try
     {
-        BottomNav.style.display = "block";
-        LeftNav.style.display = "none";
-    }
-    GameDataContext.SetGameData(new GameDataType());
-    // console.log(GameContext.GameInfo.host,GameContext.GameInfo.Speed,GameContext.GameInfo.Points);
-    initialze_data(GameContext,GameDataContext);
-    import('p5').then((p5Module) => {
-      const p5 = p5Module.default;
-      const sketch = (p5: p5) => {
-        p5.setup = () => {
-        };
-        
-        p5.draw = () => {
-          NewValue(p5,GameDataContext);      
-          if(!first_conection(p5,GameContext,GameDataContext,router))
-            return ;
-          if(GameStatusChecker(p5,GameContext,GameDataContext))
-          {
-            if(document.getElementById('sketch-container') && typeof window !== "undefined")
-              p5.createCanvas(GameDataContext.GameData.GameWidth, GameDataContext.GameData.GameHeight)
-                .parent('sketch-container')
-                .position((window.innerWidth-GameDataContext.GameData.GameWidth)/2,GameDataContext.GameData.GameHeight/4,'absolute');
-              p5.background("#090533");
-            BallAnimation(GameContext,GameDataContext);
-            if (GameContext.GameInfo.host)
-              Racket1Animation(p5,GameDataContext);
+      if(BottomNav && LeftNav)
+      {
+          BottomNav.style.display = "block";
+          LeftNav.style.display = "none";
+      }
+      GameDataContext.SetGameData(new GameDataType());
+      // console.log(GameContext.GameInfo.host,GameContext.GameInfo.Speed,GameContext.GameInfo.Points);
+      initialze_data(GameContext,GameDataContext);
+      import('p5').then((p5Module) => {
+        const p5 = p5Module.default;
+        const sketch = (p5: p5) => {
+          p5.setup = () => {
+          };
+          
+          p5.draw = () => {
+            NewValue(p5,GameDataContext);      
+            if(!first_conection(p5,GameContext,GameDataContext,router))
+              return ;
+            if(GameStatusChecker(p5,GameContext,GameDataContext))
+            {
+              if(document.getElementById('sketch-container') && typeof window !== "undefined")
+                p5.createCanvas(GameDataContext.GameData.GameWidth, GameDataContext.GameData.GameHeight)
+                  .parent('sketch-container')
+                  .position((window.innerWidth-GameDataContext.GameData.GameWidth)/2,GameDataContext.GameData.GameHeight/4,'absolute');
+                p5.background("#090533");
+              BallAnimation(GameContext,GameDataContext);
+              if (GameContext.GameInfo.host)
+                Racket1Animation(p5,GameDataContext);
+              else
+                Racket2Animation(p5,GameDataContext);
+              LineCenter(p5,GameDataContext);
+              setReslt1(GameDataContext.GameData.Result1Val);
+              setReslt2(GameDataContext.GameData.Result2Val);
+              Ball(p5,GameDataContext);
+              Racket1(p5,GameDataContext);
+              Racket2(p5,GameDataContext);
+            }
             else
-              Racket2Animation(p5,GameDataContext);
-            LineCenter(p5,GameDataContext);
-            setReslt1(GameDataContext.GameData.Result1Val);
-            setReslt2(GameDataContext.GameData.Result2Val);
-            Ball(p5,GameDataContext);
-            Racket1(p5,GameDataContext);
-            Racket2(p5,GameDataContext);
+              return;
+          };
+          p5.keyPressed = () =>
+          {  
+            if (p5.key == 'ArrowUp' || p5.key == 'ArrowDown')
+              document.body.style.overflow = "hidden";
           }
-          else
-            return;
+          p5.keyReleased = () =>
+          {
+            document.body.style.overflow = "scroll";
+            p5.key = '';
+          }
         };
-        p5.keyPressed = () =>
-        {  
-          if (p5.key == 'ArrowUp' || p5.key == 'ArrowDown')
-            document.body.style.overflow = "hidden";
-        }
-        p5.keyReleased = () =>
-        {
-          document.body.style.overflow = "scroll";
-          p5.key = '';
-        }
-      };
-      test = new p5(sketch);
-      interval = setInterval(()=>{if(!InGame.IG){router.replace('/Game/Lobbie');}},3000);
-    });
+        test = new p5(sketch);
+        interval = setInterval(()=>{if(!InGame.IG){router.replace('/Game/Lobbie');}},3000);
+      });
+    }
+    catch{}
     return()=>
     {
       if(BottomNav && LeftNav)

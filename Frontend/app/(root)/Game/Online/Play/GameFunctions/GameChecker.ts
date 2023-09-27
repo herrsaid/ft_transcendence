@@ -8,48 +8,52 @@ import { InGame } from '@/app/(root)/Components/Notification/Notification';
 
 export function GameStatusChecker(p5: p5,GameContext:GameContextType,GDC:GameDataContextType): boolean
 {
-  p5.textSize(GDC.GameData.GameWidth/26);
-  if(GameContext.GameInfo.host)
+  try
   {
-		player1.on('GameEnd',(data: string)=>
+    p5.textSize(GDC.GameData.GameWidth/26);
+    if(GameContext.GameInfo.host)
     {
-      if(GDC.GameData.access && GDC.GameData.message === '')
+      player1.on('GameEnd',(data: string)=>
       {
-        GDC.GameData.message = data;
-        player1.emit('conection_closed');
-        // console.log('conection_closed1');
+        if(GDC.GameData.access && GDC.GameData.message === '')
+        {
+          GDC.GameData.message = data;
+          player1.emit('conection_closed');
+          // console.log('conection_closed1');
+        }
+      
+      });
+      if(GDC.GameData.message !== '')
+      {
+        p5.background("#090533");
+        p5.fill(255,255,255);
+        p5.text(GDC.GameData.message, GDC.GameData.GameWidth/2 - GDC.GameData.GameWidth/12, GDC.GameData.GameHeight/2 + GDC.GameData.GameHeight/12);
+        InGame.IG = false;
+        return false;
       }
-    
-    });
-    if(GDC.GameData.message !== '')
+    }
+    else
     {
-      p5.background("#090533");
-      p5.fill(255,255,255);
-      p5.text(GDC.GameData.message, GDC.GameData.GameWidth/2 - GDC.GameData.GameWidth/12, GDC.GameData.GameHeight/2 + GDC.GameData.GameHeight/12);
-      InGame.IG = false;
-      return false;
+      player2.on('GameEnd',(data: string)=>
+      {
+        if(GDC.GameData.access && GDC.GameData.message === '')
+        {  
+          GDC.GameData.message = data;
+          player2.emit('conection_closed');
+          // console.log('conection_closed2');
+        }
+      });
+      if(GDC.GameData.message !== '')
+      {
+        p5.background("#090533");
+        p5.fill(255,255,255);
+        p5.text(GDC.GameData.message, GDC.GameData.GameWidth/2 - GDC.GameData.GameWidth/12, GDC.GameData.GameHeight/2 + GDC.GameData.GameHeight/12);
+        InGame.IG = false;
+        return false;
+      }
+  
     }
   }
-  else
-  {
-		player2.on('GameEnd',(data: string)=>
-    {
-      if(GDC.GameData.access && GDC.GameData.message === '')
-      {  
-        GDC.GameData.message = data;
-        player2.emit('conection_closed');
-        // console.log('conection_closed2');
-      }
-    });
-    if(GDC.GameData.message !== '')
-    {
-      p5.background("#090533");
-      p5.fill(255,255,255);
-      p5.text(GDC.GameData.message, GDC.GameData.GameWidth/2 - GDC.GameData.GameWidth/12, GDC.GameData.GameHeight/2 + GDC.GameData.GameHeight/12);
-      InGame.IG = false;
-      return false;
-    }
-
-  }
+  catch{}
   return true;
 }

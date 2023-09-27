@@ -186,10 +186,36 @@ export class GroupsController {
             const user_id = request['user'].id;
             try {
                 const status = await this.GroupUsersService.status(user_id, params.id)
-                console.log('iam here', status)
                 return status;
             } catch {
                 throw new UnauthorizedException();
+            }
+        }
+        @UseGuards(AuthGuard)
+        @Get('addmember')
+        async addmember(@Req() request, @Query() params)
+        {
+            const user = await this.User.findOneByUsername(params.username);
+            const user_id = user.id;
+            try
+            {
+                if (await this.GroupUsersService.isUserInGroup(user_id, params.id) == false)
+                {
+                    const group = await this.GroupService.findOne(params.id);
+                    const user = await this.User.findOne(user_id);
+                    const member = new GroupUsers();
+                    member.user = user;
+                    member.group = group;
+                    const m = await this.GroupUsersService.create(member);
+                    group.members.push(m);
+                    group.size = group.size + 1;
+                    this.GroupService.save(group);
+                    return 'created'
+                }
+            }
+            catch(error)
+            {
+                throw NotFoundException;
             }
         }
 }
