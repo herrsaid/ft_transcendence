@@ -11,6 +11,8 @@ import activeContext from "../activeContext";
 import Chats from "./chats";
 import GroupMsg from "./groupmsg";
 import useSWR from "swr";
+import { useToast } from "@chakra-ui/react";
+import { group } from "console";
 
 export default function Messages()
 {
@@ -23,9 +25,16 @@ export default function Messages()
     const [value, setValue] = useState('');
     const inputRef = useRef(null)
     const [muted, setMuted] = useState<any>([])
-    const [status, setStatus] = useState('')
+    const toast = useToast()
     const userStatus = async () => {
-        
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/status?id=${reciver.reciver.id}`,
+            {
+                method: 'GET',
+                headers:{
+                    Authorization: `Bearer ${Cookies.get('access_token')}`
+                }
+            }).then(res => res.json());
+            return res;
     }
     const scrollToBottom = (id:string) => {
         if(document)
@@ -48,10 +57,6 @@ export default function Messages()
     }
     }
     const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/status/${reciver.reciver.id}`, fetchData)
-    useEffect(()=>{
-        if(data)
-            setStatus(data.status)
-    }, [data])
     useEffect(()=>{
        socket.on('status', (data) =>{
         if(data.action == "mute" && data.user == user.user.id)
@@ -131,20 +136,31 @@ export default function Messages()
         {
             if(!reciver.reciver.isgroup)
             {
-                if (data)
-                {
-                    console.log('status', status)
-                    if((status != "blocked") && (status != "waiting-for-unblock"))
-                    {
-                        socket.emit('message', {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:false})
-                        setMessages((old:any) => [...old, {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:false}]);
-                    }
-                }
+                socket.emit('message', {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:false})
+                setMessages((old:any) => [...old, {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:false}]);
             }
             else
             {
+                const groupstatus =  userStatus()
+                groupstatus.then(data => {
+                    if (data.status == "able")
+                    {
                         socket.emit('message', {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:true})
                         setGroupMessage((old:any) => [...old, {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:true}]);
+                    }
+                    else
+                    {
+                        toast({
+                            title: 'error',
+                            description: "Can't Send Message",
+                            position: 'top-right',
+                            status: 'error',
+                            duration: 6000,
+                            isClosable: true,
+                          })
+                    }
+                })
+                // console.log('status ==', groupstatus)
             }
             setValue('')
         }
