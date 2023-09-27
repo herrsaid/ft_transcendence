@@ -3,15 +3,10 @@
 import { Dispatch, SetStateAction, useContext, useState } from "react";
 import "../Settings/Settings.css"
 import Cookies from 'js-cookie';
-import { Input } from "@chakra-ui/react";
+import { Input, useToast } from "@chakra-ui/react";
 import {AiFillCloseCircle} from 'react-icons/ai'
 import reciverContext from "../reciverContext";
-import { socket } from "../../socket/socket";
-// type GroopSet = Dispatch<SetStateAction<{
-//     type: string;
-//     name: string;
-//     password: string;
-// }>>;
+
 
 type GroopObj = {
     type: string;
@@ -25,29 +20,56 @@ const GroupSettings = () =>
     const [isCreated, setIsCreated] = useState(false);
     const [Obj, SetObj] = useState({type:"public",name:"",password:""});
     const reciver = useContext(reciverContext);
-    const CreateGroupRoom = (Obj:GroopObj, setIsCreated:any)=>
+    const toast = useToast();
+    const CreateGroupRoom = (Obj:GroopObj, setIsCreated:any) =>
     {
         const name: any = document.getElementById("Username1");
         const password: any = document.getElementById("password1");
         const NewObj:GroopObj = Obj;
-        if (name != '')
+        if (name.value != '')
         {
             NewObj.name = name.value;
             //check if you need to hash your passwrd
             if(password)
                 NewObj.password = password.value;
+            const res = fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/create`,{
+                method: 'POST', headers:{
+                    Authorization: `Bearer ${Cookies.get('access_token')}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(Obj)
+            })
+            res.then(data => 
+            {
+                if (data.status == 201)
+                {
+                    toast({
+                        title: 'succes',
+                        description: "Room Created",
+                        position: 'top-right',
+                        status: 'info',
+                        duration: 6000,
+                        isClosable: true,
+                      })
+                }
+            }
+                )
+            reciver.setReciver({...reciver.reciver, action:Math.random()})
+            // socket.emit('joinroom',{id:res.id})
+            setIsCreated(true)
+        }
+        else
+        {
+            toast({
+                title: 'error',
+                description: "Please Enter a name",
+                position: 'top-right',
+                status: 'error',
+                duration: 6000,
+                isClosable: true,
+              })
         }
         //do your logic here
-        fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/create`,{
-            method: 'POST', headers:{
-                Authorization: `Bearer ${Cookies.get('access_token')}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(Obj)
-        })
-        reciver.setReciver({...reciver.reciver, action:Math.random()})
-        // socket.emit('joinroom',{id:res.id})
-        setIsCreated(true)
     }
     if (isCreated)
         return (null)

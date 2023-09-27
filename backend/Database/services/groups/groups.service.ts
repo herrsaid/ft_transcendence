@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Inject, forwardRef } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import Groups from 'Database/entity/Groups.entity';
 import { Messages } from 'Database/entity/Message.entity';
@@ -13,8 +13,11 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 @Injectable()
 export class GroupsService {
     constructor(@InjectRepository(Groups) private Groups: Repository<Groups>,
-    private readonly user:UserService, private readonly Members:GroupusersService
-    ,private readonly eventEmitter:EventEmitter2){}
+    private readonly user:UserService,
+    private readonly eventEmitter:EventEmitter2,
+    @Inject(forwardRef(() => GroupusersService)) 
+    private readonly Members:GroupusersService
+    ){}
     async create_group(group_info: Groups, id:number)
     {
         const info = this.Groups.create(group_info);
