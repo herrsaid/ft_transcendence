@@ -17,7 +17,7 @@ export function StartRoom(router: any,toast:any,GameContext:GameContextType)
     if(newGameInfo.Online === 1)
     {
         InGame.IL = true;
-        if(notification)
+        if(notification && InGame.RM === false)
         {
             notification.style.opacity = "0";
             notification.style.display = "none";

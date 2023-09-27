@@ -21,10 +21,13 @@ import UserContext from "@/app/(root)/UserContext";
 import { GetGameInfoContext, GameContextType, GameInfoType } from '../../GameContext/GameContext';
 import { player1,player2 } from "../../Online/Socket/start_game_socket";
 import { socket } from '../../Online/Socket/auto_match_socket';
+import { InGame } from '@/app/(root)/Components/Notification/Notification';
+import { useToast } from '@chakra-ui/react';
 
 let newGameInfo:GameInfoType;
 let access:boolean = false; 
-function JoinToRoom(Room: number, router: AppRouterInstance,GameContext:GameContextType)
+
+function JoinToRoom(Room: number, router: AppRouterInstance,GameContext:GameContextType,toast:any)
 {
   // console.log("button-pressed");
   let roomNumber = Room+1;
@@ -54,13 +57,13 @@ function JoinToRoom(Room: number, router: AppRouterInstance,GameContext:GameCont
       router.replace(`/Game/Online/Play`);
     }
   });
-  // socket.on('JoinRefused',(data: string)=>
-  // {
-    // if(access)
-    //   console.log(data);
-  // });
+  socket.on('JoinRefused',(data: string)=>
+  {
+    if(access)
+      toast({title: 'Error',description: data,position: 'top-right',status: 'error',duration: 5000,isClosable: true,});
+  });
 }
-async function  GetNumberOfRooms(router: AppRouterInstance,GameContext:GameContextType)
+async function  GetNumberOfRooms(router: AppRouterInstance,GameContext:GameContextType,toast:any)
 {
   socket.emit('GetRooms');
   await socket.on('GetRooms',(Room: number)=>
@@ -83,7 +86,18 @@ async function  GetNumberOfRooms(router: AppRouterInstance,GameContext:GameConte
           element_btn.innerHTML = '<p>Join</p>';
           element.setAttribute("class",`Room`);
           element_btn.setAttribute("id",`Join`);
-          element_btn.onclick= ()=>{JoinToRoom(a,router,GameContext)};
+          element_btn.onclick= ()=>
+          {
+            // InGame
+            if(InGame.IG === false && InGame.IL === false)
+            {
+              JoinToRoom(a,router,GameContext,toast);
+            }
+            else
+            {
+              toast({title: 'Error',description: "complete your match first",position: 'top-right',status: 'error',duration: 5000,isClosable: true,});
+            }
+          };
           element.appendChild(element_btn);
           Rooms.appendChild(element);
         }
@@ -96,6 +110,7 @@ export default function Rooms() {
   const GameContext = GetGameInfoContext();
   const contexUser = useContext(UserContext);
   const router: AppRouterInstance = useRouter();
+  const toast = useToast();
   useEffect(()=>
   {
     let BottomNav:HTMLElement| null = document.getElementById('BottomNav');
@@ -140,7 +155,7 @@ export default function Rooms() {
   },[]);
   useEffect(()=>
   {
-    let interval: NodeJS.Timer  = setInterval(()=>{GetNumberOfRooms(router,GameContext);},1000); 
+    let interval: NodeJS.Timer  = setInterval(()=>{GetNumberOfRooms(router,GameContext,toast);},1000); 
     access = true;
     return ()=> 
     {

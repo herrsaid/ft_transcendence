@@ -1,4 +1,4 @@
-FROM node:14
+FROM node:latest
 
 WORKDIR /usr/src/app
 
@@ -7,14 +7,18 @@ RUN npm install
 
 COPY . .
 
+EXPOSE 3000
+ 
 RUN npm run build
 
-FROM nginx:alpine
+# FROM nginx:alpine
 
-COPY --from=0 /usr/src/app/out /usr/share/nginx/html
+# COPY --from=0 /usr/src/app/out /usr/share/nginx/html
 
-EXPOSE 80
+# EXPOSE 80
 
 
-CMD ["nginx", "-g", "daemon off;"]
+# CMD ["nginx", "-g", "daemon off;"]
+
+CMD [ "npm", "run", "dev" ]
 
