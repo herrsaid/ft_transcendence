@@ -136,7 +136,7 @@ export class GroupsController {
                 return 'deleted'
             }
             else 
-                return 'not deleted';
+                throw new UnauthorizedException();
         }
         @UseGuards(AuthGuard)
         @Get('mute')
@@ -150,7 +150,7 @@ export class GroupsController {
                 return 'muted'
             }
             else 
-                return 'not muted';
+                throw new UnauthorizedException();
         }
         @UseGuards(AuthGuard)
         @Get('ban')
@@ -176,6 +176,6 @@ export class GroupsController {
                 this.GroupUsersService.new(params.id, params.new)
             }
             else 
-                throw NotAcceptableException;
+                throw new UnauthorizedException();
         }
 }

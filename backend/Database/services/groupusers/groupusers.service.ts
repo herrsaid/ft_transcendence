@@ -48,7 +48,17 @@ export class GroupusersService {
         // const group = await this.GroupsService.findOne(group_id);
         const spes = groupusers.find(data => (data.group.id == group_id && data.user.id == user_id));
         // check to leaver is owner if set another owner
-        this.GroupUsers.delete({id:spes.id});
+        if (spes.role == "owner")
+        {
+            var newowner = groupusers.find(data => (data.role == "user" && data.group.id == group_id))
+            if(!newowner)
+                newowner = groupusers.find(data => (data.role == "user" && data.group.id == group_id))
+            newowner.role = "owner"
+            this.GroupUsers.delete({id:spes.id});
+        }
+        else
+            this.GroupUsers.delete({id:spes.id});
+        // this.GroupUsers.delete({id:spes.id});
         // group.size = group.size - 1;
         // this.GroupsService.save(group);
     }
