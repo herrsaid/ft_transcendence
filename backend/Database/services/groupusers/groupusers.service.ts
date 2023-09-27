@@ -126,7 +126,7 @@ export class GroupusersService {
 
             const groupusers = await this.GroupUsers.find({relations: ["group", "user"]})
             const spes = groupusers.find((data) => (data.group.id == group_id && data.user.id == user_id));
-            return spes.status;
+            return {status:spes.status};
         }
         catch
         {

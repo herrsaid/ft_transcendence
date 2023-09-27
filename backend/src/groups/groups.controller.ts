@@ -186,7 +186,6 @@ export class GroupsController {
             const user_id = request['user'].id;
             try {
                 const status = await this.GroupUsersService.status(user_id, params.id)
-                console.log('iam here', status)
                 return status;
             } catch {
                 throw new UnauthorizedException();
