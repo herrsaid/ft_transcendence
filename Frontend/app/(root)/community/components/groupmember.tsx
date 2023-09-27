@@ -83,11 +83,6 @@ export default function Groupmember({data}:any)
                 {
                     (click) &&
                     <div className='bg-[#18184a] flex flex-col absolute transform translate-x-[-50%] translate-y-[-50%] top-[50%] left-[50%] p-4 rounded-lg'>
-                        <div>
-                            <Button onClick={()=>setActions(!action)} className='m-1' colorScheme='teal' variant='outline'>Actions</Button>
-                            <Button onClick={()=>setActions(!action)} className='m-1' colorScheme='teal' variant='outline'>Add</Button>
-                        </div>
-                        {action && 
                             <div>
                                 <form className='flex' onSubmit={submitmute}>
                                     <Input variant='outline' placeholder='Time' type="number"  min="1" max="5" />
@@ -99,17 +94,6 @@ export default function Groupmember({data}:any)
                                     <Button className='m-1' onClick={addAdmin} colorScheme='green' variant='outline'>Add as Admin</Button>
                                 </div>
                             </div>
-                        }
-                        {
-                            !action &&
-                            <div>
-                                <form className='flex' onSubmit={()=>{}}>
-                                <Input variant='outline' placeholder='username' type="string" />
-                                <Button colorScheme='whatsapp' type="submit">add</Button>
-                                </form>
-                            </div>
-
-                        }
                         {/* <button onClick={handlekick} className='hover:bg-[#363672] w-full flex m-1'>kick</button>
                         <button onClick={handleban} className='hover:bg-[#363672] w-full flex m-1'>ban</button> */}
                     </div>

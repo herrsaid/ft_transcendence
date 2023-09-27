@@ -196,7 +196,10 @@ export class GroupsController {
         async addmember(@Req() request, @Query() params)
         {
             const user = await this.User.findOneByUsername(params.username);
+            if (!user)
+            throw new NotFoundException();
             const user_id = user.id;
+            console.log('user  dslkafldsf',user_id, params.username)
             try
             {
                 if (await this.GroupUsersService.isUserInGroup(user_id, params.id) == false)
@@ -210,12 +213,12 @@ export class GroupsController {
                     group.members.push(m);
                     group.size = group.size + 1;
                     this.GroupService.save(group);
-                    return 'created'
+                    return 'added'
                 }
             }
             catch(error)
             {
-                throw NotFoundException;
+                throw new NotFoundException();
             }
         }
 }

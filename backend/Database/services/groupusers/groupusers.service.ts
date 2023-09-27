@@ -1,13 +1,17 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException, forwardRef } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { InjectRepository } from '@nestjs/typeorm';
 import GroupUsers from 'Database/entity/GroupUsers.entity';
-import { GroupsService } from '../groups/groups.service';
+import { GroupsService } from 'Database/services/groups/groups.service';
 
 @Injectable()
 export class GroupusersService {
-    constructor(@InjectRepository(GroupUsers) private GroupUsers,
-    private eventEmitter:EventEmitter2){}
+    constructor(
+        @InjectRepository(GroupUsers) private GroupUsers,
+        private eventEmitter:EventEmitter2,
+        @Inject(forwardRef(() => GroupsService)) 
+        private Group: GroupsService
+        ){}
     async create(groupuser:GroupUsers)
     {
         const groupuser_info = this.GroupUsers.create(groupuser);
@@ -45,15 +49,16 @@ export class GroupusersService {
     async remove(user_id:number, group_id:number)
     {
         const groupusers = await this.GroupUsers.find({relations: ["group", "user"]})
-        // const group = await this.GroupsService.findOne(group_id);
+        const group = await this.Group.findOne(group_id);
         const spes = groupusers.find(data => (data.group.id == group_id && data.user.id == user_id));
         // check to leaver is owner if set another owner
-        if (spes.role == "owner")
+        if (spes.role == "owner" && group.members.length > 1)
         {
-            var newowner = groupusers.find(data => (data.role == "user" && data.group.id == group_id))
+            var newowner = groupusers.find(data => (data.role == "admin" && data.group.id == group_id))
             if(!newowner)
                 newowner = groupusers.find(data => (data.role == "user" && data.group.id == group_id))
-            newowner.role = "owner"
+            if(newowner)
+                newowner.role = "owner"
             this.GroupUsers.delete({id:spes.id});
         }
         else
@@ -61,7 +66,7 @@ export class GroupusersService {
             this.GroupUsers.delete({id:spes.id});
         }
         // this.GroupUsers.delete({id:spes.id});
-        // group.size = group.size - 1;
+        group.size = group.size - 1;
         // this.GroupsService.save(group);
     }
     async is_admin(user_id:number, group_id:number)

@@ -5,11 +5,53 @@ import Cookies from 'js-cookie';
 import UserContext from '../../UserContext';
 import Friend from './friends';
 import Groupmember from './groupmember';
+import { Button, Input, useToast } from '@chakra-ui/react';
 export default function Groupinfo()
 {
     const reciver = useContext(reciverContext);
     const user = useContext(UserContext)
     const [members, setMembers] = useState([]);
+    const [add, setAdd] = useState(false);
+    const toast = useToast();
+    const adduser =  async (e:any)=>{
+        e.preventDefault();
+        const input:any = document.getElementById('username');
+        if (input.value)
+        {
+            const res =  fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/addmember?id=${reciver.reciver.id}&username=${input.value}`,
+                {
+                    method: 'GET',
+                    headers:{
+                        Authorization: `Bearer ${Cookies.get('access_token')}`
+                    }
+                })
+            res.then(data =>{
+                if (data.status == 404)
+                {
+                    toast({
+                        title: 'error',
+                        description: "user Not Found",
+                        position: 'top-right',
+                        status: 'error',
+                        duration: 6000,
+                        isClosable: true,
+                      })
+                }
+                else
+                {
+                    toast({
+                        title: 'Great',
+                        description: "user Added",
+                        position: 'top-right',
+                        status: 'info',
+                        duration: 6000,
+                        isClosable: true,
+                      })
+                      setAdd(!add);
+                }
+            })
+        }
+    }
     useEffect(()=>{
         fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/members?id=${reciver.reciver.id}`,
         {
@@ -55,9 +97,18 @@ export default function Groupinfo()
                         }
                 </div>
                 <div className='self-center'>
-                    <button onClick={leave} className='bg-red-600 hover:bg-red-500 p-2 mb-1 rounded-full'>Leave</button>
+                    <Button onClick={leave} colorScheme='red' type="submit">leave</Button>
+                    <Button onClick={() => setAdd(true)} colorScheme='whatsapp' type="submit">Add</Button>
                 </div>
             </div>
+            {
+                add && <div className='bg-[#18184a] flex flex-col absolute transform translate-x-[-50%] translate-y-[-50%] top-[50%] left-[50%] p-4 rounded-lg'>
+                    <form className='flex' onSubmit={adduser}>
+                        <Input id='username' variant='outline' placeholder='username' type="string" />
+                        <Button onClick={adduser} colorScheme='whatsapp' type="submit">add</Button>
+                    </form>
+                </div>
+            }
         </div>
     )
 }
