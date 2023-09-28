@@ -52,7 +52,7 @@ export class AuthController {
 
     }
     catch{
-      throw new BadRequestException();
+      console.log('error');
     }
 
   }

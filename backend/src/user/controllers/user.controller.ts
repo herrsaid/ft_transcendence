@@ -1,14 +1,13 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
 import { BadRequestException, Body, Controller, FileTypeValidator, Get, MaxFileSizeValidator, NotFoundException, Param, ParseFilePipe, Post, Put, Query, Req, Request, Res, UnauthorizedException, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
-import { CreateUserDto, filterUsersdto, updateUsername } from '../dto/createUserDto';
+import { CreateUserDto, updateUsername } from '../dto/createUserDto';
 import { UserService } from '../services/user.service';
 import { AuthGuard } from 'src/auth/guard/auth.guard';
 import { JwtService } from '@nestjs/jwt';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
-import { Observable } from 'rxjs';
-import { FriendRequestStatus, FriendRequest_Interface } from 'src/entities/friend/interfaces/friend-request.interface';
+import { FriendRequestStatus} from 'src/entities/friend/interfaces/friend-request.interface';
 import { join } from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { HistoryManager } from 'src/game/data_manager/HistoryManager';
@@ -26,10 +25,6 @@ export class UserController {
     {}
     
     
-
-
-
-
 
     @UseGuards(AuthGuard)
     @Get('search')
@@ -312,7 +307,7 @@ export class UserController {
             return this.userService.updateUsername(req.user.id, updateUsername);
         }
         catch{
-            throw new BadRequestException();
+            throw new UnauthorizedException();
         }
         
     }
@@ -325,7 +320,7 @@ export class UserController {
             return this.userService.findOne(id);
         }
         catch{
-            throw new BadRequestException();
+            throw new UnauthorizedException();
         }
     }
 
@@ -337,7 +332,7 @@ export class UserController {
             return this.userService.create(CreateUserDto);
         }
         catch{
-            throw new BadRequestException();
+            throw new UnauthorizedException();
         }
     }
 
@@ -353,7 +348,7 @@ export class UserController {
             return this.HistoryManager.GetAllHistorysByUsername(req.user.id);
         }
         catch{
-            throw new BadRequestException();
+            throw new UnauthorizedException();
         }
         
     }
@@ -367,7 +362,7 @@ export class UserController {
             return this.HistoryManager.GetAllHistorysByUsername(id);
         }
         catch{
-            throw new BadRequestException();
+            throw new UnauthorizedException();
         }
         
     }
@@ -383,7 +378,7 @@ export class UserController {
             return this.GameInfoManager.GetGameInfoByUsername(req.user.id);
         }
         catch{
-            throw new BadRequestException();
+            throw new UnauthorizedException();
         }
         
     }
@@ -398,7 +393,7 @@ export class UserController {
             return this.GameInfoManager.GetGameInfoByUsername(id);
         }
         catch{
-            throw new BadRequestException();
+            throw new UnauthorizedException();
         }
        
     }
@@ -414,7 +409,7 @@ export class UserController {
             return await this.GameInfoManager.GetRankByUserId(req.user.id);
         }
         catch{
-            throw new BadRequestException();
+            throw new UnauthorizedException();
         }
         
     }
@@ -429,7 +424,7 @@ export class UserController {
             return this.GameInfoManager.GetRankByUserId(id);
         }
         catch{
-            throw new BadRequestException();
+            throw new UnauthorizedException();
         }
         
     }
@@ -445,7 +440,7 @@ export class UserController {
             return this.ArchievementManager.GetAllUserArchievementByUsername(req.user.id);
         }
         catch{
-            throw new BadRequestException();
+            throw new UnauthorizedException();
         }
         
     }
@@ -460,7 +455,7 @@ export class UserController {
             return this.ArchievementManager.GetAllUserArchievementByUsername(id);
         }
         catch{
-            throw new BadRequestException();
+            throw new UnauthorizedException();
         }
         
     }

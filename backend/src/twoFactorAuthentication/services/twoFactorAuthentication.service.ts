@@ -27,7 +27,7 @@ export class TwoFactorAuthenticationService {
           }
       }
       catch{
-        throw new BadRequestException();
+        console.log('error in twofactor generate')
       }
   }
 
@@ -38,7 +38,7 @@ export class TwoFactorAuthenticationService {
       return toFileStream(stream, otpauthUrl);
     }
     catch{
-      throw new BadRequestException();
+      console.log('error in twofactor')
     }
       
   }
@@ -54,7 +54,7 @@ export class TwoFactorAuthenticationService {
 
     }
     catch{
-      throw new BadRequestException();
+      console.log('error in twofactor virify')
     }
 
   }
