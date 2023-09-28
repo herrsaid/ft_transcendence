@@ -67,7 +67,7 @@ import { AuthenticationService } from '../services/authentication.service';
 
     }
     catch{
-      throw new BadRequestException();
+      console.log('error in twofactor')
     }
      
   }
@@ -95,7 +95,7 @@ import { AuthenticationService } from '../services/authentication.service';
 
     }
     catch{
-      throw new BadRequestException();
+      console.log('error in twofactor');
     }
      
   }
@@ -123,7 +123,7 @@ import { AuthenticationService } from '../services/authentication.service';
       return {"twofactortoken":accessTokenCookie}
     }
     catch{
-      throw new BadRequestException();
+      console.log('error in twofactor')
     }
   }
     

@@ -65,7 +65,7 @@ export class AuthStrategy extends PassportStrategy(Strategy, '42') {
 
     }
     catch{
-      throw new BadRequestException();
+      console.log('error')
     }
 
   }

@@ -70,7 +70,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google')
 
        }
        catch{
-            throw new BadRequestException();
+            console.log('error');
        }    
         
     }

@@ -51,7 +51,7 @@ export class GoogleAuthController {
       }
       }
       catch{
-        throw new BadRequestException();
+        console.log('error')
       }
     
     

@@ -21,6 +21,11 @@ services:
       dockerfile: Dockerfile
     ports:
       - "1337:1337"
+      - "3030:3030"
+      - "1339:1339"
+      - "1340:1340"
+      - "1341:1341"
+      - "1342:1342"
     depends_on:
       - db
     env_file:
@@ -33,8 +38,8 @@ services:
   db:
     image: postgres
     restart: always
-    # volumes:
-    #   - ./data/db:/var/lib/postgresql/data
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
     ports:
       - 5432:5432
     environment:
@@ -50,16 +55,6 @@ services:
       - 8080:8080
     networks:
       - my_net
-  # nginx:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   ports:
-  #     - "80:80"
-  #   depends_on:
-  #     - nextjs-app
-  #   networks:
-  #     - my_net
   
 networks:
     my_net:
