@@ -43,6 +43,7 @@ function JoinToRoom(Room: number, router: AppRouterInstance,GameContext:GameCont
         newGameInfo.enemmyusername = username;
         newGameInfo.enemmyimage = playerimg;
         newGameInfo.host = data;
+        
       }
     });
     socket.on('JoinAccepted',(speed:number,points: number)=>
@@ -97,6 +98,13 @@ async function  GetNumberOfRooms(router: AppRouterInstance,GameContext:GameConte
               // InGame
               if(InGame.IG === false && InGame.IL === false)
               {
+
+
+
+
+
+
+
                 JoinToRoom(a,router,GameContext,toast);
               }
               else

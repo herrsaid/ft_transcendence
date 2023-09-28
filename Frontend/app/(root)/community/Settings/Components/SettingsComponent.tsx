@@ -45,18 +45,17 @@ const Settings = () =>
     return(
         <div id="GameInviter" className=" absolute top-[10%] left-1/2 transform -translate-x-1/2 my-auto">
             <div id= "Settings" className="container mx-auto px-2 py-[20px] text-center items-center pb-40">
-                <div className=" bgtet h-[500px] md:h-[600px] lg:h-[700px] w-[400px] md:w-[500px] lg:w-[600px] mx-auto rounded-lg shadow-2xl py-[20px] ">
-                    <button onClick={() => {Back()}} id="Back" className="absolute  h-[40px] w-[40px] top-[25px] right-[15px] text-xl md:text-2xl lg:text-3xl font-semibold text-white-500 bg-indigo-700 hover:bg-indigo-500 rounded-[25px] shadow-2xl shadow-indigo-700 hover:shadow-indigo-500 ">
+                <div className=" bgtet h-[400px] md:h-[500px] lg:h-[600px] w-[400px] md:w-[500px] lg:w-[600px] mx-auto rounded-md shadow-xl py-[10px] ">
+                    <button onClick={() => {Back()}} id="Back" className="absolute  h-[40px] w-[40px] top-[25px] right-[15px] text-xl md:text-xl lg:text-xl font-semibold text-white-500 bg-indigo-700 hover:bg-indigo-500 rounded-[50%] shadow-xl shadow-indigo-700 hover:shadow-indigo-500 ">
                         <p>
                             x
                         </p>
                     </button>
-                    <p className="text-xl md:text-2xl lg:text-3xl font-semibold text-white-500">
+                    <p className="text-xl md:text-2xl lg:text-2xl font-semibold text-white-500">
                         PingPong
                     </p>
                     <Speed/>
                     <Points/>
-                    {/* <Form/> */}
                     <Invite router={router} toast={toast} GameContext={GameContext} username={username}/>
                 </div>
             </div>

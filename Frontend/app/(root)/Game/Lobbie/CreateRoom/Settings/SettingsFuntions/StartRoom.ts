@@ -2,18 +2,74 @@ import { newGameInfo,access } from '../Settings';
 import { socket } from '../../../../Online/Socket/auto_match_socket'
 import { GameContextType } from '../../../../GameContext/GameContext';
 import { InGame } from '@/app/(root)/Components/Notification/Notification';
+import Cookies from 'js-cookie';
+import { stat } from 'fs';
 
-export function StartRoom(router: any,toast:any,GameContext:GameContextType)
+export async function StartRoom(router: any,toast:any,GameContext:GameContextType)
 {
     try
     {
+        const getusernameid = async (url:string) => {
+                const res = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        Authorization: `Bearer ${Cookies.get('access_token')}`
+                     }});
+                if (res.status != 200)
+                {
+                    toast({
+                        title: 'Error',
+                        description: "error: this user not found",
+                        position: 'top-right',
+                        status: 'error',
+                        duration: 5000,
+                        isClosable: true,
+                      });
+                      return;
+                }
+          
+                return res.json();
+        }
+        const fetchFriendStatus = async (url:string) => {
+            const res = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    Authorization: `Bearer ${Cookies.get('access_token')}`
+                 }});
+      
+            return res.json();
+        }
         const notification:HTMLElement| null = document.getElementById('notification');
         const settings = document.getElementById("Settings");
         const loading = document.getElementById("wifi-loader");
         const input_elem:any = document.getElementById("input_val");
         let input_value:String = ''; 
-        if (input_elem)
-            input_value = input_elem.value;
+        input_value = input_elem.value;
+        if (input_value && !!newGameInfo.RoomMood == false)
+        {
+            const user = await getusernameid(`${process.env.NEXT_PUBLIC_BACK_IP}/user/${input_value}`)
+            if (user)
+            {
+                const status = await fetchFriendStatus(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/status/${user.id}`);
+                if (status)
+                {
+                    if (status.status == "waiting-for-unblock" || status.status == "blocked")
+                    {
+                        toast({
+                            title: 'Error',
+                            description: "error: you can't send invite to this user",
+                            position: 'top-right',
+                            status: 'error',
+                            duration: 5000,
+                            isClosable: true,
+                          });
+                          return;
+                    }
+                }
+            }
+        }
+
+
         newGameInfo.myusername = GameContext.GameInfo.myusername;
         newGameInfo.myimage = GameContext.GameInfo.myimage;
         if(newGameInfo.Online === 1)

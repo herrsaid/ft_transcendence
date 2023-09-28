@@ -14,10 +14,10 @@ const PauseGame_RoomMood = ({ router }: any) =>
                     Bot
                 </p>
             </button>
-            <form  id="invite">
+            <div  id="invite">
                 <input id= "input_val" type='text' placeholder="invite user..." className=" absolute h-[30px] w-[150px] left-[45%] bg-indigo-500 rounded-md text-center ">
                 </input>
-            </form>
+            </div>
             <button onClick={()=> GetOtherTools_Invite(1)} id="other_tools_1" className="relative flex w-[60px] h-[30px] left-[22.5%] top-[0px] md:left-[30%] lg:left-[33%] bottom-[12.5px] text-white-500 rounded-lg shadow-2xl bg-indigo-700">
                 <p className="mx-auto my-auto">
                 2P

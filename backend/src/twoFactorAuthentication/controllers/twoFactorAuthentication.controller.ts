@@ -67,7 +67,7 @@ import { AuthenticationService } from '../services/authentication.service';
 
     }
     catch{
-      console.log('error in twofactor')
+      throw new UnauthorizedException();
     }
      
   }
@@ -95,7 +95,7 @@ import { AuthenticationService } from '../services/authentication.service';
 
     }
     catch{
-      console.log('error in twofactor');
+      throw new UnauthorizedException();
     }
      
   }
@@ -123,7 +123,7 @@ import { AuthenticationService } from '../services/authentication.service';
       return {"twofactortoken":accessTokenCookie}
     }
     catch{
-      console.log('error in twofactor')
+      throw new UnauthorizedException();
     }
   }
     

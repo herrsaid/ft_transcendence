@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { authenticator } from 'otplib';
 import { ConfigService } from '@nestjs/config';
 import { UserService } from 'src/user/services/user.service';
@@ -27,7 +27,7 @@ export class TwoFactorAuthenticationService {
           }
       }
       catch{
-        console.log('error in twofactor generate')
+        throw new UnauthorizedException();
       }
   }
 
@@ -38,7 +38,7 @@ export class TwoFactorAuthenticationService {
       return toFileStream(stream, otpauthUrl);
     }
     catch{
-      console.log('error in twofactor')
+      throw new UnauthorizedException();
     }
       
   }
@@ -54,7 +54,7 @@ export class TwoFactorAuthenticationService {
 
     }
     catch{
-      console.log('error in twofactor virify')
+      throw new UnauthorizedException();
     }
 
   }

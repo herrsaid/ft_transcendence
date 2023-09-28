@@ -33,7 +33,7 @@ export class GameDataType
     {
         this.GameWidth = 800;
         this.GameHeight = 400;
-        this.GameSpeed = 4;
+        this.GameSpeed = 8;
         this.BallWidth = 15;
         this.BallHeight = 15;
         this.BallXpos = 400;

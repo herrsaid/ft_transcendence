@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDto, updateAvatar, updateAvatar_bol, updateGameStatus, updateImage, updateStatus, updateUsername } from '../dto/createUserDto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/entities/user/user.entity';
@@ -27,7 +27,7 @@ export class UserService {
                 return this.userRepo.createQueryBuilder(alias);
         }
         catch{
-            console.log("not found");
+            throw new UnauthorizedException();
         }
         
     }
@@ -41,7 +41,7 @@ export class UserService {
         }
         catch
         {
-            console.log("error");
+            throw new UnauthorizedException();
         }
         
     }
@@ -58,7 +58,7 @@ export class UserService {
             }
         }
         catch{
-            console.log("error") 
+            throw new UnauthorizedException(); 
         }
         
     }
@@ -75,7 +75,7 @@ export class UserService {
             }
         }
         catch{
-            console.log("error") 
+            throw new UnauthorizedException();
         }
         
     }
@@ -88,7 +88,7 @@ export class UserService {
         }
         catch
         {
-            console.log('error')
+            throw new UnauthorizedException();
         }
         
     }
@@ -102,7 +102,7 @@ export class UserService {
         }
         catch
         {
-            console.log('error');
+            throw new UnauthorizedException();
         }
         
     }
@@ -117,7 +117,7 @@ export class UserService {
         }
         catch
         {
-            console.log('error');
+            throw new UnauthorizedException();
         }
         
     }
@@ -131,7 +131,7 @@ export class UserService {
         }
         catch
         {
-            console.log('error')
+            throw new UnauthorizedException();
         }
         
     }
@@ -145,7 +145,7 @@ export class UserService {
                 return await this.userRepo.findOne({where:{email:email}})
         }
         catch{
-            console.log("error")
+            throw new UnauthorizedException();
         }
     }
 
@@ -158,7 +158,7 @@ export class UserService {
                 return await this.userRepo.save(user);
         }
         catch{
-            console.log('error')
+            throw new UnauthorizedException();
         }
     }
 
@@ -175,7 +175,7 @@ export class UserService {
             }
         }
         catch{
-            console.log('error')
+            throw new UnauthorizedException();
         }
     }
 
@@ -195,7 +195,7 @@ export class UserService {
             }
         }
         catch{
-            console.log('error')
+            throw new UnauthorizedException();
         }
         
     }
@@ -217,7 +217,7 @@ export class UserService {
             }
         }
         catch{
-            console.log('error')
+            throw new UnauthorizedException();
         }
         
     }
@@ -237,7 +237,7 @@ export class UserService {
         }
         catch
         {
-            console.log('error')
+            throw new UnauthorizedException();
         }        
     }
 
@@ -258,7 +258,7 @@ export class UserService {
         }
         catch
         {
-            console.log('error')
+            throw new UnauthorizedException();
         }        
     }
 
@@ -281,7 +281,7 @@ export class UserService {
 
         }
         catch{
-            console.log('error')
+            throw new UnauthorizedException();
         }
     }
 
@@ -315,7 +315,7 @@ export class UserService {
 
         }
         catch{
-            console.log('error')
+            throw new UnauthorizedException();
         }
         
     }
@@ -362,7 +362,7 @@ export class UserService {
 
         }
         catch{
-            console.log('error')
+            throw new UnauthorizedException();
         }
     }
 
@@ -398,7 +398,7 @@ export class UserService {
 
         }
         catch{
-            console.log('error')
+            throw new UnauthorizedException();
         }
         
     }
@@ -441,7 +441,7 @@ export class UserService {
 
         }
         catch{
-           console.log('error')
+            throw new UnauthorizedException();
         }
     }
 
@@ -456,7 +456,7 @@ export class UserService {
             }))
         }
         catch{
-            console.log('error')
+            throw new UnauthorizedException();
         }
     }
 
@@ -475,7 +475,7 @@ export class UserService {
 
         }
         catch{
-            console.log('error')
+            throw new UnauthorizedException();
         }
     }
 
@@ -495,7 +495,7 @@ export class UserService {
 
         }
         catch{
-            console.log('error')
+            throw new UnauthorizedException();
         }
     }
 
@@ -513,7 +513,7 @@ export class UserService {
         }
         catch
         {
-            console.log('error')
+            throw new UnauthorizedException();
         }
         
     }
@@ -537,7 +537,7 @@ export class UserService {
             return users;
         }
         catch{
-            console.log('error')
+            throw new UnauthorizedException();
         }
       }
 
@@ -555,7 +555,7 @@ export class UserService {
         }
         catch
         {
-            console.log('FriendRequest with not found')
+            throw new UnauthorizedException();
         }
         
       }
@@ -568,7 +568,7 @@ export class UserService {
                 console.log(user.groupusers[0].id)
         }
         catch{
-            console.log('error')
+            throw new UnauthorizedException();
         }
       }
 
@@ -588,7 +588,7 @@ export class UserService {
 
         }
         catch{
-            console.log('error in the file')
+            throw new UnauthorizedException();
         }
       }
 

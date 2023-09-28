@@ -45,7 +45,7 @@ const PingPongSettings = ({ router }: any) =>
             socket.emit('conection_closed');
             newGameInfo = {
                 Points: 10,
-                Speed: 4,
+                Speed: 8,
                 pause_game: 1,
                 RoomMood: 1,
                 other_tools: 0,
