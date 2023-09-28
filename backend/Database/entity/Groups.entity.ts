@@ -1,10 +1,9 @@
 
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn, ManyToMany, JoinTable, OneToOne, Admin, Unique } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany} from "typeorm";
 import { Messages } from "./Message.entity";
 import GroupUsers from "./GroupUsers.entity";
 
 @Entity()
-@Unique(['name'])
 export default class Groups{
     @PrimaryGeneratedColumn()
     id: number;
@@ -14,7 +13,7 @@ export default class Groups{
     password:string = null;
     @Column()
     size:number = 0
-    @Column()
+    @Column({unique: true, nullable: false})
     name:string
     @OneToMany(() => Messages, (messages) => messages.group)
     messages: Messages[]

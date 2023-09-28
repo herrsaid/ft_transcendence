@@ -14,8 +14,15 @@ export class GroupusersService {
         ){}
     async create(groupuser:GroupUsers)
     {
-        const groupuser_info = this.GroupUsers.create(groupuser);
-        return this.GroupUsers.save(groupuser_info);
+        try
+        {
+            const groupuser_info = this.GroupUsers.create(groupuser);
+            return this.GroupUsers.save(groupuser_info);
+        }
+        catch
+        {
+            throw new NotFoundException();
+        }
     }
     async findeOne(id:number)
     {
