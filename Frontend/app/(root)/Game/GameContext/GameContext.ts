@@ -21,7 +21,7 @@ export class GameInfoType
   constructor()
   {
     this.Points = 10;
-    this.Speed = 4;
+    this.Speed = 8;
     this.pause_game = 0;
     this.RoomMood = 1;
     this.other_tools = 0;

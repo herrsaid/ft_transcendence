@@ -28,7 +28,7 @@ const Settings = ({ router }: any) =>
                 <OtherTools_Invite/>
                 <PauseGame_RoomMood/>
             </div>
-            <button onClick={() => {StartRoom(router,toast,GameContext)}} id="play" className="relative  h-[40px] md:h-[50px] lg:h-[60px] w-[80px] md:w-[100px] lg:w-[120px] text-xl md:text-2xl lg:text-3xl font-semibold text-white-500 bg-blue-500 hover:bg-blue-600 mt-[50px] md:mt-[75px] lg:mt-[100px] rounded-lg shadow-2xl shadow-blue-500 hover:shadow-blue-600 ">
+            <button onClick={() => {StartRoom(router,toast,GameContext)}} id="play" className="relative  h-[20px] md:h-[40px] lg:h-[40px] w-[40px] md:w-[80px] lg:w-[80px] text-xl md:text-xl lg:text-2xl font-semibold text-white-500 bg-blue-500 hover:bg-blue-600 mt-[30px] md:mt-[50px] lg:mt-[50px] rounded-md shadow-xl shadow-blue-500 hover:shadow-blue-600 ">
                 <p>
                     Play
                 </p>

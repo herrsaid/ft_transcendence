@@ -39,7 +39,7 @@ export default  function Profile()
           })
           return
       
-    }
+        }
        
         if (username_updated.trim() == "" || username_updated.trim().length < 2 || username_updated.includes(' '))
         {
@@ -61,6 +61,7 @@ export default  function Profile()
               },
           body: JSON.stringify({ username: username_updated })
       });
+      
       if (!res.ok)
       {
         toast({

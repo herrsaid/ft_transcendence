@@ -6,7 +6,7 @@ const Points = () =>
 {
     return(
         <div className="relative flex h-[30px] top-[100px] md:top-[150px] lg:top-[150px]">
-            <p className="relative flex left-[10%] bottom-[5px] text-xl md:text-2xl lg:text-3xl font-semibold text-white-500">
+            <p className="relative flex left-[10%] bottom-[5px] text-xl md:text-xl lg:text-2xl font-semibold text-white-500">
                 Points :
             </p>
             <div className="relative flex my-auto bottom-[5px]  mx-auto h-[2px] w-[200px] md:w-[250px] lg:w-[300px]">
