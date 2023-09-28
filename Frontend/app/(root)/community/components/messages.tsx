@@ -46,27 +46,47 @@ export default function Messages()
         if(element)
             element.scrollTop = element.scrollHeight;
    }
+   useEffect(() => {
+    socket.on('message', (data:any) =>{
+        audio.play();
+        if(!data.toGroup)
+        {
+            // const id = data.id
+            // if (!messages.find((data:any) => (data.id == id)))
+            // setMessages((old:any) => [...old, {src:data.src, dst:data.dst,content:data.content}])
+            setMessages((old:any) => [...old, data])
+        }
+        else
+        {
+            // const id = data.id
+            // if (!messages.find((data:any) => (data.id == id)))
+            // setGroupMessage((old:any) => [...old, {src:data.src, dst:data.dst,content:data.content}])
+            setGroupMessage((old:any) => [...old, data])
+        }
+    })
+    },[])
     useEffect(()=>{
        socket.on('status', (data) =>{
         if(data.action == "out" && data.user == user.user.id)
             reciver.setReciver({});
+        console.log('reciver', reciver.reciver, 'data.id', data.id)
+        if (data.action == 'new' && reciver.reciver.id == data.id)
+        {
+            fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/members?id=${reciver.reciver.id}`,
+            {
+                method: 'GET',
+                headers:{
+                    Authorization: `Bearer ${Cookies.get('access_token')}`
+                }
+            }).then((response) => response.json()).then(res => {
+                reciver.setReciver({...reciver.reciver,members:res})
+            });
+        }
        }) 
-    },[])
+    },[reciver.reciver.id])
     useEffect(()=> {
         scrollToBottom('scrollable');
     },[messages, groupMessage])
-    // useEffect(()=>{
-    //         const msginput:any = document.getElementById('message');
-    //         if (reciver.reciver.id)
-    //         {
-    //             if (muted.find((data:any)=> (reciver.reciver.id == data)) && reciver.reciver.isgroup)
-    //                 msginput.disabled = true;
-    //             else
-    //                 msginput.disabled = false;
-    //         }
-
-    // },[reciver.reciver.id,muted])
-    // fetch group messages
     useEffect(()=>{
         if(reciver.reciver.isgroup)
         {
@@ -94,26 +114,7 @@ export default function Messages()
             }
         }).then((response) => response.json()).then(data => setMessages(data))
     }, [])
-    //listening to message event on the socket
-    useEffect(() => {
-        socket.on('message', (data:any) =>{
-            audio.play();
-            if(!data.toGroup)
-            {
-                // const id = data.id
-                // if (!messages.find((data:any) => (data.id == id)))
-                // setMessages((old:any) => [...old, {src:data.src, dst:data.dst,content:data.content}])
-                setMessages((old:any) => [...old, data])
-            }
-            else
-            {
-                // const id = data.id
-                // if (!messages.find((data:any) => (data.id == id)))
-                // setGroupMessage((old:any) => [...old, {src:data.src, dst:data.dst,content:data.content}])
-                setGroupMessage((old:any) => [...old, data])
-            }
-        })
-    },[])
+
     const send = (e:any)=>{
         e.preventDefault();
         if (value != '')

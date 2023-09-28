@@ -20,6 +20,7 @@ export class GroupsService {
     ){}
     async create_group(group_info: Groups, id:number)
     {
+        console.log('created');
         const info = this.Groups.create(group_info);
         info.size = 1;
         const user = await this.user.findOne(id);
@@ -28,8 +29,8 @@ export class GroupsService {
         members.user = user;
         const m = await this.Members.create(members);
         info.members = [m];
-        this.Groups.save(info);
-        this.eventEmitter.emit('roomjoin',user.id);
+        await this.Groups.save(info);
+        // this.eventEmitter.emit('joinroom',{id:user.id});
     }
     findOne(groupId:number)
     {
@@ -56,13 +57,6 @@ export class GroupsService {
     {
         this.Groups.save(group);
     }
-    // async search(value:string) 
-    // {
-    //     return this.Groups.findBy({
-    //          name: Like(`%${value}%`),
-             
-    //     })
-    // }
     async search(value:string)
     {
         return this.Groups.find({where:[

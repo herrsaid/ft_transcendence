@@ -6,6 +6,7 @@ import UserContext from '../../UserContext';
 import { GiMute } from 'react-icons/gi';
 import Cookies from 'js-cookie';
 import { Button, Input } from '@chakra-ui/react';
+import { dividerClasses } from '@mui/material';
 
 export default function Groupmember({data}:any)
 {
@@ -51,7 +52,6 @@ export default function Groupmember({data}:any)
             }
         })
         setClick(!click);
-        setKick(!kick);
     }
     const submitmute = (e:any)=>{
         e.preventDefault();
@@ -76,7 +76,7 @@ export default function Groupmember({data}:any)
         <div className=" p-1 w-full flex justify-between hover:bg-sky-800">
             <div className="flex ">
                 <img className="w-10 h-10 rounded-full" src={data.user.avatar} alt="No image" />
-                <h1 className="p-1">{data.user.username}</h1>
+                <h1 className="p-1">{data.user.username} {<h6 className=' text-green-600 text-sm text-center border border-green-500 rounded-full'>{data.role}</h6>}</h1>
             </div>
             <div className='p-2'>
                 {(reciver.reciver.me != "user")&&<button onClick={() => setClick(!click)}><SlOptionsVertical/> </button>}
@@ -85,7 +85,7 @@ export default function Groupmember({data}:any)
                     <div className='bg-[#18184a] flex flex-col absolute transform translate-x-[-50%] translate-y-[-50%] top-[50%] left-[50%] p-4 rounded-lg'>
                             <div>
                                 <form className='flex' onSubmit={submitmute}>
-                                    <Input variant='outline' placeholder='Time' type="number"  min="1" max="5" />
+                                    <Input id='time' variant='outline' placeholder='Time' type="number"  min="1" max="5" />
                                     <Button onClick={submitmute} colorScheme='whatsapp' type="submit">mute</Button>
                                 </form>
                                 <div className='flex flex-col'>
@@ -97,19 +97,6 @@ export default function Groupmember({data}:any)
                         {/* <button onClick={handlekick} className='hover:bg-[#363672] w-full flex m-1'>kick</button>
                         <button onClick={handleban} className='hover:bg-[#363672] w-full flex m-1'>ban</button> */}
                     </div>
-                //     <div className='bg-[#18184a] absolute transform translate-x-[-50%] translate-y-[-50%] top-[50%] left-[50%] p-4 rounded-lg '>
-                //     <button onClick={handlemute} className='hover:bg-[#363672] w-full flex m-1'>mute</button>
-                //     {mute &&
-                //         <div>
-                //         <form onSubmit={submitmute}>
-                //             <input id='time' className='rounded-full bg-[#363672] p-1 mb-1' type="number" 
-                //             placeholder='time to mute' min="1" max="5"/>
-                //             <input className='bg-green-600 rounded-full p-1 m-1' type="submit" value="mute"/>
-                //         </form>
-                //         </div>}
-                //     <button onClick={handlekick} className='hover:bg-[#363672] w-full flex m-1'>kick</button>
-                //     <button onClick={handleban} className='hover:bg-[#363672] w-full flex m-1'>ban</button>
-                // </div>
                 }
             </div>
         </div>

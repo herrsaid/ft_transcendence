@@ -23,7 +23,8 @@ export class GroupsController {
             const user_id = request['user'];
             if (Group.type == 'protected')
                 Group.password = await hashPassword(Group.password);
-            const group  = this.GroupService.create_group(Group, user_id.id);
+            const group  = await  this.GroupService.create_group(Group, user_id.id);
+            this.eventEmitter.emit('joinroom', {id:user_id.id});
         }
         @UseGuards(AuthGuard)
         @Get('join')
@@ -43,6 +44,7 @@ export class GroupsController {
                     group.members.push(m);
                     group.size = group.size + 1;
                     this.GroupService.save(group);
+                    this.eventEmitter.emit('status', {id:group.id, action:"new"})
                     return 'created'
                 }
             }
@@ -70,6 +72,9 @@ export class GroupsController {
                         member.group = group;
                         const m = await this.GroupUsersService.create(member);
                         group.members.push(m);
+                        group.size = group.size + 1;
+                        this.GroupService.save(group);
+                        this.eventEmitter.emit('status', {id:group.id, action:"new"})
                     }
                     throw new UnauthorizedException();
                 }
@@ -120,8 +125,16 @@ export class GroupsController {
         @Get('leave')
         async leave(@Req() request, @Query() params)
         {
-            const user_id = request['user'].id;
-            this.GroupUsersService.remove(user_id, params.id)
+            try
+            {
+                const user_id = request['user'].id;
+                this.GroupUsersService.remove(user_id, params.id)
+                this.eventEmitter.emit('status', {id:params.id, action:"new"})
+            }
+            catch
+            {
+                throw new UnauthorizedException();
+            }
         }
         @UseGuards(AuthGuard)
         @Get('kick')
@@ -131,8 +144,8 @@ export class GroupsController {
             if((await this.GroupUsersService.is_admin(user_id, parmas.id)) != "user"
                 && (await this.GroupUsersService.is_admin(parmas.toremove, parmas.id)) != "owner")
             {
-                this.eventEmitter.emit('status', {user:parmas.toremove, action:"out"})
                 this.GroupUsersService.remove(parmas.toremove, parmas.id)
+                this.eventEmitter.emit('status', {user:parmas.toremove, action:"out"})
                 return 'deleted'
             }
             else 
@@ -143,6 +156,7 @@ export class GroupsController {
         async mute(@Req() request, @Query() parmas)
         {
             const user_id = request['user'].id;
+            console.log('time', parmas)
             if((await this.GroupUsersService.is_admin(user_id, parmas.id)) != "user"
                 && (await this.GroupUsersService.is_admin(parmas.tomute, parmas.id)) != "owner")
             {
@@ -156,11 +170,12 @@ export class GroupsController {
         @Get('ban')
         async ban(@Req() request, @Query() params)
         {
+            console.log('ban', params)
             const user_id = request['user'].id;
             if((await this.GroupUsersService.is_admin(user_id, params.id)) != "user"
                 && (await this.GroupUsersService.is_admin(params.toban, params.id)) != "owner")
             {
-                this.eventEmitter.emit('status', {user:params.to_ban, action:"out"})
+                this.eventEmitter.emit('status', {user:params.toban, action:"out"})
                 this.GroupUsersService.ban(params.id, params.toban)
             }
             else 
@@ -199,7 +214,6 @@ export class GroupsController {
             if (!user)
             throw new NotFoundException();
             const user_id = user.id;
-            console.log('user  dslkafldsf',user_id, params.username)
             try
             {
                 if (await this.GroupUsersService.isUserInGroup(user_id, params.id) == false)
@@ -220,5 +234,11 @@ export class GroupsController {
             {
                 throw new NotFoundException();
             }
+        }
+        @UseGuards(AuthGuard)
+        @Get('test')
+        async test ()
+        {
+            this.eventEmitter.emit('joinroom', {id:1})
         }
 }

@@ -91,7 +91,7 @@ export default function Info()
             {
                 ( data && data.status != 'waiting-for-unblock') && <div className='flex justify-between w-[90%] self-center p-1'>
                 {statusBtn}
-                <Button onClick={Display} colorScheme='whatsapp'>invite</Button>
+                <Button onClick={Display} colorScheme='Green'>invite</Button>
             </div>
             }
             {
