@@ -1,9 +1,10 @@
 
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn, ManyToMany, JoinTable, OneToOne, Admin } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany, JoinColumn, ManyToMany, JoinTable, OneToOne, Admin, Unique } from "typeorm";
 import { Messages } from "./Message.entity";
 import GroupUsers from "./GroupUsers.entity";
 
 @Entity()
+@Unique(['name'])
 export default class Groups{
     @PrimaryGeneratedColumn()
     id: number;

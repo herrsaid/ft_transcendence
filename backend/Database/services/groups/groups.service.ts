@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, Inject, forwardRef } from '@nestjs/common';
+import { Injectable, NotFoundException, Inject, forwardRef, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import Groups from 'Database/entity/Groups.entity';
 import { Messages } from 'Database/entity/Message.entity';
@@ -20,17 +20,23 @@ export class GroupsService {
     ){}
     async create_group(group_info: Groups, id:number)
     {
-        console.log('created');
-        const info = this.Groups.create(group_info);
-        info.size = 1;
-        const user = await this.user.findOne(id);
-        const members = new GroupUsers;
-        members.role = "owner";
-        members.user = user;
-        const m = await this.Members.create(members);
-        info.members = [m];
-        await this.Groups.save(info);
-        // this.eventEmitter.emit('joinroom',{id:user.id});
+        try
+        {
+            const info = this.Groups.create(group_info);
+            info.size = 1;
+            const user = await this.user.findOne(id);
+            const members = new GroupUsers;
+            members.role = "owner";
+            members.user = user;
+            const m = await this.Members.create(members);
+            info.members = [m];
+            await this.Groups.save(info);
+            // this.eventEmitter.emit('joinroom',{id:user.id});
+        }
+        catch
+        {
+            throw new NotFoundException();
+        }
     }
     findOne(groupId:number)
     {

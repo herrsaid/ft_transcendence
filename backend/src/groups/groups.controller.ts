@@ -20,11 +20,18 @@ export class GroupsController {
         @Post('create')
         async create(@Req() request, @Body() Group)
         {
-            const user_id = request['user'];
-            if (Group.type == 'protected')
-                Group.password = await hashPassword(Group.password);
-            const group  = await  this.GroupService.create_group(Group, user_id.id);
-            this.eventEmitter.emit('joinroom', {id:user_id.id});
+            try
+            {
+                const user_id = request['user'];
+                if (Group.type == 'protected')
+                    Group.password = await hashPassword(Group.password);
+                const group  = await  this.GroupService.create_group(Group, user_id.id);
+                this.eventEmitter.emit('joinroom', {id:user_id.id});
+            }
+            catch
+            {
+                throw new UnauthorizedException();
+            }
         }
         @UseGuards(AuthGuard)
         @Get('join')
@@ -97,9 +104,18 @@ export class GroupsController {
         @Get('mygroups')
         async myGroups(@Req() request, @Query() params)
         {
-            const user_id = request['user'].id;
-            const usergroup = await this.groupusers.findGroup(user_id);
-            return(usergroup)
+            try
+            {
+                console.log('params', params)
+                const user_id = request['user'].id;
+                const usergroup = await this.groupusers.findGroup(user_id);
+                console.log('my', usergroup);
+                return(usergroup)
+            }
+            catch
+            {
+                throw new UnauthorizedException();
+            }
         }
         @UseGuards(AuthGuard)
         @Get('messages')

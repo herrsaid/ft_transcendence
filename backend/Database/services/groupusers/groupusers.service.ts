@@ -31,12 +31,19 @@ export class GroupusersService {
     }
     async findGroup(id:number)
     {
-        const groupusers = await this.GroupUsers.find({relations: ["group", "user"]})
-        const mygorup = groupusers.filter((data) => {return (data.user.id == id && data.status != "baned")}).map((data)=>{
-                data.group.role = data.role;
-                return (data.group)
-        })
-        return (mygorup);
+        try 
+        {
+            const groupusers = await this.GroupUsers.find({relations: ["group", "user"]})
+            const mygorup = groupusers.filter((data) => {return (data.user.id == id && data.status != "baned")}).map((data)=>{
+                    data.group.role = data.role;
+                    return (data.group)
+            })
+            return (mygorup);
+        }
+        catch
+        {
+            throw new NotFoundException();
+        }
     }
     async findMembers(id:number)
     {
