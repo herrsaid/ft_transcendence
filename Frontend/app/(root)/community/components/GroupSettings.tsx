@@ -23,8 +23,9 @@ const GroupSettings = () =>
     const toast = useToast();
     const CreateGroupRoom = (Obj:GroopObj, setIsCreated:any) =>
     {
-        const name: any = document.getElementById("Username1");
+        var name: any = document.getElementById("Username1");
         const password: any = document.getElementById("password1");
+        name.value = name.value.trim();
         const NewObj:GroopObj = Obj;
         if (name.value != '')
         {

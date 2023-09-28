@@ -88,15 +88,15 @@ export class WebsockGateway {
   {
     this.server.emit('status', payload)
   }
-  @OnEvent('roomjoin')
+  @OnEvent('joinroom')
   async handlejoin(payload)
   {
+    const client = this.server.sockets.sockets.get(this.online.get(payload.id));
     const groups = await this.UserGroupService.findGroup(payload.id)
-      for (let i = 0; i < groups.length; i++)
-      {
-        this.server.emit('roomjoin', {id:payload.id})
-      }
-        // this.socket.join(groups[i].id.toString())
+    for (let i = 0; i < groups.length; i++)
+    {
+      client.join(groups[i].id.toString());
+    }
   }
   @SubscribeMessage('joinroom')
   async handleJoinRoom(client: Socket, payload:any)

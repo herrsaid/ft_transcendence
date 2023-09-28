@@ -6,6 +6,7 @@ import UserContext from '../../UserContext';
 import Friend from './friends';
 import Groupmember from './groupmember';
 import { Button, Input, useToast } from '@chakra-ui/react';
+import { socket } from '../../socket/socket';
 export default function Groupinfo()
 {
     const reciver = useContext(reciverContext);
@@ -43,10 +44,11 @@ export default function Groupinfo()
                         title: 'Great',
                         description: "user Added",
                         position: 'top-right',
-                        status: 'info',
+                        status: 'success',
                         duration: 6000,
                         isClosable: true,
                       })
+                      socket.emit('joinroom',{id:reciver.reciver.id})
                       setAdd(!add);
                 }
             })
@@ -98,14 +100,14 @@ export default function Groupinfo()
                 </div>
                 <div className='self-center'>
                     <Button onClick={leave} colorScheme='red' type="submit">leave</Button>
-                    <Button onClick={() => setAdd(true)} colorScheme='whatsapp' type="submit">Add</Button>
+                    {(reciver.reciver.me != "user") && <Button onClick={() => setAdd(true)} colorScheme='whatsapp' type="submit">Add</Button>}
                 </div>
             </div>
             {
                 add && <div className='bg-[#18184a] flex flex-col absolute transform translate-x-[-50%] translate-y-[-50%] top-[50%] left-[50%] p-4 rounded-lg'>
                     <form className='flex' onSubmit={adduser}>
                         <Input id='username' variant='outline' placeholder='username' type="string" />
-                        <Button onClick={adduser} colorScheme='whatsapp' type="submit">add</Button>
+                         <Button onClick={adduser} colorScheme='Green' type="submit">add</Button>
                     </form>
                 </div>
             }
