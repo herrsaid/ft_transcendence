@@ -98,7 +98,7 @@ import { UserService } from 'src/user/services/user.service';
     {
       try
       {
-          JoinPublicRoomLogic(client,data);
+          JoinPublicRoomLogic(client,data,this.UserManager);
       }
       catch(error)
       {

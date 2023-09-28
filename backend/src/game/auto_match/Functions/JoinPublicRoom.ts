@@ -3,8 +3,10 @@ import { Socket } from 'socket.io';
 import { UserInfo } from "src/game/PingPong.dto";
 import { PlayerClass } from "../auto_match_class/PlayerClass";
 import { GameObj } from "src/game/game_brain/logic/Brain";
+import { UserService } from "src/user/services/user.service";
+import { User } from "src/entities/user/user.entity";
 
-export function JoinPublicRoomLogic(client: Socket, data: UserInfo): void {
+export async function JoinPublicRoomLogic(client: Socket, data: UserInfo,UserManager:UserService): Promise<void> {
     let Public_Rooms= 0;
     for(let a = 0;a<Rooms.length;a++)
     {
@@ -38,6 +40,23 @@ export function JoinPublicRoomLogic(client: Socket, data: UserInfo): void {
       {
         client.emit('JoinRefused',"you are already in game");
         return ;
+      }
+      const user1:User = await UserManager.findOneByUsername(data.username);
+      const user2:User = await UserManager.findOneByUsername(Rooms[data.roomNumber].players[0].Player);
+      if(user1 && user2)
+      {
+        console.log(user1);
+        console.log(user2);
+        const status = await UserManager.getBlockStatus(user1.id,user2).toPromise();
+        console.log(status);
+        if(status)
+        {
+          if (status.status == "waiting-for-unblock" || status.status == "blocked")
+          {
+            client.emit('JoinRefused',"error: you can't send invite to this user");
+            return;
+          }
+        }
       }
       player_data.Player = data.username;
       player_data.PlayerImg = data.myimage;
