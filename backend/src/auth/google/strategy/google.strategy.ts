@@ -1,6 +1,6 @@
 import {PassportStrategy} from "@nestjs/passport";
 import { Strategy, VerifyCallback } from "passport-google-oauth20"
-import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/common";
+import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { UserService } from "../../../user/services/user.service";
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from "@nestjs/config";

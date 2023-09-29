@@ -33,7 +33,6 @@ export class GoogleAuthController {
       res.cookie('access_token', token,{
         httpOnly: false,
               secure: false,
-              expires: new Date(Date.now() + 1 * 24 * 600 * 10000),
       });
       const front_url = this.configService.get<string>('IP') + ":3000";
 
