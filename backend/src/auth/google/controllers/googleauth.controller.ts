@@ -1,4 +1,4 @@
-import { Controller, Get , UseGuards, Req, Res, BadRequestException} from '@nestjs/common';
+import { Controller, Get , UseGuards, Req, Res, UnauthorizedException} from '@nestjs/common';
 import {AuthGuard} from "@nestjs/passport"
 import { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
@@ -51,10 +51,8 @@ export class GoogleAuthController {
       }
       }
       catch{
-        console.log('error')
+        throw new UnauthorizedException();
       }
-    
-    
   }
 
 }

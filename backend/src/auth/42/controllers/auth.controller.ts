@@ -1,4 +1,4 @@
-import { BadRequestException, Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
+import { Controller, Get, Req, Res, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Request, Response } from 'express';
 import { AuthService } from '../services/auth.service';
@@ -52,7 +52,7 @@ export class AuthController {
 
     }
     catch{
-      console.log('error');
+      throw new UnauthorizedException();
     }
 
   }
