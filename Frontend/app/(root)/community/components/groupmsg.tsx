@@ -11,7 +11,7 @@ export default function GroupMsg({content}:any)
     const router = useRouter();
     const profile = () =>{
         // user?username=dk
-        router.replace(`/user?username?${user.user.username}`);
+        router.replace(`/user?username=${user.user.username}`);
     }
     if(user == undefined)
         return(null)
