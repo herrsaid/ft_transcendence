@@ -1,5 +1,6 @@
 import { useContext } from "react"
 import reciverContext from "../reciverContext"
+import { useRouter } from 'next/navigation';
 
 
 export default function GroupMsg({content}:any)
@@ -7,8 +8,11 @@ export default function GroupMsg({content}:any)
     
     const reciver = useContext(reciverContext);
     const user = reciver.reciver.members.find((data:any) => (data.user.id == content.member))
-    const currentDate = new Date();
-    const now = currentDate.getHours()  + ':' + currentDate.getMinutes()
+    const router = useRouter();
+    const profile = () =>{
+        // user?username=dk
+        router.replace(`/user?username=${user.user.username}`);
+    }
     if(user == undefined)
         return(null)
     if (content.class == 'me')
@@ -25,7 +29,7 @@ export default function GroupMsg({content}:any)
                         </div>
                     </div>
                 </div>
-                <div>
+                <div onClick={profile}>
                     <img className="h-8 w-8 rounded-full" src={user.user.avatar} alt="" />
                 </div>
             </div>
@@ -35,7 +39,7 @@ export default function GroupMsg({content}:any)
     {
         return(
             <div className="flex self-start ml-1 ">
-                <div>
+                <div onClick={profile}>
                     <img className="h-8 w-8 rounded-full" src={user.user.avatar} alt="" />
                 </div>
                 <div className="drop-shadow-md rounded-md ml-1 max-w-[300px]">
