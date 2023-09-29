@@ -27,7 +27,7 @@ import reciverContext from "../reciverContext";
               }
             </div>
             <div className="self-center fixed bottom-4">
-                <button className="bg-green-600 rounded-lg p-1" onClick={()=>setIsOpen(true)}>New Group</button>
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={()=>setIsOpen(true)}>New Group</button>
             </div >
             {isOpen && <GroupSettings></GroupSettings>}
         </div>

@@ -5,7 +5,7 @@ import reciverContext from '../reciverContext'
 import UserContext from '../../UserContext';
 import { GiMute } from 'react-icons/gi';
 import Cookies from 'js-cookie';
-import { Button, Input } from '@chakra-ui/react';
+import { Button, Input, useToast } from '@chakra-ui/react';
 import { dividerClasses } from '@mui/material';
 
 export default function Groupmember({data}:any)
@@ -15,13 +15,27 @@ export default function Groupmember({data}:any)
     const [click, setClick] = useState(false)
     const [kick, setKick] = useState(false)
     const [mute, setMute] = useState(false);
-    const [action, setActions] = useState(true);
-    const [members, setMemeber] = useState(reciver.reciver.members)
+    const toast = useToast();
     const handlemute = () => {
         setMute(!mute);
     }
+    const showerror = (err:string) =>{
+        toast({
+            title: 'error',
+            description: err,
+            position: 'top-right',
+            status: 'error',
+            duration: 6000,
+            isClosable: true,
+          })
+    }
     const handlekick = ()=>
     {
+        if (data.role == "owner")
+        {
+            showerror("Can't Kick Owner")
+            return;
+        }
         fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/kick?id=${reciver.reciver.id}&toremove=${data.user.id}`,
         {
             method: 'GET',
@@ -33,6 +47,11 @@ export default function Groupmember({data}:any)
         setKick(!kick);
     }
     const handleban = ()=>{
+        if (data.role == "owner")
+        {
+            showerror("Can't Ban Owner")
+            return;
+        }
         fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/ban?id=${reciver.reciver.id}&toban=${data.user.id}`,
         {
             method: 'GET',
@@ -56,6 +75,11 @@ export default function Groupmember({data}:any)
     const submitmute = (e:any)=>{
         e.preventDefault();
         const time:any = document.getElementById('time');
+        if (data.role == "owner")
+        {
+            showerror("Can't Mute Owner")
+            return;
+        }
         if (time)
         {
             fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/mute?id=${reciver.reciver.id}&tomute=${data.user.id}&time=${time.value}`,

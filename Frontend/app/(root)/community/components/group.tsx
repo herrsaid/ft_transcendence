@@ -8,7 +8,7 @@ export default function Group({group}:any) {
     const reciver = useContext(reciverContext);
     const active = useContext(activeContext);
     const group_click = () =>{
-        if (reciver.reciver.id != group.id)
+        if (reciver.reciver.id != group.id && !group.toGroup)
             reciver.setReciver({isgroup:true, id:group.id, name:group.name,me:group.role,size:group.size,members:[]});
         console.log('reciver:  ',group)
         active.setActive('message');
