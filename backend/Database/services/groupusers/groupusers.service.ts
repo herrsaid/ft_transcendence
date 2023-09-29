@@ -3,11 +3,12 @@ import { EventEmitter2 } from '@nestjs/event-emitter';
 import { InjectRepository } from '@nestjs/typeorm';
 import GroupUsers from 'Database/entity/GroupUsers.entity';
 import { GroupsService } from 'Database/services/groups/groups.service';
+import { MessageService } from 'src/message/message.service';
 
 @Injectable()
 export class GroupusersService {
     constructor(
-        @InjectRepository(GroupUsers) private GroupUsers,
+        @InjectRepository(GroupUsers) private GroupUsers,private readonly Messages:MessageService,
         private eventEmitter:EventEmitter2,
         @Inject(forwardRef(() => GroupsService)) 
         private Group: GroupsService
@@ -66,7 +67,17 @@ export class GroupusersService {
         const group = await this.Group.findOne(group_id);
         const spes = groupusers.find(data => (data.group.id == group_id && data.user.id == user_id));
         // check to leaver is owner if set another owner
-        if (spes.role == "owner" && group.members.length > 1)
+        if (group.members.length == 1)
+        {
+            console.log('if ',group.id)
+            const messages = await this.Group.findOne_messages(group.id)
+            this.GroupUsers.delete({id:spes.id});
+            await messages.messages.forEach( async element => {
+                await this.Messages.delete(element.id);
+            });
+            this.Group.delete(group.id)
+        }
+        else if (spes.role == "owner" && group.members.length > 1)
         {
             var newowner = groupusers.find(data => (data.role == "admin" && data.group.id == group_id))
             if(!newowner)
@@ -74,6 +85,7 @@ export class GroupusersService {
             if(newowner)
                 newowner.role = "owner"
             this.GroupUsers.delete({id:spes.id});
+            // this.Group.delete()
         }
         else
         {

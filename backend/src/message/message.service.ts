@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Messages } from 'Database/entity/Message.entity';
 import { Repository } from 'typeorm';
@@ -17,5 +17,15 @@ export class MessageService {
         return this.messageRepo.find({
             where:[{src: id, toGroup:false}, {dst: id, toGroup:false},],
         })
+    }
+    async delete(id:number)
+    {
+        try{
+            this.messageRepo.delete({id:id})
+        }
+        catch
+        {
+            throw new NotFoundException();
+        }
     }
 }

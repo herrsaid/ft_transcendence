@@ -106,10 +106,8 @@ export class GroupsController {
         {
             try
             {
-                console.log('params', params)
                 const user_id = request['user'].id;
                 const usergroup = await this.groupusers.findGroup(user_id);
-                console.log('my', usergroup);
                 return(usergroup)
             }
             catch
@@ -145,7 +143,7 @@ export class GroupsController {
             {
                 const user_id = request['user'].id;
                 this.GroupUsersService.remove(user_id, params.id)
-                this.eventEmitter.emit('status', {id:params.id, action:"new"})
+                // this.eventEmitter.emit('status', {id:params.id, action:"new"})
             }
             catch
             {
@@ -228,7 +226,7 @@ export class GroupsController {
         {
             const user = await this.User.findOneByUsername(params.username);
             if (!user)
-            throw new NotFoundException();
+                throw new NotFoundException();
             const user_id = user.id;
             try
             {

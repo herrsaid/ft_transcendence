@@ -1,9 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import Group from "./group";
 import Cookies from 'js-cookie';
-import {useForm, SubmitHandler, FormProvider} from 'react-hook-form'
 import UserContext from "../../UserContext";
-import useSWR from "swr";
 import GroupSettings from "./GroupSettings";
 import reciverContext from "../reciverContext";
   
@@ -13,7 +11,7 @@ import reciverContext from "../reciverContext";
     const [group, setGroup] = useState([]);
     const user = useContext(UserContext);
     const reciver = useContext(reciverContext);
-    useEffect(()=>{
+    useEffect(() => {
       fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/mygroups?id=${user.user.id}`,{
         method: 'GET',
         headers:{

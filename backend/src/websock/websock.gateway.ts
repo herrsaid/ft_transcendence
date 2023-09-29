@@ -51,8 +51,6 @@ export class WebsockGateway {
   }
   handleDisconnect(socket: Socket)
   {
-    console.log('disconnected ', socket.id)
-    console.log(this.getkey(this.online, socket.id), 'hada khrej')
     this.online.delete(this.getkey(this.online, socket.id))
     console.log(this.online);
   }

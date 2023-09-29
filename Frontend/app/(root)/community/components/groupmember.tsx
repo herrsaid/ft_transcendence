@@ -91,7 +91,7 @@ export default function Groupmember({data}:any)
                                 <div className='flex flex-col'>
                                     <Button className='m-1' onClick={handlekick} colorScheme='red' variant='outline'>Kick</Button>
                                     <Button className='m-1' onClick={handleban} colorScheme='red' variant='outline'>Ban</Button>
-                                    <Button className='m-1' onClick={addAdmin} colorScheme='green' variant='outline'>Add as Admin</Button>
+                                    { (data.role == 'user' ) && <Button className='m-1' onClick={addAdmin} colorScheme='green' variant='outline'>Set Admin</Button>}
                                 </div>
                             </div>
                         {/* <button onClick={handlekick} className='hover:bg-[#363672] w-full flex m-1'>kick</button>

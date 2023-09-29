@@ -77,4 +77,9 @@ export class GroupsService {
         if (group.type == 'protected')
             return group.password;
     }
+    async delete(id:number)
+    {
+        console.log('delete', id );
+        this.Groups.delete({id:id})
+    }
 }

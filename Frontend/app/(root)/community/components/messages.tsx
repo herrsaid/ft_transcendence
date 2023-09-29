@@ -10,9 +10,8 @@ import { useContext } from "react";
 import activeContext from "../activeContext";
 import Chats from "./chats";
 import GroupMsg from "./groupmsg";
-import useSWR from "swr";
 import { useToast } from "@chakra-ui/react";
-import { group } from "console";
+
 
 export default function Messages()
 {
