@@ -25,14 +25,14 @@ export default function LiveGames() {
 
 
       <div className="live-game-card bannerwatch rounded-lg shadow-md p-6  justify-between">
-        <div className="text-white text-lg font-semibold mb-4"></div>
+      <h1 className="text-xl font-semibold ">Watch <span className=' text-purple-500'>Games</span></h1>
         <p className="text-white"></p>
         <Link className=" forhover bg-gradient-to-br from-purple-600 to-indigo-800 font-semibold mt-20 py-2 px-4 rounded-lg inline-block" href="/Stream">Watch Now</Link>
       </div>
   
       
       <div className="live-game-card bannerchat rounded-lg shadow-md p-6  justify-between">
-        <div className="text-white text-lg font-semibold mb-4"></div>
+      <h1 className="text-xl font-semibold ">Chat <span className=' text-purple-500'>Now</span></h1>
         <p className="text-white"></p>
         <Link className=" forhover bg-gradient-to-br from-purple-600 to-indigo-800 font-semibold mt-20 py-2 px-4 rounded-lg inline-block" href="/community">Chat Now</Link>
       </div>

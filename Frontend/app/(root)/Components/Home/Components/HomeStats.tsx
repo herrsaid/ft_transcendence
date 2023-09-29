@@ -61,8 +61,13 @@ if (!data)
 const winRate = (data.totalwins / data.totalgames) * 100;
   return (
 
-
-
+<div className="video-container live-game-card playbanner rounded-lg shadow-md p-6 flex flex-col justify-between">
+    <video loop muted autoPlay>
+      <source src="https://mp2023.nyc3.digitaloceanspaces.com/689084892688/2023/06/29/480/sftyecbqvvk6keda.mp4" type="video/mp4"/>
+     
+    </video>
+    <div className="overlay"></div>
+    <div className="content">
     <div className="live-game-card playbanner rounded-lg shadow-md p-6 flex flex-col justify-between">
         <div className="w-16 h-16 rounded-full overflow-hidden">
         <Link href="/profile" className="text-blue-400 font-semibold mt-4">
@@ -80,7 +85,10 @@ const winRate = (data.totalwins / data.totalgames) * 100;
     <div className="text-blue-400 text-xl">Win Rate: { (winRate - Math.floor(winRate) < 0.5)? Math.floor(winRate) : Math.ceil(winRate)}%</div>
   </div>
       </div>
-//     
+    </div>
+  </div>
+
+      
 
 
 
