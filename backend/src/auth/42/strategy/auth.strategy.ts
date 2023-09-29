@@ -1,5 +1,5 @@
 import { PassportStrategy } from '@nestjs/passport';
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { Strategy } from 'passport-42';
 import { UserService } from 'src/user/services/user.service';
 import { JwtService } from '@nestjs/jwt';
@@ -65,7 +65,7 @@ export class AuthStrategy extends PassportStrategy(Strategy, '42') {
 
     }
     catch{
-      console.log('error')
+      throw new UnauthorizedException();
     }
 
   }

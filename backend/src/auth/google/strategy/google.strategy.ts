@@ -1,6 +1,6 @@
 import {PassportStrategy} from "@nestjs/passport";
 import { Strategy, VerifyCallback } from "passport-google-oauth20"
-import { BadRequestException, Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable, UnauthorizedException } from "@nestjs/common";
 import { UserService } from "../../../user/services/user.service";
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from "@nestjs/config";
@@ -70,7 +70,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google')
 
        }
        catch{
-            console.log('error');
+            throw new UnauthorizedException();
        }    
         
     }

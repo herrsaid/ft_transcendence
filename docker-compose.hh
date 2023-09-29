@@ -4,6 +4,7 @@ services:
     build:
       context: ./Frontend
       dockerfile: Dockerfile
+    restart: always
     ports:
       - "3000:3000"
     volumes:
@@ -19,6 +20,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    restart: always
     ports:
       - "1337:1337"
       - "3030:3030"
@@ -38,8 +40,8 @@ services:
   db:
     image: postgres
     restart: always
-    # volumes:
-    #   - ./data/db:/var/lib/postgresql/data
+    volumes:
+      - postgressdb:/var/lib/postgresql/data
     ports:
       - 5432:5432
     environment:
@@ -56,5 +58,9 @@ services:
     networks:
       - my_net
   
+
+
+volumes:
+  postgressdb:
 networks:
     my_net:
