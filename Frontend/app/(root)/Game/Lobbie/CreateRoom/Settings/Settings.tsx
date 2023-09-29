@@ -61,11 +61,11 @@ const PingPongSettings = ({ router }: any) =>
         }
         catch{}
         return()=>{
-        if(BottomNav && LeftNav)
-        {
-            BottomNav.style.display = "none";
-            LeftNav.style.display = "block";
-        }
+        // if(BottomNav && LeftNav)
+        // {
+        //     BottomNav.style.display = "none";
+        //     LeftNav.style.display = "block";
+        // }
         // console.log("i'm leaving");
         access = false;
         InGame.IL = false;

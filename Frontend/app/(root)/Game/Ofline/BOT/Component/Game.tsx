@@ -88,11 +88,11 @@ const Game = () => {
     catch{}
     return()=>
     {
-      if(BottomNav && LeftNav)
-      {
-          BottomNav.style.display = "none";
-          LeftNav.style.display = "block";
-      }
+      // if(BottomNav && LeftNav)
+      // {
+      //     BottomNav.style.display = "none";
+      //     LeftNav.style.display = "block";
+      // }
       document.body.style.overflow = "scroll";
       test.remove();
       GameData = new GameClass();

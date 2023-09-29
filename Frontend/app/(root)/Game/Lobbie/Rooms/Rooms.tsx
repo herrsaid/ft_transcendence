@@ -169,11 +169,11 @@ export default function Rooms() {
     }
     return ()=> 
     {
-      if(BottomNav && LeftNav)
-      {
-        BottomNav.style.display = "none";
-        LeftNav.style.display = "block";
-      }
+      // if(BottomNav && LeftNav)
+      // {
+      //   BottomNav.style.display = "none";
+      //   LeftNav.style.display = "block";
+      // }
     };
   },[]);
   useEffect(()=>
