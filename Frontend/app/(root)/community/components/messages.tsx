@@ -117,7 +117,8 @@ export default function Messages()
 
     const send = (e:any)=>{
         e.preventDefault();
-        if (value != '')
+        const val = value.trim()
+        if (val != '')
         {
             if(!reciver.reciver.isgroup)
             {
@@ -125,8 +126,8 @@ export default function Messages()
                 userstate.then(data => {
                     if (data.status != 'blocked' && data.status != 'waiting-for-unblock')
                     {
-                        socket.emit('message', {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:false})
-                        setMessages((old:any) => [...old, {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:false}]);
+                        socket.emit('message', {src:user.user.id, dst:reciver.reciver.id, content:val, toGroup:false})
+                        setMessages((old:any) => [...old, {src:user.user.id, dst:reciver.reciver.id, content:val, toGroup:false}]);
                     }
                     else
                     {
@@ -147,8 +148,8 @@ export default function Messages()
                 groupstatus.then(data => {
                     if (data.status == "able")
                     {
-                        socket.emit('message', {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:true})
-                        setGroupMessage((old:any) => [...old, {src:user.user.id, dst:reciver.reciver.id, content:value, toGroup:true}]);
+                        socket.emit('message', {src:user.user.id, dst:reciver.reciver.id, content:val, toGroup:true})
+                        setGroupMessage((old:any) => [...old, {src:user.user.id, dst:reciver.reciver.id, content:val, toGroup:true}]);
                     }
                     else
                     {
