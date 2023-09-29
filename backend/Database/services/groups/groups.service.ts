@@ -22,7 +22,8 @@ export class GroupsService {
     {
         try
         {
-            const info = this.Groups.create(group_info);
+            const info = await this.Groups.create(group_info);
+            await this.Groups.save(info);
             info.size = 1;
             const user = await this.user.findOne(id);
             const members = new GroupUsers;
@@ -31,7 +32,7 @@ export class GroupsService {
             const m = await this.Members.create(members);
             info.members = [m];
             await this.Groups.save(info);
-            // this.eventEmitter.emit('joinroom',{id:user.id});
+            this.eventEmitter.emit('joinroom',{id:user.id});
         }
         catch
         {

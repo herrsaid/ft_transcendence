@@ -24,15 +24,31 @@ const GroupSettings = () =>
     const CreateGroupRoom = (Obj:GroopObj, setIsCreated:any) =>
     {
         var name: any = document.getElementById("Username1");
-        const password: any = document.getElementById("password1");
+        var password: any = document.getElementById("password1");
         name.value = name.value.trim();
         const NewObj:GroopObj = Obj;
         if (name.value != '')
         {
             NewObj.name = name.value;
             //check if you need to hash your passwrd
-            if(password)
-                NewObj.password = password.value;
+            if (Obj.type == 'protected')
+            {
+                const passwrd = password.value.trim();
+                if(passwrd != '')
+                    NewObj.password = passwrd;
+                else
+                {
+                    toast({
+                        title: 'error',
+                        description: "enter a valid password",
+                        position: 'top-right',
+                        status: 'error',
+                        duration: 6000,
+                        isClosable: true,
+                      })
+                      return;
+                }
+            }
             const res = fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/create`,{
                 method: 'POST', headers:{
                     Authorization: `Bearer ${Cookies.get('access_token')}`,
@@ -49,6 +65,17 @@ const GroupSettings = () =>
                         description: "Room Created",
                         position: 'top-right',
                         status: 'info',
+                        duration: 6000,
+                        isClosable: true,
+                      })
+                }
+                else
+                {
+                    toast({
+                        title: 'error',
+                        description: "this name is used before",
+                        position: 'top-right',
+                        status: 'error',
                         duration: 6000,
                         isClosable: true,
                       })
