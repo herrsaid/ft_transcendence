@@ -18,7 +18,7 @@ export default function GroupMsg({content}:any)
                 <div className="bg-[#34346e]  drop-shadow-md m-1 rounded-md max-w-[300px]">
                 <div className="flex flex-col mr-1 self-end">
                         <div className="text-xs text-gray-300">
-                            {(content.created_at)?content.created_at.substring(11, 16):now}
+                            {user.user.username}
                         </div>
                         <div className="bg-[#7d32d9] drop-shadow-md p-2 rounded-md max-w-[300px]">
                             {content.content}
@@ -41,7 +41,7 @@ export default function GroupMsg({content}:any)
                 <div className="drop-shadow-md rounded-md ml-1 max-w-[300px]">
                     <div className="flex flex-col">
                         <div className="text-xs text-gray-300">
-                            {content.created_at.substring(11, 16)}
+                            {user.user.username}
                         </div>
                         <div className="bg-[#7d32d9] drop-shadow-md p-2 rounded-md max-w-[300px]">
                             {content.content}
