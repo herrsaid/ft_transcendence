@@ -5,8 +5,10 @@ import { PlayerClass } from "../auto_match_class/PlayerClass";
 import { RoomSettings } from "src/game/PingPong.dto";
 import { RoomClass } from "../auto_match_class/RoomClass";
 import { GameObj } from "src/game/game_brain/logic/Brain";
+import { UserService } from 'src/user/services/user.service';
+import { User } from 'src/entities/user/user.entity';
 
-export function CreateRoomLogic(client: Socket, data: RoomSettings): void {
+export async function CreateRoomLogic(client: Socket, data: RoomSettings,UserManager:UserService): Promise<void> {
     if(data.myusername === null)
     {
       client.emit('CreateRefused','please (log-in/sign-in) to accept your join');
@@ -27,6 +29,23 @@ export function CreateRoomLogic(client: Socket, data: RoomSettings): void {
     {
       client.emit('CreateRefused',"you are already in game");
       return ;
+    }
+    const user1:User = await UserManager.findOneByUsername(data.myusername);
+    const user2:User = await UserManager.findOneByUsername(data.inputValue);
+    if(user1 && user2 && data.roomMood === false)
+    {
+      console.log(user1);
+      console.log(user2);
+      const status = await UserManager.getBlockStatus(user1.id,user2).toPromise();
+      console.log(status);
+      if(status)
+      {
+        if (status.status == "waiting-for-unblock" || status.status == "blocked")
+        {
+          client.emit('CreateRefused',"error: you can't send invite to this user");
+          return;
+        }
+      }
     }
     let player_data:PlayerClass = new PlayerClass;
     player_data.Player = data.myusername;

@@ -9,65 +9,65 @@ export async function StartRoom(router: any,toast:any,GameContext:GameContextTyp
 {
     try
     {
-        const getusernameid = async (url:string) => {
-                const res = await fetch(url, {
-                    method: 'GET',
-                    headers: {
-                        Authorization: `Bearer ${Cookies.get('access_token')}`
-                     }});
-                if (res.status != 200)
-                {
-                    toast({
-                        title: 'Error',
-                        description: "error: this user not found",
-                        position: 'top-right',
-                        status: 'error',
-                        duration: 5000,
-                        isClosable: true,
-                      });
-                      return;
-                }
+        // const getusernameid = async (url:string) => {
+        //         const res = await fetch(url, {
+        //             method: 'GET',
+        //             headers: {
+        //                 Authorization: `Bearer ${Cookies.get('access_token')}`
+        //              }});
+        //         if (res.status != 200)
+        //         {
+        //             toast({
+        //                 title: 'Error',
+        //                 description: "error: this user not found",
+        //                 position: 'top-right',
+        //                 status: 'error',
+        //                 duration: 5000,
+        //                 isClosable: true,
+        //               });
+        //               return;
+        //         }
           
-                return res.json();
-        }
-        const fetchFriendStatus = async (url:string) => {
-            const res = await fetch(url, {
-                method: 'GET',
-                headers: {
-                    Authorization: `Bearer ${Cookies.get('access_token')}`
-                 }});
+        //         return res.json();
+        // }
+        // const fetchFriendStatus = async (url:string) => {
+        //     const res = await fetch(url, {
+        //         method: 'GET',
+        //         headers: {
+        //             Authorization: `Bearer ${Cookies.get('access_token')}`
+        //          }});
       
-            return res.json();
-        }
+        //     return res.json();
+        // }
         const notification:HTMLElement| null = document.getElementById('notification');
         const settings = document.getElementById("Settings");
         const loading = document.getElementById("wifi-loader");
         const input_elem:any = document.getElementById("input_val");
         let input_value:String = ''; 
         input_value = input_elem.value;
-        if (input_value && !!newGameInfo.RoomMood == false)
-        {
-            const user = await getusernameid(`${process.env.NEXT_PUBLIC_BACK_IP}/user/${input_value}`)
-            if (user)
-            {
-                const status = await fetchFriendStatus(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/status/${user.id}`);
-                if (status)
-                {
-                    if (status.status == "waiting-for-unblock" || status.status == "blocked")
-                    {
-                        toast({
-                            title: 'Error',
-                            description: "error: you can't send invite to this user",
-                            position: 'top-right',
-                            status: 'error',
-                            duration: 5000,
-                            isClosable: true,
-                          });
-                          return;
-                    }
-                }
-            }
-        }
+        // if (input_value && !!newGameInfo.RoomMood == false)
+        // {
+        //     const user = await getusernameid(`${process.env.NEXT_PUBLIC_BACK_IP}/user/${input_value}`)
+        //     if (user)
+        //     {
+        //         const status = await fetchFriendStatus(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/status/${user.id}`);
+        //         if (status)
+        //         {
+        //             if (status.status == "waiting-for-unblock" || status.status == "blocked")
+        //             {
+        //                 toast({
+        //                     title: 'Error',
+        //                     description: "error: you can't send invite to this user",
+        //                     position: 'top-right',
+        //                     status: 'error',
+        //                     duration: 5000,
+        //                     isClosable: true,
+        //                   });
+        //                   return;
+        //             }
+        //         }
+        //     }
+        // }
 
 
         newGameInfo.myusername = GameContext.GameInfo.myusername;

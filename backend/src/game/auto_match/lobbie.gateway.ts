@@ -85,7 +85,7 @@ import { UserService } from 'src/user/services/user.service';
     {
       try
       {
-          CreateRoomLogic(client,data);
+          CreateRoomLogic(client,data,this.UserManager);
       }
       catch(error)
       {
