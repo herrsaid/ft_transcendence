@@ -103,25 +103,35 @@ export default function Groupmember({data}:any)
                 <h1 className="p-1">{data.user.username} {<h6 className=' text-green-600 text-sm text-center border border-green-500 rounded-full'>{data.role}</h6>}</h1>
             </div>
             <div className='p-2'>
-                {(reciver.reciver.me != "user")&&<button onClick={() => setClick(!click)}><SlOptionsVertical/> </button>}
-                {
-                    (click) &&
-                    <div className='bg-[#18184a] flex flex-col absolute transform translate-x-[-50%] translate-y-[-50%] top-[50%] left-[50%] p-4 rounded-lg'>
+                {(reciver.reciver.me != "user")&&<button onClick={()=>{const id:any = document.getElementById('setting'); id.showModal()}}><SlOptionsVertical/> </button>}
+                <dialog id="setting" className="modal">
+                <div className="modal-box flex bg-[#18184a]">
+                    <div className=' flex flex-col w-1/2 justify-center'>
+                        <div className=' self-center'>
+                            <img className='w-24 rounded-full' src={data.user.avatar} alt="" />
+                        </div>
+                        <div className=' font-bold self-center'>
+                            <h1>{data.user.username}</h1>
+                        </div>
+                    </div>
+                  <div className='bg-[#18184a] flex flex-colp-4 rounded-lg  self-center'>
                             <div>
                                 <form className='flex' onSubmit={submitmute}>
-                                    <Input id='time' variant='outline' placeholder='Time' type="number"  min="1" max="5" />
-                                    <Button onClick={submitmute} colorScheme='whatsapp' type="submit">mute</Button>
+                                    <input className=' bg-[#18184a] input input-bordered input-primary w-full max-w-xs m-1' id='time'  placeholder='Time' type="number"  min="1" max="5" />
+                                    <button onClick={submitmute} className='btn btn-outline btn-success m-1' type="submit"><GiMute></GiMute></button>
                                 </form>
                                 <div className='flex flex-col'>
-                                    <Button className='m-1' onClick={handlekick} colorScheme='red' variant='outline'>Kick</Button>
-                                    <Button className='m-1' onClick={handleban} colorScheme='red' variant='outline'>Ban</Button>
-                                    { (data.role == 'user' ) && <Button className='m-1' onClick={addAdmin} colorScheme='green' variant='outline'>Set Admin</Button>}
+                                    <button className='m-1 btn btn-outline btn-error' onClick={handlekick} >Kick</button>
+                                    <button className='m-1 btn btn-outline btn-error' onClick={handleban} >Ban</button>
+                                    {(data.role == 'user' ) && <button className='m-1 btn btn-outline btn-success' onClick={addAdmin} >Set Admin</button>}
                                 </div>
                             </div>
-                        {/* <button onClick={handlekick} className='hover:bg-[#363672] w-full flex m-1'>kick</button>
-                        <button onClick={handleban} className='hover:bg-[#363672] w-full flex m-1'>ban</button> */}
                     </div>
-                }
+                  </div>
+                  <form method="dialog" className="modal-backdrop">
+                    <button>close</button>
+                  </form>
+                </dialog>
             </div>
         </div>
     ) 

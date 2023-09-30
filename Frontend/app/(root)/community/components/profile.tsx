@@ -13,7 +13,7 @@ export default function Profile(props:any)
     const active = useContext(activeContext);
     const reciver = useContext(reciverContext);
     const handleclick = () =>{active.setActive('chats')}
-    const info_click = () => {active.setActive('info');alert('jjjjjjj')}
+    const info_click = () => {active.setActive('info')}
     return (
         <div className="container flex h-20 top-0 sticky justify-between rounded-xl">
             <div className="flex">
