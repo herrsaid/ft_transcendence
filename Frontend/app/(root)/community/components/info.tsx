@@ -11,6 +11,8 @@ import {BiArrowBack} from 'react-icons/bi'
 import Settings from '../Settings/Components/SettingsComponent';
 import useSWR from 'swr';
 import { Button } from '@chakra-ui/react';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 
 export default function Info()
@@ -20,6 +22,10 @@ export default function Info()
     const [status, setStatus] = useState('');
     const [statusBtn, setStatusBtn] = useState<any>();
     const back_click = ()=>{active.setActive('message')}
+    const router = useRouter();
+    const profile = () =>{
+        router.replace(`/user?username=${reciver.reciver.username}`);
+    }
     const fetchData = async (url:string) => {
         try{
                 const res = await fetch(url, {
@@ -36,7 +42,7 @@ export default function Info()
     const {data, isLoading} = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/block/status/${reciver.reciver.id}`, fetchData)
     const block = () => 
     {
-        setStatusBtn(<Button onClick={Unblock} colorScheme='red'>Unblock</Button>)
+        setStatusBtn(<button className='btn btn-error w-full' onClick={Unblock} >Unblock</button>)
         console.log('tblock')
         fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/block/${reciver.reciver.id}`, {
             method: 'POST',
@@ -51,7 +57,7 @@ export default function Info()
     {
         if (data)
         {
-            setStatusBtn(<Button onClick={block} colorScheme='red'>Block</Button>)
+            setStatusBtn(<button className='btn btn-error w-full' onClick={block} >Block</button>)
             fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/remove/${data.id}`, {
                 method: 'GET',
                 headers:{
@@ -65,10 +71,10 @@ export default function Info()
             setStatus(data.status)
             if (status != 'blocked')
             {
-                setStatusBtn(<Button onClick={block} colorScheme='red'>Block</Button>)
+                setStatusBtn(<button className='btn btn-error w-full' onClick={block}>Block</button>)
             }
             else if (status == "blocked")
-                setStatusBtn(<Button onClick={Unblock} colorScheme='red'>Unblock</Button>)
+                setStatusBtn(<button className='btn btn-error w-full' onClick={Unblock}>Unblock</button>)
         }
     }, [data, status])
     if(!reciver.reciver.id)
@@ -87,16 +93,26 @@ export default function Info()
                 <div className='self-center'>
                     <h1>{reciver.reciver.username}</h1>
                 </div>
+                <div className='self-center'>
+                    <Link className='btn btn-outline btn-info' href={`/user?username=${reciver.reciver.username}`}>Viste Pofile</Link>
+                </div>
             </div>
             {
                 ( data && data.status != 'waiting-for-unblock') && <div className='flex justify-between w-[90%] self-center p-1'>
-                {statusBtn}
-                <Button onClick={Display} colorScheme='Green'>invite</Button>
+                    <div className='w-1/2 m-1'>
+                        {statusBtn}
+                    </div>
+                    <div className=' w-1/2 m-1'>
+                        <button className='btn btn-success w-full' onClick={Display} >invite</button>
+                    </div>
             </div>
             }
             {
                 (data && data.status == 'waiting-for-unblock') && <div className='flex justify-between w-[90%] self-center p-1'>
-                    <h1>You Are Blocked</h1>
+                    <div className="alert alert-error">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        <span>Error! You Are Blocked.</span>
+                        </div>
                 </div>
 
             }
@@ -106,38 +122,38 @@ export default function Info()
 }
 
 
-{/* <div className="self-center text-2xl pb-3 flex justify-between"><div><button className='sm:hidden' onClick={back_click}><IoIosArrowBack/></button></div><h1>Info</h1> <div></div></div>
-            <div className="text-center flex flex-col">
-                <div className='w-60 self-center pb-10'>
-                    <img className='rounded-full self-center w-36' src={reciver.reciver.avatar} alt="img" />
-                </div>
-                <div className='text-center text-2xl mb-1'>
-                    <h1 className='text-center '>{reciver.reciver.username}</h1>
-                </div>
-                <hr className="pb-5 border-gray-500"></hr>
-                <div>
-                    <p className=''>Hi my name is doukalin and i Love lger3a</p>
-                </div>
-            </div>
-            <div className="self-center">
-                <div className="rounded-lg w-1/1 bg-sky-900">
-                    <div className="flex p-2 hover:bg-indigo-900 cursor-pointer" onClick={()=>{Display()}}>
-                        <div className='mt-1'>
-                            <ImInfo color='red'/>
-                        </div>
-                        <p className='text-red-500 ml-2 mt-'>Invite To Play</p>
-                    </div>
-                    <div className="flex p-2 hover:bg-indigo-900 cursor-pointer">
-                        <div className='mt-1'>
-                            <ImBlocked color='red'/>
-                        </div>
-                        <p className='text-red-500 ml-2 mt-'>Block this Perosn</p>
-                    </div>
-                    <div className="flex p-2 hover:bg-indigo-900 cursor-pointer">
-                        <div className='mt-1'>
-                            <GoReport />
-                        </div>
-                        <p className='text-red-500 ml-2'>Report this Perosn</p>
-                    </div>
-                </div>
-            </div> */}
+// {/* <div className="self-center text-2xl pb-3 flex justify-between"><div><button className='sm:hidden' onClick={back_click}><IoIosArrowBack/></button></div><h1>Info</h1> <div></div></div>
+//             <div className="text-center flex flex-col">
+//                 <div className='w-60 self-center pb-10'>
+//                     <img className='rounded-full self-center w-36' src={reciver.reciver.avatar} alt="img" />
+//                 </div>
+//                 <div className='text-center text-2xl mb-1'>
+//                     <h1 className='text-center '>{reciver.reciver.username}</h1>
+//                 </div>
+//                 <hr className="pb-5 border-gray-500"></hr>
+//                 <div>
+//                     <p className=''>Hi my name is doukalin and i Love lger3a</p>
+//                 </div>
+//             </div>
+//             <div className="self-center">
+//                 <div className="rounded-lg w-1/1 bg-sky-900">
+//                     <div className="flex p-2 hover:bg-indigo-900 cursor-pointer" onClick={()=>{Display()}}>
+//                         <div className='mt-1'>
+//                             <ImInfo color='red'/>
+//                         </div>
+//                         <p className='text-red-500 ml-2 mt-'>Invite To Play</p>
+//                     </div>
+//                     <div className="flex p-2 hover:bg-indigo-900 cursor-pointer">
+//                         <div className='mt-1'>
+//                             <ImBlocked color='red'/>
+//                         </div>
+//                         <p className='text-red-500 ml-2 mt-'>Block this Perosn</p>
+//                     </div>
+//                     <div className="flex p-2 hover:bg-indigo-900 cursor-pointer">
+//                         <div className='mt-1'>
+//                             <GoReport />
+//                         </div>
+//                         <p className='text-red-500 ml-2'>Report this Perosn</p>
+//                     </div>
+//                 </div>
+//             </div> */}

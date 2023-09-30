@@ -7,7 +7,6 @@ import reciverContext from "../reciverContext";
   
   export default function Groups()
   {
-    const [isOpen, setIsOpen] = useState(false);
     const [group, setGroup] = useState([]);
     const user = useContext(UserContext);
     const reciver = useContext(reciverContext);
@@ -23,13 +22,21 @@ import reciverContext from "../reciverContext";
         <div className="flex flex-col justify-between h-[100%]">
             <div >
               {
-                group.map((data:any, index:number) => {return(<Group key={index} group={data}/>)})
+                group && group.map((data:any, index:number) => {return(<Group key={index} group={data}/>)})
               }
             </div>
             <div className="self-center fixed bottom-4">
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={()=>setIsOpen(true)}>New Group</button>
+              <button className="btn btn-success" onClick={()=> document.getElementById('my_modal_2').showModal()}>new room</button>
             </div >
-            {isOpen && <GroupSettings></GroupSettings>}
+            
+              <dialog id="my_modal_2" className="modal">
+                <div className="modal-box bg-[#18184a]">
+                  <GroupSettings></GroupSettings>
+                </div>
+                <form method="dialog" className="modal-backdrop">
+                  <button>close</button>
+                </form>
+              </dialog>
         </div>
     )
 }

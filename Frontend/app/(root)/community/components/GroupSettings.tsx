@@ -4,9 +4,7 @@ import { Dispatch, SetStateAction, useContext, useState } from "react";
 import "../Settings/Settings.css"
 import Cookies from 'js-cookie';
 import { Input, useToast } from "@chakra-ui/react";
-import {AiFillCloseCircle} from 'react-icons/ai'
 import reciverContext from "../reciverContext";
-
 
 type GroopObj = {
     type: string;
@@ -21,13 +19,14 @@ const GroupSettings = () =>
     const [Obj, SetObj] = useState({type:"public",name:"",password:""});
     const reciver = useContext(reciverContext);
     const toast = useToast();
+
     const CreateGroupRoom = (Obj:GroopObj, setIsCreated:any) =>
     {
         var name: any = document.getElementById("Username1");
         var password: any = document.getElementById("password1");
         name.value = name.value.trim();
         const NewObj:GroopObj = Obj;
-        if (name.value != '')
+        if (name.value != '' && name.value.length <= 10)
         {
             NewObj.name = name.value;
             //check if you need to hash your passwrd
@@ -99,36 +98,41 @@ const GroupSettings = () =>
         }
         //do your logic here
     }
-    if (isCreated)
-        return (null)
+    // if (isCreated)
+    //     return (null)
     return(
-        <div className="absolute transform translate-x-[-50%] 
-        translate-y-[-50%] top-[50%] left-[50%] flex-col 
-        bg-[#18184a] p-6 rounded-md w-[400px] z-[100]">
-            <div className=" flex w-full justify-end">
-                <div className="self-end">
-                    <button className="" onClick={() => setIsCreated(true)}><AiFillCloseCircle></AiFillCloseCircle></button>
+        <div className="bg-[#18184a]">
+            <div className="flex w-full justify-center">
+                <div className="">
+                    <p className=" font-bold">Create New Room</p>
+                    {/* <button className="" onClick={() => setIsCreated(true)}><AiFillCloseCircle></AiFillCloseCircle></button> */}
                 </div>
             </div>
             <div>
             <div className="flex justify-between p-2">
-                     <div className="p-1">
-                         <input name="radio"  onClick={()=>SetObj({type:"public", name:Obj.name, password:Obj.password})} type="radio" id="public" />
-                         <label className="p-1" htmlFor="public">public</label>
+                     <div className="">
+                         <label className="label cursor-pointer" htmlFor="public">
+                            <span className="p-1">Public</span> 
+                            <input className="radio radio-success" name="radio-10" onClick={()=>SetObj({type:"public", name:Obj.name, password:Obj.password})} type="radio" id="public" />
+                         </label>
                      </div >
-                     <div className="p-1">
-                         <input name="radio" onClick={()=>SetObj({type:"private", name:Obj.name, password:Obj.password})} type="radio" id="private" />
-                         <label className="p-1" htmlFor="private">private</label>
+                     <div className="">
+                         <label className="label cursor-pointer" htmlFor="private">
+                         <span className="p-1">Private</span> 
+                         <input className="radio radio-success" name="radio-10" onClick={()=>SetObj({type:"private", name:Obj.name, password:Obj.password})} type="radio" id="private" />
+                         </label>
                      </div>
-                     <div className="p-1">
-                         <input name="radio" onClick={()=>SetObj({type:"protected", name:Obj.name, password:Obj.password})} type="radio" id="protected" />
-                         <label className="p-1" htmlFor="protected">protected</label>
+                     <div className="">
+                         <label className="label cursor-pointer" htmlFor="protected">
+                         <span className="p-1">Protected</span> 
+                         <input className="radio radio-success" name="radio-10" onClick={()=>SetObj({type:"protected", name:Obj.name, password:Obj.password})} type="radio" id="protected" />
+                         </label>
                      </div>
                  </div>
                  <div className=" flex-col w-full justify-center">
-                    <Input id="Username1" placeholder="name..." _placeholder={{ opacity: 1, color: 'gray.500' }} className="focus:outline-none" variant='flushed'/>
-                     {/* <input id="Username1"  className="" type='text' placeholder="name..."></input> */}
-                     {(Obj.type == "protected")&&<Input id="password1" placeholder="password..." _placeholder={{ opacity: 1, color: 'gray.500' }} type="password" className="focus:outline-none" variant='flushed'/>}
+                    <input  id="Username1" maxLength={8} type="text" placeholder="name" className="input input-bordered w-full max-w-xs bg-[#18184a]" />
+                    {/* <Input id="Username1" maxLength={8} placeholder="name..." _placeholder={{ opacity: 1, color: 'gray.500' }} className="focus:outline-none" variant='flushed'/> */}
+                     {(Obj.type == "protected")&&<input id="password1" type="password" maxLength={20} placeholder="password" className="input input-bordered w-full max-w-xs bg-[#18184a]" />}
                  </div>
             </div>
 

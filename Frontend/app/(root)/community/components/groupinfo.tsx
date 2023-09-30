@@ -7,9 +7,13 @@ import Friend from './friends';
 import Groupmember from './groupmember';
 import { Button, Input, useToast } from '@chakra-ui/react';
 import { socket } from '../../socket/socket';
+import {BiArrowBack} from 'react-icons/bi'
+import activeContext from '../activeContext';
+
 export default function Groupinfo()
 {
     const reciver = useContext(reciverContext);
+    const active = useContext(activeContext);
     const user = useContext(UserContext)
     const [members, setMembers] = useState([]);
     const [add, setAdd] = useState(false);
@@ -74,7 +78,10 @@ export default function Groupinfo()
         reciver.setReciver({})
     }
     return (
-        <div className="flex flex-col justify-center h-full">
+        <div className=" relative flex flex-col justify-center h-full">
+            <div className='absolute top-0 left-5 sm:hidden'>
+                <button onClick={active.setActive('message')} className='btn btn-outline btn-info'><BiArrowBack/></button>
+            </div>
             <div className="flex flex-col  h-[40%] w-[90%] self-center mb-1 rounded-lg bg-[#363672] justify-center">
                 <div className=" rounded-full self-center">
                     <FaHashtag size={60}></FaHashtag>
@@ -90,7 +97,7 @@ export default function Groupinfo()
                 <div className='self-center'>
                         <h1 className='font-bold'>members</h1>
                 </div>
-                <div className='flex-grow  overflow-auto'>
+                <div className='flex-grow overflow-auto'>
                         {
                             reciver.reciver.members.map((data:any, index:number) => 
                             {
@@ -98,9 +105,9 @@ export default function Groupinfo()
                             })
                         }
                 </div>
-                <div className='self-center'>
-                    <Button onClick={leave} colorScheme='red' type="submit">leave</Button>
-                    {(reciver.reciver.me != "user") && <Button onClick={() => setAdd(true)} colorScheme='whatsapp' type="submit">Add</Button>}
+                <div className='flex self-center w-[90%]'>
+                    <button onClick={leave} className='btn btn-error w-1/2 m-1' type="submit">leave</button>
+                    {(reciver.reciver.me != "user") && <button onClick={() => setAdd(true)} className='btn btn-success w-1/2 m-1' type="submit">Add</button>}
                 </div>
             </div>
             {
