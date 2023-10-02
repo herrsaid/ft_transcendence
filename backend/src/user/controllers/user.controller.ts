@@ -461,20 +461,20 @@ export class UserController {
     }
     
 
-
     @UseGuards(AuthGuard)
-    @Post('log-out')
-    logOut(@Req() request, @Res() response) {
+    @Get('leaderboard')
+    getLeaderBoard()
+    {
+        try
+        {
+            return this.GameInfoManager.getleaderboard();
+        }
+        catch{
+            throw new UnauthorizedException();
+        }
         
-        response.cookie('access_token', '',{
-            httpOnly: false,
-                  secure: false,
-                  path: "/",
-                  maxAge: 0,
-                 
-          });
-      return response.sendStatus(200);
     }
+    
    
 }
 
