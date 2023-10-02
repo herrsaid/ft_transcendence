@@ -241,6 +241,7 @@ export class GroupsController {
                     group.members.push(m);
                     group.size = group.size + 1;
                     this.GroupService.save(group);
+                    this.eventEmitter.emit('status', {id:group.id, action:"new"})
                     return 'added'
                 }
             }

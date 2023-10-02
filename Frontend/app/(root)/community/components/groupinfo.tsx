@@ -44,6 +44,15 @@ export default function Groupinfo()
                 }
                 else
                 {
+                    fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/members?id=${reciver.reciver.id}`,
+                    {
+                        method: 'GET',
+                        headers:{
+                            Authorization: `Bearer ${Cookies.get('access_token')}`
+                        }
+                    }).then((response) => response.json()).then(res => {
+                        reciver.setReciver({...reciver.reciver,members:res})
+                    });
                     toast({
                         title: 'Great',
                         description: "user Added",
@@ -107,17 +116,31 @@ export default function Groupinfo()
                 </div>
                 <div className='flex self-center w-[90%]'>
                     <button onClick={leave} className='btn btn-error w-1/2 m-1' type="submit">leave</button>
-                    {(reciver.reciver.me != "user") && <button onClick={() => setAdd(true)} className='btn btn-success w-1/2 m-1' type="submit">Add</button>}
+                    {(reciver.reciver.me != "user") && <button onClick={()=>{const id:any =document.getElementById('add'); id.showModal()}} className='btn btn-success w-1/2 m-1' type="submit">Add</button>}
                 </div>
             </div>
             {
-                add && <div className='bg-[#18184a] flex flex-col absolute transform translate-x-[-50%] translate-y-[-50%] top-[50%] left-[50%] p-4 rounded-lg'>
+                // add && <div className='bg-[#18184a] flex flex-col absolute transform translate-x-[-50%] translate-y-[-50%] top-[50%] left-[50%] p-4 rounded-lg'>
+                //     <form className='flex' onSubmit={adduser}>
+                //         <Input id='username' variant='outline' placeholder='username' type="string" />
+                //          <Button onClick={adduser} colorScheme='Green' type="submit">add</Button>
+                //     </form>
+                // </div>
+            }
+            {/* <button className="btn" onClick={()=>document.getElementById('add').showModal()}>open modal</button> */}
+                <dialog id="add" className="modal">
+                  <div className="modal-box bg-[#18184a]">
+                  <div className='bg-[#18184a] flex flex-col absolute transform translate-x-[-50%] translate-y-[-50%] top-[50%] left-[50%] p-4 rounded-lg'>
                     <form className='flex' onSubmit={adduser}>
                         <Input id='username' variant='outline' placeholder='username' type="string" />
                          <Button onClick={adduser} colorScheme='Green' type="submit">add</Button>
                     </form>
                 </div>
-            }
+                  </div>
+                  <form method="dialog" className="modal-backdrop">
+                    <button>close</button>
+                  </form>
+                </dialog>
         </div>
     )
 }
