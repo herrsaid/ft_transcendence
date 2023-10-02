@@ -6,7 +6,7 @@ export default function Home() {
     <>
     
    
-  <div className="container mx-auto mt-16 py-8 pb-32">
+  <div className="container mx-auto py-8 pb-32">
     
 
     

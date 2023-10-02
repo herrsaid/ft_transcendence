@@ -5,6 +5,7 @@ import { Repository } from "typeorm";
 import { data } from "../game_brain/logic/game_server_class";
 import { ArchievementManager } from "./ArchievementManager";
 import { UserService } from "src/user/services/user.service";
+import { User } from "src/entities/user/user.entity";
 
 @Injectable()
 export class GameInfoManager
@@ -202,5 +203,24 @@ export class GameInfoManager
             return await rankObj;
         }
         
+    }
+    async getleaderboard()
+    {
+        let LeaderBoad:User[] = [];
+        let len = 0;
+        try
+        {   
+            const query =  await this.GameUserInfo
+                .createQueryBuilder('game_user_info')
+                .orderBy('game_user_info.rank', 'DESC')
+                .getMany();
+            len = query.length;
+            for(let a=0;a<len;a++)
+                LeaderBoad.push(await this.UserManager.findOne(query[a].userid));
+        }
+        catch{
+            throw new NotFoundException();
+        }
+        return LeaderBoad;
     }
 }
