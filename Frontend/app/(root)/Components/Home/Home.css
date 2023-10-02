@@ -125,4 +125,8 @@ background-blend-mode: multiply;
   }
 
   
-  
+  .stats-bg {
+    background: linear-gradient(-45deg, #C56CDD,#18184a);
+    background-size: 400% 400%;
+ 
+  }

@@ -39,8 +39,9 @@ body{
   background-color: var(--back-color);
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
+  background-repeat: repeat;
   min-height: 100vh;
+
 }
 
 .site
@@ -81,8 +82,10 @@ justify-items: center;
 
 body {
   scrollbar-width: none;
+  background-repeat: repeat;
 }
 
 body{
   background-color: var(--back-color) !important;
+  background-repeat: repeat !important;
 }
