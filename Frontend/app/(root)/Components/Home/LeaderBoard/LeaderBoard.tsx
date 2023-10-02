@@ -57,11 +57,36 @@ export default function LeaderBoard() {
     if (data)
     {
         users = data.map((user:any, index:any) => {
-            return <CardColum key={user.id} 
-            image={user.avatar}  
-            username={user.username} 
-            rank={index+1}
-            />
+            if (index > 2)
+            {
+                return <CardColum key={user.id} 
+                image={user.avatar}  
+                username={user.username} 
+                rank={index+1}
+                />
+            }
+        })
+
+            
+        
+    }
+
+    if (data)
+    {
+        userspartone = data.map((user:any, index:any) => {
+            if (index == 0)
+            {
+                return  <div key={user.id} className="b p-10 stats-bg h-[70%] ml-5 mr-5 rounded-md transform transition-transform duration-300 hover:scale-105"> <CardLeader image={user.avatar} username={user.username} rank={index+1}/></div>
+            }
+            else if (index == 1)
+            {
+                return <div key={user.id} className=" p-10 stats-bg h-[70%] mt-8 rounded-md transform transition-transform duration-300 hover:scale-105"><CardLeader image={user.avatar} username={user.username} rank={index+1}/></div>
+
+            }
+            else if (index == 2)
+            {
+                <div key={user.id} className=" p-10 stats-bg h-[70%] mt-8 rounded-md transform transition-transform duration-300 hover:scale-105"> <CardLeader image={user.avatar} username={user.username} rank={index+1}/></div>
+            }
         })
 
             
@@ -78,11 +103,9 @@ export default function LeaderBoard() {
    <div className="container mx-auto">
 
 <div className="flex justify-center h-90 flex-wrap"> 
-    <div className=" p-10 stats-bg h-[70%] mt-8 rounded-md transform transition-transform duration-300 hover:scale-105"><CardLeader image="/avatar.png" username="selhanda" rank={2}/></div>
     
-    <div className="b p-10 stats-bg h-[70%] ml-5 mr-5 rounded-md transform transition-transform duration-300 hover:scale-105"> <CardLeader image="/avatar.png" username="mabdelou" rank={1}/></div>
- 
-    <div className=" p-10 stats-bg h-[70%] mt-8 rounded-md transform transition-transform duration-300 hover:scale-105"> <CardLeader image="/avatar.png" username="salamane" rank={3}/></div>
+    
+ {userspartone}
 
 </div>
 <div className="flex flex-col scroll-auto mx-auto overflow-scroll w-[300px] h-[300px]">
