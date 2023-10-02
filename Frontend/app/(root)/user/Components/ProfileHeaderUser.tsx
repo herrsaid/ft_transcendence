@@ -15,7 +15,7 @@ import UserRank from "./UserRank";
   }
 
 
-const ProfileHeader = (props:props) => {
+const ProfileHeaderUser = (props:props) => {
 
 
   let button_placeholder = 'Add Friend';
@@ -263,4 +263,4 @@ const ProfileHeader = (props:props) => {
   </div>
     );
 };
-export default ProfileHeader;
+export default ProfileHeaderUser;
