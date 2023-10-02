@@ -11,6 +11,9 @@ export default function LeaderBoard() {
 
     let users;
     let userspartone;
+    let first  = <></>;
+    let second = <></>;
+    let therd = <></>;
     
     const fetchLeaders = async (url:string) => {
         const res = await fetch(url, {
@@ -36,7 +39,7 @@ export default function LeaderBoard() {
                 
         <div className="live-game-card stats-bgf rounded-lg shadow-md p-6 flex flex-col justify-between">
         
-        <p className="text-white">we dont have users yet!</p>
+        <p className="text-white">we dont have matchs yet!</p>
 
       </div>
         
@@ -73,19 +76,20 @@ export default function LeaderBoard() {
 
     if (data)
     {
+        
         userspartone = data.map((user:any, index:any) => {
             if (index == 0)
             {
-                return  <div key={user.id} className="b p-10 stats-bg h-[70%] ml-5 mr-5 rounded-md transform transition-transform duration-300 hover:scale-105"> <CardLeader image={user.avatar} username={user.username} rank={index+1}/></div>
+                first =  <div key={user.id} className="b p-10 stats-bg h-[70%] ml-5 mr-5 rounded-md transform transition-transform duration-300 hover:scale-105"> <CardLeader image={user.avatar} username={user.username} rank={index+1}/></div>
             }
             else if (index == 1)
             {
-                return <div key={user.id} className=" p-10 stats-bg h-[70%] mt-8 rounded-md transform transition-transform duration-300 hover:scale-105"><CardLeader image={user.avatar} username={user.username} rank={index+1}/></div>
+                second = <div key={user.id} className=" p-10 stats-bg h-[70%] mt-8 rounded-md transform transition-transform duration-300 hover:scale-105"><CardLeader image={user.avatar} username={user.username} rank={index+1}/></div>
 
             }
             else if (index == 2)
             {
-                <div key={user.id} className=" p-10 stats-bg h-[70%] mt-8 rounded-md transform transition-transform duration-300 hover:scale-105"> <CardLeader image={user.avatar} username={user.username} rank={index+1}/></div>
+                therd = <div key={user.id} className=" p-10 stats-bg h-[70%] mt-8 rounded-md transform transition-transform duration-300 hover:scale-105"> <CardLeader image={user.avatar} username={user.username} rank={index+1}/></div>
             }
         })
 
@@ -104,8 +108,9 @@ export default function LeaderBoard() {
 
 <div className="flex justify-center h-90 flex-wrap"> 
     
-    
- {userspartone}
+    {second ? second : null}
+    {first ? first : null}
+    {therd ? therd : null}
 
 </div>
 <div className="flex flex-col scroll-auto mx-auto overflow-scroll w-[300px] h-[300px]">

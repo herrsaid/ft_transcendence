@@ -17,6 +17,9 @@ import { useRouter } from 'next/navigation'
 export default function Game() {
   const router = useRouter();
     return (
+      <div className="container mx-auto h-[90vh] scroll-auto overflow-scroll">
         <PingPongSettings router={router} />
+      </div>
+        
     )
   }
