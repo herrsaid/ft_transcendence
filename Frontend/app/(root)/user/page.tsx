@@ -4,13 +4,14 @@ import Cookies from 'js-cookie';
 import useSWR from "swr"
 import { Box, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react';
 import { SkeletonCircle, SkeletonText } from '@chakra-ui/react'
-import ProfileHeader from './Components/ProfileHeader';
 import ProfileUserState from './Components/ProfileUserState';
 import HistoryUser from './Components/HistoryUser';
 import { useContext } from "react";
 import UserContext from '../UserContext';
 import UserAchievevements from './Components/UserAchievevements';
 import '../profile/profile.css'
+import ProfileHeaderUser from './Components/ProfileHeaderUser';
+import ProfileHeader from '../profile/components/ProfileHeader';
 
 export default  function User()
 {
@@ -20,10 +21,10 @@ export default  function User()
     const usercontext = useContext(UserContext);
 
 
-    if (usercontext.user.username == username)
-    {
-        router.push('/profile')
-    }
+    // if (usercontext.user.username == username)
+    // {
+    //     router.push('/profile')
+    // }
     const fetchUserData = async (url:string) => {
         const res = await fetch(url, {
             method: 'GET',
@@ -58,8 +59,12 @@ export default  function User()
        
 
                 <div className="container mx-auto px-2 py-10 pb-32">
-                            <ProfileHeader  avatar={data.avatar} username={data.username} email={data.email} rank={data.rank}
-                 id={data.id} status={data.status} isIngame={data.isInGame}/>
+                    
+                    {usercontext.user.username == username && <ProfileHeader  username={usercontext.user.username} email={usercontext.user.email} rank={usercontext.user.rank} 
+                />}
+                {usercontext.user.username != username && <ProfileHeaderUser  avatar={data.avatar} username={data.username} email={data.email} rank={data.rank}
+                 id={data.id} status={data.status} isIngame={data.isInGame}/>}
+                            
       
                 <ProfileUserState id={data.id}/>
     
