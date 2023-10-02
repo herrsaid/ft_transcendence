@@ -70,6 +70,15 @@ export default function Groupmember({data}:any)
                 Authorization: `Bearer ${Cookies.get('access_token')}`
             }
         })
+        fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/members?id=${reciver.reciver.id}`,
+        {
+            method: 'GET',
+            headers:{
+                Authorization: `Bearer ${Cookies.get('access_token')}`
+            }
+        }).then((response) => response.json()).then(res => {
+            reciver.setReciver({...reciver.reciver,members:res})
+        });
         setClick(!click);
     }
     const submitmute = (e:any)=>{
@@ -103,8 +112,8 @@ export default function Groupmember({data}:any)
                 <h1 className="p-1">{data.user.username} {<h6 className=' text-green-600 text-sm text-center border border-green-500 rounded-full'>{data.role}</h6>}</h1>
             </div>
             <div className='p-2'>
-                {(reciver.reciver.me != "user")&&<button onClick={()=>{const id:any = document.getElementById('setting'); id.showModal()}}><SlOptionsVertical/> </button>}
-                <dialog id="setting" className="modal">
+                {(reciver.reciver.me != "user")&&<button id={data.user.id} onClick={()=>{const id:any = document.getElementById(data.user.username); id.showModal()}}><SlOptionsVertical/> </button>}
+                <dialog id={data.user.username} className="modal">
                 <div className="modal-box flex bg-[#18184a]">
                     <div className=' flex flex-col w-1/2 justify-center'>
                         <div className=' self-center'>

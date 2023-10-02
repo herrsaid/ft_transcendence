@@ -69,7 +69,6 @@ export class GroupusersService {
         // check to leaver is owner if set another owner
         if (group.members.length == 1)
         {
-            console.log('if ',group.id)
             const messages = await this.Group.findOne_messages(group.id)
             this.GroupUsers.delete({id:spes.id});
             await messages.messages.forEach( async element => {
@@ -84,15 +83,25 @@ export class GroupusersService {
                 newowner = groupusers.find(data => (data.role == "user" && data.group.id == group_id))
             if(newowner)
                 newowner.role = "owner"
+            group.size = group.size - 1;
+            this.GroupUsers.save(newowner);
+            this.Group.save(group);
             this.GroupUsers.delete({id:spes.id});
             // this.Group.delete()
         }
         else
         {
-            this.GroupUsers.delete({id:spes.id});
+            try{
+                this.GroupUsers.delete({id:spes.id});
+                group.size = group.size - 1;
+                this.GroupUsers.save(group);
+            }
+            catch
+            {
+                throw new NotFoundException();
+            }
         }
         // this.GroupUsers.delete({id:spes.id});
-        group.size = group.size - 1;
         // this.GroupsService.save(group);
     }
     async is_admin(user_id:number, group_id:number)
