@@ -462,7 +462,7 @@ export class UserController {
     
 
     @UseGuards(AuthGuard)
-    @Get('leaderboard')
+    @Get('leaderboard/users')
     getLeaderBoard()
     {
         try
