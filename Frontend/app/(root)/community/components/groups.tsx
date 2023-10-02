@@ -26,7 +26,7 @@ import reciverContext from "../reciverContext";
               }
             </div>
             <div className="self-center fixed bottom-4">
-              <button className="btn btn-success" onClick={()=> document.getElementById('my_modal_2').showModal()}>new room</button>
+              <button className="btn btn-success" onClick={()=> {const id:any = document.getElementById('my_modal_2'); id.showModal()}}>new room</button>
             </div >
             
               <dialog id="my_modal_2" className="modal">
