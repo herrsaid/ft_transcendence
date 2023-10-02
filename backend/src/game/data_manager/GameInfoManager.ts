@@ -203,4 +203,18 @@ export class GameInfoManager
         }
         
     }
+    async getleaderboard()
+    {
+        try
+        {
+            const query = this.GameUserInfo
+                .createQueryBuilder('game_user_info')
+                .select('*')
+                .orderBy('rank', 'DESC')
+                .limit(50);
+        }
+        catch{
+            throw new NotFoundException();
+        }
+    }
 }
