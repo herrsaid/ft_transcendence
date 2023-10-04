@@ -8,15 +8,28 @@ export class MessageService {
     constructor(@InjectRepository(Messages) private messageRepo : Repository<Messages>){}
     async create(messageData: Partial<Messages>)
     {
-        const message = this.messageRepo.create(messageData);
-        return this.messageRepo.save(message);
+        try
+        {
+            const message = this.messageRepo.create(messageData);
+            return this.messageRepo.save(message);
+        }
+        catch
+        {
+            throw new NotFoundException();
+        }
     }
     getMessages(id:number): Promise<Messages[]> {
-        if (!id)
-            return;
-        return this.messageRepo.find({
-            where:[{src: id, toGroup:false}, {dst: id, toGroup:false},],
-        })
+        try
+        {
+            if (!id)
+                return;
+            return this.messageRepo.find({
+                where:[{src: id, toGroup:false}, {dst: id, toGroup:false},],
+            })
+        }
+        catch{
+            throw new NotFoundException();
+        }
     }
     async delete(id:number)
     {

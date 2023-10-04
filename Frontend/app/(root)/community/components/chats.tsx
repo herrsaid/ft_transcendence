@@ -40,14 +40,14 @@ export default function Chats()
     const friend_click = () =>{setForg(true)}
     const group_click = () =>{setForg(false)}
     useEffect(()=>{
-        document.addEventListener('click', (e) => {((searchRef.current)&&(!searchRef.current.contains(e.target)))?setSearch([]):console.log('dd')}, true)
+        document.addEventListener('click', (e) => {((searchRef.current)&&(!searchRef.current.contains(e.target)))?setSearch([]):console.log('')}, true)
     },[])
     return (
         <div className="flex flex-col h-full">
-            <div className="text-center text-2xl pb-1">Chats</div>
-            <div className="flex justify-around m-2">
-                <div onClick={friend_click} className="hover:bg-sky-900 w-1/2 text-center bg-[#363672] rounded-full cursor-pointer p-2 drop-shadow-md">friends</div>
-                <div onClick={group_click} className="hover:bg-sky-900 w-1/2 text-center bg-[#363672] rounded-full cursor-pointer p-2 drop-shadow-md" >groups</div>
+            <div className="text-center text-2xl pb-1 font-bold">Chats</div>
+            <div className="flex self-center m-2 w-[90%]">
+                <div onClick={friend_click} className="hover:bg-[#7d32d9] w-1/2 text-center bg-[#363672] rounded-full cursor-pointer p-2 drop-shadow-md">friends</div>
+                <div onClick={group_click} className="hover:bg-[#7d32d9] w-1/2 text-center bg-[#363672] rounded-full cursor-pointer p-2 drop-shadow-md" >rooms</div>
             </div>
             <div className="self-center mt-2 mb-2 w-[90%] relative drop-shadow-md">
                 <form action="">
