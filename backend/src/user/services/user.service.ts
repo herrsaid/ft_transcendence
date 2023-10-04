@@ -550,7 +550,6 @@ export class UserService {
             if (!FriendRequest) {
                 console.log('FriendRequest with not found')
             }
-            console.log('friend req', FriendRequest);
             await this.FriendRequestRepo.remove(FriendRequest);
         }
         catch
