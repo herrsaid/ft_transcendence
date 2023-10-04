@@ -20,7 +20,7 @@ export default function Group({group}:any) {
         active.setActive('message');
     }
     return(
-        <div onClick={group_click} className="flex hover:bg-[#7d32d9]cursor-pointer">
+        <div onClick={group_click} className="flex hover:bg-[#7d32d9] cursor-pointer">
             <div className='p-1'>
                 <FaHashtag size={35} />
             </div>
