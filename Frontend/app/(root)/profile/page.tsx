@@ -15,7 +15,7 @@ export default  function Profile()
 
     return(
         
-        <div className="container mx-auto px-2 py-10 pb-32">
+        <div className="container mx-auto px-2 py-10 pb-32 h-[90vh] scroll-auto overflow-scroll">
                 <ProfileHeader  username={usercontext.user.username} email={usercontext.user.email} rank={usercontext.user.rank} 
                 />
   

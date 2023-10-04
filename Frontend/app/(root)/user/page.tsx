@@ -58,7 +58,7 @@ export default  function User()
     return(
        
 
-                <div className="container mx-auto px-2 py-10 pb-32">
+                <div className="container mx-auto px-2 py-10 pb-32 h-[90vh] scroll-auto overflow-scroll">
                     
                     {usercontext.user.username == username && <ProfileHeader  username={usercontext.user.username} email={usercontext.user.email} rank={usercontext.user.rank} 
                 />}

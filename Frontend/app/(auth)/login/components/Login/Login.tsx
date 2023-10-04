@@ -43,11 +43,11 @@ export default function Login()
           </button>
         </Link>
 
-        <Link className="bg-transparent text-blue-400 font-semibold py-2 px-4 rounded-lg inline-block" href={`${process.env.NEXT_PUBLIC_BACK_IP_G}/auth/google`}>
+        {/* <Link className="bg-transparent text-blue-400 font-semibold py-2 px-4 rounded-lg inline-block" href={`${process.env.NEXT_PUBLIC_BACK_IP_G}/auth/google`}>
             <button className="hero-button">
             Google
           </button>
-        </Link>
+        </Link> */}
       </div>
       </div>
      

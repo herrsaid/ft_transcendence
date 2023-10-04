@@ -75,11 +75,11 @@ export default function Stream() {
     NewStreamInfo = new StreamInfoType;
     return()=>
     {
-        if(BottomNav && LeftNav)
-        {
-            BottomNav.style.display = "none";
-            LeftNav.style.display = "block";
-        }
+        // if(BottomNav && LeftNav)
+        // {
+        //     BottomNav.style.display = "none";
+        //     LeftNav.style.display = "block";
+        // }
     };
   },[]);
     return (
