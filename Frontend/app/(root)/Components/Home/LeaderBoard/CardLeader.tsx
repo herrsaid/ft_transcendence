@@ -12,8 +12,8 @@ export default function CardLeader(props:props) {
     
    
     <div className="flex flex-col items-center relative">
-        <div className=" w-32 h-32">
-            <img src={props.image} alt="" className=" rounded-full border border-purple-500 absolute top-[-30%]"/>
+        <div className=" w-28 h-28 rounded-full">
+            <img src={props.image} alt="" className=" rounded-full border border-purple-500  absolute top-[-35%] w-28 h-28 shadow-md"/>
         </div>
         <div className="items-center">
             <h1 className="text-md text-center">{props.username}</h1>

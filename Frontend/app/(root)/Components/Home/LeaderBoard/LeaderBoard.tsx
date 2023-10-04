@@ -80,7 +80,7 @@ export default function LeaderBoard() {
         userspartone = data.map((user:any, index:any) => {
             if (index == 0)
             {
-                first =  <div key={user.id} className="b p-10 stats-bg h-[70%] ml-5 mr-5 rounded-md transform transition-transform duration-300 hover:scale-105"> <CardLeader image={user.avatar} username={user.username} rank={index+1}/></div>
+                first =  <div key={user.id} className=" mt-1 md:mt-0 lg:mt-0 p-10 mb-1 md:mb-0 lg:mb-0 stats-bg h-[70%] ml-5 mr-5 rounded-md transform transition-transform duration-300 hover:scale-105"> <CardLeader image={user.avatar} username={user.username} rank={index+1}/></div>
             }
             else if (index == 1)
             {
