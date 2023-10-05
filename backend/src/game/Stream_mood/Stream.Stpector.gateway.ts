@@ -82,7 +82,6 @@ import { NewSpectator } from '../PingPong.dto';
     handleconection_closed(client: Socket): void {
       try
       {
-        console.log("handleconection_closed");
         if(GameObj)
         {
           for(let a = 0 ; a<GameObj.length; a++ )
@@ -97,7 +96,6 @@ import { NewSpectator } from '../PingPong.dto';
     handleDisconnect(client: Socket): void {
       try
       {
-        console.log("handleDisconnect");
         if(GameObj)
         {
           for(let a = 0 ; a<GameObj.length; a++ )

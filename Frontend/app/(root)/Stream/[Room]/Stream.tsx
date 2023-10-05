@@ -68,7 +68,6 @@ const Game = ({ router }: any) => {
     {
       test.remove();
       StreamData = new GameDataType();
-      console.log("just show me "+StreamContext.StreamInfo.Access);
       stream.emit('spectator_leave');
     };
   }, []);
