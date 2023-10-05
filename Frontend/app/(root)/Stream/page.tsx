@@ -8,19 +8,39 @@ import {StreamInfoType,GetStreamInfoContext, StreamContextType} from '../Stream/
 import { stream } from './Socket/start_stream_socket';
 import { player1, player2 } from '../Game/Online/Socket/start_game_socket';
 import { socket } from '../Game/Online/Socket/auto_match_socket';
+import { GameContextType, GetGameInfoContext } from '../Game/GameContext/GameContext';
+import { useToast } from '@chakra-ui/react';
 
 
 let NewStreamInfo:StreamInfoType = new StreamInfoType;
 
-function SpectatorMood(Room: number, router: AppRouterInstance,StreamContext:StreamContextType)
+function SpectatorMood(toast:any,MyUserName:String,Room: number, router: AppRouterInstance,StreamContext:StreamContextType)
 {
-  NewStreamInfo.Access = 1;
   NewStreamInfo.RoomNumber = Room;
-  StreamContext.SetStreamInfo(NewStreamInfo);
-  router.replace(`/Stream/Room${Room+1}`);
+  stream.emit("new_spectator",{RoomNumber: StreamContext.StreamInfo.RoomNumber,User:MyUserName});
+  stream.on("LoadStreamFail",(message: string)=>
+  {
+    toast.closeAll();
+    toast({title: 'Error',description: message,position: 'top-right',status: 'error',duration: 5000,isClosable: true,});
+    NewStreamInfo.Access = 0;
+      
+  });
+  stream.on("InvalidData",(message: string)=>
+  {
+    toast.closeAll();
+    toast({title: 'Error',description: message,position: 'top-right',status: 'error',duration: 5000,isClosable: true,});
+    NewStreamInfo.Access = 0;
+      
+  });
+  stream.on("LoadStreamAccept",()=>
+  {
+    NewStreamInfo.Access = 1;
+    StreamContext.SetStreamInfo(NewStreamInfo);
+    router.replace(`/Stream/Room${Room+1}`);
+  })
 }
 
-function  GetNumberOfRooms(router: AppRouterInstance,StreamContext:StreamContextType)
+function  GetNumberOfRooms(router: AppRouterInstance,toast:any,MyUserName:String,StreamContext:StreamContextType)
 {
   stream.emit('LoadStream');
   stream.on('LoadStream',(Room: number)=>
@@ -39,7 +59,7 @@ function  GetNumberOfRooms(router: AppRouterInstance,StreamContext:StreamContext
         element_btn.innerHTML = '<p>Watch</p>';
         element.setAttribute("id",`Room`);
         element_btn.setAttribute("id",`Watch`);
-        element_btn.onclick= ()=>{SpectatorMood(a,router,StreamContext)};
+        element_btn.onclick= ()=>{SpectatorMood(toast,MyUserName,a,router,StreamContext)};
         element.appendChild(element_btn);
         Rooms.appendChild(element);
       
@@ -49,11 +69,13 @@ function  GetNumberOfRooms(router: AppRouterInstance,StreamContext:StreamContext
 }
 
 export default function Stream() {
-  const StreamContext = GetStreamInfoContext();
+  const StreamContext:StreamContextType = GetStreamInfoContext();
+  const GameContext:GameContextType = GetGameInfoContext();
   const router: AppRouterInstance = useRouter();
+  const toast = useToast();
   useEffect(()=>
   {
-    let interval:NodeJS.Timer = setInterval(()=>{GetNumberOfRooms(router,StreamContext);},1000);
+    let interval:NodeJS.Timer = setInterval(()=>{GetNumberOfRooms(router,toast,GameContext.GameInfo.myusername,StreamContext);},1000);
     return ()=> 
     {
       clearInterval(interval);

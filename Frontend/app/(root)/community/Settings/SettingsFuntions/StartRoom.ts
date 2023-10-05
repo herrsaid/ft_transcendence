@@ -42,6 +42,20 @@ export function StartRoom(router: any,toast:any,GameContext:GameContextType,user
                 socket.emit("conection_closed");
             }
         });
+        socket.on("InvalidData",(message: string)=>
+        {
+            if(access && settings && loading)
+            {
+                InGame.IL = false;
+                settings.style.filter = "blur(0px)";
+                settings.style.animation = "Animation 1s";
+                loading.style.opacity = "0";
+                socket.emit("conection_closed");
+            }
+            toast.closeAll();
+            toast({title: 'Error',description: message,position: 'top-right',status: 'error',duration: 5000,isClosable: true,});
+            
+        });
         socket.on('CreateRefused', (message: string) => {
             if(access)
             {
@@ -58,14 +72,15 @@ export function StartRoom(router: any,toast:any,GameContext:GameContextType,user
                         socket.emit("conection_closed");
                     }
                 }
-                    toast({
+                toast.closeAll();
+                toast({
                     title: 'Error',
                     description: message,
                     position: 'top-right',
                     status: 'error',
                     duration: 5000,
                     isClosable: true,
-                  });
+                });
             }  
         });
         if(settings && loading)

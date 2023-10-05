@@ -54,19 +54,24 @@ function JoinToRoom(Room: number, router: AppRouterInstance,GameContext:GameCont
         newGameInfo.Speed = speed;
         newGameInfo.Points = points;
         GameContext.SetGameInfo(newGameInfo);
-        // console.log("conection_closed on room");
-        // socket.emit('conection_closed');
         router.replace(`/Game/Online/Play`);
       }
+    });
+    socket.on("InvalidData",(message: string)=>
+    {
+      toast.closeAll();
+      toast({title: 'Error',description: message,position: 'top-right',status: 'error',duration: 5000,isClosable: true,});    
     });
     socket.on('JoinRefused',(data: string)=>
     {
       if(access)
+      {
+        toast.closeAll();
         toast({title: 'Error',description: data,position: 'top-right',status: 'error',duration: 5000,isClosable: true,});
-    });
+      }
+      });
   }
   catch{}
-  // console.log("button-pressed");
 }
 async function  GetNumberOfRooms(router: AppRouterInstance,GameContext:GameContextType,toast:any)
 {
@@ -109,6 +114,7 @@ async function  GetNumberOfRooms(router: AppRouterInstance,GameContext:GameConte
               }
               else
               {
+                toast.closeAll();
                 toast({title: 'Error',description: "complete your match first",position: 'top-right',status: 'error',duration: 5000,isClosable: true,});
               }
             };

@@ -21,11 +21,13 @@ export class GameStreamAttribute
 {
     //attributes
     public SpectatorID: string;
+    public SpectatorUser: string;
     public SpectatorSocket: Socket| undefined;
 
     constructor()
     {
         this.SpectatorID = '';
+        this.SpectatorUser = '';
         this.SpectatorSocket = undefined;
     }
 }

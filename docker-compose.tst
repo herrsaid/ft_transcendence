@@ -1,4 +1,5 @@
-version: '3'
+version: '3.1'
+
 services:
   db:
     image: postgres
@@ -21,8 +22,6 @@ services:
     networks:
       - my_net
   
-
-
 volumes:
   postgressdb:
 networks:

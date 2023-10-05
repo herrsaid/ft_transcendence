@@ -1,21 +1,6 @@
 import p5 from 'p5';
 import { StreamData } from '../Stream';
-import { stream } from '../../Socket/start_stream_socket';
-import { StreamContextType } from '../../StreamContext/StreamContext';
 
-
-export function first_conection(StreamContext:StreamContextType)
-{
-  try
-  {
-    if(StreamData.first_conection_val === false)
-    {
-      StreamData.first_conection_val = true;
-      stream.emit("new_spectator",{RoomNumber: StreamContext.StreamInfo.RoomNumber});
-    }
-  }
-  catch{}
-}
 
 export function NewValue(p5:p5)
 {

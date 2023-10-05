@@ -6,6 +6,6 @@ import { BaseWsExceptionFilter } from '@nestjs/websockets';
 export class WebSocketGateWayFilter extends BaseWsExceptionFilter {
   catch(exception: any, host: ArgumentsHost) {
     const client = host.switchToWs().getClient();
-    client.emit('CreateRefused', 'Invalid data');
+    client.emit('InvalidData', 'Invalid data');
   }
 }
