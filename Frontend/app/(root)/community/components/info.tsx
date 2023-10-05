@@ -51,12 +51,14 @@ export default function Info()
         }
             
           }).then((response) => response.json())
-          .then(data => setStatus(data.status))
+        //   .then(data => setStatus(data.status))
     }
     const Unblock = () => 
     {
+        console.log('unblock :', data)
         if (data)
         {
+            console.log('unblock : if data ', data)
             setStatusBtn(<button className='btn btn-error w-full' onClick={block} >Block</button>)
             fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/remove/${data.id}`, {
                 method: 'GET',
@@ -77,6 +79,8 @@ export default function Info()
                 setStatusBtn(<button className='btn btn-error w-full' onClick={Unblock}>Unblock</button>)
         }
     }, [data, status])
+    if (data)
+        console.log('status', data);
     if(!reciver.reciver.id)
         return (null)
     if (reciver.reciver.isgroup)

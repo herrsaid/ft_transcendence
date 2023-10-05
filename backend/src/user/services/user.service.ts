@@ -546,11 +546,10 @@ export class UserService {
       async deleteFriendRequest(id: number){
         try
         {
-            const FriendRequest = await this.FriendRequestRepo.findOne({where:{id:id}});
+            const FriendRequest = await this.FriendRequestRepo.findOne({where:{id:id}, relations:["receiver","creator"]});
             if (!FriendRequest) {
                 console.log('FriendRequest with not found')
             }
-    
             await this.FriendRequestRepo.remove(FriendRequest);
         }
         catch

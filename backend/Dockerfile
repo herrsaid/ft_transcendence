@@ -13,10 +13,8 @@ RUN npm install -g @nestjs/cli
 
 RUN npm run build
 
-
 EXPOSE 1337
 
 
-# CMD [ "node", "./dist/src/main.js" ]
 CMD [ "npm", "run","start" ]
 
