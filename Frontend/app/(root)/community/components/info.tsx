@@ -55,10 +55,8 @@ export default function Info()
     }
     const Unblock = () => 
     {
-        console.log('unblock :', data)
         if (data)
         {
-            console.log('unblock : if data ', data)
             setStatusBtn(<button className='btn btn-error w-full' onClick={block} >Block</button>)
             fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/remove/${data.id}`, {
                 method: 'GET',

@@ -14,6 +14,7 @@ import { HistoryManager } from 'src/game/data_manager/HistoryManager';
 import { GameInfoManager } from 'src/game/data_manager/GameInfoManager';
 import { ArchievementManager } from 'src/game/data_manager/ArchievementManager';
 import { JwtTwoFactorGuard } from 'src/twoFactorAuthentication/services/authentication.service';
+import { request } from 'https';
 
 const v4id = uuidv4()
 
@@ -474,7 +475,12 @@ export class UserController {
         }
         
     }
-    
+    @UseGuards(AuthGuard)
+    @Get('unblock/test')
+    async test(@Req() request, @Query() param)
+    {
+        this.userService.deleteFriendRequestsaid(2,1);
+    }
    
 }
 

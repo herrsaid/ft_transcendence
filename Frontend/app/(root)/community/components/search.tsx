@@ -71,7 +71,7 @@ function Result({res}:any)
         }
     }
     return (
-        <div className="flex justify-between hover:bg-[#18184a] cursor-pointer p-2 rounded-lg">
+        <div className="flex justify-between hover:bg-[#7d32d9] cursor-pointer p-2 rounded-lg">
             <div className="flex">
             <HiUserGroup size={30} />
             {res.name}

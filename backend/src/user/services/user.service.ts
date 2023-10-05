@@ -558,6 +558,24 @@ export class UserService {
         }
         
       }
+      async deleteFriendRequestsaid(receiverId: number, creatorId:number){
+        try
+        {
+            // const FriendRequest = await this.FriendRequestRepo.findOne({where:{id:id}, relations:["receiver","creator"]});
+            // const friend
+            const user = await this.userRepo.findOne({where:{id:creatorId}, relations:["sentFriendRequest", "receivedFriendRequest"]})
+            console.log('user', user);
+            if (!FriendRequest) {
+                console.log('FriendRequest with not found')
+            }
+            // await this.FriendRequestRepo.remove(FriendRequest);
+        }
+        catch
+        {
+            throw new UnauthorizedException();
+        }
+        
+      }
       async myGroups(id:number)
       {
         try

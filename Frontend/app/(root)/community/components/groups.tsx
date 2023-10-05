@@ -19,11 +19,16 @@ import reciverContext from "../reciverContext";
       }).then((response) => response.json()).then(data => setGroup(data))
       reciver.reciver.action = 0;
     },[reciver.reciver.action, reciver.reciver.id])
+    let groups;
+    if (group)
+    {
+      groups = group.map((data:any, index:number) => {return(<Group key={index} group={data}/>)});
+    }
     return (
         <div className="flex flex-col justify-between h-[100%]">
             <div >
               {
-                group && group.map((data:any, index:number) => {return(<Group key={index} group={data}/>)})
+                  groups
               }
             </div>
             <div className="self-center fixed bottom-4">

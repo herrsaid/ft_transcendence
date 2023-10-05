@@ -26,7 +26,7 @@ export class GroupsController {
                 if (Group.type == 'protected')
                     Group.password = await hashPassword(Group.password);
                 const group  = await  this.GroupService.create_group(Group, user_id.id);
-                this.eventEmitter.emit('joinroom', {id:user_id.id});
+                this.eventEmitter.emit('join', {id:user_id.id});
             }
             catch
             {
@@ -51,6 +51,7 @@ export class GroupsController {
                     group.members.push(m);
                     group.size = group.size + 1;
                     this.GroupService.save(group);
+                    // this.eventEmitter.emit('join', {id:user_id});
                     this.eventEmitter.emit('status', {id:group.id, action:"new"})
                     return 'created'
                 }
@@ -254,6 +255,6 @@ export class GroupsController {
         @Get('test')
         async test ()
         {
-            this.eventEmitter.emit('joinroom', {id:1})
+            this.eventEmitter.emit('join', {id:1})
         }
 }
