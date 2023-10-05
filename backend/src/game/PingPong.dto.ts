@@ -21,6 +21,9 @@ export class NewSpectator
   @IsNumber()
   @IsNotEmpty()
   RoomNumber:number;
+  @IsString()
+  @IsNotEmpty()
+  User:string;
 }
 export class FirstConnection 
 {

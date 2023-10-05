@@ -6,10 +6,13 @@ import { GameDataType } from "./StreamClass/StreamClass";
 import { GetStreamInfoContext, StreamContextType } from '../../Stream/StreamContext/StreamContext'
 import './Stream.css';
 import { GetPlayersData } from "./GameFunctions/GameLogic";
-import { NewValue, first_conection } from "./GameFunctions/Initialise";
+import { NewValue } from "./GameFunctions/Initialise";
 import { Ball, LineCenter, Racket1, Racket2 } from "./GameFunctions/GameDrawer";
 import { player1, player2 } from "../../Game/Online/Socket/start_game_socket";
 import { socket } from "../../Game/Online/Socket/auto_match_socket";
+import { useToast } from "@chakra-ui/react";
+import { GameContextType, GetGameInfoContext } from "../../Game/GameContext/GameContext";
+import { stream } from "../Socket/start_stream_socket";
 
 export let StreamData:GameDataType = new GameDataType();
 
@@ -37,7 +40,6 @@ const Game = ({ router }: any) => {
         
         p5.draw = () => 
         {
-          first_conection(StreamContext);
           NewValue(p5);
           GetPlayersData(router,StreamContext);
           if(!StreamContext.StreamInfo.Access)
@@ -64,13 +66,10 @@ const Game = ({ router }: any) => {
     catch{}
     return()=>
     {
-      if(BottomNav && LeftNav)
-      {
-          BottomNav.style.display = "none";
-          LeftNav.style.display = "block";
-      }
       test.remove();
       StreamData = new GameDataType();
+      console.log("just show me "+StreamContext.StreamInfo.Access);
+      stream.emit('spectator_leave');
     };
   }, []);
 

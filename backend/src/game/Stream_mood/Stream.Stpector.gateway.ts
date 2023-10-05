@@ -29,34 +29,85 @@ import { NewSpectator } from '../PingPong.dto';
     server: Server;
     @SubscribeMessage('LoadStream')
     handleLoadStream(client: Socket): void {
+      try{
       client.emit("LoadStream",GameObj.length);
+      }
+      catch{}
     }
     @SubscribeMessage('new_spectator')
     handleNewSpectator(client: Socket,data: NewSpectator): void {
+      try{
       const RoomNumber = data.RoomNumber;
       if(GameObj.length && GameObj[RoomNumber] !== undefined)
+      {
+        if(GameObj[RoomNumber].StreamsInfo.find(elem =>elem.SpectatorUser === data.User) !== undefined)
+        {
+          client.emit("LoadStreamFail","you can't watch two times");
+          return ;
+        }
+        else if(data.User === GameObj[RoomNumber].PlayersInfo.Player1UserName
+            || data.User === GameObj[RoomNumber].PlayersInfo.Player2UserName)
+        {
+          client.emit("LoadStreamFail","you can't watch yourself");
+          return ;
+        }
+        for(let a = 0 ; a<GameObj.length; a++ )
+        {
+          if(GameObj[a].StreamsInfo.find(elem =>elem.SpectatorUser === data.User) !== undefined)
+          {
+            client.emit("LoadStreamFail","you already register as spectator in another room");
+            return ;
+          }
+        }
         GameObj[RoomNumber].StreamsInfo.push(new GameStreamAttribute);
-      // console.log('new_spectator at: ',RoomNumber,GameObj[RoomNumber].StreamsInfo.length );
+        client.emit("LoadStreamAccept");
+      }
+      else
+      {
+        client.emit("LoadStreamFail","please try later...");
+        return ;
+      }
       if(GameObj.length
         && GameObj[RoomNumber] !== undefined
         && GameObj[RoomNumber].StreamsInfo[GameObj[RoomNumber].StreamsInfo.length - 1] !== undefined)
       {
         GameObj[RoomNumber].StreamsInfo[GameObj[RoomNumber].StreamsInfo.length - 1].SpectatorID = client.id;
+        GameObj[RoomNumber].StreamsInfo[GameObj[RoomNumber].StreamsInfo.length - 1].SpectatorUser = data.User;
         GameObj[RoomNumber].StreamsInfo[GameObj[RoomNumber].StreamsInfo.length - 1].SpectatorSocket = client;
       }
     }
-	@SubscribeMessage('spectator_leave')
-	handleconection_closed(client: Socket): void {
-    if(GameObj)
-        for(let a = 0 ; a<GameObj.length; a++ )
-          for(let b = 0 ; b<GameObj.length; b++ )
-            GameObj[a].StreamsInfo = GameObj[a].StreamsInfo.filter((elem)=>{elem.SpectatorID !== client.id});
-  }
+    catch{}
+    }
+	  @SubscribeMessage('spectator_leave')
+    handleconection_closed(client: Socket): void {
+      try
+      {
+        console.log("handleconection_closed");
+        if(GameObj)
+        {
+          for(let a = 0 ; a<GameObj.length; a++ )
+          {
+            GameObj[a].StreamsInfo = GameObj[a].StreamsInfo.filter((elem)=>elem.SpectatorID !== client.id);
+            client.emit('SimulationEnd','you are no longger in spectator mood');
+          }
+        }
+      }
+      catch{}
+    }
     handleDisconnect(client: Socket): void {
-      if(GameObj)
-        for(let a = 0 ; a<GameObj.length; a++ )
-          for(let b = 0 ; b<GameObj.length; b++ )
-            GameObj[a].StreamsInfo = GameObj[a].StreamsInfo.filter((elem)=>{elem.SpectatorID !== client.id});
+      try
+      {
+        console.log("handleDisconnect");
+        if(GameObj)
+        {
+          for(let a = 0 ; a<GameObj.length; a++ )
+          {
+            GameObj[a].StreamsInfo = GameObj[a].StreamsInfo.filter((elem)=>elem.SpectatorID !== client.id);
+            client.emit('SimulationEnd','you are no longger in spectator mood');
+          }
+        }
+      }
+      catch{}
     }
   }
   

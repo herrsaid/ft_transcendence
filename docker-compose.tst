@@ -4,16 +4,14 @@ services:
   db:
     image: postgres
     restart: always
-    # volumes:
-    #   - ./data/db:/var/lib/postgresql/data
+    volumes:
+      - postgressdb:/var/lib/postgresql/data
     ports:
       - 5432:5432
-    # environment:
-    #   - POSTGRES_DB=pong
-    #   - POSTGRES_USER=postgres
-    #   - POSTGRES_PASSWORD=postgres
-    env_file:
-      - ./backend/.postgres.env
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     networks:
       - my_net
   adminer:
@@ -24,5 +22,7 @@ services:
     networks:
       - my_net
   
+volumes:
+  postgressdb:
 networks:
     my_net:
