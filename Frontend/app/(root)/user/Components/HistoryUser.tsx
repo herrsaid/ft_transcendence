@@ -47,8 +47,10 @@ const HistoryUser = (props:props) => {
     }
 
 
-    if (data)
+    try
     {
+        if (data)
+        {
         myHistory = data.map((history:any) => {
             return <OneHistoryUser key={history.key} 
             rank={history.rank}
@@ -58,8 +60,12 @@ const HistoryUser = (props:props) => {
             enemmyuserid={history.enemmyuserid}
             />
         });
+        }
     }
-   
+    catch{
+        return null;
+    }
+    
 
     
     if (!data.length)

@@ -29,12 +29,19 @@ const UserAchievevements = (props:Achievevement) => {
   );
 
 
-  if (data)
-    {
-      myAchievevement = data.map((Achievevement:any) => {
-            return <UserOneAchievement name={Achievevement.archievement_name} key={Achievevement.key}/>
-        });
-    }
+  try
+  {
+    if (data)
+      {
+        myAchievevement = data.map((Achievevement:any) => {
+              return <UserOneAchievement name={Achievevement.archievement_name} key={Achievevement.key}/>
+          });
+      }
+
+  }
+  catch{
+    return null;
+  }
 
 
   

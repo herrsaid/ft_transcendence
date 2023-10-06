@@ -89,7 +89,7 @@ export class UserController {
             return user;
         }
         catch{
-            throw new UnauthorizedException();
+            return null;
         }
         
     }
