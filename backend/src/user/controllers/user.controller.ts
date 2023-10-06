@@ -89,7 +89,7 @@ export class UserController {
             return user;
         }
         catch{
-            throw new UnauthorizedException();
+            return null;
         }
         
     }
@@ -476,10 +476,15 @@ export class UserController {
         
     }
     @UseGuards(AuthGuard)
-    @Get('unblock/test')
-    async test(@Req() request, @Query() param)
+    @Get('unblock/users/:receiverId')
+    async unblockUsers(@Param('receiverId') receiverId:number, @Req() request)
     {
-        this.userService.deleteFriendRequestsaid(2,1);
+        try{
+            this.userService.deleteFriendRequestusers(receiverId,request.user.id);
+        }
+        catch{
+            throw new UnauthorizedException();
+        }
     }
    
 }

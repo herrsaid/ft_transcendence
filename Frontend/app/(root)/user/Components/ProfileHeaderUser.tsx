@@ -109,9 +109,9 @@ const ProfileHeaderUser = (props:props) => {
           .then(data => user_response == 'accepted' ? setstatus('Unfriend') : setstatus(data.status))
     }
 
-    const deleteFriendRequest = (friendRequestId:string) =>
+    const deleteFriendRequest = (friendRequestId:any) =>
     {
-        fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/remove/${friendRequestId}`, {
+        fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/unblock/users/${friendRequestId}`, {
             method: 'GET',
             headers:{
                 Authorization: `Bearer ${Cookies.get('access_token')}`,
@@ -165,7 +165,7 @@ const ProfileHeaderUser = (props:props) => {
             }
             else if (blockString === 'Unblock' || data.status == 'blocked')
             {
-                deleteFriendRequest(data.id);
+                deleteFriendRequest(props.id);
                 setBlockString('Block')
                 setBlockStatus(false);
             }
@@ -176,7 +176,7 @@ const ProfileHeaderUser = (props:props) => {
             }
             else
             {
-                deleteFriendRequest(data.id);
+                deleteFriendRequest(props.id);
                 blockFriend();
                 setBlockString('Unblock')
                 setBlockStatus(true);
@@ -189,7 +189,7 @@ const ProfileHeaderUser = (props:props) => {
         {
     
             if (data.status === 'pending' || status == 'Cancel'){
-                deleteFriendRequest(data.id);
+                deleteFriendRequest(props.id);
                 button_placeholder = 'Add Friend';
                 setstatus('Add Friend')
             }
@@ -208,7 +208,7 @@ const ProfileHeaderUser = (props:props) => {
             }
             else if (data.status === 'accepted' || status == 'Unfriend')
             {
-                deleteFriendRequest(data.id);
+                deleteFriendRequest(props.id);
                 button_placeholder = 'Add Friend';
                 setstatus('Add Friend')
             }    
