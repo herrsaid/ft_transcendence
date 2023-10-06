@@ -50,17 +50,20 @@ export default function Messages()
         audio.play();
         if(!data.toGroup)
         {
-            // const id = data.id
-            // if (!messages.find((data:any) => (data.id == id)))
-            // setMessages((old:any) => [...old, {src:data.src, dst:data.dst,content:data.content}])
             setMessages((old:any) => [...old, data])
         }
-        else
+        else if (data.toGroup)
         {
-            // const id = data.id
-            // if (!messages.find((data:any) => (data.id == id)))
-            // setGroupMessage((old:any) => [...old, {src:data.src, dst:data.dst,content:data.content}])
-            setGroupMessage((old:any) => [...old, data])
+            fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/block/status/${data.src}`,{
+                method: 'GET',
+                headers:{
+                    Authorization: `Bearer ${Cookies.get('access_token')}`
+                }
+            }).then(data => data.json()).then(res => {
+                // if (data.status != 'waiting-for-unblock')
+                    if (res.status != 'blocked' && res.status != 'waiting-for-unblock')
+                        setGroupMessage((old:any) => [...old, data])
+            })
         }
     })
     },[])

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Cookies from 'js-cookie';
 import Groups from "./groups";
 import Search from "./search";
+import useSWR from 'swr';
 
 export default function Chats()
 {
@@ -11,6 +12,11 @@ export default function Chats()
     const [forg, setForg] = useState(true);
     const [search, setSearch] = useState([]);
     const searchRef = useRef<any>(null);
+    const fetcher = (url:string) => fetch(url,{method: 'GET',
+            headers:{
+                Authorization: `Bearer ${Cookies.get('access_token')}`
+            }}).then((res) => res.json());
+    const { data, error } = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friends`, fetcher);
     const searching = (e:any) => {
         console.log(e.target.value)
         fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/search?value=${e.target.value}`, {
@@ -21,22 +27,25 @@ export default function Chats()
         }).then((response) => response.json())
         .then(data => setSearch(data))
     }
-    useEffect(()=>{
+    // useEffect(()=>{
         
-        fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friends`, {
-            method: 'GET',
-            headers:{
-                Authorization: `Bearer ${Cookies.get('access_token')}`
-            }
+    //     fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friends`, {
+    //         method: 'GET',
+    //         headers:{
+    //             Authorization: `Bearer ${Cookies.get('access_token')}`
+    //         }
             
-        }).then((response) => response.json())
-        .then(data => setFriends(data))  
-    },[]);
-
-    const newArray = friends.map((frnd:any, index)=>
+    //     }).then((response) => response.json())
+    //     .then(data => setFriends(data))  
+    // },[]);
+    if (data)
     {
-        return (<Friend key={index} user={frnd} />)
-    })
+        console.log('data', data)
+        var newArray = data.map((frnd:any, index:number)=>
+        {
+            return (<Friend key={index} user={frnd} />)
+        })
+    }
     const friend_click = () =>{setForg(true)}
     const group_click = () =>{setForg(false)}
     useEffect(()=>{

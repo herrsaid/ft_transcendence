@@ -69,12 +69,18 @@ export class GroupusersService {
         // check to leaver is owner if set another owner
         if (group.members.length == 1)
         {
-            const messages = await this.Group.findOne_messages(group.id)
-            this.GroupUsers.delete({id:spes.id});
-            await messages.messages.forEach( async element => {
-                await this.Messages.delete(element.id);
-            });
-            this.Group.delete(group.id)
+            try{
+
+                const messages = await this.Group.findOne_messages(group.id)
+                this.GroupUsers.delete({id:spes.id});
+                await messages.messages.forEach( async element => {
+                    await this.Messages.delete(element.id);
+                });
+                this.Group.delete(group.id)
+            }
+            catch{
+                throw new  NotFoundException();
+            }
         }
         else if (spes.role == "owner" && group.members.length > 1)
         {

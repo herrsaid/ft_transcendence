@@ -79,7 +79,14 @@ export class GroupsService {
     }
     async delete(id:number)
     {
-        console.log('delete', id );
-        this.Groups.delete({id:id})
+        try
+        {
+            console.log('delete', id );
+            this.Groups.delete({id:id})
+        }
+        catch
+        {
+            throw new NotFoundException();
+        }
     }
 }

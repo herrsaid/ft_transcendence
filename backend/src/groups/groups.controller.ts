@@ -155,16 +155,21 @@ export class GroupsController {
         @Get('kick')
         async kick(@Req() request, @Query() parmas)
         {
-            const user_id = request['user'].id;
-            if((await this.GroupUsersService.is_admin(user_id, parmas.id)) != "user"
-                && (await this.GroupUsersService.is_admin(parmas.toremove, parmas.id)) != "owner")
+            try
             {
-                this.GroupUsersService.remove(parmas.toremove, parmas.id)
-                this.eventEmitter.emit('status', {user:parmas.toremove, action:"out"})
-                return 'deleted'
+                const user_id = request['user'].id;
+                if((await this.GroupUsersService.is_admin(user_id, parmas.id)) != "user"
+                    && (await this.GroupUsersService.is_admin(parmas.toremove, parmas.id)) != "owner")
+                {
+                    this.GroupUsersService.remove(parmas.toremove, parmas.id)
+                    this.eventEmitter.emit('status', {user:parmas.toremove, action:"out"})
+                    return 'deleted'
+                }
             }
-            else 
+            catch
+            {
                 throw new UnauthorizedException();
+            }
         }
         @UseGuards(AuthGuard)
         @Get('mute')

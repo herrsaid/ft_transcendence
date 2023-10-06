@@ -16,11 +16,17 @@ import reciverContext from "../reciverContext";
         headers:{
           Authorization: `Bearer ${Cookies.get('access_token')}`,
         }
-      }).then((response) => response.json()).then(data => setGroup(data))
+      }).then((response) => 
+      {
+        if (response.status == 200)
+          return response.json()
+        else
+          return []
+      }).then(data => setGroup(data))
       reciver.reciver.action = 0;
-    },[reciver.reciver.action, reciver.reciver.id])
+    },[reciver.reciver.id, reciver.reciver.action])
     let groups;
-    if (group)
+    if (group != undefined)
     {
       groups = group.map((data:any, index:number) => {return(<Group key={index} group={data}/>)});
     }

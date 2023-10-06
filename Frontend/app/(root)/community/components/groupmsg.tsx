@@ -1,18 +1,29 @@
-import { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
 import reciverContext from "../reciverContext"
 import { useRouter } from 'next/navigation';
-
+import Cookies from 'js-cookie';
 
 export default function GroupMsg({content}:any)
 {
     
     const reciver = useContext(reciverContext);
     const user = reciver.reciver.members.find((data:any) => (data.user.id == content.member))
+    const [status, setStatus] = useState('')
     const router = useRouter();
     const profile = () =>{
         // user?username=dk
         router.replace(`/user?username=${user.user.username}`);
     }
+    useEffect(() =>{
+        fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/block/status/${content.member}`,
+            {
+                method: 'GET',
+                headers:{
+                    Authorization: `Bearer ${Cookies.get('access_token')}`
+                }
+            }).then(res => res.json()).then(data => setStatus(data.status));
+    })
+    console.log('sts => ',status);
     if(user == undefined)
         return(null)
     if (content.class == 'me')
@@ -35,7 +46,7 @@ export default function GroupMsg({content}:any)
             </div>
         )
     }
-    else
+    else if (content.class == 'you' && status == 'not-sent')
     {
         return(
             <div className="flex self-start ml-1 ">
