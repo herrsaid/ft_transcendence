@@ -66,5 +66,7 @@ export default function GroupMsg({content}:any)
             </div>
         )
     }
+    else
+        return (null);
             
 }
