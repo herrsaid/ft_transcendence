@@ -1,5 +1,5 @@
 
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import {SlOptionsVertical} from 'react-icons/sl'
 import reciverContext from '../reciverContext'
 import UserContext from '../../UserContext';
@@ -108,6 +108,16 @@ export default function Groupmember({member}:any)
             setClick(!click);
         }
     }
+    const [muteState, setMuteState] = useState(<button onClick={submitmute} className='btn btn-outline btn-success m-1' type="submit">mute</button>)
+    useEffect(()=>{
+        if (data)
+        {
+            if(data.status == 'able')
+                setMuteState(<button id='mute' onClick={submitmute} className='btn btn-outline btn-success m-1' type="submit">mute</button>)
+            else if (data.status == 'muted')
+                setMuteState(<button id='unmute' onClick={submitmute} className='btn btn-outline btn-success m-1' type="submit">unmute</button>);
+        }
+    },[data])
     if (data)
         console.log('da =>', data);
     if (member.user.id == user.user.id)
@@ -135,8 +145,8 @@ export default function Groupmember({member}:any)
                   <div className='bg-[#18184a] flex flex-colp-4 rounded-lg  self-center'>
                             <div>
                                 <form className='flex' onSubmit={submitmute}>
-                                    <input className=' bg-[#18184a] input input-bordered input-primary w-full max-w-xs m-1' id='time'  placeholder='Time' type="number"  min="1" max="5" />
-                                    <button onClick={submitmute} className='btn btn-outline btn-success m-1' type="submit"><GiMute></GiMute></button>
+                                    <input className=' bg-[#18184a] input input-bordered input-primary w-full max-w-xs m-1' id='time'  placeholder='Time' type="number"  min='1' max='5' />
+                                    {muteState}
                                 </form>
                                 <div className='flex flex-col'>
                                     <button className='m-1 btn btn-outline btn-error' onClick={handlekick} >Kick</button>

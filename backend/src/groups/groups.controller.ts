@@ -176,12 +176,25 @@ export class GroupsController {
         async mute(@Req() request, @Query() parmas)
         {
             const user_id = request['user'].id;
-            console.log('time', parmas)
             if((await this.GroupUsersService.is_admin(user_id, parmas.id)) != "user"
                 && (await this.GroupUsersService.is_admin(parmas.tomute, parmas.id)) != "owner")
             {
                 this.GroupUsersService.mute(parmas.id, parmas.tomute,parmas.time)
                 return 'muted'
+            }
+            else 
+                throw new UnauthorizedException();
+        }
+        @UseGuards(AuthGuard)
+        @Get('unmute')
+        async unmute(@Req() request, @Query() parmas)
+        {
+            const user_id = request['user'].id;
+            if((await this.GroupUsersService.is_admin(user_id, parmas.id)) != "user"
+                && (await this.GroupUsersService.is_admin(parmas.tomute, parmas.id)) != "owner")
+            {
+                this.GroupUsersService.unmute(parmas.id, parmas.tounmute)
+                return 'unmuted'
             }
             else 
                 throw new UnauthorizedException();

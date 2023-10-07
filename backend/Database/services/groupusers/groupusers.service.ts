@@ -150,6 +150,19 @@ export class GroupusersService {
         }
     }
 
+    async unmute(group_id:number,to_mute:number)
+    {
+        try{
+            const groupusers = await this.GroupUsers.find({relations: ["group", "user"]});
+            const spes = groupusers.find((data)=> data.group.id == group_id && data.user.id == to_mute);
+            spes.status = "able";
+            this.GroupUsers.save(spes);
+        }
+        catch
+        {
+            throw new UnauthorizedException();
+        }
+    }
     async ban(group_id:number, to_ban:number)
     {
         try
