@@ -68,6 +68,56 @@ export default function Groupinfo()
             })
         }
     }
+    const remove = (e:any)=>{
+        e.preventDefault();
+        fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/remove?id=${reciver.reciver.id}`,
+                    {
+                        method: 'GET',
+                        headers:{
+                            Authorization: `Bearer ${Cookies.get('access_token')}`
+                        }
+                    }).then((response) => {
+                        if (response.status == 200)
+                        {
+                            toast({
+                                title: 'great',
+                                description: "password removed",
+                                position: 'top-right',
+                                status: 'info',
+                                duration: 6000,
+                                isClosable: true,
+                              })
+                        }
+                    })
+    }
+    const change = (e:any) => {
+        e.preventDefault();
+        const element:any = document.getElementById('password');
+        const value = element.value.trim();
+        console.log('valu', value);
+        if (value != '')
+        {
+            fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/change`,{
+                method: 'POST', headers:{
+                    Authorization: `Bearer ${Cookies.get('access_token')}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({id:reciver.reciver.id, password:value})
+            }).then(res => {
+                if (res.status == 201)
+                {
+                    toast({
+                        title: 'Greate',
+                        description: "password changed",
+                        position: 'top-right',
+                        status: 'success',
+                        duration: 6000,
+                        isClosable: true,
+                      })
+                }
+            })
+        }
+    }
     useEffect(()=>{
         fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/members?id=${reciver.reciver.id}`,
         {
@@ -153,9 +203,9 @@ export default function Groupinfo()
                         </div>
                         <div className='flex self-center p-2'>
                             <form action="">
-                                <input type="password" placeholder="New Password" className="input bg-[#18184a] input-secondary w-full max-w-xs m-2" />
-                                <button type='submit' className='btn btn-success'>change</button>
-                                {(reciver.reciver.type == "protected") && <button className='btn btn-error'>remove password</button>}
+                                <input id='password' type="password" placeholder="New Password" className="input bg-[#18184a] input-secondary w-full max-w-xs m-2" />
+                                <button onClick={change} type='submit' className='btn btn-success'>change</button>
+                                {(reciver.reciver.type == "protected") && <button onClick={remove} className='btn btn-error'>remove password</button>}
                             </form>
                         </div>
                 </div>
