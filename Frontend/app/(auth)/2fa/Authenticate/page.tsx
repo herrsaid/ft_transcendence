@@ -23,7 +23,7 @@ export default  function TwoFactor()
         }
         else if(Cookies.get('twofactortoken') != undefined)
         {
-          router.back();
+            router.replace("/");
         }
       }
       
