@@ -110,7 +110,7 @@ export default function Groupinfo()
                         {
                             reciver.reciver.members.map((data:any, index:number) => 
                             {
-                                return (<Groupmember data={data} key={index} />)
+                                return (<Groupmember member={data} key={index} />)
                             })
                         }
                 </div>
