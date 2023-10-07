@@ -257,9 +257,21 @@ export class GroupsController {
             }
         }
         @UseGuards(AuthGuard)
-        @Get('test')
-        async test ()
+        @Get('access')
+        async test (@Req() request, @Query() params)
         {
-            this.eventEmitter.emit('join', {id:1})
+            try
+            {
+                const user_id = request['user'].id;
+                const status = await this.GroupUsersService.isUserInGroup(user_id, params.id)
+                if(status)
+                    return {status: true}
+                else
+                    return {status: false}
+            }
+            catch
+            {
+                throw new UnauthorizedException();
+            }
         }
 }

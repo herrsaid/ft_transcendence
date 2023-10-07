@@ -23,7 +23,6 @@ export default function GroupMsg({content}:any)
                 }
             }).then(res => res.json()).then(data => setStatus(data.status));
     })
-    console.log('sts => ',status);
     if(user == undefined)
         return(null)
     if (content.class == 'me')

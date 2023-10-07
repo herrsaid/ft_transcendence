@@ -58,7 +58,7 @@ export default function Info()
         if (data)
         {
             setStatusBtn(<button className='btn btn-error w-full' onClick={block} >Block</button>)
-            fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/remove/${data.id}`, {
+            fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/unblock/users/${reciver.reciver.id}`, {
                 method: 'GET',
                 headers:{
                     Authorization: `Bearer ${Cookies.get('access_token')}`

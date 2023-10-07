@@ -3,21 +3,33 @@ import { useContext } from 'react'
 import {FaHashtag} from 'react-icons/fa'
 import reciverContext from '../reciverContext'
 import activeContext from '../activeContext';
+import Cookies from 'js-cookie';
 
 export default function Group({group}:any) {
     const reciver = useContext(reciverContext);
     const active = useContext(activeContext);
     const group_click = () =>{
-        if (reciver.reciver.isgroup == true)
+        fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/access?id=${group.id}`,
         {
-            if (reciver.reciver.id != group.id)
-                reciver.setReciver({isgroup:true, id:group.id, name:group.name,me:group.role,size:group.size,members:[]});
-        }
-        else
-        {
-            reciver.setReciver({isgroup:true, id:group.id, name:group.name,me:group.role,size:group.size,members:[]});
-        }
-        active.setActive('message');
+            method: 'GET',
+            headers:{
+                Authorization: `Bearer ${Cookies.get('access_token')}`
+            }
+        }).then(res => res.json()).then(data => {
+            if (data.status == true)
+            {
+                if (reciver.reciver.isgroup == true)
+                {
+                    if (reciver.reciver.id != group.id)
+                        reciver.setReciver({isgroup:true, id:group.id, name:group.name,me:group.role,size:group.size,members:[]});
+                }
+                else
+                {
+                    reciver.setReciver({isgroup:true, id:group.id, name:group.name,me:group.role,size:group.size,members:[]});
+                }
+                active.setActive('message');
+            }
+        });
     }
     return(
         <div onClick={group_click} className="flex hover:bg-[#7d32d9] cursor-pointer">
