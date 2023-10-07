@@ -8,7 +8,7 @@ export default function LoginPage() {
   const router = useRouter();
   if (Cookies.get('access_token') != undefined)
   {
-    router.back();
+    router.replace('/')
   }
   return (
     <>
