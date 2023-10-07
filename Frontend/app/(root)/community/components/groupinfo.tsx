@@ -149,9 +149,7 @@ export default function Groupinfo()
                 <div className="self-center">
                     {reciver.reciver.name}
                 </div>
-                <div className="self-center">
-                    {reciver.reciver.size} member
-                </div>
+
                 <div className="self-center">
                     {(reciver.reciver.me == "owner") && <button onClick={()=>{const id:any =document.getElementById('setting'); id.showModal()}} className='btn btn-outline btn-secondary'><AiFillSetting size={30}></AiFillSetting></button>}
                 </div>
