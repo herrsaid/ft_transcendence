@@ -57,7 +57,7 @@ function Result({res}:any)
                   socket.emit('joinroom',{id:res.id})
                   reciver.setReciver({...reciver.reciver, action:Math.random()})
             }
-            else
+            else 
             {
                 toast({
                     title: 'error',

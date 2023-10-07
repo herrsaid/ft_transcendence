@@ -203,9 +203,13 @@ export default function Groupinfo()
                         </div>
                         <div className='flex self-center p-2'>
                             <form action="">
-                                <input id='password' type="password" placeholder="New Password" className="input bg-[#18184a] input-secondary w-full max-w-xs m-2" />
-                                <button onClick={change} type='submit' className='btn btn-success'>change</button>
-                                {(reciver.reciver.type == "protected") && <button onClick={remove} className='btn btn-error'>remove password</button>}
+                                <div>
+                                    <input id='password' type="password" placeholder="New Password" className="input bg-[#18184a] input-secondary w-full max-w-xs m-2" />
+                                </div>
+                                <div className='flex flex-col self-center'>
+                                    <button onClick={change} type='submit' className='btn btn-success m-1'>change</button>
+                                    {(reciver.reciver.type == "protected") && <button onClick={remove} className='btn btn-error m-1'>remove password</button>}
+                                </div>
                             </form>
                         </div>
                 </div>
