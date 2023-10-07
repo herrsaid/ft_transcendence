@@ -105,7 +105,7 @@ export class GroupsService {
         }
         catch 
         {
-            throw new UnauthorizedException;
+            throw new UnauthorizedException();
         }
     }
     async change(id:number, password:string)
