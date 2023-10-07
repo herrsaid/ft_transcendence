@@ -274,4 +274,33 @@ export class GroupsController {
                 throw new UnauthorizedException();
             }
         }
+        @UseGuards(AuthGuard)
+        @Post('change')
+        async change(@Req() request, @Body() params)
+        {
+            try
+            {
+                const user_id = request['user'].id;
+                await this.GroupService.change(params.id, params.password);
+            }
+            catch (error)
+            {
+                throw new UnauthorizedException();
+            }
+
+        }
+        @UseGuards(AuthGuard)
+        @Get('remove')
+        async remove(@Req() request, @Query() params)
+        {
+            try
+            {
+                const user_id = request['user'].id;
+                await this.GroupService.remove(params.id)
+            }
+            catch (error)
+            {
+                throw new UnauthorizedException();
+            }
+        }
 }

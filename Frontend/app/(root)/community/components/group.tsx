@@ -21,11 +21,11 @@ export default function Group({group}:any) {
                 if (reciver.reciver.isgroup == true)
                 {
                     if (reciver.reciver.id != group.id)
-                        reciver.setReciver({isgroup:true, id:group.id, name:group.name,me:group.role,size:group.size,members:[]});
+                        reciver.setReciver({isgroup:true, id:group.id, name:group.name,me:group.role,size:group.size,type:group.type,members:[]});
                 }
                 else
                 {
-                    reciver.setReciver({isgroup:true, id:group.id, name:group.name,me:group.role,size:group.size,members:[]});
+                    reciver.setReciver({isgroup:true, id:group.id, name:group.name,me:group.role,size:group.size,type:group.type,members:[]});
                 }
                 active.setActive('message');
             }

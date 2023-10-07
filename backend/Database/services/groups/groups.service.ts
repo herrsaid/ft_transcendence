@@ -8,6 +8,8 @@ import { Like } from "typeorm"
 import { GroupusersService } from '../groupusers/groupusers.service';
 import GroupUsers from 'Database/entity/GroupUsers.entity';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import { hashPassword } from 'src/hash/hash';
+// import {hashPassword, compare} from './hash/hash'
 
 
 @Injectable()
@@ -83,6 +85,37 @@ export class GroupsService {
         {
             console.log('delete', id );
             this.Groups.delete({id:id})
+        }
+        catch
+        {
+            throw new NotFoundException();
+        }
+    }
+    async remove(id:number)
+    {
+        try
+        {
+            const group = await this.Groups.findOne({where:{id:id}})
+            if (group.type == 'protected')
+            {
+                group.type = 'public';
+                group.password = '';
+                this.Groups.save(group);
+            }
+        }
+        catch 
+        {
+            throw new UnauthorizedException;
+        }
+    }
+    async change(id:number, password:string)
+    {
+        try
+        {
+            const group = await this.Groups.findOne({where:{id:id}})
+            group.type = 'protected';
+            group.password = await hashPassword(password);
+            this.Groups.save(group);
         }
         catch
         {

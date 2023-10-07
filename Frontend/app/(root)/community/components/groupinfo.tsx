@@ -9,6 +9,7 @@ import { Button, Input, useToast } from '@chakra-ui/react';
 import { socket } from '../../socket/socket';
 import {BiArrowBack} from 'react-icons/bi'
 import activeContext from '../activeContext';
+import {AiFillSetting} from 'react-icons/ai'
 
 export default function Groupinfo()
 {
@@ -89,7 +90,7 @@ export default function Groupinfo()
     return (
         <div className=" relative flex flex-col justify-center h-full">
             <div className='absolute top-0 left-5 sm:hidden'>
-                <button onClick={active.setActive('message')} className='btn btn-outline btn-info'><BiArrowBack/></button>
+                <button onClick={() => {active.setActive('message')}} className='btn btn-outline btn-info'><BiArrowBack/></button>
             </div>
             <div className="flex flex-col  h-[40%] w-[90%] self-center mb-1 rounded-lg bg-[#363672] justify-center">
                 <div className=" rounded-full self-center">
@@ -100,6 +101,9 @@ export default function Groupinfo()
                 </div>
                 <div className="self-center">
                     {reciver.reciver.size} member
+                </div>
+                <div className="self-center">
+                    {(reciver.reciver.me == "owner") && <button onClick={()=>{const id:any =document.getElementById('setting'); id.showModal()}} className='btn btn-outline btn-secondary'><AiFillSetting size={30}></AiFillSetting></button>}
                 </div>
             </div>
             <div className="flex flex-col h-[50%] w-[90%] justify-between self-center rounded-lg bg-[#363672]">
@@ -135,6 +139,25 @@ export default function Groupinfo()
                         <Input id='username' variant='outline' placeholder='username' type="string" />
                          <Button onClick={adduser} colorScheme='Green' type="submit">add</Button>
                     </form>
+                </div>
+                  </div>
+                  <form method="dialog" className="modal-backdrop">
+                    <button>close</button>
+                  </form>
+                </dialog>
+                <dialog id="setting" className="modal">
+                  <div className="modal-box bg-[#18184a]">   
+                    <div className='flex flex-col justify-center'>
+                        <div className='flex self-center'>
+                            <h1 className=' font-bold'>Settings</h1>
+                        </div>
+                        <div className='flex self-center p-2'>
+                            <form action="">
+                                <input type="password" placeholder="New Password" className="input bg-[#18184a] input-secondary w-full max-w-xs m-2" />
+                                <button type='submit' className='btn btn-success'>change</button>
+                                {(reciver.reciver.type == "protected") && <button className='btn btn-error'>remove password</button>}
+                            </form>
+                        </div>
                 </div>
                   </div>
                   <form method="dialog" className="modal-backdrop">

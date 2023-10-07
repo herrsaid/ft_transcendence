@@ -74,7 +74,7 @@ export class GroupusersService {
                 try{
     
                     const messages = await this.Group.findOne_messages(group.id)
-                    this.GroupUsers.delete({id:spes.id});
+                    await this.GroupUsers.delete({id:spes.id});
                     await messages.messages.forEach( async element => {
                         await this.Messages.delete(element.id);
                     });
@@ -94,13 +94,13 @@ export class GroupusersService {
                 group.size = group.size - 1;
                 this.GroupUsers.save(newowner);
                 this.Group.save(group);
-                this.GroupUsers.delete({id:spes.id});
+                await this.GroupUsers.delete({id:spes.id});
                 // this.Group.delete()
             }
             else
             {
                 try{
-                    this.GroupUsers.delete({id:spes.id});
+                    await this.GroupUsers.delete({id:spes.id});
                     group.size = group.size - 1;
                     this.GroupUsers.save(group);
                 }
