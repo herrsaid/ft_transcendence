@@ -60,8 +60,6 @@ export default function Groupmember({member}:any)
                 Authorization: `Bearer ${Cookies.get('access_token')}`
             }
         })
-        setClick(!click);
-        setKick(!kick);
     }
     const addAdmin = ()=>{
         fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/newadmin?id=${reciver.reciver.id}&new=${member.user.id}`,
@@ -144,7 +142,7 @@ export default function Groupmember({member}:any)
                                 </form>
                                 <div className='flex flex-col'>
                                     <button className='m-1 btn btn-outline btn-error' onClick={handlekick} >Kick</button>
-                                    <button className='m-1 btn btn-outline btn-error' onClick={handleban} >Ban</button>
+                                    <button className='m-1 btn btn-outline btn-error' onClick={handleban} >Ban/Unban</button>
                                     {(member.role == 'user' ) && <button className='m-1 btn btn-outline btn-success' onClick={addAdmin} >Set Admin</button>}
                                 </div>
                             </div>

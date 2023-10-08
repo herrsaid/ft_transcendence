@@ -42,7 +42,7 @@ export class GroupusersService {
         try 
         {
             const groupusers = await this.GroupUsers.find({relations: ["group", "user"]})
-            const mygorup = groupusers.filter((data) => {return (data.user.id == id && data.status != "baned")}).map((data)=>{
+            const mygorup = groupusers.filter((data) => {return (data.user.id == id)}).map((data)=>{
                     data.group.role = data.role;
                     return (data.group)
             })
@@ -167,10 +167,17 @@ export class GroupusersService {
     {
         try
         {
-
             const groupusers = await this.GroupUsers.find({relations: ["group", "user"]});
             const spes = groupusers.find((data)=> data.group.id == group_id && data.user.id == to_ban);
-            spes.status = "baned"
+            if(spes.status == "able")
+            {
+                spes.status = "baned"
+            }
+            else if (spes.status == "baned")
+            {
+                spes.status = "able"
+            }
+            console.log('after',spes.status)
             this.GroupUsers.save(spes);
         }
         catch

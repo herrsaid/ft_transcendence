@@ -209,12 +209,11 @@ export class GroupsController {
         @Get('ban')
         async ban(@Req() request, @Query() params)
         {
-            console.log('ban', params)
             const user_id = request['user'].id;
             if((await this.GroupUsersService.is_admin(user_id, params.id)) != "user"
                 && (await this.GroupUsersService.is_admin(params.toban, params.id)) != "owner")
             {
-                this.eventEmitter.emit('status', {user:params.toban, action:"out"})
+                // this.eventEmitter.emit('status', {user:params.toban, action:"out"})
                 this.GroupUsersService.ban(params.id, params.toban)
             }
             else 
