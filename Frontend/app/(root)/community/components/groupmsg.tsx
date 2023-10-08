@@ -45,7 +45,7 @@ export default function GroupMsg({content}:any)
             </div>
         )
     }
-    else if (content.class == 'you' && status == 'not-sent')
+    else if (content.class == 'you' && (status == 'not-sent' || status == 'accepted'))
     {
         return(
             <div className="flex self-start ml-1 ">
