@@ -94,7 +94,6 @@ export default function Groupinfo()
         e.preventDefault();
         const element:any = document.getElementById('password');
         const value = element.value.trim();
-        console.log('valu', value);
         if (value != '')
         {
             fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/change`,{
