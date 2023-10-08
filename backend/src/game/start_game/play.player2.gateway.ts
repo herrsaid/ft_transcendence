@@ -23,6 +23,10 @@ import {
 import { FirstConnection, PlayerPos } from '../PingPong.dto';
 import { WebSocketGateWayFilter } from '../PingPong.filter';
 import { UseFilters, UsePipes, ValidationPipe } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+
+const jwt = require('jsonwebtoken');
+
   export let Player2ID: string = '',speed2: number = 0,points2: number = 0,enemyusername:string = '',enemyimage:string = '';;
   let none: Socket;
   @WebSocketGateway(1341, {
@@ -31,8 +35,20 @@ import { UseFilters, UsePipes, ValidationPipe } from '@nestjs/common';
   @UseFilters(new WebSocketGateWayFilter())
   @UsePipes(new ValidationPipe())
   export class PlayPlayer2Gateway implements OnGatewayDisconnect {
-    @WebSocketServer()
-    server: Server;
+    constructor(private jwtService: JwtService)
+    {
+      
+    };
+    async handleConnection(socket: Socket)
+    {
+      try{
+        const token = socket.handshake.headers.authorization;
+        const payload = jwt.verify(token, process.env.JWT_ACCESS_TOKEN_SECRET);
+        
+      }catch(error){
+        socket.disconnect(); 
+      }
+    }
     @SubscribeMessage('first_conection')
     handleFirst_conct(@ConnectedSocket() client: Socket, @MessageBody() data:FirstConnection): void {
       try{

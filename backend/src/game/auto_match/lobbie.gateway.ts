@@ -10,6 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 import {
     SubscribeMessage,
     WebSocketGateway,
@@ -38,7 +42,10 @@ import { ConectionClosedLogic, DisconnectLogic } from './Functions/Disconnect_Co
 import { UseFilters, UsePipes, ValidationPipe } from '@nestjs/common';
 import { WebSocketGateWayFilter } from '../PingPong.filter';
 import { UserService } from 'src/user/services/user.service';
-  
+import { JwtService } from '@nestjs/jwt';
+
+const jwt = require('jsonwebtoken');
+
   export let Rooms: RoomClass[] = [];
   export let Online: OnlineClass[] = [];
   @WebSocketGateway(1339, {
@@ -48,12 +55,21 @@ import { UserService } from 'src/user/services/user.service';
   @UseFilters(new WebSocketGateWayFilter())
   @UsePipes(new ValidationPipe())
   export class PingPongGateway implements OnGatewayDisconnect {
-    constructor(private UserManager:UserService)
+    constructor(private UserManager:UserService,private jwtService: JwtService)
     {
       
     };
-    @WebSocketServer()
-    
+
+    async handleConnection(socket: Socket)
+    {
+      try{
+        const token = socket.handshake.headers.authorization;
+        const payload = jwt.verify(token, process.env.JWT_ACCESS_TOKEN_SECRET);
+        
+      }catch(error){
+        socket.disconnect(); 
+      }
+    }
     @SubscribeMessage('Online')
     async handleOnline(@ConnectedSocket() client: Socket, @MessageBody() data:OnlineDTO ): Promise<void>
     {

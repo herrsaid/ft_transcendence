@@ -20,13 +20,29 @@ import {
   import { GameStreamAttribute } from '../game_brain/methods/Game_stream_attribute';
   import { GameObj } from '../game_brain/logic/Brain';
 import { NewSpectator } from '../PingPong.dto';
+import { JwtService } from '@nestjs/jwt';
+
+const jwt = require('jsonwebtoken');
+
   let none: Socket;
   @WebSocketGateway(1342, {
     cors: { origin: '*', credentials: true },
   })
   export class PlaySpactatorGateway implements OnGatewayDisconnect {
-    @WebSocketServer()
-    server: Server;
+    constructor(private jwtService: JwtService)
+    {
+      
+    };
+    async handleConnection(socket: Socket)
+    {
+      try{
+        const token = socket.handshake.headers.authorization;
+        const payload = jwt.verify(token, process.env.JWT_ACCESS_TOKEN_SECRET);
+        
+      }catch(error){
+        socket.disconnect(); 
+      }
+    }
     @SubscribeMessage('LoadStream')
     handleLoadStream(client: Socket): void {
       try{
