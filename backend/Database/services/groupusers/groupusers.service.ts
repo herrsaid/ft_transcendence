@@ -177,7 +177,6 @@ export class GroupusersService {
             {
                 spes.status = "able"
             }
-            console.log('after',spes.status)
             this.GroupUsers.save(spes);
         }
         catch
