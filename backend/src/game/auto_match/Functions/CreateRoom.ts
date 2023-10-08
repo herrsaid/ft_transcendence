@@ -14,6 +14,21 @@ export async function CreateRoomLogic(client: Socket, data: RoomSettings,UserMan
       client.emit('CreateRefused','please (log-in/sign-in) to accept your join');
       return ;
     }
+    else if(data.points > 30)
+    {
+      client.emit('InvalidData','InvalidPointsData');
+      return ;
+    }
+    else if(data.speed !== 8 && data.speed !== 6 && data.speed !== 4)
+    {
+      client.emit('InvalidData','InvalidSpeedData');
+      return ;
+    }
+    else if(Online.find(elem =>elem.Player === data.myusername) === undefined)
+    {
+      client.emit('InvalidData','InvalidUserData');
+      return ;
+    }
     let Room = Rooms.find((elem)=> elem.players[0].Player === data.myusername)
     if(Room !== undefined)
     {
