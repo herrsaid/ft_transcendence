@@ -12,3 +12,5 @@ node_modules
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+/backend/.env
+/Frontend/.env.local

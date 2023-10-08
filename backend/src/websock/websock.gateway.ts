@@ -39,20 +39,17 @@ export class WebsockGateway {
       const token = socket.handshake.headers.authorization;
       const payload = jwt.verify(token, process.env.JWT_ACCESS_TOKEN_SECRET)
       this.online.set(payload.id, socket.id);
-      console.log(this.online);
       // const groups = await this.UserService.getGroups(payload.id);
       const groups = await this.UserGroupService.findGroup(payload.id)
       for (let i = 0; i < groups.length; i++)
         socket.join(groups[i].id.toString())
     }catch(error){
-      console.log('l9lawi ladkhlti')
       socket.disconnect(); 
     }
   }
   handleDisconnect(socket: Socket)
   {
     this.online.delete(this.getkey(this.online, socket.id))
-    console.log(this.online);
   }
   @SubscribeMessage('message')
   async handleMessage(client: Socket, payload: any){
@@ -93,14 +90,12 @@ export class WebsockGateway {
     const groups = await this.UserGroupService.findGroup(payload.id)
     for (let i = 0; i < groups.length; i++)
     {
-      console.log('client: ', groups[i].id, client.id, i)
       client.join((groups[i].id).toString());
     }
   }
   @SubscribeMessage('joinroom')
   async handleJoinRoom(client: Socket, payload:any)
   {
-    console.log('joined',payload)
     client.join(payload.id.toString());
   }
 }

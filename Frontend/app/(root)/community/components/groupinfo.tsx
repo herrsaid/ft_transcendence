@@ -151,7 +151,7 @@ export default function Groupinfo()
                 </div>
 
                 <div className="self-center">
-                    {(reciver.reciver.me == "owner") && <button onClick={()=>{const id:any =document.getElementById('setting'); id.showModal()}} className='btn btn-outline btn-secondary'><AiFillSetting size={30}></AiFillSetting></button>}
+                    {(reciver.reciver.me == "owner" && reciver.reciver.type != "private") && <button onClick={()=>{const id:any =document.getElementById('setting'); id.showModal()}} className='btn btn-outline btn-secondary'><AiFillSetting size={30}></AiFillSetting></button>}
                 </div>
             </div>
             <div className="flex flex-col h-[50%] w-[90%] justify-between self-center rounded-lg bg-[#363672]">

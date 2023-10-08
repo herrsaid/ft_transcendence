@@ -175,15 +175,19 @@ export class GroupsController {
         @Get('mute')
         async mute(@Req() request, @Query() parmas)
         {
-            const user_id = request['user'].id;
-            if((await this.GroupUsersService.is_admin(user_id, parmas.id)) != "user"
-                && (await this.GroupUsersService.is_admin(parmas.tomute, parmas.id)) != "owner")
+            try
             {
-                this.GroupUsersService.mute(parmas.id, parmas.tomute,parmas.time)
-                return 'muted'
+                const user_id = request['user'].id;
+                if((await this.GroupUsersService.is_admin(user_id, parmas.id)) != "user"
+                    && (await this.GroupUsersService.is_admin(parmas.tomute, parmas.id)) != "owner")
+                {
+                    await this.GroupUsersService.mute(parmas.id, parmas.tomute,parmas.time)
+                }
             }
-            else 
+            catch(error)
+            {
                 throw new UnauthorizedException();
+            }
         }
         @UseGuards(AuthGuard)
         @Get('unmute')
@@ -261,6 +265,7 @@ export class GroupsController {
                     group.size = group.size + 1;
                     this.GroupService.save(group);
                     this.eventEmitter.emit('status', {id:group.id, action:"new"})
+                    this.eventEmitter.emit('join', {id:user_id});
                     return 'added'
                 }
             }

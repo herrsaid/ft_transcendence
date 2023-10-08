@@ -23,9 +23,6 @@ export default function Info()
     const [statusBtn, setStatusBtn] = useState<any>();
     const back_click = ()=>{active.setActive('message')}
     const router = useRouter();
-    const profile = () =>{
-        router.replace(`/user?username=${reciver.reciver.username}`);
-    }
     const fetchData = async (url:string) => {
         try{
                 const res = await fetch(url, {
@@ -43,7 +40,6 @@ export default function Info()
     const block = () => 
     {
         setStatusBtn(<button className='btn btn-error w-full' onClick={Unblock} >Unblock</button>)
-        console.log('tblock')
         fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friend-request/block/${reciver.reciver.id}`, {
             method: 'POST',
             headers:{
@@ -65,7 +61,7 @@ export default function Info()
             }})
         }
     }
-    useEffect(()=>{
+    useEffect(() => {
         if (data)
         {
             setStatus(data.status)
@@ -77,8 +73,6 @@ export default function Info()
                 setStatusBtn(<button className='btn btn-error w-full' onClick={Unblock}>Unblock</button>)
         }
     }, [data, status])
-    if (data)
-        console.log('status', data);
     if(!reciver.reciver.id)
         return (null)
     if (reciver.reciver.isgroup)
@@ -122,40 +116,3 @@ export default function Info()
         </div>
     )
 }
-
-
-// {/* <div className="self-center text-2xl pb-3 flex justify-between"><div><button className='sm:hidden' onClick={back_click}><IoIosArrowBack/></button></div><h1>Info</h1> <div></div></div>
-//             <div className="text-center flex flex-col">
-//                 <div className='w-60 self-center pb-10'>
-//                     <img className='rounded-full self-center w-36' src={reciver.reciver.avatar} alt="img" />
-//                 </div>
-//                 <div className='text-center text-2xl mb-1'>
-//                     <h1 className='text-center '>{reciver.reciver.username}</h1>
-//                 </div>
-//                 <hr className="pb-5 border-gray-500"></hr>
-//                 <div>
-//                     <p className=''>Hi my name is doukalin and i Love lger3a</p>
-//                 </div>
-//             </div>
-//             <div className="self-center">
-//                 <div className="rounded-lg w-1/1 bg-sky-900">
-//                     <div className="flex p-2 hover:bg-indigo-900 cursor-pointer" onClick={()=>{Display()}}>
-//                         <div className='mt-1'>
-//                             <ImInfo color='red'/>
-//                         </div>
-//                         <p className='text-red-500 ml-2 mt-'>Invite To Play</p>
-//                     </div>
-//                     <div className="flex p-2 hover:bg-indigo-900 cursor-pointer">
-//                         <div className='mt-1'>
-//                             <ImBlocked color='red'/>
-//                         </div>
-//                         <p className='text-red-500 ml-2 mt-'>Block this Perosn</p>
-//                     </div>
-//                     <div className="flex p-2 hover:bg-indigo-900 cursor-pointer">
-//                         <div className='mt-1'>
-//                             <GoReport />
-//                         </div>
-//                         <p className='text-red-500 ml-2'>Report this Perosn</p>
-//                     </div>
-//                 </div>
-//             </div> */}

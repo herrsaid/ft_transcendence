@@ -17,15 +17,9 @@ export default function Groupmember({member}:any)
     const [kick, setKick] = useState(false)
     const [mute, setMute] = useState(false);
     const toast = useToast();
-    const url = `${process.env.NEXT_PUBLIC_BACK_IP}/groups/status?id=${reciver.reciver.id}`;
     const handlemute = () => {
         setMute(!mute);
     }
-    const fetcher = (url:string) => fetch(url,{method: 'GET',
-    headers:{
-        Authorization: `Bearer ${Cookies.get('access_token')}`
-    }}).then((res) => res.json());
-    const { data, error } = useSWR(url, fetcher);
     const showerror = (err:string) =>{
         toast({
             title: 'error',
@@ -96,7 +90,7 @@ export default function Groupmember({member}:any)
             showerror("Can't Mute Owner")
             return;
         }
-        if (time)
+        if (time && time.value >= 0 && time.value <= 60 && time.value != '')
         {
             fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/mute?id=${reciver.reciver.id}&tomute=${member.user.id}&time=${time.value}`,
             {
@@ -105,27 +99,27 @@ export default function Groupmember({member}:any)
                     Authorization: `Bearer ${Cookies.get('access_token')}`
                 }
             })
-            setClick(!click);
+            toast({
+                title: 'success',
+                description: 'muted',
+                position: 'top-right',
+                status: 'success',
+                duration: 6000,
+                isClosable: true,
+              })
+            time.value = '';
+        }
+        else
+        {
+            showerror("Max time to mute is 60 min")
         }
     }
-    const [muteState, setMuteState] = useState(<button onClick={submitmute} className='btn btn-outline btn-success m-1' type="submit">mute</button>)
-    useEffect(()=>{
-        if (data)
-        {
-            if(data.status == 'able')
-                setMuteState(<button id='mute' onClick={submitmute} className='btn btn-outline btn-success m-1' type="submit">mute</button>)
-            else if (data.status == 'muted')
-                setMuteState(<button id='unmute' onClick={submitmute} className='btn btn-outline btn-success m-1' type="submit">unmute</button>);
-        }
-    },[data])
-    if (data)
-        console.log('da =>', data);
     if (member.user.id == user.user.id)
         return(<></>)
     if(kick)
         return(<></>)
     return(
-        <div className=" p-1 w-full flex justify-between hover:bg-sky-800">
+        <div className=" p-1 w-full flex justify-between hover:bg-[#7d32d9]">
             <div className="flex ">
                 <img className="w-10 h-10 rounded-full" src={member.user.avatar} alt="No image" />
                 <h1 className="p-1">{member.user.username} {<h6 className=' text-green-600 text-sm text-center border border-green-500 rounded-full'>{member.role}</h6>}</h1>
@@ -146,7 +140,7 @@ export default function Groupmember({member}:any)
                             <div>
                                 <form className='flex' onSubmit={submitmute}>
                                     <input className=' bg-[#18184a] input input-bordered input-primary w-full max-w-xs m-1' id='time'  placeholder='Time' type="number"  min='1' max='5' />
-                                    {muteState}
+                                    <button id='unmute' onClick={submitmute} className='btn btn-outline btn-success m-1' type="submit">mute</button>
                                 </form>
                                 <div className='flex flex-col'>
                                     <button className='m-1 btn btn-outline btn-error' onClick={handlekick} >Kick</button>

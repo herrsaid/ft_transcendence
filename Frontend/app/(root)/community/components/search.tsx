@@ -57,7 +57,7 @@ function Result({res}:any)
                   socket.emit('joinroom',{id:res.id})
                   reciver.setReciver({...reciver.reciver, action:Math.random()})
             }
-            else 
+            else if (respond.status == 403)
             {
                 toast({
                     title: 'error',
@@ -74,7 +74,9 @@ function Result({res}:any)
         <div className="flex justify-between hover:bg-[#7d32d9] cursor-pointer p-2 rounded-lg">
             <div className="flex">
             <HiUserGroup size={30} />
-            {res.name}
+            <div className="p-1">
+                {res.name}
+            </div>
             </div>
             <div className="p-1 rounded-full hover:bg-green-500">
                 <button onClick={join}><MdOutlineGroupAdd size={20} /></button>
