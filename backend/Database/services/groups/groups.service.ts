@@ -83,7 +83,6 @@ export class GroupsService {
     {
         try
         {
-            console.log('delete', id );
             this.Groups.delete({id:id})
         }
         catch
