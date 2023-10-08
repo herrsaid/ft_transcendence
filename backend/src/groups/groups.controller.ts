@@ -83,8 +83,10 @@ export class GroupsController {
                         group.size = group.size + 1;
                         this.GroupService.save(group);
                         this.eventEmitter.emit('status', {id:group.id, action:"new"})
+                        this.eventEmitter.emit('join', {id:user_id});
                     }
-                    throw new UnauthorizedException();
+                    else
+                        throw new NotFoundException();
                 }
             }
             catch(error)

@@ -35,39 +35,41 @@ function Result({res}:any)
         if (passowrd)
         {
             const obj = {id:res.id, password:passowrd.value}
-            const respond = await fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/protectedjoin`, {
+            fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/protectedjoin`, {
                 method: 'POST',
                 headers:{
                     Authorization: `Bearer ${Cookies.get('access_token')}`,
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(obj)
+            }).then(respond => {
+                console.log('res', respond)
+                if (respond.status == 201)
+                {
+                    setpassword(false)
+                    toast({
+                        title: 'Joined',
+                        description: "thanks for joining",
+                        position: 'top-right',
+                        status: 'info',
+                        duration: 6000,
+                        isClosable: true,
+                      })
+                      socket.emit('joinroom',{id:res.id})
+                      reciver.setReciver({...reciver.reciver, action:Math.random()})
+                }
+                else if (respond.status == 401)
+                {
+                    toast({
+                        title: 'error',
+                        description: "Wrong password",
+                        position: 'top-right',
+                        status: 'error',
+                        duration: 6000,
+                        isClosable: true,
+                      })
+                }
             })
-            if (respond.status == 201)
-            {
-                setpassword(false)
-                toast({
-                    title: 'Joined',
-                    description: "thanks for joining",
-                    position: 'top-right',
-                    status: 'info',
-                    duration: 6000,
-                    isClosable: true,
-                  })
-                  socket.emit('joinroom',{id:res.id})
-                  reciver.setReciver({...reciver.reciver, action:Math.random()})
-            }
-            else if (respond.status == 403)
-            {
-                toast({
-                    title: 'error',
-                    description: "Wrong password",
-                    position: 'top-right',
-                    status: 'error',
-                    duration: 6000,
-                    isClosable: true,
-                  })
-            }
         }
     }
     return (

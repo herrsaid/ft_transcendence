@@ -4,8 +4,6 @@ import reciverContext from '../reciverContext'
 import { useContext } from 'react';
 import activeContext from '../activeContext';
 import {IoMdArrowRoundBack} from 'react-icons/io'
-import { handleClientScriptLoad } from 'next/script';
-import { info } from 'console';
 import {FaHashtag} from 'react-icons/fa'
 
 export default function Profile(props:any)

@@ -15,7 +15,6 @@ import { useToast } from "@chakra-ui/react";
 
 export default function Messages()
 {
-    const audio = new Audio('https://cdn.jsdelivr.net/npm/whatsapp-notification-sound@1.0.0/notification.mp3')
     const active = useContext(activeContext);
     const user = useContext(UserContext);
     const reciver = useContext(reciverContext);
@@ -47,7 +46,6 @@ export default function Messages()
    }
    useEffect(() => {
     socket.on('message', (data:any) =>{
-        audio.play();
         if(!data.toGroup)
         {
             setMessages((old:any) => [...old, data])
@@ -71,7 +69,6 @@ export default function Messages()
        socket.on('status', (data) =>{
         if(data.action == "out" && data.user == user.user.id)
             reciver.setReciver({});
-        console.log('reciver', reciver.reciver, 'data.id', data.id)
         if (data.action == 'new' && reciver.reciver.id == data.id)
         {
             fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/members?id=${reciver.reciver.id}`,
@@ -108,7 +105,6 @@ export default function Messages()
     },[reciver.reciver.isgroup, reciver.reciver.id])
     //fetch private messages
     useEffect(()=> {
-        console.log('user = ', user.user.id);
         fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/messages?id=${user.user.id}`,{
             method: 'GET', headers:{
                 

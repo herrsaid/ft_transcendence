@@ -18,7 +18,6 @@ export default function Chats()
             }}).then((res) => res.json());
     const { data, error } = useSWR(`${process.env.NEXT_PUBLIC_BACK_IP}/user/friends`, fetcher);
     const searching = (e:any) => {
-        console.log(e.target.value)
         fetch(`${process.env.NEXT_PUBLIC_BACK_IP}/groups/search?value=${e.target.value}`, {
             method: 'GET',
             headers:{
@@ -40,7 +39,6 @@ export default function Chats()
     // },[]);
     if (data)
     {
-        console.log('data', data)
         var newArray = data.map((frnd:any, index:number)=>
         {
             return (<Friend key={index} user={frnd} />)
