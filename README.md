@@ -24,12 +24,33 @@ This project is an online multiplayer ping pong game that was developed by a col
 - **Backend**: The backend was built using Nest.js, providing a robust and scalable server framework.
 
 - **Containerization**: Docker was utilized for containerization, enabling consistent deployment across various environments.
+  
+- **database**: This project utilizes PostgreSQL as the database management system
 
 ## Contributions
 
-As a team member, I played a pivotal role in the development process. My contributions included:
+As a team of 3 members, I played a pivotal role in the development process. My contributions included:
 
-- **Game Functionality**: Focused on developing the core game mechanics, including ball physics, player movement, and scoring.
+
+- **User Authentication**:
+  - Implemented a robust user authentication system to secure user accounts and login sessions.
+
+- **Two-Factor Authentication (2FA)** with Google**:
+  - Integrated Google's 2FA for an added layer of security, enhancing user account protection.
+
+- **Friend Requests and Blocks**:
+  - Designed and implemented a system for sending and accepting friend requests, as well as blocking unwanted interactions.
+
+- **Public and Private Profiles**:
+  - Created user interface elements for both public and private profiles, allowing users to control their visibility and share relevant information.
+
+- **Dashboard**:
+  - Developed a user-friendly dashboard providing an overview of a player's activity, including match history, statistics, and notifications.
+
+- **Leaderboard**:
+  - Designed and implemented the leaderboard feature to showcase top players based on various metrics.
+
+These contributions were instrumental in shaping the functionality and user experience of the project, ensuring a secure and engaging environment for all players.
 
 - **User Interface Design**: Actively participated in the design of the user interface, ensuring an intuitive and engaging player experience.
 
