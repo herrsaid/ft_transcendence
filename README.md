@@ -1,7 +1,5 @@
 # ft_transcendence is Online Multiplayer Ping Pong Game
 
-![Game Screenshot](Screenshoot/1.png) ![2](Screenshoot/2.png) ![3](Screenshoot/3.png) ![4](Screenshoot/4.png) ![5](Screenshoot/5.png) ![6](Screenshoot/6.png) ![7](Screenshoot/7.png) ![8](Screenshoot/8.png)
-
 
 ## Overview
 
@@ -83,3 +81,5 @@ Ensure you have Docker installed in order to run this project.
 Note: Make sure to provide appropriate environment variables in the .env files to configure the project according to your setup.
 
 Enjoy the game!
+
+![Game Screenshot](Screenshoot/1.png) ![2](Screenshoot/2.png) ![3](Screenshoot/3.png) ![4](Screenshoot/4.png) ![5](Screenshoot/5.png) ![6](Screenshoot/6.png) ![7](Screenshoot/7.png) ![8](Screenshoot/8.png)
