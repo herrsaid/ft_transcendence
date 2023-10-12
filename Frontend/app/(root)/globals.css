@@ -41,6 +41,8 @@ body{
   background-position: center;
   background-repeat: repeat;
   min-height: 100vh;
+  max-width: 100%;
+
 
 }
 
@@ -83,9 +85,12 @@ justify-items: center;
 body {
   scrollbar-width: none;
   background-repeat: repeat;
+  max-width: 100%;
 }
 
 body{
   background-color: var(--back-color) !important;
   background-repeat: repeat !important;
+  max-width: 100% !important;
+  
 }

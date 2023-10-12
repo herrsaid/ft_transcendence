@@ -29,14 +29,14 @@ const Settings = () =>
     const toast = useToast();
     useEffect(() => {
         Back();
-        player1.emit('conection_closed');
-        player2.emit('conection_closed');
-        socket.emit('conection_closed');
         newGameInfo = new GameInfoType();
         newGameInfo.RoomMood = 0;
           access = true;
           InGame.RM  = false;
           return()=>{
+            player1.emit('conection_closed');
+            player2.emit('conection_closed');
+            socket.emit('conection_closed');
             access = false;
             InGame.IL = false;
             InGame.RM = true;
