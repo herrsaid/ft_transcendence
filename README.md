@@ -1,6 +1,7 @@
 # ft_transcendence is Online Multiplayer Ping Pong Game
 
-![Game Screenshot](screenshot.png)
+![Game Screenshot](Screenshoot/1.png) ![2](Screenshoot/2.png) ![3](Screenshoot/3.png) ![4](Screenshoot/4.png) ![5](Screenshoot/5.png) ![6](Screenshoot/6.png) ![7](Screenshoot/7.png) ![8](Screenshoot/8.png)
+
 
 ## Overview
 
