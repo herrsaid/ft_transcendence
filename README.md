@@ -16,6 +16,10 @@ This project is an online multiplayer ping pong game that was developed by a col
 - **Player Profiles**: Create and customize your player profile to showcase your achievements and progress.
 
 - **Friends List**: Connect with friends and challenge them to friendly matches.
+- 
+- **Two-Factor Authentication (2FA)** with Google**: Integrated Google's 2FA for an added layer of security, enhancing user account protection.
+
+- **User Authentication**: Implemented a robust user authentication system to secure user accounts and login sessions.
 
 ## Technologies Used
 
@@ -58,8 +62,24 @@ These contributions were instrumental in shaping the functionality and user expe
 
 ## Installation
 
-1. Clone the repository:
+To run this project, follow these steps:
 
-```bash
-git clone https://github.com/your_username/online-ping-pong.git
-cd online-ping-pong
+1. **Environment Variables**:
+   - Create a `.env` file in the root of the project with the necessary environment variables.
+   - Create a `.env.local` file in the `frontend` folder with frontend-specific environment variables.
+   - Create another `.env` file in the `backend` folder with backend-specific environment variables.
+
+2. **Build and Run**:
+   - Open a terminal and run the following command to build and start the project:
+
+   ```bash
+   docker-compose up --build
+
+- Access the Application:
+        Once the containers are up and running, open a web browser and navigate to http://localhost:3000.
+
+Ensure you have Docker installed in order to run this project.
+
+Note: Make sure to provide appropriate environment variables in the .env files to configure the project according to your setup.
+
+Enjoy the game!
