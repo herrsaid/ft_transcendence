@@ -16,7 +16,7 @@ This project is an online multiplayer ping pong game that was developed by a col
 - **Player Profiles**: Create and customize your player profile to showcase your achievements and progress.
 
 - **Friends List**: Connect with friends and challenge them to friendly matches.
-- 
+  
 - **Two-Factor Authentication (2FA)** with Google**: Integrated Google's 2FA for an added layer of security, enhancing user account protection.
 
 - **User Authentication**: Implemented a robust user authentication system to secure user accounts and login sessions.
